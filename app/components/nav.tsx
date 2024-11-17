@@ -1,14 +1,12 @@
 import Link from 'next/link'
 
+// 헤더 nav
 const navItems = {
   '/': {
     name: 'home',
   },
   '/blog': {
-    name: 'blog',
-  },
-  'https://vercel.com/templates/next.js/portfolio-starter-kit': {
-    name: 'deploy',
+    name: 'posts',
   },
 }
 
