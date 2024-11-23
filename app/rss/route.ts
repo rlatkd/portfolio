@@ -1,6 +1,8 @@
 import { baseUrl } from 'app/sitemap'
 import { getBlogPosts } from 'app/blog/utils'
 
+// baseURL/rss
+
 export async function GET() {
   let allBlogs = await getBlogPosts()
 

@@ -58,6 +58,8 @@ export default function Blog({ params }) {
     notFound()
   }
 
+  // JSON-LD; 검색 엔진 최적화
+
   return (
     <section>
       <script
