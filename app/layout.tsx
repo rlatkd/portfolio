@@ -53,7 +53,6 @@ export default function RootLayout({
         GeistMono.variable
       )}
     >
-
       {/* 다크모드 설정 */}
       <head>
         <script
