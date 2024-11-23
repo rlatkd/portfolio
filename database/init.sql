@@ -1,0 +1,16 @@
+CREATE DATABASE IF NOT EXISTS blog;
+
+USE blog;
+
+CREATE TABLE posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    views INT DEFAULT 0, 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+INSERT INTO posts (title, views) VALUES 
+('First Post', 0),
+('Second Post', 10),
+('Third Post', 25);

@@ -34,6 +34,7 @@ export function Navbar() {
                 </Link>
               )
             })}
+          
           </div>
           <ThemeSwitcher />
         </nav>

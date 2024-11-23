@@ -51,15 +51,26 @@ export function generateMetadata({ params }) {
   }
 }
 
-export default function Blog({ params }) {
+export async function getViewCount(): Promise<
+  { slug: string; count: number }[]
+> {
+
+
+
+
+  return [{ slug: "vim", count: 1234 }];
+}
+
+export default async function Blog({ params }) {
   let post = getBlogPosts().find((post) => post.slug === params.slug)
+  const views = await getViewCount();
+  const count = views.find((view) => view.slug === params.slug)?.count
 
   if (!post) {
     notFound()
   }
 
   // JSON-LD; 검색 엔진 최적화
-
   return (
     <section>
       <script
@@ -90,6 +101,9 @@ export default function Blog({ params }) {
       <div className="flex justify-between items-center mt-2 mb-8 text-sm">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           {formatDate(post.metadata.publishedAt)}
+        </p>
+        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          {count} views
         </p>
       </div>
       <article className="prose">
