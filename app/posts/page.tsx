@@ -8,7 +8,10 @@ export const metadata = {
 export default function Page() {
   return (
     <section>
-      <h1 className="font-semibold text-2xl mb-8 tracking-tighter">Katalog</h1>
+      <div className="flex justify-between items-center mb-8">
+      <h1 className="font-semibold text-2xl mb-8 tracking-tighter text-center flex-grow">Katalog</h1>
+      <h1 className='text-right'>11</h1>
+      </div>
       <BlogPosts />
     </section>
   )

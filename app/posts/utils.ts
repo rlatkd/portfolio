@@ -3,6 +3,7 @@ import path from 'path'
 
 type Metadata = {
   title: string
+  category: string
   publishedAt: string
   summary: string
   image?: string
@@ -50,7 +51,7 @@ function getMDXData(dir) {
 }
 
 export function getBlogPosts() {
-  return getMDXData(path.join(process.cwd(), 'posts')) // 게시글 디렉터리 위치
+  return getMDXData(path.join(process.cwd(), 'static', 'posts')) // 정적파일경로
 }
 
 export function formatDate(date: string, includeRelative = false) {
