@@ -124,12 +124,19 @@ html {
 }
 
 pre::-webkit-scrollbar {
-  display: none;
+  /* display: none; */
+  width: 4px;
+  height: 4px;
+}
+
+pre::-webkit-scrollbar-thumb {
+  background-color: #b1b1b1;
+  border-radius: 4px;
 }
 
 pre {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: auto; /* IE and Edge */
+  scrollbar-width: auto; /* Firefox */
 }
 
 /* Remove Safari input shadow on mobile */

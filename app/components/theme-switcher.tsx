@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
-export const ThemeSwitcher = () => {
+export function ThemeSwitcher() {
   const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
