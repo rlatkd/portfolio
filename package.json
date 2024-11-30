@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "npm run open && next dev",
-    "open": "open http://localhost:3000",
+    "open": "node open.js",
     "build": "next build",
     "start": "next start"
   },
