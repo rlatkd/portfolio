@@ -21,9 +21,8 @@ export function Code({ children, className, ...props }) {
 
   return (
     <>
-    
       <div className="flex justify-between items-center ml-1 mb-2">
-        <span className="text-gray-500 capitalize">
+        <span className="font-bold text-gray-400 capitalize">
           {language}
         </span>
         <button
@@ -43,10 +42,7 @@ export function Code({ children, className, ...props }) {
           )}
         </button>
       </div>
-      <pre>
-        <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
-      </pre>
-    
+      <div dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
     </>
   )
 }

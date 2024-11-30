@@ -8,28 +8,80 @@
 }
 
 :root {
-  --sh-class: #2d5e9d;
-  --sh-identifier: #354150;
-  --sh-sign: #8996a3;
-  --sh-string: #007f7a;
-  --sh-keyword: #e02518;
-  --sh-comment: #a19595;
-  --sh-jsxliterals: #6266d1;
-  --sh-property: #e25a1c;
-  --sh-entity: #e25a1c;
+  --sh-background: #282c34;
+  --sh-class: #c678dd;
+  --sh-identifier: #e5c07b;
+  --sh-sign: #56b6c2;
+  --sh-string: #98c379;
+  --sh-keyword: #e06c75;
+  --sh-comment: #5c6370;
+  --sh-jsxliterals: #61afef;
+  --sh-property: #d19a66;
+  --sh-entity: #61afef;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --sh-class: #4c97f8;
-    --sh-identifier: white;
-    --sh-keyword: #f47067;
-    --sh-string: #0fa295;
+    --sh-background: #1e1e1e;
+    --sh-class: #c678dd;
+    --sh-identifier: #e5c07b;
+    --sh-sign: #56b6c2;
+    --sh-string: #98c379;
+    --sh-keyword: #e06c75;
+    --sh-comment: #5c6370;
+    --sh-jsxliterals: #61afef;
+    --sh-property: #d19a66;
+    --sh-entity: #61afef;
   }
   html {
     color-scheme: dark;
   }
 }
+
+pre {
+  background-color: var(--sh-background);
+  color: var(--sh-identifier);
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  padding: 1em;
+  overflow: auto;
+}
+
+.token.class {
+  color: var(--sh-class);
+}
+
+.token.identifier {
+  color: var(--sh-identifier);
+}
+
+.token.sign {
+  color: var(--sh-sign);
+}
+
+.token.string {
+  color: var(--sh-string);
+}
+
+.token.keyword {
+  color: var(--sh-keyword);
+}
+
+.token.comment {
+  color: var(--sh-comment);
+}
+
+.token.jsx-literals {
+  color: var(--sh-jsxliterals);
+}
+
+.token.property {
+  color: var(--sh-property);
+}
+
+.token.entity {
+  color: var(--sh-entity);
+}
+
 
 html {
   min-width: 360px;
@@ -63,7 +115,7 @@ html {
 }
 
 .prose pre {
-  @apply bg-neutral-50 dark:bg-neutral-900 rounded-lg overflow-x-auto border border-neutral-200 dark:border-neutral-900 py-2 px-3 text-sm;
+  @apply bg-neutral-800 dark:bg-neutral-800 rounded overflow-x-auto py-2 px-3 text-sm;
 }
 
 .prose code {
@@ -81,7 +133,6 @@ html {
 }
 
 .prose img {
-  /* Don't apply styles to next/image */
   @apply m-0;
 }
 
@@ -118,15 +169,14 @@ html {
 }
 
 .prose > :first-child {
-  /* Override removing top margin, causing layout shift */
   margin-top: 1.25em !important;
   margin-bottom: 1.25em !important;
 }
 
 pre::-webkit-scrollbar {
   /* display: none; */
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
 }
 
 pre::-webkit-scrollbar-thumb {
@@ -134,12 +184,6 @@ pre::-webkit-scrollbar-thumb {
   border-radius: 4px;
 }
 
-pre {
-  -ms-overflow-style: auto; /* IE and Edge */
-  scrollbar-width: auto; /* Firefox */
-}
-
-/* Remove Safari input shadow on mobile */
 input[type='text'],
 input[type='email'] {
   -webkit-appearance: none;

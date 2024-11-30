@@ -48,20 +48,15 @@ function RoundedImage(props) {
   return <Image alt={props.alt} className="rounded-lg" {...props} />
 }
 
-// function Code({ children, ...props }) {
-//   let codeHTML = highlight(children)
-//   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
-// }
-
 function slugify(str) {
   return str
     .toString()
     .toLowerCase()
-    .trim() // Remove whitespace from both ends of a string
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w\-]+/g, '') // Remove all non-word characters except for -
-    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/&/g, '-and-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-')
 }
 
 function createHeading(level) {
@@ -95,7 +90,7 @@ let components = {
   h6: createHeading(6),
   Image: RoundedImage,
   a: CustomLink,
-  div: Code,
+  code: Code,
   Table,
 }
 
