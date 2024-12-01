@@ -10,6 +10,7 @@ export default function Page() {
         <h1 className='text-right'>TODO 정렬</h1>
       </div>
       <BlogPosts />
+      <div>TODO Pagination Footer 필요</div>
     </section>
   )
 }

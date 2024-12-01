@@ -150,7 +150,7 @@ span.sh__line {
 }
 
 .prose h2 {
-  @apply text-xl font-medium tracking-tight mt-6 mb-2;
+  @apply text-2xl font-medium tracking-tight mt-6 mb-2;
 }
 
 .prose h3 {
@@ -179,9 +179,8 @@ span.sh__line {
 }
 
 pre::-webkit-scrollbar {
-  /* display: none; */
-  width: 5px;
-  height: 5px;
+  width: 7px;
+  height: 7px;
 }
 
 pre::-webkit-scrollbar-thumb {

@@ -21,7 +21,7 @@ export function Code({ children, className, ...props }) {
 
   return (
     <>
-      <div className="flex justify-between items-center ml-1 mb-2">
+      <div className="flex justify-between items-center ml-1 mb-5">
         <span className="font-bold text-gray-400 capitalize">
           {language}
         </span>
