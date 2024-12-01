@@ -40,7 +40,7 @@ public class UserController {
 
 ### @NoArgsConstructor
 
-_@NoArgsConstructor_을 사용하면, class에 명시적으로 선언된 생성자가 없더라도 instance를 생성할 수 있다.
+*@NoArgsConstructor*을 사용하면, class에 명시적으로 선언된 생성자가 없더라도 instance를 생성할 수 있다.
 ```java
 @NoArgsConstructor
 public class User {
@@ -61,7 +61,7 @@ public class User {
 ```
 ### @AllArgsConstructor
 
-_@AllArgsConstructor_을 사용하면, class의 모든 field를 한 번에 초기화할 수 있다.
+*@AllArgsConstructor*을 사용하면, class의 모든 field를 한 번에 초기화할 수 있다.
 ```java
 @AllArgsConstructor
 public class User {
@@ -85,7 +85,7 @@ public class User {
 ```
 ### @RequiredArgsConstructor
 
-_@RequiredArgsConstructor_을 사용하면, class가 의존하는 field를 간단하게 초기화할 수 있다.
+*@RequiredArgsConstructor*을 사용하면, class가 의존하는 field를 간단하게 초기화할 수 있다.
 
 ※ final로 선언하면 한 번 초기화된 변수는 변경할 수 없는 상수값이 된다. → 불변성 유지
 

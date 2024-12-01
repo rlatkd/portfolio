@@ -43,6 +43,7 @@ export function Code({ children, className, ...props }) {
         </button>
       </div>
       <div dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+      <div className="flex justify-between items-center ml-1 mb-5"></div>
     </>
   )
 }

@@ -128,6 +128,11 @@ html {
   line-height: 1.5;
 }
 
+span.sh__line {
+  display: block;
+  line-height: 0;
+}
+
 .prose code span {
   @apply font-medium;
 }
