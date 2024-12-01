@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 type Metadata = {
+  index: string
   title: string
   category: string
   publishedAt: string
@@ -20,7 +21,7 @@ function parseFrontmatter(fileContent: string) {
   frontMatterLines.forEach((line) => {
     let [key, ...valueArr] = line.split(': ')
     let value = valueArr.join(': ').trim()
-    value = value.replace(/^['"](.*)['"]$/, '$1') // Remove quotes
+    value = value.replace(/^['"](.*)['"]$/, '$1')
     metadata[key.trim() as keyof Metadata] = value
   })
 
@@ -41,9 +42,8 @@ function getMDXData(dir) {
   return mdxFiles.map((file) => {
     let { metadata, content } = readMDXFile(path.join(dir, file))
     let slug = path.basename(file, path.extname(file))
-
     return {
-      metadata,
+      metadata: { ...metadata, index: parseInt(metadata.index, 10) },
       slug,
       content,
     }

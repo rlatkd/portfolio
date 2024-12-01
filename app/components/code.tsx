@@ -12,7 +12,7 @@ export function Code({ children, className, ...props }) {
     // Clipboard API; localhost, https 에서만 적용됨
     navigator.clipboard.writeText(children)
     setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    setTimeout(() => setCopied(false), 1000)
   }
 
   const language = className ? className.replace('language-', '') : 'javascript';

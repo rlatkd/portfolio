@@ -5,12 +5,10 @@ import { GeistMono } from 'geist/font/mono'
 import { Navbar } from './components/nav'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import Footer from './components/footer'
-import { baseUrl } from './sitemap'
 import { themeEffect } from './utils/themeEffect'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(baseUrl),
+ 
   title: {
     default: 'Katalog',
     template: 'Katalog',
@@ -19,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'My Portfolio',
     description: 'This is my portfolio.',
-    url: baseUrl,
+    
     siteName: 'My Portfolio',
     locale: 'en_US',
     type: 'website',
@@ -65,7 +63,7 @@ export default function RootLayout({
         <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
           <Navbar />
           {children}
-          <Footer />
+          {/* <Footer /> */}
           <Analytics />
           <SpeedInsights />
         </main>
