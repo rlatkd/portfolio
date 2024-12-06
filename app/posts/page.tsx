@@ -7,7 +7,7 @@ export default function Page({ searchParams }: { searchParams: { page?: string }
   const currentPage = searchParams.page ? parseInt(searchParams.page, 10) : 1; // 쿼리파라미터 page 존재하지 않으면 default 값;1
   const POST_PER_PAGE = 10;
   const totalPosts = getBlogPosts().length;
-  const totalPages = Math.ceil(totalPosts / POST_PER_PAGE);
+  const lastPage = Math.ceil(totalPosts / POST_PER_PAGE);
 
   return (
     <>
@@ -19,7 +19,7 @@ export default function Page({ searchParams }: { searchParams: { page?: string }
         </div>
         <Posts currentPage={currentPage} />
       </section>
-      <Pagination currentPage={currentPage} totalPages={totalPages} />
+      <Pagination currentPage={currentPage} lastPage={lastPage} />
     </>
   )
 }

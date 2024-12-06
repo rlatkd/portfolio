@@ -1,28 +1,36 @@
+"use client";
+
 import Link from 'next/link'
+import { useRouter } from 'next/router';
 import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight, FaChevronLeft } from 'react-icons/fa';
 
 type PaginationProps = {
   currentPage: number;
-  totalPages: number;
+  lastpage: number;
 }
 
-export default function Pagination({ currentPage, totalPages }: PaginationProps) {
+export default function Pagination({ currentPage, lastPage }: PaginationProps) {
+  const router = useRouter();
+  
+  const firstPage = 1;
   const pageRange = 5;
   const startPage = Math.max(1, currentPage - Math.floor(pageRange / 2));
-  const endPage = Math.min(totalPages, startPage + pageRange - 1);
+  const endPage = Math.min(lastPage, startPage + pageRange - 1);
   
   const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
 
+  console.log(currentPage)
+
   return (
-    <div className="flex justify-center items-center mt-8 space-x-2">
-      {currentPage > 1 && (
-        <Link href={`?page=1`}>
+    <div className="flex justify-center items-center mb-5 space-x-2">
+      {currentPage > firstPage && (
+        <Link href={`?page=${firstPage}`}>
           <FaAngleDoubleLeft />
         </Link>
       )}
 
-      {currentPage > 1 && (
-        <Link href={`?page=${Math.max(1, currentPage - pageRange)}`}>
+      {currentPage > firstPage && (
+        <Link href={`?page=${currentPage - 1}`}>
           <FaAngleLeft />
         </Link>
       )}
@@ -31,20 +39,20 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
         <Link
           key={page}
           href={`?page=${page}`}
-          className={`text-neutral-600 dark:text-neutral-400 ${page === currentPage ? 'font-semibold' : ''}`}
+          className={`text-neutral-800 dark:text-neutral-100 ${page === currentPage ? 'text-neutral-100 dark:text-neutral-800 font-bold bg-black dark:bg-white' : ''}`}
         >
           {page}
         </Link>
       ))}
 
-      {currentPage < totalPages && (
-        <Link href={`?page=${Math.min(totalPages, currentPage + pageRange)}`}>
+      {currentPage < lastPage && (
+        <Link href={`?page=${currentPage + 1}`}>
           <FaAngleRight />
         </Link>
       )}
 
-      {currentPage < totalPages && (
-        <Link href={`?page=${totalPages}`}>
+      {currentPage < lastPage && (
+        <Link href={`?page=${lastPage}`}>
           <FaAngleDoubleRight />
         </Link>
       )}
