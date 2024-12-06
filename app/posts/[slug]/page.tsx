@@ -2,7 +2,9 @@ import { notFound } from 'next/navigation'
 import { CustomMDX } from 'app/components/mdx'
 import { formatDate, getBlogPosts } from 'app/posts/utils'
 import { baseUrl } from 'app/sitemap'
+import { FaList } from 'react-icons/fa'
 import PostNavigation from 'app/components/post-navigation'
+import Link from 'next/link'
 
 export async function generateStaticParams() {
   let posts = getBlogPosts()
@@ -95,22 +97,26 @@ export default async function Blog({ params }) {
           }),
         }}
       />
-      <h1 className="title font-semibold text-2xl tracking-tighter">
-        {post.metadata.title}
-        
-      </h1>
+       <div className="flex justify-between items-center">
+        <h1 className="title font-semibold text-2xl tracking-tighter">
+          {post.metadata.title}
+        </h1>
+        <Link href="/posts" className="flex items-center text-neutral-300 hover:text-white">
+          <FaList />
+        </Link>
+      </div>
       <div className="flex justify-between items-center mt-2 mb-8 text-sm">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+        <p className="text-sm text-neutral-600 dark:text-neutral-400 cursor-default">
           {formatDate(post.metadata.publishedAt)}
         </p>
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+        <p className="text-sm text-neutral-600 dark:text-neutral-400 cursor-default">
           {count} views
         </p>
       </div>
       <article className="prose">
         <CustomMDX source={post.content} />
       </article>
-      <PostNavigation currentPost={currentPost} />
+      {/* <PostNavigation currentPost={currentPost} /> */}
     </section>
   )
 }
