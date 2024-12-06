@@ -1,12 +1,21 @@
 import Link from 'next/link'
 import { formatDate, getBlogPosts } from 'app/posts/utils'
 
-export function Posts() {
-  let allBlogs = getBlogPosts()
+type PostsProps = {
+  currentPage: number;
+}
+
+export function Posts({ currentPage }: PostsProps) {
+  const POST_PER_PAGE = 10;
+  const allPosts = getBlogPosts();
+  const startIndex = (currentPage - 1) * POST_PER_PAGE;
+  const endIndex = startIndex + POST_PER_PAGE;
+  const currentPosts = allPosts.slice(startIndex, endIndex);
+
 
   return (
     <div>
-      {allBlogs
+      {currentPosts
         .sort((a, b) => {
           if (
             new Date(a.metadata.index) > new Date(b.metadata.index)
