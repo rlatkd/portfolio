@@ -101,7 +101,7 @@ export default async function Blog({ params }) {
         <h1 className="title font-semibold text-2xl tracking-tighter">
           {post.metadata.title}
         </h1>
-        <Link href="/posts" className="flex items-center text-neutral-300 hover:text-white">
+        <Link href="/posts" className="flex items-center text-neutral-700 dark:text-neutral-200 hover:text-white">
           <FaList />
         </Link>
       </div>

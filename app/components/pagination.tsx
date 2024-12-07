@@ -10,7 +10,7 @@ type PaginationProps = {
 }
 
 export default function Pagination({ currentPage, lastPage }: PaginationProps) {
-  const router = useRouter();
+  // const router = useRouter();
   
   const firstPage = 1;
   const pageRange = 5;
@@ -39,7 +39,7 @@ export default function Pagination({ currentPage, lastPage }: PaginationProps) {
         <Link
           key={page}
           href={`?page=${page}`}
-          className={`text-neutral-800 dark:text-neutral-100 ${page === currentPage ? 'text-neutral-100 dark:text-neutral-800 font-bold bg-black dark:bg-white' : ''}`}
+          className={`text-dark dark:text-white ${page === currentPage ? 'text-white dark:text-black font-bold bg-black dark:bg-white' : ''}`}
         >
           {page}
         </Link>
