@@ -54,17 +54,28 @@ export function generateMetadata({ params }) {
   }
 }
 
-export async function getViewCount(): Promise<
-  { slug: string; count: number }[]
-> {
+// export async function getViewCount(): Promise<
+//   { slug: string; count: number }[]
+// > {
 
-  return [{ slug: "vim", count: 1234 }];
-}
+//   if (!process.env.POSTGRES_URL) {
+//     return [];
+//   }
+
+//   const { rows } = await sql `
+//     SELECT slug, count
+//     FROM views
+//   `
+//   return rows.map(row => ({
+//     slug: row.slug,
+//     count: row.count
+//   }));
+// }
 
 export default async function Blog({ params }) {
   let post = getBlogPosts().find((post) => post.metadata.index.toString() === params.slug)
-  const views = await getViewCount();
-  const count = views.find((view) => view.slug === params.slug)?.count
+  // const views = await getViewCount();
+  // const count = views.find((view) => view.slug === params.slug)?.count
 
   if (!post) {
     notFound()
@@ -110,7 +121,8 @@ export default async function Blog({ params }) {
           {formatDate(post.metadata.publishedAt)}
         </p>
         <p className="text-sm text-neutral-600 dark:text-neutral-400 cursor-default">
-          {count} views
+          {/* {count} */}
+          views
         </p>
       </div>
       <article className="prose">
