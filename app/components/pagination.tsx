@@ -1,25 +1,21 @@
 "use client";
 
 import Link from 'next/link'
-import { useRouter } from 'next/router';
 import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight, FaChevronLeft } from 'react-icons/fa';
 
 type PaginationProps = {
   currentPage: number;
-  lastpage: number;
+  lastPage: number;
 }
 
 export default function Pagination({ currentPage, lastPage }: PaginationProps) {
-  // const router = useRouter();
   
   const firstPage = 1;
   const pageRange = 5;
   const startPage = Math.max(1, currentPage - Math.floor(pageRange / 2));
   const endPage = Math.min(lastPage, startPage + pageRange - 1);
-  
   const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
 
-  console.log(currentPage)
 
   return (
     <div className="flex justify-center items-center mb-5 space-x-2">
