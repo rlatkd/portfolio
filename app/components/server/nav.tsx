@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ThemeSwitcher } from './theme-switcher'
+import { ThemeSwitcher } from '../client/theme-switcher'
 import { FaGithub, FaHome } from 'react-icons/fa'
 
 // 헤더 nav

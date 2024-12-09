@@ -1,4 +1,3 @@
-// 클라이언트 컴포넌트 명시 (useState, useEffect, useContext 등 사용가능)
 "use client";
 
 import { useEffect, useState } from "react";

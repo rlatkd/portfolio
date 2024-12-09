@@ -1,4 +1,4 @@
-import { getBlogPosts } from 'app/posts/utils'
+import { getBlogPosts } from 'app/utils/mdx'
 import Link from 'next/link'
 import { FaChevronCircleRight, FaChevronCircleLeft } from 'react-icons/fa'
 

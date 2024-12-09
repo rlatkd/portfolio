@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation'
-import { CustomMDX } from 'app/components/mdx'
-import { formatDate, getBlogPosts } from 'app/posts/utils'
+import { CustomMDX } from 'app/components/server/mdx'
+import { formatDate, getBlogPosts } from 'app/utils/mdx'
 import { baseUrl } from 'app/sitemap'
 import { FaList } from 'react-icons/fa'
-import PostNavigation from 'app/components/post-navigation'
+import PostNavigation from 'app/components/server/post-navigation'
 import Link from 'next/link'
 
 export async function generateStaticParams() {
