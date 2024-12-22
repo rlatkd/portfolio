@@ -46,8 +46,8 @@ export default function Pagination({
             href={`?page=${page}`}
             className={`p-2 text-lg rounded-md ${
               page === currentPage
-                ? 'bg-black text-white font-bold'
-                : 'bg-transparent text-black dark:text-white hover:bg-gray-200'
+                ? 'bg-black text-white font-bold dark:bg-white dark:text-black'
+                : 'bg-transparent text-black dark:text-white hover:bg-gray-200 hover:dark:bg-gray-600'
             }`}
           >
             {page}
