@@ -7,9 +7,9 @@ type PostNavigationProps = {
 };
 
 export default function PostNavigation({ currentPost }: PostNavigationProps) {
-  let previousPost = getBlogPosts().find((post) => post.metadata.index === currentPost - 1)
-  let nextPost = getBlogPosts().find((post) => post.metadata.index === currentPost + 1)
-
+  const previousPost = getBlogPosts().find((post) => post.metadata.index === currentPost - 1)
+  const nextPost = getBlogPosts().find((post) => post.metadata.index === currentPost + 1)
+  
   return (
     <div className="flex justify-between mt-20 mb-20">
       {previousPost ? (
