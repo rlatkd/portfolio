@@ -54,6 +54,10 @@ export function getBlogPosts() {
   return getMDXData(path.join(process.cwd(), 'static', 'posts')) // 정적파일경로
 }
 
+export function getEtcMdxs() {
+  return getMDXData(path.join(process.cwd(), 'static', 'etc'))
+}
+
 export function formatDate(date: string, includeRelative = false) {
   let currentDate = new Date()
   if (!date.includes('T')) {

@@ -2,7 +2,7 @@ import { getBlogPosts } from '../utils/mdx';
 import { Posts } from 'app/components/server/posts';
 import Pagination from 'app/components/server/pagination';
 
-const POSTS_PER_PAGE = 3; // 게시글 랜더링 수
+const POSTS_PER_PAGE = 5; // 게시글 랜더링 수
 
 export default function Page({ searchParams }: { searchParams: { page?: string } }) {
   const allPosts = getBlogPosts().sort((a,b) => parseInt(b.metadata.index, 10) - parseInt(a.metadata.index, 10)); // 내림차순 정렬(최신글이 맨 위로)
@@ -16,7 +16,6 @@ export default function Page({ searchParams }: { searchParams: { page?: string }
   return (
     <>
       <section>
-        <h1 className="font-semibold text-2xl mb-8 tracking-tighter text-center">Katalog</h1>
         <Posts posts={currentPosts} />
         <Pagination currentPage={currentPage} lastPage={lastPage} />
       </section>
