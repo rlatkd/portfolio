@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 
-type Theme = "light" | "dark";
+type ThemeProps = "light" | "dark";
 
-export function ThemeSwitcher() {
-  const [theme, setTheme] = useState<Theme>("light");
+export function Theme() {
+  const [theme, setTheme] = useState<ThemeProps>("light");
 
   useEffect(() => {
     if (!('theme' in localStorage)) {
@@ -16,11 +16,11 @@ export function ThemeSwitcher() {
       return;
     }
 
-    const currentTheme = localStorage.getItem("theme") as Theme;
+    const currentTheme = localStorage.getItem("theme") as ThemeProps;
     setTheme(currentTheme);
   }, []);
 
-  const applyTheme = (nextTheme: Theme) => {
+  const applyTheme = (nextTheme: ThemeProps) => {
     if (localStorage.getItem("theme") === nextTheme) return;
 
     setTheme(nextTheme);
@@ -42,7 +42,7 @@ export function ThemeSwitcher() {
 }
 
 type Props = {
-  theme: Theme;
+  theme: ThemeProps;
 }
 
 const ThemeIcon = ({ theme }: Props) => {

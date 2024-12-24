@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import React from 'react'
-import { Code } from '../client/code'
+import { Code } from './client/code'
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (

@@ -2,11 +2,11 @@ import { getBlogPosts } from 'app/utils/mdx'
 import Link from 'next/link'
 import { FaChevronCircleRight, FaChevronCircleLeft } from 'react-icons/fa'
 
-type PostNavigationProps = {
+type NavigationProps = {
   currentPost: number;
 };
 
-export default function PostNavigation({ currentPost }: PostNavigationProps) {
+export default function Navigation({ currentPost }: NavigationProps) {
   const previousPost = getBlogPosts().find((post) => post.metadata.index === currentPost - 1)
   const nextPost = getBlogPosts().find((post) => post.metadata.index === currentPost + 1)
   

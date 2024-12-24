@@ -1,7 +1,11 @@
 import Link from 'next/link';
 import { formatDate } from 'app/utils/mdx';
 
-export function Posts({ posts }: { posts: any[] }) {
+type PostsProps = {
+  posts: any[];
+}
+
+export function Posts({ posts }: PostsProps) {
   return (
     <>
       <div className="grid grid-cols-1 gap-12 mb-12">

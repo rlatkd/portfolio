@@ -1,13 +1,12 @@
 import Link from 'next/link';
 import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
-export default function Pagination({
-  currentPage,
-  lastPage,
-}: {
+type PaginationProps = {
   currentPage: number;
   lastPage: number;
-}) {
+}
+
+export default function Pagination({ currentPage, lastPage }: PaginationProps) {
   const pageRange = 5; // 페이지버튼 갯수
   const centerPage = Math.floor(pageRange / 2); // 중앙 페이지
   let startPage = Math.max(currentPage - centerPage, 1); // 시작 페이지

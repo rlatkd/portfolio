@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation'
-import { CustomMDX } from 'app/components/server/mdx'
+import { CustomMDX } from 'app/components/mdx'
 import { formatDate, getBlogPosts } from 'app/utils/mdx'
-import { baseUrl } from 'app/sitemap'
+import { baseUrl } from 'app/utils/sitemap'
 import { FaList } from 'react-icons/fa'
-import PostNavigation from 'app/components/server/post-navigation'
 import Link from 'next/link'
+import Navigation from 'app/components/server/navigation'
 
 export async function generateStaticParams() {
   let posts = getBlogPosts()
@@ -128,7 +128,7 @@ export default async function Blog({ params }) {
       <article className="prose">
         <CustomMDX source={post.content} />
       </article>
-      <PostNavigation currentPost={currentPost} />
+      <Navigation currentPost={currentPost} />
     </section>
   )
 }

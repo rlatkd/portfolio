@@ -1,4 +1,4 @@
-import { CustomMDX } from "app/components/server/mdx";
+import { CustomMDX } from "app/components/mdx";
 import { getEtcMdxs } from "app/utils/mdx";
 
 export default function Page() {
