@@ -1,20 +1,27 @@
+import { Scroll } from "./components/client/scroll";
+import { CustomMDX } from "./components/mdx";
 import { Top } from "./components/top";
+import { getEtcMdxs } from "./utils/mdx";
 
 export default function Page() {
+
+  const about = getEtcMdxs().find((about) => about.metadata.summary === 'about')
+
   return (
     <>
-      <Top headerText="메인-안녕하세요 김상훈입니다" headerImage="/static/images/header.jpg" />
-      <section>
-        <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
-          김상훈
-        </h1>
-        <p className="mb-4">
-          {`테스트1`}
-        </p>
-        <div className="my-8">
-          {/* <BlogPosts /> */}
-        </div>
-      </section>
+      <Scroll>
+        <Top headerText="헤더문구 예정" headerImage="/static/images/header.jpg" />
+      </Scroll>
+      <Scroll>
+        <section>
+        <article className="prose">
+          <CustomMDX source={about.content} />
+        </article>
+          <div className="my-8">
+            {/* <BlogPosts /> */}
+          </div>
+        </section>
+      </Scroll>
     </>
   )
 }

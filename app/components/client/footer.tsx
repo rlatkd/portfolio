@@ -62,7 +62,7 @@ export default function Footer() {
           </div>
         </div>
         <p className="mt-8 text-neutral-600 dark:text-neutral-300 text-sm leading-relaxed cursor-default">
-          주소 : 서울특별시 노원구 동일로 245길 162, 103동 806호 (문의 :{" "}
+          주소 : 서울특별시 노원구 동일로 245길 162 (문의 :{" "}
           <a
             className="underline"
             href="mailto:rlatkdgns042@gmail.com"
@@ -70,7 +70,7 @@ export default function Footer() {
             rlatkdgns042@gmail.com
           </a>
           ) <br />
-          © Copyright {new Date().getFullYear()} Sanghun.Kim
+          © {new Date().getFullYear()}. kata All rights reserved.
         </p>
       </footer>
 

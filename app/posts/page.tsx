@@ -22,7 +22,7 @@ export default function Page({ searchParams }: PageProps) {
 
   return (
     <>
-      <Top headerText="블로그-안녕하세요 김상훈입니다" headerImage="/static/images/header.jpg" />
+      <Top headerText="" headerImage="/static/images/header.jpg" />
       <section className='w-4/6 mx-auto'>
         <Posts posts={currentPosts} />
         <Pagination currentPage={currentPage} lastPage={lastPage} />

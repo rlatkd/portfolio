@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { themeEffect } from './utils/themeEffect'
 import Footer from './components/client/footer'
+import { Top } from './components/top'
 
 export const metadata: Metadata = {
  
@@ -60,9 +61,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased max-w-6xl mx-4 mt-8 lg:mx-auto">
-        <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
+      <body className="antialiased max-w-6xl mx-4 lg:mx-auto">
+        <main className="flex-auto min-w-0 flex flex-col px-2 md:px-0">
           <Header />
+          <Top />
           <div>
             {children}
           </div>

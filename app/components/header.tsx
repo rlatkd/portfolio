@@ -1,15 +1,14 @@
 import Link from 'next/link'
 import { Theme } from './client/theme'
-import { FaGithub } from 'react-icons/fa'
 import { routing } from './routing';
-import { Top } from './top';
 
 export function Header() {
   return (
-    <aside className="tracking-tight">
-      <div className="lg:sticky lg:top-20">
+    <aside className="tracking-tight mb-14">
+      <div className="fixed top-0 left-0 right-0 z-50 h-16 text-black bg-white dark:text-white dark:bg-black">
+      <div className="mx-auto max-w-6xl px-4">
         <nav
-          className="flex flex-row items-center justify-between relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative mb-8"
+          className=" flex flex-row items-center justify-between relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative h-16"
           id="nav"
         >
           <div className="flex flex-row space-x-20 pr-10">
@@ -25,11 +24,11 @@ export function Header() {
               )
             })}
           </div>
-          <div className="ml-auto flex space-x-4 items-center">
+          <div className="flex space-x-4 items-center">
             <Theme />
           </div>
         </nav>
-        <Top />
+        </div>
       </div>
     </aside>
   )
