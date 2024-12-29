@@ -116,16 +116,16 @@ export default async function Blog({ params }) {
           <FaList />
         </Link>
       </div>
-      <div className="flex justify-between items-center mt-2 mb-8 text-sm">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400 cursor-default">
+      <div className="flex justify-between items-center mt-2 mb-8 text-sm border-b border-b-gray-200">
+        <p className="mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default">
           {formatDate(post.metadata.publishedAt)}
         </p>
-        <p className="text-sm text-neutral-600 dark:text-neutral-400 cursor-default">
+        <p className="mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default">
           {/* {count} */}
           views
         </p>
       </div>
-      <article className="prose">
+      <article className="prose w-4/6 mx-auto">
         <CustomMDX source={post.content} />
       </article>
       <Navigation currentPost={currentPost} />

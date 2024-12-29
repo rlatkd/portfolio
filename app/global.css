@@ -38,19 +38,6 @@
   }
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 1s ease-in-out;
-}
-
 pre {
   background-color: var(--sh-background);
   color: var(--sh-identifier);
@@ -128,7 +115,7 @@ html {
 }
 
 .prose pre {
-  @apply bg-neutral-800 dark:bg-neutral-800 rounded overflow-x-auto py-2 px-3 text-sm;
+  @apply w-5/6 mx-auto bg-neutral-800 dark:bg-neutral-800 rounded overflow-x-auto py-2 px-3 text-sm;
 }
 
 .prose code {

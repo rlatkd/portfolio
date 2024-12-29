@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FaFacebook, FaGithub, FaInstagram } from "react-icons/fa";
+import { FaFacebook, FaGithub, FaInstagram, FaLinkedin, FaLinkedinIn } from "react-icons/fa";
 
 export default function Footer() {
   const [modalMessage, setModalMessage] = useState("");
@@ -45,7 +45,15 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="transition-all hover:text-neutral-800 dark:hover:text-neutral-100 w-6 h-6"
             >
-              <img className="rounded" src="static/images/velog.jpg"/>
+              <img className="rounded dark:invert" src="static/images/velog.jpg"/>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/sanghun-kim-689a03342/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+            >
+              <FaLinkedin className="w-7 h-7" />
             </a>
             <button
               onClick={() => openModal("저는 Facebook을 안 합니다.")}
