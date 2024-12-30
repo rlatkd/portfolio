@@ -1,7 +1,6 @@
 import { getBlogPosts } from '../utils/mdx';
 import { Posts } from 'app/components/posts';
 import Pagination from 'app/components/pagination';
-import { Top } from 'app/components/top';
 
 const POSTS_PER_PAGE = 5; // 게시글 랜더링 수
 
@@ -21,12 +20,9 @@ export default function Page({ searchParams }: PageProps) {
   const currentPosts = allPosts.slice(startIndex, endIndex); // 현재 게시글들
 
   return (
-    <>
-      <Top headerText="" headerImage="/static/images/header.jpg" />
-      <section className='w-4/6 mx-auto'>
-        <Posts posts={currentPosts} />
-        <Pagination currentPage={currentPage} lastPage={lastPage} />
-      </section>
-    </>
+    <section className='w-4/6 mx-auto'>
+      <Posts posts={currentPosts} />
+      <Pagination currentPage={currentPage} lastPage={lastPage} />
+    </section>
   );
 }

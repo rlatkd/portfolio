@@ -1,5 +1,3 @@
-import { FaHome } from 'react-icons/fa';
-
 type RoutingProps = {
     name?: string;
     icon?: JSX.Element;
@@ -9,18 +7,19 @@ type RoutingProps = {
 export const routing: Record<string, RoutingProps> = {
   '/': {
     // name: 'home',
-    icon: <FaHome className="h-6 w-6"/>,
+    icon: <img src='/static/images/logo.jpg' className="h-9 w-9"/>,
+    name: 'Katalog'
   },
   '/portfolio': {
-    name: 'portfolio',
+    name: '포트폴리오',
   },
   '/posts': {
-    name: 'post',
+    name: '블로그',
   },
   '/about': {
-    name: 'about',
+    name: '래퍼런스',
   },
   '/contact': {
-    name: 'contact'
+    name: '문의'
   },
 }
