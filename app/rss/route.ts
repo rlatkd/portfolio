@@ -1,10 +1,10 @@
 import { baseUrl } from 'app/utils/sitemap'
-import { getBlogPosts } from 'app/utils/mdx'
+import { getPosts } from 'app/utils/mdx'
 
 // baseURL/rss
 
 export async function GET() {
-  let allBlogs = await getBlogPosts()
+  let allBlogs = await getPosts()
 
   const itemsXml = allBlogs
     .sort((a, b) => {

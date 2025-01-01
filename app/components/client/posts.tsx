@@ -4,7 +4,7 @@ import { formatDate } from 'app/utils/mdx';
 type PostsProps = {
   posts: any[];
 }
-
+// TODO filter, sort 다시 구현
 export function Posts({ posts }: PostsProps) {
   return (
     <>

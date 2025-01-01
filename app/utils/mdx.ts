@@ -50,12 +50,16 @@ function getMDXData(dir) {
   })
 }
 
-export function getBlogPosts() {
-  return getMDXData(path.join(process.cwd(), 'static', 'posts')) // 정적파일경로
+export function getPosts() {
+  return getMDXData(path.join(process.cwd(), 'static', 'mdx', 'posts')) // 정적파일경로
 }
 
 export function getEtcMdxs() {
-  return getMDXData(path.join(process.cwd(), 'static', 'etc'))
+  return getMDXData(path.join(process.cwd(), 'static', 'mdx', 'etc'))
+}
+
+export function getProjects() {
+  return getMDXData(path.join(process.cwd(), 'static', 'mdx', 'projects'))
 }
 
 export function formatDate(date: string, includeRelative = false) {

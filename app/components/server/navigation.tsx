@@ -1,4 +1,4 @@
-import { getBlogPosts } from 'app/utils/mdx'
+import { getPosts } from 'app/utils/mdx'
 import Link from 'next/link'
 import { FaChevronCircleRight, FaChevronCircleLeft } from 'react-icons/fa'
 
@@ -7,8 +7,8 @@ type NavigationProps = {
 };
 
 export default function Navigation({ currentPost }: NavigationProps) {
-  const previousPost = getBlogPosts().find((post) => post.metadata.index === currentPost - 1)
-  const nextPost = getBlogPosts().find((post) => post.metadata.index === currentPost + 1)
+  const previousPost = getPosts().find((post) => post.metadata.index === currentPost - 1)
+  const nextPost = getPosts().find((post) => post.metadata.index === currentPost + 1)
   
   return (
     <div className="flex justify-between mt-20 mb-20">

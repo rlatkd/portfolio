@@ -1,13 +1,13 @@
 import { notFound } from 'next/navigation'
 import { CustomMDX } from 'app/components/mdx'
-import { formatDate, getBlogPosts } from 'app/utils/mdx'
+import { formatDate, getPosts } from 'app/utils/mdx'
 import { baseUrl } from 'app/utils/sitemap'
 import { FaList } from 'react-icons/fa'
 import Link from 'next/link'
 import Navigation from 'app/components/server/navigation'
 
 export async function generateStaticParams() {
-  let posts = getBlogPosts()
+  let posts = getPosts()
 
   return posts.map((post) => ({
     slug: post.metadata.index.toString(),
@@ -15,7 +15,7 @@ export async function generateStaticParams() {
 }
 
 export function generateMetadata({ params }) {
-  let post = getBlogPosts().find((post) => post.metadata.index.toString() === params.slug)
+  let post = getPosts().find((post) => post.metadata.index.toString() === params.slug)
   if (!post) {
     return
   }
@@ -73,7 +73,7 @@ export function generateMetadata({ params }) {
 // }
 
 export default async function Blog({ params }) {
-  let post = getBlogPosts().find((post) => post.metadata.index.toString() === params.slug)
+  let post = getPosts().find((post) => post.metadata.index.toString() === params.slug)
   // const views = await getViewCount();
   // const count = views.find((view) => view.slug === params.slug)?.count
 

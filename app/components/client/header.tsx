@@ -9,7 +9,7 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <aside className="tracking-tight mb-14">
+    <aside className="tracking-tight mb-12">
       <div className="fixed top-0 left-0 right-0 z-50 h-16 text-black bg-white dark:text-white dark:bg-black">
         <div className="mx-auto max-w-6xl px-4">
           <nav
@@ -22,7 +22,7 @@ export function Header() {
                 className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex items-center space-x-2 py-1 px-2"
               >
                  {routing['/'].icon}
-                 <span className="text-xl font-semibold">{routing['/'].name}</span>
+                 <span className="text-2xl font-semibold">{routing['/'].name}</span>
               </Link>
             </div>
             <div className="flex flex-row items-center space-x-10 mr-1">
@@ -36,8 +36,8 @@ export function Header() {
                       key={path}
                       href={path}
                       className={`${
-                        isActive ? 'text-blue-500 font-bold' : 'hover:text-neutral-600 dark:hover:text-neutral-200'
-                      } font-bold transition-all py-1 px-2`}
+                        isActive ? 'text-blue-500 font-bold' : 'hover:text-neutral-400 dark:hover:text-neutral-200'
+                      } font-bold transition-all py-1 px-2 text-xl`}
                     >
                       {name}
                     </Link>

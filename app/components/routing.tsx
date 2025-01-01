@@ -8,18 +8,18 @@ export const routing: Record<string, RoutingProps> = {
   '/': {
     // name: 'home',
     icon: <img src='/static/images/logo.jpg' className="h-9 w-9"/>,
-    name: 'Katalog'
-  },
-  '/portfolio': {
-    name: '포트폴리오',
+    name: 'KATALOG'
   },
   '/posts': {
-    name: '블로그',
+    name: 'Archiving',
+  },
+  '/projects': {
+    name: 'Projects',
   },
   '/about': {
-    name: '래퍼런스',
+    name: 'Career',
   },
   '/contact': {
-    name: '문의'
+    name: 'Contact'
   },
 }
