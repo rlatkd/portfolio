@@ -61,7 +61,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased max-w-6xl mx-4 lg:mx-auto">
+      <body className="antialiased max-w-6xl mx-4 lg:mx-auto overflow-y-scroll">
         <main className="flex-auto min-w-0 flex flex-col px-2 md:px-0">
           <Header />
           <Top />

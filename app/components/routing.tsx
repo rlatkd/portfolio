@@ -11,12 +11,12 @@ export const routing: Record<string, RoutingProps> = {
     name: 'KATALOG'
   },
   '/posts': {
-    name: 'Archiving',
+    name: 'Archive',
   },
   '/projects': {
-    name: 'Projects',
+    name: 'Project',
   },
-  '/about': {
+  '/career': {
     name: 'Career',
   },
   '/contact': {
