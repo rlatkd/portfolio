@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { formatDate } from 'app/utils/mdx';
+import { CustomMDX } from '../mdx';
 
 type ProjectsProps = {
   projects: any[];
@@ -22,20 +23,23 @@ export function Projects({ projects }: ProjectsProps) {
                 alt={project.metadata.title}
                 className="w-full h-80 object-cover rounded-t-lg"
               />
-              <div className="flex flex-col space-y-2">
-                <p className="text-neutral-600 dark:text-neutral-400 text-sm tabular-nums">
-                  {formatDate(project.metadata.publishedAt, false)}
-                </p>
-                <p className="text-neutral-900 dark:text-neutral-100 text-sm">
-                  {project.metadata.category}
-                </p>
-                <p className="text-neutral-900 dark:text-neutral-100 text-lg font-semibold">
-                  {project.metadata.title}
-                </p>
-                <p className="text-neutral-500 dark:text-neutral-400 text-xs ml-auto">
-                  {project.slug}
-                </p>
+              <div className="flex flex-col">
+                <ul className="list-disc pl-5">
+                  <li>{project.metadata?.description1}</li>
+                  <li>{project.metadata?.description2}</li>
+                  <li>{project.metadata?.description3}</li>
+                  <li>{project.metadata?.description4}</li>
+                </ul>
+                
               </div>
+                <div style={{backgroundColor: '#F9C51D33',
+                              border: '1px solid #f9c51d',
+                              borderRadius: '0.5rem',
+                              padding: '0.75rem',
+                              fontSize: '0.875rem',
+                              fontWeight: '500'}}>
+                  <p>{project.metadata.stack}</p>
+                </div>
             </Link>
           ))}
       </div>
