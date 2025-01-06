@@ -6,76 +6,8 @@ import { FaList } from 'react-icons/fa'
 import Link from 'next/link'
 import Navigation from 'app/components/server/navigation'
 
-export async function generateStaticParams() {
-  let posts = getPosts()
-
-  return posts.map((post) => ({
-    slug: post.metadata.index.toString(),
-  }))
-}
-
-export function generateMetadata({ params }) {
+export default async function Page({ params }) {
   let post = getPosts().find((post) => post.metadata.index.toString() === params.slug)
-  if (!post) {
-    return
-  }
-
-  let {
-    title,
-    publishedAt: publishedTime,
-    summary: description,
-    image,
-  } = post.metadata
-  let ogImage = image
-    ? image
-    : `${baseUrl}/og?title=${encodeURIComponent(title)}`
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      type: 'article',
-      publishedTime,
-      url: `${baseUrl}/posts/${post.metadata.index}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [ogImage],
-    },
-  }
-}
-
-// export async function getViewCount(): Promise<
-//   { slug: string; count: number }[]
-// > {
-
-//   if (!process.env.POSTGRES_URL) {
-//     return [];
-//   }
-
-//   const { rows } = await sql `
-//     SELECT slug, count
-//     FROM views
-//   `
-//   return rows.map(row => ({
-//     slug: row.slug,
-//     count: row.count
-//   }));
-// }
-
-export default async function Blog({ params }) {
-  let post = getPosts().find((post) => post.metadata.index.toString() === params.slug)
-  // const views = await getViewCount();
-  // const count = views.find((view) => view.slug === params.slug)?.count
 
   if (!post) {
     notFound()
@@ -103,7 +35,7 @@ export default async function Blog({ params }) {
             url: `${baseUrl}/posts/${post.metadata.index}`,
             author: {
               '@type': 'Person',
-              name: 'My Portfolio',
+              name: 'kata',
             },
           }),
         }}

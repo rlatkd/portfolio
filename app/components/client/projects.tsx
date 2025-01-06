@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import { formatDate } from 'app/utils/mdx';
-import { CustomMDX } from '../mdx';
 
 type ProjectsProps = {
   projects: any[];
@@ -21,7 +19,7 @@ export function Projects({ projects }: ProjectsProps) {
               <img
                 src={project.metadata.image}
                 alt={project.metadata.title}
-                className="w-full h-80 object-cover rounded-t-lg"
+                className="w-full h-80 object-contain rounded-t-lg"
               />
               <div className="flex flex-col">
                 <ul className="list-disc pl-5">
