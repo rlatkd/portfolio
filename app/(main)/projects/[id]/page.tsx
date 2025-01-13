@@ -1,15 +1,13 @@
 import { notFound } from 'next/navigation'
-import { CustomMDX } from 'app/components/mdx'
-import { formatDate, getPosts, getProjects } from 'app/utils/mdx'
+import { CustomMDX } from 'app/(with-layout)/components/mdx'
+import { formatDate, getPosts, getProjects } from 'app/(with-layout)/utils/mdx'
 import { FaList } from 'react-icons/fa'
 import Link from 'next/link'
 
 export default async function Page({ params }) {
   let project = getProjects().find((project) => project.metadata.index.toString() === params.id)
 
-  if (!project) {
-    notFound()
-  }
+  if (!project) notFound()
 
   return (
     <section>

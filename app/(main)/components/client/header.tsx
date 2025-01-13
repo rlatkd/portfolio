@@ -4,11 +4,19 @@ import Link from 'next/link';
 import { Theme } from './theme';
 import { routing } from '../routing';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export function Header() {
   const pathname = usePathname();
 
+  const [mounted, setMounted] = useState<boolean>(false);
+  
+    useEffect(() => {
+      setMounted(true);
+    }, []);
+
   return (
+    mounted && pathname && 
     <aside className="tracking-tight mb-12">
       <div className="fixed top-0 left-0 right-0 z-50 h-16 text-black bg-white dark:text-white dark:bg-black">
         <div className="mx-auto max-w-6xl px-4">

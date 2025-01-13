@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  reactStrictMode: true,
+  swcMinify: true,
   darkMode: 'selector',
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",

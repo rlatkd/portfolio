@@ -1,4 +1,4 @@
-import { getPosts } from "app/utils/mdx"
+import { getPosts } from "app/(with-layout)/utils/mdx"
 
 // TODO 블로그 제네레이터 다시 수정
 

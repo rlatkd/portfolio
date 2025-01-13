@@ -1,18 +1,16 @@
 import { notFound } from 'next/navigation'
-import { CustomMDX } from 'app/components/mdx'
-import { formatDate, getPosts } from 'app/utils/mdx'
-import { baseUrl } from 'app/utils/sitemap'
+import { CustomMDX } from 'app/(with-layout)/components/mdx'
+import { formatDate, getPosts } from 'app/(with-layout)/utils/mdx'
+import { baseUrl } from 'app/(with-layout)/utils/sitemap'
 import { FaList } from 'react-icons/fa'
 import Link from 'next/link'
-import Navigation from 'app/components/server/navigation'
+import Navigation from 'app/(with-layout)/components/server/navigation'
 
 export default async function Page({ params }) {
   let post = getPosts().find((post) => post.metadata.index.toString() === params.slug)
 
-  if (!post) {
-    notFound()
-  }
-
+  if (!post) notFound()
+  
   const currentPost = post.metadata.index
 
   // JSON-LD; 검색 엔진 최적화
