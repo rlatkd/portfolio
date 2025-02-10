@@ -1,5 +1,5 @@
-import { Projects } from "app/(with-layout)/components/client/projects";
-import { getProjects } from "app/(with-layout)/utils/mdx";
+import { Projects } from "app/(main)/components/client/projects";
+import { getProjects } from "app/(main)/utils/mdx";
 
 const POSTS_PER_PAGE = 5; // 게시글 랜더링 수
 

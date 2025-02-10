@@ -1,4 +1,4 @@
-import { getPosts } from 'app/(with-layout)/utils/mdx'
+import { getPosts } from 'app/(main)/utils/mdx'
 import { MetadataRoute } from 'next'
 
 // TODO

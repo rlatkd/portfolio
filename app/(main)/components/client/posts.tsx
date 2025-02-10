@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { formatDate } from 'app/(with-layout)/utils/mdx';
+import { formatDate } from 'app/(main)/utils/mdx';
 
 type PostsProps = {
   posts: any[];

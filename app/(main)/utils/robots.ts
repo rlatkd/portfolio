@@ -1,4 +1,4 @@
-import { baseUrl } from 'app/(with-layout)/utils/sitemap'
+import { baseUrl } from 'app/(main)/utils/sitemap'
 import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {

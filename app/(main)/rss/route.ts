@@ -1,5 +1,5 @@
-import { baseUrl } from 'app/(with-layout)/utils/sitemap'
-import { getPosts } from 'app/(with-layout)/utils/mdx'
+import { baseUrl } from 'app/(main)/utils/sitemap'
+import { getPosts } from 'app/(main)/utils/mdx'
 
 // baseURL/rss
 

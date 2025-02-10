@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation'
-import { CustomMDX } from 'app/(with-layout)/components/mdx'
-import { formatDate, getPosts } from 'app/(with-layout)/utils/mdx'
-import { baseUrl } from 'app/(with-layout)/utils/sitemap'
+import { CustomMDX } from 'app/(main)/components/mdx'
+import { formatDate, getPosts } from 'app/(main)/utils/mdx'
+import { baseUrl } from 'app/(main)/utils/sitemap'
 import { FaList } from 'react-icons/fa'
 import Link from 'next/link'
-import Navigation from 'app/(with-layout)/components/server/navigation'
+import Navigation from 'app/(main)/components/server/navigation'
 
 export default async function Page({ params }) {
   let post = getPosts().find((post) => post.metadata.index.toString() === params.slug)
