@@ -1,6 +1,7 @@
 import { getPosts } from "app/(main)/utils/mdx"
 
 // TODO 블로그 제네레이터 다시 수정
+const baseUrl = 'localhost:3000'
 
 export async function generateStaticParams() {
   let posts = getPosts()
@@ -13,7 +14,7 @@ export async function generateStaticParams() {
 export function generateMetadata({ params }) {
   let post = getPosts().find((post) => post.metadata.index.toString() === params.slug)
   if (!post) {
-    return
+    return;
   }
 
   let {
@@ -50,20 +51,20 @@ export function generateMetadata({ params }) {
   }
 }
 
-export async function getViewCount(): Promise<
-  { slug: string; count: number }[]
-> {
+// export async function getViewCount(): Promise<
+//   { slug: string; count: number }[]
+// > {
 
-  if (!process.env.POSTGRES_URL) {
-    return [];
-  }
+//   if (!process.env.POSTGRES_URL) {
+//     return [];
+//   }
 
-  const { rows } = await sql `
-    SELECT slug, count
-    FROM views
-  `
-  return rows.map(row => ({
-    slug: row.slug,
-    count: row.count
-  }));
-}
+//   const { rows } = await sql `
+//     SELECT slug, count
+//     FROM views
+//   `
+//   return rows.map(row => ({
+//     slug: row.slug,
+//     count: row.count
+//   }));
+// }

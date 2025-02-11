@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "npm run open && next dev",
-    "open": "node open.js",
+    "open": "node opener.js",
     "build": "next build",
     "start": "next start"
   },

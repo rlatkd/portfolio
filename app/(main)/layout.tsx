@@ -1,4 +1,4 @@
-import './global.css'
+import '../global.css'
 import { Header } from './components/client/header'
 import Footer from './components/client/footer'
 import { Top } from './components/top'

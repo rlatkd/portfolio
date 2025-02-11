@@ -27,8 +27,7 @@ export default function Footer() {
             target="_blank"
             href="/rss"
           >
-            <p className="h-7">rss</p>
-            <ArrowIcon />
+            <img className="w-5 h-5 rounded dark:invert" src="static/images/rss.jpg"/>
           </a>
           <div className="flex items-center flex-row ml-auto gap-10">
             <a
