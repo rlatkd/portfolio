@@ -115,7 +115,7 @@ html {
 }
 
 .prose pre {
-  @apply w-5/6 mx-auto bg-neutral-800 dark:bg-neutral-800 rounded overflow-x-auto py-2 px-3 text-sm;
+  @apply  mx-auto bg-neutral-800 dark:bg-neutral-800 rounded overflow-x-auto py-2 px-3 text-sm;
 }
 
 .prose code {

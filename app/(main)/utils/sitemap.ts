@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next'
 
 // TODO
 // baseUrl 수정
-export const baseUrl = 'https://portfolio-blog-starter.vercel.app'
+export const baseUrl = 'http://localhost:3000'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let blogs = getPosts().map((post) => ({
