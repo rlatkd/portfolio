@@ -11,9 +11,9 @@ export function Header() {
 
   const [mounted, setMounted] = useState<boolean>(false);
   
-    useEffect(() => {
-      setMounted(true);
-    }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     mounted && pathname && 

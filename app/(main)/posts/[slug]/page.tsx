@@ -59,20 +59,7 @@ export default async function Page({ params }) {
 
 
 
-      <div className="flex w-full h-32 gap-6 justify-center">
-        <div className="relative flex items-center justify-center w-2/3 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold">Spring Boot</h2>
-          <div className="absolute bottom-4 right-4 flex items-center space-x-2 text-gray-400">
-            <span className="text-sm">2/2</span>
-            <button className="p-1 rounded-full border border-gray-300 hover:bg-gray-200">
-              ←
-            </button>
-            <button className="p-1 rounded-full border border-gray-300 hover:bg-gray-200">
-              →
-            </button>
-          </div>
-        </div>
-      </div>
+     
 
         {/* 오른쪽 탭 */}
         {/* <div className="w-1/3 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md">
@@ -89,11 +76,37 @@ export default async function Page({ params }) {
       
 
 
+      <div className='flex justify-between'>
 
-
-      <article className="prose w-4/6 mx-auto">
-        <CustomMDX source={post.content} />
-      </article>
+      
+        <div className="fixed  z-50 ml-[-20%] flex items-center justify-center w-1/4 h-32 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold">Spring Boot</h2>
+          <div className="absolute bottom-4 right-4 flex items-center space-x-2 text-gray-400">
+            <span className="text-sm">2/2</span>
+            <button className="p-1 rounded-full border border-gray-300 hover:bg-gray-200">
+              ←
+            </button>
+            <button className="p-1 rounded-full border border-gray-300 hover:bg-gray-200">
+              →
+            </button>
+          </div>
+        </div>
+        <article className="prose w-4/6 m-auto">
+          <CustomMDX source={post.content} />
+        </article>
+        <div className="fixed right-0 z-50 mr-[-20%] flex items-center justify-center w-1/4 h-32 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold">Spring Boot</h2>
+          <div className="absolute bottom-4 right-4 flex items-center space-x-2 text-gray-400">
+            <span className="text-sm">2/2</span>
+            <button className="p-1 rounded-full border border-gray-300 hover:bg-gray-200">
+              ←
+            </button>
+            <button className="p-1 rounded-full border border-gray-300 hover:bg-gray-200">
+              →
+            </button>
+          </div>
+        </div>
+      </div>
       <Navigation currentPost={currentPost} />
     </section>
   )
