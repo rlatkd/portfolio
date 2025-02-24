@@ -1,21 +1,11 @@
 "use client";
 
+import { useRouter } from "next/navigation"; // navigation 모듈 주의
 import { useState } from "react";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedin, FaLinkedinIn } from "react-icons/fa";
 
 export default function Footer() {
-  const [modalMessage, setModalMessage] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = (message: string) => {
-    setModalMessage(message);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setModalMessage("");
-  };
+  const router = useRouter();
 
   return (
     <>
@@ -66,35 +56,20 @@ export default function Footer() {
               <FaLinkedin className="w-7 h-7" />
             </a>
             <button
-              onClick={() => openModal("저는 Facebook을 안 합니다.")}
+              onClick={() => router.push('/404')}
               className="transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
             >
               <FaFacebook className="w-6 h-6" />
             </button>
             <button
-              onClick={() => openModal("저는 Instagram을 안 합니다.")}
+              onClick={() => router.push('/404')}
               className="transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
             >
               <FaInstagram className="w-7 h-7" />
             </button>
           </div>
         </div>
-        
       </footer>
-
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-            <p className="text-neutral-900 dark:text-neutral-100 mb-4">{modalMessage}</p>
-            <button
-              onClick={closeModal}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              닫기
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 }

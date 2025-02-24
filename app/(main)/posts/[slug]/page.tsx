@@ -5,6 +5,7 @@ import { baseUrl } from 'app/(main)/utils/sitemap'
 import { FaBookmark, FaList } from 'react-icons/fa'
 import Link from 'next/link'
 import Navigation from 'app/(main)/components/server/navigation'
+import { Table } from 'app/(main)/components/table'
 
 export default async function Page({ params }) {
   let post = getPosts().find((post) => post.metadata.index.toString() === params.slug)
@@ -42,7 +43,7 @@ export default async function Page({ params }) {
         <h1 className="title font-semibold text-2xl tracking-tighter">
           {post.metadata.title}
         </h1>
-        <Link href="/posts" className="flex items-center text-neutral-700 dark:text-neutral-200 hover:text-white">
+        <Link href="/posts" className="flex items-center text-neutral-700 dark:text-neutral-200 hover:text-neutral-400">
           <FaList />
         </Link>
       </div>
@@ -57,28 +58,10 @@ export default async function Page({ params }) {
       </div>
 
 
-
-
-     
-
-        {/* 오른쪽 탭 */}
-        {/* <div className="w-1/3 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md">
-          <h3 className="text-lg font-medium border-b pb-2 mb-2">개요</h3>
-          <ul className="text-sm space-y-1">
-            <li>@NoArgsConstructor</li>
-            <li>@AllArgsConstructor</li>
-            <li>@RequiredArgsConstructor</li>
-            <li>staticName</li>
-            <li>access</li>
-            <li>force</li>
-          </ul>
-        </div> */}
-      
-
-
       <div className='flex justify-between'>
 
-      
+
+
         <div className="fixed  z-50 ml-[-20%] flex items-center justify-center w-1/4 h-32 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold">Spring Boot</h2>
           <div className="absolute bottom-4 right-4 flex items-center space-x-2 text-gray-400">
@@ -91,21 +74,21 @@ export default async function Page({ params }) {
             </button>
           </div>
         </div>
+
+
+
         <article className="prose w-4/6 m-auto">
           <CustomMDX source={post.content} />
         </article>
-        <div className="fixed right-0 z-50 mr-[-20%] flex items-center justify-center w-1/4 h-32 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold">Spring Boot</h2>
-          <div className="absolute bottom-4 right-4 flex items-center space-x-2 text-gray-400">
-            <span className="text-sm">2/2</span>
-            <button className="p-1 rounded-full border border-gray-300 hover:bg-gray-200">
-              ←
-            </button>
-            <button className="p-1 rounded-full border border-gray-300 hover:bg-gray-200">
-              →
-            </button>
-          </div>
+
+
+
+        <div className="fixed right-0 z-50 mr-[5%] flex items-center justify-center w-60 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+          <Table headings={post.headings}></Table>
         </div>
+
+
+
       </div>
       <Navigation currentPost={currentPost} />
     </section>

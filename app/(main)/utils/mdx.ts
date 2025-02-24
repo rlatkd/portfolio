@@ -42,15 +42,46 @@ function readMDXFile(filePath) {
   return parseFrontmatter(rawContent)
 }
 
+function slugify(str) {
+  return str
+    .toString()
+    .trim()
+    .replace(/[\s]+/g, '-') // 한국어: 띄어쓰기 기준으로 '-'
+    .replace(/([a-z])([A-Z])/g, '$1-$2') // 영어: 대문자 앞에 '-' 추가 (camelCase)
+    .toLowerCase()
+    .replace(/&/g, '-and-')
+    .replace(/[^\w\-가-힣]+/g, '') // 한글, 영문, 숫자만 허용
+    .replace(/\-\-+/g, '-') // 연속된 '-' 제거
+}
+
+// TODO
+function tableOfContents(content: string) {
+  const headingRegex = /^(#{1,6})\s+(.+)$/gm;
+  const headings = [];
+  let match;
+
+  while ((match = headingRegex.exec(content)) !== null) {
+    const level = match[1].length;
+    const text = match[2].trim();
+    const id = slugify(text);
+
+    headings.push({ level, text, id });
+  }
+
+  return headings;
+}
+
 function getMDXData(dir) {
   let mdxFiles = getMDXFiles(dir)
   return mdxFiles.map((file) => {
-    let { metadata, content } = readMDXFile(path.join(dir, file))
-    let slug = path.basename(file, path.extname(file))
+    let { metadata, content } = readMDXFile(path.join(dir, file));
+    let slug = path.basename(file, path.extname(file));
+    let headings = tableOfContents(content);
     return {
       metadata: { ...metadata, index: parseInt(metadata.index, 10) },
       slug,
       content,
+      headings,
     }
   })
 }
