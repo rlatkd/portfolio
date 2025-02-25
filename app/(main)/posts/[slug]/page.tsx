@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { CustomMDX } from 'app/(main)/components/mdx'
+import { CustomMDX } from 'app/(main)/components/custom-mdx'
 import { formatDate, getPosts } from 'app/(main)/utils/mdx'
 import { baseUrl } from 'app/(main)/utils/sitemap'
 import { FaBookmark, FaList } from 'react-icons/fa'

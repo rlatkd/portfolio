@@ -1,7 +1,7 @@
 type RoutingProps = {
-    name?: string;
-    icon?: JSX.Element;
-  }
+  name?: string;
+  icon?: JSX.Element;
+}
   
 // 헤더 nav
 export const routing: Record<string, RoutingProps> = {

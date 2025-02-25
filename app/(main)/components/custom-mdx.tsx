@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import React from 'react'
 import { Code } from './client/code'
+import { slugify } from '../utils/slugify'
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (
@@ -48,26 +49,15 @@ function RoundedImage(props) {
   return <Image alt={props.alt} className="rounded-lg" {...props} />
 }
 
-function slugify(str) {
-  return str
-    .toString()
-    .trim()
-    .replace(/[\s]+/g, '-') // 한국어: 띄어쓰기 기준으로 '-'
-    .replace(/([a-z])([A-Z])/g, '$1-$2') // 영어: 대문자 앞에 '-' 추가 (camelCase)
-    .toLowerCase()
-    .replace(/&/g, '-and-')
-    .replace(/[^\w\-가-힣]+/g, '') // 한글, 영문, 숫자만 허용
-    .replace(/\-\-+/g, '-') // 연속된 '-' 제거
-}
-
-
 // TODO
 function createHeading(level) {
   const Heading = ({ children }) => {
     let slug = slugify(children)
     return React.createElement(
       `h${level}`,
-      { id: slug },
+      { id: slug,
+        style: { scrollMarginTop: '80px' }
+       },
       [
         React.createElement('a', {
           href: `#${slug}`,

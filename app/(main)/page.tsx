@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CustomMDX } from "./components/mdx";
+import { CustomMDX } from "./components/custom-mdx";
 import { Top } from "./components/top";
 import { getEtcMdxs } from "./utils/mdx";
 
