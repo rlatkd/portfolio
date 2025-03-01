@@ -49,7 +49,6 @@ function RoundedImage(props) {
   return <Image alt={props.alt} className="rounded-lg" {...props} />
 }
 
-// TODO
 function createHeading(level) {
   const Heading = ({ children }) => {
     let slug = slugify(children)

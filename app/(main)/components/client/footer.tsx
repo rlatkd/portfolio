@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation"; // navigation 모듈 주의
-import { useState } from "react";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedin, FaLinkedinIn } from "react-icons/fa";
 
 export default function Footer() {

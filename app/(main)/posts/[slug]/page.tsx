@@ -2,10 +2,10 @@ import { notFound } from 'next/navigation'
 import { CustomMDX } from 'app/(main)/components/custom-mdx'
 import { formatDate, getPosts } from 'app/(main)/utils/mdx'
 import { baseUrl } from 'app/(main)/utils/sitemap'
-import { FaBookmark, FaList } from 'react-icons/fa'
+import { FaList } from 'react-icons/fa'
 import Link from 'next/link'
 import Navigation from 'app/(main)/components/server/navigation'
-import { Table } from 'app/(main)/components/table'
+import { TableOfContents } from 'app/(main)/components/client/toc'
 
 export default async function Page({ params }) {
   let post = getPosts().find((post) => post.metadata.index.toString() === params.slug)
@@ -83,8 +83,8 @@ export default async function Page({ params }) {
 
 
 
-        <div className="fixed right-0 z-50 mr-[5%] flex items-center justify-center w-60 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
-          <Table headings={post.headings}></Table>
+        <div className="fixed right-0 z-50 mr-[0%] flex items-center justify-center w-80 p-6">
+          <TableOfContents contents={post.tableContents}></TableOfContents>
         </div>
 
 

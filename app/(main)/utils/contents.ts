@@ -6,7 +6,7 @@ type ContentsProps = {
   id: string;
 }
 
-export const contents = (content: string) => {
+export const getContents = (content: string) => {
   const contentRegex = /^(#{1,6})\s+(.+)$/gm;
   const contents: ContentsProps[] = [];
   let mdxInfo;
