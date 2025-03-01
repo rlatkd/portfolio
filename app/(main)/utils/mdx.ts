@@ -3,7 +3,7 @@ import path from 'path'
 import { getContents } from './contents'
 
 type Metadata = {
-  index?: string
+  index: string
   title?: string
   category?: string
   publishedAt?: string

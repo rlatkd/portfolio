@@ -40,7 +40,7 @@ export default async function Page({ params }) {
         }}
       />
        <div className="flex justify-between items-center">
-        <h1 className="title font-semibold text-2xl tracking-tighter">
+        <h1 className="title font-semibold text-2xl tracking-tighter cursor-default">
           {post.metadata.title}
         </h1>
         <Link href="/posts" className="flex items-center text-neutral-700 dark:text-neutral-200 hover:text-neutral-400">
@@ -62,7 +62,7 @@ export default async function Page({ params }) {
 
 
 
-        <div className="fixed  z-50 ml-[-20%] flex items-center justify-center w-1/4 h-32 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+        {/* <div className="fixed  z-50 ml-[-20%] flex items-center justify-center w-1/4 h-32 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold">Spring Boot</h2>
           <div className="absolute bottom-4 right-4 flex items-center space-x-2 text-gray-400">
             <span className="text-sm">2/2</span>
@@ -73,7 +73,7 @@ export default async function Page({ params }) {
               →
             </button>
           </div>
-        </div>
+        </div> */}
 
 
 

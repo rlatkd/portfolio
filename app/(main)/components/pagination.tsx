@@ -4,9 +4,10 @@ import { FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleLeft, FaAngleRight } from
 type PaginationProps = {
   currentPage: number;
   lastPage: number;
-}
+  category?: string;
+};
 
-export default function Pagination({ currentPage, lastPage }: PaginationProps) {
+export default function Pagination({ currentPage, lastPage, category }: PaginationProps) {
   const pageRange = 5; // 페이지버튼 갯수
   const centerPage = Math.floor(pageRange / 2); // 중앙 페이지
   let startPage = Math.max(currentPage - centerPage, 1); // 시작 페이지
@@ -21,28 +22,29 @@ export default function Pagination({ currentPage, lastPage }: PaginationProps) {
   }
 
   const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+  const queryPrefix = category ? `?category=${category}&page=` : '?page=';
 
   return (
     <div className="flex items-center justify-center space-x-2 mb-5">
-      <div className={"flex items-center"}>
+      <div className="flex items-center">
         {currentPage > 1 ? (
           <>
-            <Link href={`?page=1`} className="p-2 text-lg">
+            <Link href={`${queryPrefix}1`} className="p-2 text-lg">
               <FaAngleDoubleLeft />
             </Link>
-            <Link href={`?page=${currentPage - 1}`} className="p-2 text-lg">
+            <Link href={`${queryPrefix}${currentPage - 1}`} className="p-2 text-lg">
               <FaAngleLeft />
             </Link>
           </>
         ) : (
-          <div style={{width: '68px'}} /> 
+          <div style={{ width: '68px' }} />
         )}
       </div>
       <div className="flex items-center mx-auto">
         {pages.map((page) => (
           <Link
             key={page}
-            href={`?page=${page}`}
+            href={`${queryPrefix}${page}`}
             className={`p-2 text-lg rounded-md ${
               page === currentPage
                 ? 'bg-black text-white font-bold dark:bg-white dark:text-black'
@@ -53,18 +55,18 @@ export default function Pagination({ currentPage, lastPage }: PaginationProps) {
           </Link>
         ))}
       </div>
-      <div className={"flex items-center"}>
+      <div className="flex items-center">
         {currentPage < lastPage ? (
           <>
-            <Link href={`?page=${currentPage + 1}`} className="p-2 text-lg">
+            <Link href={`${queryPrefix}${currentPage + 1}`} className="p-2 text-lg">
               <FaAngleRight />
             </Link>
-            <Link href={`?page=${lastPage}`} className="p-2 text-lg">
+            <Link href={`${queryPrefix}${lastPage}`} className="p-2 text-lg">
               <FaAngleDoubleRight />
             </Link>
           </>
         ) : (
-          <div style={{width: '68px'}} /> 
+          <div style={{ width: '68px' }} />
         )}
       </div>
     </div>
