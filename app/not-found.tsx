@@ -1,5 +1,7 @@
 "use client";
 
+import './global.css'
+
 export default function NotFound() {
   return (
     <div className="flex items-center justify-center w-full min-h-screen py-8 text-gray-900 page md:py-16">

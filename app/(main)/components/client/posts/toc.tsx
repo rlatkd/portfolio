@@ -26,9 +26,16 @@ export function TableOfContents({ contents }) {
         }
       });
 
-      if (currentSection) {
-        setSection(currentSection);
+      // 첫 번째 섹션보다 위로 올라가면 강조 제거
+      const firstSection = contents[0];
+      if (firstSection) {
+        const firstSectionTop = document.getElementById(firstSection.id)?.offsetTop || 0;
+        if (window.scrollY + headerHeight < firstSectionTop) {
+          currentSection = "";
+        }
       }
+
+      setSection(currentSection);
     };
 
     window.addEventListener("scroll", updateSection);

@@ -1,3 +1,5 @@
+"use server";
+
 import fs from 'fs'
 import path from 'path'
 import { getContents } from './contents'
@@ -58,19 +60,19 @@ function getMDXData(dir) {
   })
 }
 
-export function getPosts() {
+export async function getPosts() {
   return getMDXData(path.join(process.cwd(), 'static', 'mdx', 'posts')) // 정적파일경로
 }
 
-export function getEtcMdxs() {
+export async function getEtcMdxs() {
   return getMDXData(path.join(process.cwd(), 'static', 'mdx', 'etc'))
 }
 
-export function getProjects() {
+export async function getProjects() {
   return getMDXData(path.join(process.cwd(), 'static', 'mdx', 'projects'))
 }
 
-export function formatDate(date: string, includeRelative = false) {
+export async function formatDate(date: string, includeRelative = false) {
   let currentDate = new Date()
   if (!date.includes('T')) {
     date = `${date}T00:00:00`

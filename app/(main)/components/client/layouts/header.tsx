@@ -1,10 +1,10 @@
 "use client";
 
 import Link from 'next/link';
-import { Theme } from './theme';
-import { routing } from '../routing';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { routing } from '../../routing';
+import { Theme } from './theme';
 
 export function Header() {
   const pathname = usePathname();

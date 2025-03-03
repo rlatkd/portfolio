@@ -6,9 +6,10 @@ type NavigationProps = {
   currentPost: number;
 };
 
-export default function Navigation({ currentPost }: NavigationProps) {
-  const previousPost = getPosts().find((post) => post.metadata.index === currentPost - 1)
-  const nextPost = getPosts().find((post) => post.metadata.index === currentPost + 1)
+export default async function Navigation({ currentPost }: NavigationProps) {
+  const posts = await getPosts();
+  const previousPost = posts.find((post) => post.metadata.index === currentPost - 1)
+  const nextPost = posts.find((post) => post.metadata.index === currentPost + 1)
   
   return (
     <div className="flex justify-between mt-20 mb-20">

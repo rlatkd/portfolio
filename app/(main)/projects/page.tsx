@@ -1,4 +1,4 @@
-import { Projects } from "app/(main)/components/client/projects";
+import { Projects } from "app/(main)/components/projects";
 import { getProjects } from "app/(main)/utils/mdx";
 
 const POSTS_PER_PAGE = 5; // 게시글 랜더링 수
