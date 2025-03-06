@@ -3,6 +3,7 @@
 import fs from 'fs'
 import path from 'path'
 import { getContents } from './contents'
+import { unstable_noStore as noStore } from 'next/cache';
 
 type Metadata = {
   index: string
@@ -61,6 +62,7 @@ function getMDXData(dir) {
 }
 
 export async function getPosts() {
+  noStore();
   return getMDXData(path.join(process.cwd(), 'static', 'mdx', 'posts')) // 정적파일경로
 }
 
