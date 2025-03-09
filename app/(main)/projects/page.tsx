@@ -9,8 +9,8 @@ type PageProps = {
   };
 };
 
-export default function Page({ searchParams }: PageProps) {
-  const sortedProjects = getProjects();
+export default async function Page({ searchParams }: PageProps) {
+  const sortedProjects = await getProjects();
   const totalPosts = sortedProjects.length; // 총 게시글 수
   const lastPage = Math.ceil(totalPosts / POSTS_PER_PAGE); // 마지막 페이지
   const currentPage = parseInt(searchParams.page || "1", 10); // 현재 페이지

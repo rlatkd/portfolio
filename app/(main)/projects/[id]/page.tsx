@@ -1,11 +1,14 @@
 import { notFound } from 'next/navigation'
-import { CustomMDX } from 'app/(main)/components/custom-mdx'
 import { formatDate, getPosts, getProjects } from 'app/(main)/utils/mdx'
 import { FaList } from 'react-icons/fa'
 import Link from 'next/link'
+import { Render } from 'app/(main)/components/mdx/render'
 
 export default async function Page({ params }) {
-  let project = getProjects().find((project) => project.metadata.index.toString() === params.id)
+
+  const projects = await getProjects();
+
+  const project = projects.find((project) => project.metadata.index.toString() === params.id)
 
   if (!project) notFound()
 
@@ -29,7 +32,7 @@ export default async function Page({ params }) {
         </p>
       </div>
       <article className="prose w-4/6 mx-auto">
-        <CustomMDX source={project.content} />
+        <Render source={project.content} />
       </article>
     </section>
   )
