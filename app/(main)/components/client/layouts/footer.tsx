@@ -28,7 +28,7 @@ export default function Footer() {
               target="_blank"
               href="/rss"
             >
-              <img className="w-5 h-5 rounded dark:invert" src="static/images/rss.jpg"/>
+              <img className="w-5 h-5 rounded dark:invert" src="/static/images/rss.jpg"/>
             </a>
             <a
               href="https://github.com/rlatkd"
@@ -44,7 +44,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="transition-all hover:text-neutral-800 dark:hover:text-neutral-100 w-6 h-6"
             >
-              <img className="rounded dark:invert" src="static/images/velog.jpg"/>
+              <img className="rounded dark:invert" src="/static/images/velog.jpg"/>
             </a>
             <a
               href="https://www.linkedin.com/in/sanghun-kim-689a03342/"

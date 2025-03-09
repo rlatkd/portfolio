@@ -1,7 +1,7 @@
 import { getPosts } from '../utils/mdx';
-import { Posts } from 'app/(main)/components/posts';
-import Pagination from 'app/(main)/components/pagination';
 import Category from '../components/category';
+import { Posts } from '../components/client/posts/posts';
+import Pagination from '../components/pagination';
 
 const POSTS_PER_PAGE = 5; // 게시글 랜더링 수
 

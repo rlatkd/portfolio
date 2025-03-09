@@ -35,6 +35,21 @@ export function TableOfContents({ contents }) {
         }
       }
 
+      // 마지막 섹션보다 아래로 내려가면 강조 제거
+      const lastSection = contents[contents.length - 1];
+      if (lastSection) {
+        const lastSectionElement = document.getElementById(lastSection.id);
+        if (lastSectionElement) {
+          // 마지막 섹션의 끝 위치 계산 (섹션의 시작 위치 + 섹션의 높이)
+          const lastSectionBottom = lastSectionElement.offsetTop + lastSectionElement.offsetHeight;
+          
+          // 현재 스크롤 위치가 마지막 섹션의 끝 위치보다 아래에 있는지 확인
+          if (window.scrollY > lastSectionBottom) {
+            currentSection = "";
+          }
+        }
+      }
+
       setSection(currentSection);
     };
 
@@ -73,9 +88,8 @@ export function TableOfContents({ contents }) {
   };
 
   return (
-    <nav className="text-sm w-full">
-      <h2 className="font-semibold text-lg mb-2">목차</h2>
-      <ul className="space-y-1">
+    <nav className="text-sm w-full border-l-2 border-gray-200">
+      <ul className="ml-2 space-y-1">
         {contents.map(({ level, text, id }) => (
           <li key={id} className={`ml-${(level - 1) * 2}`}>
             <a
@@ -84,8 +98,8 @@ export function TableOfContents({ contents }) {
                 e.preventDefault();
                 handleSectionClick(id);
               }}
-              className={`hover:underline ${
-                id === section ? "font-bold text-blue-600" : "text-blue-500"
+              className={`hover:underline transition-all duration-300 ${
+                id === section ? "font-bold text-neutral-600 text-base" : "text-neutral-500 text-sm"
               }`}
             >
               {text}

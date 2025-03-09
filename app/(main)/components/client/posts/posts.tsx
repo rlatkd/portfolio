@@ -1,10 +1,12 @@
+'use client';
+
 import Link from 'next/link';
-import { formatDate } from 'app/(main)/utils/mdx';
+import { dateFormatter } from 'app/(main)/utils/dateFormatter';
 
 type PostsProps = {
   posts: any[];
 }
-// TODO filter, sort 다시 구현
+
 export function Posts({ posts }: PostsProps) {
   return (
     <>
@@ -24,7 +26,7 @@ export function Posts({ posts }: PostsProps) {
               />
               <div className="flex flex-col space-y-2">
                 <p className="text-neutral-600 dark:text-neutral-400 text-sm tabular-nums">
-                  {formatDate(post.metadata.publishedAt, false)}
+                  {dateFormatter(post.metadata.publishedAt, false)}
                 </p>
                 <p className="text-neutral-900 dark:text-neutral-100 text-sm">
                   {post.metadata.category}

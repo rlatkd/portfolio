@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Posts } from 'app/(main)/components/posts';
+import { useEffect, useState, useRef } from 'react';
+import Link from 'next/link';
+import { dateFormatter } from 'app/(main)/utils/dateFormatter';
 
 type RecommendProps = {
   posts: any[]; // 서버에서 가져온 게시글 데이터
@@ -9,22 +10,44 @@ type RecommendProps = {
 };
 
 export default function Recommend({ posts, currentPostIndex }: RecommendProps) {
-
-  console.log(posts)
   const [randomPosts, setRandomPosts] = useState<any[]>([]);
+  const initialized = useRef(false);
 
   useEffect(() => {
-    const otherPosts = posts.filter((post) => post.metadata.index !== currentPostIndex);
-    const shuffledPosts = [...otherPosts].sort(() => Math.random() - 0.5).slice(0, 4);
-    setRandomPosts(shuffledPosts);
-  }, []); 
+    if (!initialized.current && posts && posts.length > 0) {
+      const otherPosts = posts.filter((post) => post.metadata.index !== currentPostIndex);
+      const shuffledPosts = [...otherPosts].sort(() => Math.random() - 0.5).slice(0, 4);
+      setRandomPosts(shuffledPosts);
+      initialized.current = true;
+    }
+  }, [posts, currentPostIndex]); 
 
   if (randomPosts.length === 0) return null;
 
+  // CSS 커스텀을 위해 Posts 컴포넌트 사용 X
   return (
     <div className="mt-16">
-      <h2 className="text-xl font-bold mb-4">추천 글</h2>
-      <Posts posts={randomPosts} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {randomPosts.map((post) => (
+          <Link
+            key={post.slug}
+            className="flex flex-col h-80 space-y-1 border border-neutral-300 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+            href={`/posts/${post.metadata.index}`}
+          >
+            <div className="flex flex-col space-y-2">
+              <p className="text-neutral-600 dark:text-neutral-400 text-sm tabular-nums">
+                {dateFormatter(post.metadata.publishedAt, false)}
+              </p>
+              <p className="text-neutral-900 dark:text-neutral-100 text-sm">
+                {post.metadata.category}
+              </p>
+              <p className="text-neutral-900 dark:text-neutral-100 text-lg font-semibold">
+                {post.metadata.title}
+              </p>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
