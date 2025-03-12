@@ -60,7 +60,7 @@ export default async function Page({ params }) {
         <article className="prose w-4/6 m-auto">
           <Render source={post.content} />
         </article>
-        <div className="fixed right-0 z-50 mr-[15%] flex items-center justify-center w-80 p-6">
+        <div className="fixed right-0 z-50 mr-[0%] flex items-center justify-center w-80 p-6">
           <TableOfContents contents={post.tableContents}></TableOfContents>
         </div>
       </div>
