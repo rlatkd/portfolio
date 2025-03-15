@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 export function TableOfContents({ contents }) {
   const [section, setSection] = useState(""); // 목차의 구역 설정
   const [scrolling, setScrolling] = useState(false); // 스크롤 상태 추적
+  const [visible, setVisible] = useState(true); // 컴포넌트 표시 여부
+  const [opacity, setOpacity] = useState(1); // 투명도 조절
   const pathname = usePathname();
   const headerHeight = 80; // 레이아웃 헤더의 높이
 
@@ -40,10 +42,7 @@ export function TableOfContents({ contents }) {
       if (lastSection) {
         const lastSectionElement = document.getElementById(lastSection.id);
         if (lastSectionElement) {
-          // 마지막 섹션의 끝 위치 계산 (섹션의 시작 위치 + 섹션의 높이)
           const lastSectionBottom = lastSectionElement.offsetTop + lastSectionElement.offsetHeight;
-          
-          // 현재 스크롤 위치가 마지막 섹션의 끝 위치보다 아래에 있는지 확인
           if (window.scrollY > lastSectionBottom) {
             currentSection = "";
           }
@@ -53,7 +52,38 @@ export function TableOfContents({ contents }) {
       setSection(currentSection);
     };
 
-    window.addEventListener("scroll", updateSection);
+    // 네비게이션 영역 감지 및 투명도 조절 함수
+    const checkNavigationVisibility = () => {
+      const navigationElement = document.querySelector('div#navigation') || document.querySelector('.navigation');
+      
+      if (navigationElement) {
+        const navigationTop = navigationElement.getBoundingClientRect().top;
+        const threshold = 500; // 감지 시작 거리
+        const fadeDistance = 200; // 서서히 사라지는 거리
+        
+        if (navigationTop < threshold) {
+          const newOpacity = Math.max(0, Math.min(1, (navigationTop - (threshold - fadeDistance)) / fadeDistance));
+          setOpacity(newOpacity);
+        
+          if (newOpacity < 0.05) {
+            setVisible(false); // 완전히 투명해지면 렌더링 X
+          } else {
+            setVisible(true);
+          }
+        } else {
+          setOpacity(1);
+          setVisible(true);
+        }
+      }
+    };
+
+    // 스크롤 이벤트 핸들러
+    const handleScroll = () => {
+      updateSection(); // 구역 파싱용
+      checkNavigationVisibility(); // 네비게이션 위치 감지용
+    };
+
+    window.addEventListener("scroll", handleScroll);
 
     // 구역 변경 이벤트핸들러
     const handleSectionChange = () => {
@@ -63,8 +93,11 @@ export function TableOfContents({ contents }) {
 
     window.addEventListener("hashchange", handleSectionChange);
 
+    // 초기 상태 설정
+    handleScroll();
+
     return () => {
-      window.removeEventListener("scroll", updateSection);
+      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("hashchange", handleSectionChange);
     };
   }, [contents, pathname, scrolling]);
@@ -87,8 +120,14 @@ export function TableOfContents({ contents }) {
       setScrolling(false)}, 200);
   };
 
+  // visible이 false면 컴포넌트를 렌더링 X
+  if (!visible || !contents || contents.length === 0) return null;
+
   return (
-    <nav className="text-sm w-full border-l-2 border-gray-200">
+    <nav 
+      className="text-sm w-full  transition-opacity duration-300" 
+      style={{ opacity: opacity }}
+    >
       <ul className="ml-2 space-y-1">
         {contents.map(({ level, text, id }) => (
           <li key={id} className={`ml-${(level - 1) * 2}`}>

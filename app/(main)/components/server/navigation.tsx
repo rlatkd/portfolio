@@ -12,7 +12,7 @@ export default async function Navigation({ currentPost }: NavigationProps) {
   const nextPost = posts.find((post) => post.metadata.index === currentPost + 1)
   
   return (
-    <div className="flex justify-between mt-20 mb-20">
+    <div id="navigation" className="flex justify-between mt-20 mb-20">
       {previousPost ? (
         <Link
           href={`/posts/${previousPost.metadata.index}`}

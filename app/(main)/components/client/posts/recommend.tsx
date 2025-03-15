@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { dateFormatter } from 'app/(main)/utils/dateFormatter';
 
 type RecommendProps = {
-  posts: any[]; // 서버에서 가져온 게시글 데이터
-  currentPostIndex: number; // 현재 상세 페이지의 게시글 인덱스
+  posts: any[];
+  currentPostIndex: number;
 };
 
 export default function Recommend({ posts, currentPostIndex }: RecommendProps) {
@@ -24,7 +24,6 @@ export default function Recommend({ posts, currentPostIndex }: RecommendProps) {
 
   if (randomPosts.length === 0) return null;
 
-  // CSS 커스텀을 위해 Posts 컴포넌트 사용 X
   return (
     <div className="mt-16">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

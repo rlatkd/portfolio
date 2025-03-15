@@ -40,7 +40,7 @@ export default async function Page({ params }) {
           }),
         }}
       />
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center w-4/6 mx-auto">
         <h1 className="title font-semibold text-2xl tracking-tighter cursor-default">
           {post.metadata.title}
         </h1>
@@ -48,7 +48,7 @@ export default async function Page({ params }) {
           <FaList />
         </Link>
       </div>
-      <div className="flex justify-between items-center mt-2 mb-8 text-sm border-b border-b-gray-200">
+      <div className="flex justify-between items-center mt-2 mb-8 text-sm border-b border-b-gray-200 w-4/6 mx-auto">
         <p className="mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default">
           {formatDate(post.metadata.publishedAt)}
         </p>
@@ -57,13 +57,13 @@ export default async function Page({ params }) {
         </p>
       </div>
       <div className='flex justify-between'>
-        <article className="prose w-4/6 m-auto">
-          <Render source={post.content} />
-        </article>
-        <div className="fixed right-0 z-50 mr-[0%] flex items-center justify-center w-80 p-6">
-          <TableOfContents contents={post.tableContents}></TableOfContents>
-        </div>
-      </div>
+  <article className="prose w-4/6 m-auto ml-[23%]">
+    <Render source={post.content} />
+  </article>
+  <div className="sticky top-20 self-start w-80 p-6 ml-[10%]">
+    <TableOfContents contents={post.tableContents}></TableOfContents>
+  </div>
+</div>
       <Navigation currentPost={currentPost} />
       <Recommend posts={posts} currentPostIndex={currentPost} />
     </section>
