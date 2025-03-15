@@ -57,13 +57,15 @@ export default async function Page({ params }) {
         </p>
       </div>
       <div className='flex justify-between'>
-  <article className="prose w-4/6 m-auto ml-[23%]">
-    <Render source={post.content} />
-  </article>
-  <div className="sticky top-20 self-start w-80 p-6 ml-[10%]">
-    <TableOfContents contents={post.tableContents}></TableOfContents>
-  </div>
-</div>
+        <div className="w-4/6 ">
+          <article className="prose prose-lg max-w-none w-full ml-[25%]">
+            <Render source={post.content} />
+          </article>
+        </div>
+        <div className="sticky top-20 self-start w-80 p-6 mr-[-15%]">
+          <TableOfContents contents={post.tableContents}></TableOfContents>
+        </div>
+      </div>
       <Navigation currentPost={currentPost} />
       <Recommend posts={posts} currentPostIndex={currentPost} />
     </section>
