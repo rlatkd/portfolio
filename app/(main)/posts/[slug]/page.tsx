@@ -7,6 +7,7 @@ import { TableOfContents } from 'app/(main)/components/client/posts/toc'
 import { notFound } from 'next/navigation'
 import { Render } from 'app/(main)/components/mdx/render'
 import Recommend from 'app/(main)/components/client/posts/recommend'
+import Comments from 'app/(main)/components/client/posts/comments'
 
 export default async function Page({ params }) {
   const posts = await getPosts();
@@ -52,6 +53,7 @@ export default async function Page({ params }) {
         <p className="mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default">
           {formatDate(post.metadata.publishedAt)}
         </p>
+        {/* TODO DataBase(RDB or NoSQL) 연결 필요 */}
         <p className="mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default">
           views
         </p>
@@ -67,6 +69,7 @@ export default async function Page({ params }) {
         </div>
       </div>
       <Navigation currentPost={currentPost} />
+      <Comments />
       <Recommend posts={posts} currentPostIndex={currentPost} />
     </section>
   )
