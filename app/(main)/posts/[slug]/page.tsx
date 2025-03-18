@@ -69,7 +69,7 @@ export default async function Page({ params }) {
         </div>
       </div>
       <Navigation currentPost={currentPost} />
-      <Comments />
+      <Comments postId={currentPost}/>
       <Recommend posts={posts} currentPostIndex={currentPost} />
     </section>
   )

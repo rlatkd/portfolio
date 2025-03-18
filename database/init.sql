@@ -1,16 +1,41 @@
-CREATE DATABASE IF NOT EXISTS blog;
-
 USE blog;
 
-CREATE TABLE posts (
+-- posts 테이블에 의존하지 않는 comments 테이블 생성
+CREATE TABLE IF NOT EXISTS comments (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    views INT DEFAULT 0, 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    post_id INT NOT NULL,
+    user_name VARCHAR(100) NOT NULL DEFAULT '익명',
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    -- 외래 키 제약 없음
 );
 
-INSERT INTO posts (title, views) VALUES 
-('First Post', 0),
-('Second Post', 10),
-('Third Post', 25);
+-- 샘플 댓글 데이터
+INSERT INTO comments (post_id, user_name, content) VALUES
+(1, '사용자1', '첫 번째 게시물에 대한 댓글입니다.'),
+(2, '사용자2', '정말 좋은 글이네요!'),
+(3, '사용자3', '세 번째 게시물에 대한 의견입니다.'),
+(4, '익명', '네 번째 게시물 잘 읽었습니다.'),
+(5, '사용자4', '다섯 번째 게시물에 대한 댓글입니다.'),
+(6, '사용자5', '여섯 번째 게시물 정보가 유익합니다.'),
+(7, '사용자6', '일곱 번째 게시물에 대한 의견입니다.'),
+(8, '익명', '여덟 번째 게시물 내용이 흥미롭네요.'),
+(9, '사용자7', '아홉 번째 게시물에 대한 댓글입니다.'),
+(10, '사용자8', '열 번째 게시물 내용이 좋습니다.'),
+(11, '사용자9', '열한 번째 게시물에 대한 의견입니다.'),
+(12, '익명', '열두 번째 게시물 잘 읽었습니다.'),
+(13, '사용자10', '열세 번째 게시물에 대한 댓글입니다.'),
+(14, '사용자11', '열네 번째 게시물이 유익합니다.'),
+(15, '사용자12', '열다섯 번째 게시물에 대한 의견입니다.'),
+(16, '익명', '열여섯 번째 게시물 내용이 좋네요.'),
+(17, '사용자13', '열일곱 번째 게시물에 대한 댓글입니다.'),
+(18, '사용자14', '열여덟 번째 게시물 감사합니다.'),
+(19, '사용자15', '열아홉 번째 게시물에 대한 의견입니다.'),
+(20, '익명', '스무 번째 게시물 잘 읽었습니다.'),
+(21, '사용자16', '스물한 번째 게시물에 대한 댓글입니다.'),
+(22, '사용자17', '스물두 번째 게시물이 유익합니다.'),
+(23, '사용자18', '스물세 번째 게시물에 대한 의견입니다.'),
+(24, '익명', '스물네 번째 게시물 내용이 좋네요.'),
+(25, '사용자19', '스물다섯 번째 게시물에 대한 댓글입니다.'),
+(26, '사용자20', '스물여섯 번째 게시물 감사합니다.'),
+(27, '사용자21', '스물일곱 번째 게시물에 대한 의견입니다.');
