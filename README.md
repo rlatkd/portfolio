@@ -9,6 +9,19 @@ TODO
 7. css 공통화
 8. import 경로 @로 수정
 
+MongoDB 명령어
+
+```
+docker container exec -it MONGODB_CONTAINER bash
+mongosh
+show dbs
+use DATABASE_NAME
+show collections
+db.COLLECTION_NAME.find() (.pretty())
+db.COLLECTION_NAME.find(OBJECT)
+```
+
+
 폴더 구조 변경
 
 ```

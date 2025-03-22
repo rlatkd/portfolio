@@ -1,21 +1,16 @@
-networks:
-  mysql:
-    driver: bridge
-
 services:
-  mysql:
+  mongodb:
     build:
       context: ./database
       dockerfile: Dockerfile
-    container_name: mysql
+    container_name: blog-mongodb
     ports:
-      - "3306:3306"
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=blogdb
     volumes:
-      - mysql_data:/var/lib/mysql
-    restart: unless-stopped
-    networks:
-      - mysql
+      - mongodb_data:/data/db
+    restart: always
 
 volumes:
-  mysql_data:
-    driver: local
+  mongodb_data:

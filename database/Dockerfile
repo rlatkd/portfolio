@@ -1,10 +1,13 @@
-FROM   mysql:8.0
+FROM mongo:7.0
 
-ENV    MYSQL_ROOT_PASSWORD=1234
-ENV    MYSQL_DATABASE=blog
-ENV    MYSQL_USER=rlatkd
-ENV    MYSQL_PASSWORD=1234
+# 환경 변수 설정
+ENV MONGO_INITDB_DATABASE=blogdb
 
-COPY   ./init.sql /docker-entrypoint-initdb.d/
+# 초기화 스크립트 복사
+COPY ./init.js /docker-entrypoint-initdb.d/
 
-CMD    ["mysqld", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--skip-character-set-client-handshake"]
+# 볼륨 설정
+VOLUME ["/data/db"]
+
+# 27017 포트 노출
+EXPOSE 27017

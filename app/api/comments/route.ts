@@ -1,25 +1,8 @@
+// app/api/comments/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import mysql from 'mysql2/promise';
-
-// MySQL 연결 설정
-const dbConfig = {
-  host: process.env.DB_HOST || 'localhost',
-  port: Number(process.env.DB_PORT) || 3306,
-  user: process.env.DB_USER || 'rlatkd',
-  password: process.env.DB_PASSWORD || '1234',
-  database: process.env.DB_NAME || 'blog'
-};
-
-// MySQL 연결 함수
-async function connectToDatabase() {
-  try {
-    const connection = await mysql.createConnection(dbConfig);
-    return connection;
-  } catch (error) {
-    console.error('데이터베이스 연결 오류:', error);
-    throw new Error('데이터베이스 연결에 실패했습니다.');
-  }
-}
+import clientPromise from 'lib/mongodb';
+import { ObjectId } from 'mongodb';
+import { CommentType } from 'lib/models';
 
 // GET 요청 처리 - 댓글 목록 가져오기
 export async function GET(request: NextRequest) {
@@ -30,30 +13,23 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: '게시물 ID가 필요합니다.' }, { status: 400 });
   }
 
-  let connection;
+  // postId를 문자열로 확실하게 처리
+  const postIdStr = String(postId);
+
   try {
-    connection = await connectToDatabase();
+    const client = await clientPromise;
+    const db = client.db();
 
-    const [rows] = await connection.execute(
-      'SELECT * FROM comments WHERE post_id = ? ORDER BY created_at DESC',
-      [postId]
-    );
-
-    // 컬럼명 스네이크 케이스에서 카멜 케이스로 변환
-    const comments = (rows as any[]).map(row => ({
-      id: row.id,
-      postId: row.post_id,
-      userName: row.user_name,
-      content: row.content,
-      createdAt: row.created_at
-    }));
+    // postId는 문자열로 처리
+    const comments = await db.collection('comments')
+      .find({ postId: postIdStr })
+      .sort({ createdAt: -1 })
+      .toArray();
 
     return NextResponse.json(comments);
   } catch (error) {
     console.error('댓글 조회 오류:', error);
     return NextResponse.json({ error: '댓글을 불러오는데 실패했습니다.' }, { status: 500 });
-  } finally {
-    if (connection) await connection.end();
   }
 }
 
@@ -70,51 +46,43 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: '댓글 내용이 필요합니다.' }, { status: 400 });
   }
 
-  let connection;
+  // postId를 문자열로 확실하게 변환
+  const postIdStr = String(postId);
+  
   try {
-    connection = await connectToDatabase();
+    console.log('댓글 작성 요청:', { postId: postIdStr, userName, content });
+    
+    const client = await clientPromise;
+    console.log('MongoDB 연결 성공');
+    
+    const db = client.db();
+    console.log('데이터베이스:', db.databaseName);
 
-    // 게시물 존재 여부 확인
-    // const [posts] = await connection.execute(
-    //   'SELECT id FROM posts WHERE id = ?',
-    //   [postId]
-    // );
+    // 날짜 객체 생성
+    const now = new Date();
 
-    // if ((posts as any[]).length === 0) {
-    //   return NextResponse.json({ error: '존재하지 않는 게시물입니다.' }, { status: 404 });
-    // }
+    // 새 댓글 생성 (postId를 문자열로 저장)
+    const newComment: CommentType = {
+      postId: postIdStr,
+      userName,
+      content,
+      createdAt: now,
+      replies: [] // 초기에는 답변이 없음
+    };
+
+    console.log('삽입할 댓글 데이터:', newComment);
 
     // 댓글 삽입
-    const [result] = await connection.execute(
-      'INSERT INTO comments (post_id, user_name, content) VALUES (?, ?, ?)',
-      [postId, userName, content]
-    );
+    const result = await db.collection('comments').insertOne(newComment);
+    console.log('댓글 삽입 결과:', result);
 
-    const commentId = (result as any).insertId;
+    // 생성된 댓글 ID로 완전한 댓글 정보 조회
+    const createdComment = await db.collection('comments').findOne({ _id: result.insertedId });
+    console.log('생성된 댓글:', createdComment);
 
-    // 삽입된 댓글 정보 조회
-    const [comments] = await connection.execute(
-      'SELECT * FROM comments WHERE id = ?',
-      [commentId]
-    );
-
-    if ((comments as any[]).length === 0) {
-      return NextResponse.json({ error: '댓글 작성에 실패했습니다.' }, { status: 500 });
-    }
-
-    const comment = (comments as any[])[0];
-
-    return NextResponse.json({
-      id: comment.id,
-      postId: comment.post_id,
-      userName: comment.user_name,
-      content: comment.content,
-      createdAt: comment.created_at
-    }, { status: 201 });
+    return NextResponse.json(createdComment, { status: 201 });
   } catch (error) {
-    console.error('댓글 작성 오류:', error);
+    console.error('댓글 작성 오류 상세:', error);
     return NextResponse.json({ error: '댓글 작성에 실패했습니다.' }, { status: 500 });
-  } finally {
-    if (connection) await connection.end();
   }
 }
