@@ -1,17 +1,29 @@
-TODO
+### TODO
 
-1. 메타데이터 제네레이터 수정
-2. baseUrl 수정 및 배포
-3. UIUX 생각
-4. Light House 성능 개선
-5. 핸드폰으로 볼 때 반응형 적용
-6. 다크모드 수정
-7. css 공통화
-8. import 경로 @로 수정
+- ~~Interceptor로 라우팅 벗어나는거 캐치~~
+- ~~filter, sort 다시 구현~~
+- ~~posts 우측 탭 구현~~
+- ~~posts 목차 탭 맨 위, 만 아래 버그 수정~~
+- ~~recommend.tsx 해결 - 서버컴포넌트와 클라이언트컴포넌트 분리~~
+- ~~import 경로 @로 수정~~
+- ~~캐싱 다시 한번~~
+- ~~폴더 구조 변경~~
+- RESTful API로 수정 (경로 지금 뭔가 좀 애매함)
+- 메타데이터 제네레이터 수정 (이게 SEO의 꽃인거같은데 어렵다)
+- baseUrl 수정 및 배포 (이건 뭐.. 금방할듯 Vercel말고 AWS라 CloudFlare 생각 중)
+- 댓글 github auth (깃헙 auth로 댓글 달수있게)
+- 게시글 플랫폼 공유 (위하고 비슷)
+- 다크모드 수정 (이거 싱크 안 맞는 부분 있음 /w 하조은쌤)
+- 핸드폰으로 볼 때 반응형 적용 (적응형인듯?)
+- css 공통화 (퍼블리싱...이런1)
+- UIUX 생각 (퍼블리싱...이런2)
+- 폴더 구조 md 다시
+- favicon 수정 (급하지 않음)
+- Light House 성능 개선 (최후의 보루)
 
-MongoDB 명령어
+### MongoDB Command
 
-```
+```sh
 docker container exec -it MONGODB_CONTAINER bash
 mongosh
 show dbs
@@ -21,46 +33,55 @@ db.COLLECTION_NAME.find() (.pretty())
 db.COLLECTION_NAME.find(OBJECT)
 ```
 
+### Directory Structure (미완)
 
-폴더 구조 변경
-
-```
+```PlainText
 project-root/
-├── app/                    # App Router의 기본 디렉토리
-│   ├── (auth)/             # 그룹화된 라우트 (선택적)
-│   │   ├── login/          # /login 경로
-│   │   │   └── page.tsx    # 로그인 페이지
-│   │   └── register/       # /register 경로
-│   │       └── page.tsx    # 회원가입 페이지
-│   ├── api/                # API 라우트
-│   │   └── [...]/route.ts  # API 엔드포인트
-│   ├── blog/               # 블로그 관련 페이지
-│   │   ├── [slug]/         # 동적 라우트
-│   │   │   └── page.tsx    # 블로그 상세 페이지
-│   │   └── page.tsx        # 블로그 목록 페이지
-│   ├── _components/        # 앱 전체에서 사용하는 컴포넌트 (프라이빗)
-│   ├── error.tsx           # 에러 처리 컴포넌트
-│   ├── layout.tsx          # 루트 레이아웃
-│   ├── loading.tsx         # 로딩 상태 컴포넌트
-│   ├── not-found.tsx       # 404 페이지
-│   └── page.tsx            # 홈페이지
-├── components/             # 전역 공유 컴포넌트
-│   ├── ui/                 # UI 컴포넌트 (버튼, 카드 등)
-│   └── layout/             # 레이아웃 관련 컴포넌트
-├── lib/                    # 유틸리티 함수, 설정 등
-│   ├── utils.ts            # 유틸리티 함수
-│   └── constants.ts        # 상수
-├── hooks/                  # 커스텀 훅
-├── contexts/               # React 컨텍스트
-├── types/                  # 타입 정의
-├── styles/                 # 전역 스타일
+├── app/                               - App Router의 기본 디렉터리
+│   ├── (main)/                        - 라우팅 그룹화
+│   │   ├── career/
+│   │   │   └── page.tsx               - career 페이지
+│   │   │── contact/
+│   │   │   └── page.tsx               - contact 페이지
+│   │   ├── posts/
+│   │   │   ├── [slug]/
+│   │   │   │   └── page.tsx           - posts 상세 페이지
+│   │   │   └── page.tsx               - posts 목록 페이지
+│   │   ├── projects/
+│   │   │   ├── [projectId]/
+│   │   │   │   └── page.tsx           - projects 상세 페이지
+│   │   │   └── page.tsx               - projects 목록 페이지
+│   │   ├── layout.tsx                 - main 서비스 레이아웃
+│   │   └── page.tsx                   - main 페이지
+│   ├── api/
+│   │   ├── og/
+│   │   │   └── route.tsx              - OG API 라우트
+│   │   ├── posts/
+│   │   │   └── [postId]/              - [미완]
+│   │   └── rss/
+│   │       └── route.tsx              - RSS API 라우트
+│   ├── favicon.ico
+│   ├── layout.tsx                     - 루트 레이아웃
+│   └── not-found.tsx                  - 404 페이지
+├── components/             
+│   ├── layouts/               
+│   ├── markdown/           
+│   ├── posts/              
+│   ├── providers/             
+│   └── ui/                
+├── config/                
+├── content/                
+├── database/            
+├── lib/                 
+├── public/              
+│   ├── fonts/
+│   └── images/
+├── styles/              
 │   └── globals.css
-├── public/                 # 정적 파일
-│   ├── images/
-│   └── fonts/
-├── middleware.ts           # 미들웨어
-├── next.config.js          # Next.js 설정
-├── tailwind.config.js      # Tailwind CSS 설정
-├── tsconfig.json           # TypeScript 설정
+├── utils/              
+│   └── globals.css
+├── next.config.js        
+├── tailwind.config.js     
+├── tsconfig.json          
 └── package.json
 ```

@@ -3,11 +3,11 @@ services:
     build:
       context: ./database
       dockerfile: Dockerfile
-    container_name: blog-mongodb
+    container_name: rlatkd-mongodb
     ports:
       - "27017:27017"
     environment:
-      - MONGO_INITDB_DATABASE=blogdb
+      - MONGO_INITDB_DATABASE=posts
     volumes:
       - mongodb_data:/data/db
     restart: always

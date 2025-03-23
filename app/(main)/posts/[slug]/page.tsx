@@ -1,13 +1,13 @@
-import { formatDate, getPosts } from 'app/(main)/utils/mdx'
-import { baseUrl } from 'app/(main)/utils/sitemap'
-import { FaList } from 'react-icons/fa'
-import Link from 'next/link'
-import Navigation from 'app/(main)/components/server/navigation'
-import { TableOfContents } from 'app/(main)/components/client/posts/toc'
-import { notFound } from 'next/navigation'
-import { Render } from 'app/(main)/components/mdx/render'
-import Recommend from 'app/(main)/components/client/posts/recommend'
-import Comments from 'app/(main)/components/client/posts/comments'
+import { FaList } from 'react-icons/fa';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import Comments from '@/components/posts/comments';
+import { MdxRenderer } from '@/components/markdown/mdx-renderer';
+import PostRecommends from '@/components/posts/post-recommend';
+import Navigation from '@/components/posts/navigation';
+import { formatDate, getPosts } from '@/lib/markdown';
+import { baseUrl } from '@/utils/sitemap';
+import { TableOfContents } from '@/components/posts/table-of-contents';
 
 export default async function Page({ params }) {
   const posts = await getPosts();
@@ -61,16 +61,18 @@ export default async function Page({ params }) {
       <div className='flex justify-between'>
         <div className="w-4/6 ">
           <article className="prose prose-lg max-w-none w-full ml-[25%]">
-            <Render source={post.content} />
+            <MdxRenderer source={post.content} />
           </article>
         </div>
         <div className="sticky top-20 self-start w-80 p-6 mr-[-15%]">
           <TableOfContents contents={post.tableContents}></TableOfContents>
         </div>
       </div>
-      <Navigation currentPost={currentPost} />
+      <div className='w-4/6 mx-auto'>
+        <Navigation currentPost={currentPost} />
+      </div>
       <Comments postId={currentPost}/>
-      <Recommend posts={posts} currentPostIndex={currentPost} />
+      <PostRecommends posts={posts} currentPostIndex={currentPost} />
     </section>
   )
 }

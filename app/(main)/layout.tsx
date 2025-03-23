@@ -1,7 +1,7 @@
-import '../global.css'
-import Footer from './components/client/layouts/footer'
-import { Header } from './components/client/layouts/header'
-import { Top } from './components/top'
+import '@/styles/global.css';
+import Footer from '@/components/layouts/footer';
+import { Header } from '@/components/layouts/header';
+import { Top } from '@/components/layouts/top';
 
 type LayoutProps = {
   children: React.ReactNode,
