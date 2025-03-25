@@ -161,9 +161,9 @@ export default function Comments({ postId }: CommentsProps) {
           />
         </div>
         <textarea
-          className='w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-black'
+          className='w-full h-40 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-black'
           rows={3}
-          placeholder='댓글을 작성해주세요...'
+          placeholder='댓글을 작성해주세요'
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />

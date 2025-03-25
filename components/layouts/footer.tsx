@@ -9,8 +9,9 @@ export default function Footer() {
 
   return (
     <>
-      <footer className='flex flex-col mt-20 mb-20 border-t border-t-gray-200'>
-        <div className='flex flex-row gap-4 mt-20'>
+      <div className="w-screen border-t border-t-gray-200 relative left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] mt-20"></div>
+      <footer className='flex flex-col mt-20 mb-20'>
+        <div className='flex flex-row gap-4'>
           <p className='text-neutral-600 dark:text-neutral-300 text-sm leading-relaxed cursor-default'>
             주소 : 서울특별시 노원구 동일로 245길 162 (문의 :{' '}
             <a

@@ -49,7 +49,7 @@ export default async function Page({ params }) {
           <FaList />
         </Link>
       </div>
-      <div className="flex justify-between items-center mt-2 mb-8 text-sm border-b border-b-gray-200 w-4/6 mx-auto">
+      <div className="flex justify-between items-center mt-2 text-sm w-4/6 mx-auto">
         <p className="mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default">
           {formatDate(post.metadata.publishedAt)}
         </p>
