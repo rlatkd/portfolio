@@ -7,10 +7,14 @@ interface CategoriesProps {
 
 export default function Categories({ categories, selectedCategory }: CategoriesProps) {
   return (
-    <div className='flex flex-wrap gap-3 mt-10 mb-10 items-center text-center'>
+    <div className='flex flex-wrap gap-3 items-center justify-center'>
       <Link
         href="/posts"
-        className={`border border-gray-200 rounded-3xl px-4 py-2 min-w-20 ${!selectedCategory ? 'bg-black text-white font-extrabold' : 'bg-gray-200 text-gray-500 font-semibold'}`}
+        className={`px-4 py-2 min-w-20 transition-all duration-300 rounded-full text-center ${
+          !selectedCategory 
+            ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold' 
+            : 'border border-blue-500/20 hover:border-blue-500/50 text-white/70 hover:text-white'
+        }`}
       >
         ALL
       </Link>
@@ -18,7 +22,11 @@ export default function Categories({ categories, selectedCategory }: CategoriesP
         <Link
           key={category}
           href={`?category=${category}`}
-          className={`border border-gray-200 rounded-3xl px-4 py-2 min-w-20 ${selectedCategory === category ? 'bg-black text-white font-extrabold' : 'bg-gray-200 text-gray-500 font-semibold'}`}
+          className={`px-4 py-2 min-w-20 transition-all duration-300 rounded-full text-center ${
+            selectedCategory === category 
+              ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold' 
+              : 'border border-blue-500/20 hover:border-blue-500/50 text-white/70 hover:text-white'
+          }`}
         >
           {category}
         </Link>

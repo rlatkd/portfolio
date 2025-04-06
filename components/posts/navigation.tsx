@@ -15,7 +15,7 @@ export default async function Navigation({ currentPost }: NavigationProps) {
     <div id='navigation' className='flex justify-between mt-20 mb-20 w-full'>
       {previousPost ? (
         <Link
-          href={`/posts/${previousPost.metadata.index}`}
+          href={`/posts/${previousPost.slug}`}
           className='flex items-center w-[200px] px-6 py-3 bg-gray-100 rounded-md text-center text-sm font-medium text-gray-700 hover:bg-gray-200 transition duration-300'
         >
           <FaChevronCircleLeft className='mr-4 h-6 w-6' />
@@ -29,7 +29,7 @@ export default async function Navigation({ currentPost }: NavigationProps) {
       )}
       {nextPost ? (
         <Link
-          href={`/posts/${nextPost.metadata.index}`}
+          href={`/posts/${nextPost.slug}`}
           className='flex items-center w-[200px] px-6 py-3 bg-gray-100 rounded-md text-center text-sm font-medium text-gray-700 hover:bg-gray-200 transition duration-300'
         >
           <div className='flex flex-col items-start overflow-hidden flex-1'>

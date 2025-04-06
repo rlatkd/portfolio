@@ -33,7 +33,7 @@ export default function PostRecommend({ posts, currentPostIndex }: PostRecommend
           <Link
             key={post.slug}
             className='flex flex-col bg-white border border-gray-100 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow'
-            href={`/posts/${post.metadata.index}`}
+            href={`/posts/${post.slug}`}
           >
             <div className='relative p-6 flex flex-col h-80'>
               <div>

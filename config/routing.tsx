@@ -8,9 +8,7 @@ type RoutingProps = {
 // 헤더 nav
 export const routing: Record<string, RoutingProps> = {
   '/': {
-    // name: 'home',
-    icon: <Image src='/images/logo.jpg' alt="Logo" width={36} height={36} className='rounded' />,
-    name: 'KATALOG'
+    name: 'XOps',
   },
   '/posts': {
     name: 'Archive',

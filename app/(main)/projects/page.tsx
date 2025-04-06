@@ -19,8 +19,11 @@ export default async function Page({ searchParams }: PageProps) {
   const currentPosts = sortedProjects.slice(startIndex, endIndex); // 현재 게시글들
 
   return (
-    <section className='mx-auto'>
-      <Projects projects={currentPosts} />
-    </section>
+    <>
+      This is projects
+    </>
+    // <section className='mx-auto'>
+    //   <Projects projects={currentPosts} />
+    // </section>
   );
 }

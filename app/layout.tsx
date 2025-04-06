@@ -8,8 +8,8 @@ import { themeEffect } from '@/utils/themeEffect';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Katalog',
-    template: 'Katalog',
+    default: 'xops',
+    template: 'xops',
   },
   description: 'This is my portfolio.',
   openGraph: {
@@ -46,12 +46,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html
       lang='en'
       className={cx(
-        'text-black bg-white dark:text-white dark:bg-black',
+        'bg-black text-white',
         GeistSans.variable,
         GeistMono.variable
       )}
     >
-      {/* 다크모드 설정 */}
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -60,6 +59,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body className='antialiased max-w-6xl mx-4 lg:mx-auto overflow-y-scroll'>
+        {/* 배경 그라데이션 효과 */}
+        <div className="fixed inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 blur-3xl -z-10"></div>
+        
         <main className='flex-auto min-w-0 flex flex-col px-2 md:px-0'>
           <div>
             {children}

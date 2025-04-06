@@ -35,7 +35,7 @@ export function generateMetadata({ params }) {
       description,
       type: 'article',
       publishedTime,
-      url: `${baseUrl}/posts/${post.metadata.index}`,
+      url: `${baseUrl}/posts/${post.slug}`,
       images: [
         {
           url: ogImage,

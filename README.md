@@ -9,6 +9,7 @@
 - ~~캐싱 다시 한번~~
 - ~~폴더 구조 변경~~
 - ~~MySQL에서 MongoDB로 변경~~
+- middleware.ts 수정
 - Nextjs 버전 올려야 됨 (보안이슈)
 - 추천게시물 캐러셀로 변경
 - RESTful API로 수정 (경로 지금 뭔가 좀 애매함)
@@ -16,7 +17,7 @@
 - baseUrl 수정 및 배포 (이건 뭐.. 금방할듯 Vercel말고 AWS라 CloudFlare 생각 중)
 - 댓글 github auth (깃헙 auth로 댓글 달수있게)
 - 게시글 플랫폼 공유 (위하고 비슷)
-- 다크모드 수정 (이거 싱크 안 맞는 부분 있음 /w 하조은쌤)
+- 다크모드 수정
 - Type, Interface 정의 제대로
 - 핸드폰으로 볼 때 반응형 적용 (적응형인듯?)
 - css 공통화 (퍼블리싱...이런1)
@@ -67,25 +68,25 @@ project-root/
 │   ├── favicon.ico
 │   ├── layout.tsx                     - 루트 레이아웃
 │   └── not-found.tsx                  - 404 페이지
-├── components/             
-│   ├── layouts/               
-│   ├── markdown/           
-│   ├── posts/              
-│   ├── providers/             
-│   └── ui/                
-├── config/                
-├── content/                
-├── database/            
-├── lib/                 
-├── public/              
+├── components/
+│   ├── layouts/
+│   ├── markdown/
+│   ├── posts/
+│   ├── providers/
+│   └── ui/
+├── config/
+├── content/
+├── database/
+├── lib/
+├── public/
 │   ├── fonts/
 │   └── images/
-├── styles/              
+├── styles/
 │   └── globals.css
-├── utils/              
+├── utils/
 │   └── globals.css
-├── next.config.js        
-├── tailwind.config.js     
-├── tsconfig.json          
+├── next.config.js
+├── tailwind.config.js
+├── tsconfig.json
 └── package.json
 ```

@@ -13,7 +13,6 @@ type PageProps = {
 };
 
 export default async function Page({ searchParams }: PageProps) {
-  // TODO index number type 수정
   const posts = await getPosts();
   const allPosts = posts.sort((a, b) => parseInt(b.metadata.index, 10) - parseInt(a.metadata.index, 10)); // 내림차순 정렬(최신글이 맨 위로)
   const categoryFilter = searchParams.category?.toLowerCase(); // 소문자 변환
@@ -27,8 +26,9 @@ export default async function Page({ searchParams }: PageProps) {
   const categories = Array.from(new Set(allPosts.map((post) => post.metadata.category?.toLowerCase()).filter(Boolean))); // 카테고리 리스트
 
   return (
-    <section className='w-4/6 mx-auto'>
-      <div className='flex flex-wrap gap-3 mt-10 mb-10 items-center text-center'>
+    <section className='w-5/6 lg:w-4/6 mx-auto'>
+      {/* <h1 className='text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 tracking-wider text-center my-10'>Archive</h1> */}
+      <div className='flex flex-wrap gap-3 mt-6 mb-10 items-center justify-center'>
         <Categories categories={categories} selectedCategory={searchParams.category} />
       </div>
       <Posts posts={currentPosts} />

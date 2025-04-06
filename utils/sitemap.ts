@@ -7,7 +7,7 @@ export const baseUrl = 'http://localhost:3000'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let blogs = getPosts().map((post) => ({
-    url: `${baseUrl}/posts/${post.metadata.index}`,
+    url: `${baseUrl}/posts/${post.slug}`,
     lastModified: post.metadata.publishedAt,
   }))
 

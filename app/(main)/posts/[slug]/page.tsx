@@ -8,10 +8,16 @@ import Navigation from '@/components/posts/navigation';
 import { formatDate, getPosts } from '@/lib/markdown';
 import { baseUrl } from '@/utils/sitemap';
 import { TableOfContents } from '@/components/posts/table-of-contents';
+import { slugify } from '@/utils/slugify';
 
 export default async function Page({ params }) {
   const posts = await getPosts();
-  const post = posts.find((post) => post.metadata.index.toString() === params.slug);  
+  // console.log(posts)
+  // console.log(posts.length)
+  // console.log(posts[25].slug)
+  console.log(params.slug)
+  console.log(params)
+  const post = posts.find((post) => post.slug === params.slug);  
   
   if (!post) notFound();
   

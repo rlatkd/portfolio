@@ -25,14 +25,14 @@ export default function Pagination({ currentPage, lastPage, category }: Paginati
   const queryPrefix = category ? `?category=${category}&page=` : '?page=';
 
   return (
-    <div className="flex items-center justify-center space-x-2 mb-5">
+    <div className="flex items-center justify-center space-x-2 mb-10">
       <div className="flex items-center">
         {currentPage > 1 ? (
           <>
-            <Link href={`${queryPrefix}1`} className="p-2 text-lg">
+            <Link href={`${queryPrefix}1`} className="p-2 text-lg text-white/70 hover:text-blue-400 transition-colors">
               <FaAngleDoubleLeft />
             </Link>
-            <Link href={`${queryPrefix}${currentPage - 1}`} className="p-2 text-lg">
+            <Link href={`${queryPrefix}${currentPage - 1}`} className="p-2 text-lg text-white/70 hover:text-blue-400 transition-colors">
               <FaAngleLeft />
             </Link>
           </>
@@ -45,10 +45,10 @@ export default function Pagination({ currentPage, lastPage, category }: Paginati
           <Link
             key={page}
             href={`${queryPrefix}${page}`}
-            className={`p-2 text-lg rounded-md ${
+            className={`p-2 min-w-10 text-center text-lg rounded-md transition-all ${
               page === currentPage
-                ? 'bg-black text-white font-bold dark:bg-white dark:text-black'
-                : 'bg-transparent text-black dark:text-white hover:bg-gray-200 hover:dark:bg-gray-600'
+                ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold'
+                : 'text-white/70 hover:text-blue-400'
             }`}
           >
             {page}
@@ -58,10 +58,10 @@ export default function Pagination({ currentPage, lastPage, category }: Paginati
       <div className="flex items-center">
         {currentPage < lastPage ? (
           <>
-            <Link href={`${queryPrefix}${currentPage + 1}`} className="p-2 text-lg">
+            <Link href={`${queryPrefix}${currentPage + 1}`} className="p-2 text-lg text-white/70 hover:text-blue-400 transition-colors">
               <FaAngleRight />
             </Link>
-            <Link href={`${queryPrefix}${lastPage}`} className="p-2 text-lg">
+            <Link href={`${queryPrefix}${lastPage}`} className="p-2 text-lg text-white/70 hover:text-blue-400 transition-colors">
               <FaAngleDoubleRight />
             </Link>
           </>
