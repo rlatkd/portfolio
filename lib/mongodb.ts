@@ -1,5 +1,6 @@
 import { MongoClient } from 'mongodb';
 
+// TODO 환경에 따라 수정
 const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/posts';
 const options = {};
 

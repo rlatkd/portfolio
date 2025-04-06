@@ -33,8 +33,9 @@ export default function Footer() {
               <div className="w-5 h-5 relative">
                 <Image 
                   src="/images/rss.jpg" 
-                  alt="RSS" 
-                  fill
+                  alt="RSS"
+                  width={20}
+                  height={20}
                   className="object-contain filter invert opacity-80 hover:opacity-100 transition-opacity" 
                 />
               </div>
@@ -55,8 +56,9 @@ export default function Footer() {
               <div className="w-6 h-6 relative">
                 <Image 
                   src="/images/velog.jpg" 
-                  alt="Velog" 
-                  fill
+                  alt="Velog"
+                  width={20}
+                  height={20}
                   className="object-contain filter invert opacity-80 hover:opacity-100 transition-opacity" 
                 />
               </div>

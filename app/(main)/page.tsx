@@ -4,6 +4,7 @@ import { Top } from '@/components/layouts/top';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Code, Pencil, Sparkles } from 'lucide-react';
+import Carousel from '@/components/ui/carousel';
 
 export default function Page() {
   const [typedText, setTypedText] = useState('');
@@ -102,51 +103,8 @@ export default function Page() {
             </div>
           </div>
           
-          {/* 최근 프로젝트 또는 블로그 */}
-          <div className="mb-12">
-            <div className="flex justify-between items-center mb-8">
-              <h2 className="text-2xl font-bold text-white/90 cursor-default">최근 프로젝트</h2>
-              <Link href="/projects" className="text-blue-400 hover:text-blue-300 flex items-center">
-                모두 보기 <ArrowRight className="ml-1 w-4 h-4" />
-              </Link>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden group hover:bg-white/10 transition-all">
-                <div className="aspect-video bg-gradient-to-r from-blue-900 to-purple-900 relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center text-white/50">
-                    <Code className="w-16 h-16" />
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2 text-white/90 cursor-default">AI 기반 데이터 분석 플랫폼</h3>
-                  <p className="text-white/70 mb-4 cursor-default">머신러닝을 활용한 데이터 분석과 시각화를 위한 웹 애플리케이션</p>
-                  <div className="flex gap-2">
-                    <span className="text-xs px-3 py-1 bg-blue-500/20 rounded-full text-blue-300 cursor-default">React</span>
-                    <span className="text-xs px-3 py-1 bg-green-500/20 rounded-full text-green-300 cursor-default">TensorFlow</span>
-                    <span className="text-xs px-3 py-1 bg-purple-500/20 rounded-full text-purple-300 cursor-default">Python</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden group hover:bg-white/10 transition-all">
-                <div className="aspect-video bg-gradient-to-r from-green-900 to-blue-900 relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center text-white/50">
-                    <Pencil className="w-16 h-16" />
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2 text-white/90 cursor-default">분산 시스템 모니터링 대시보드</h3>
-                  <p className="text-white/70 mb-4 cursor-default">실시간 시스템 모니터링을 위한 확장 가능한 대시보드 솔루션</p>
-                  <div className="flex gap-2">
-                    <span className="text-xs px-3 py-1 bg-cyan-500/20 rounded-full text-cyan-300 cursor-default">Next.js</span>
-                    <span className="text-xs px-3 py-1 bg-orange-500/20 rounded-full text-orange-300 cursor-default">GraphQL</span>
-                    <span className="text-xs px-3 py-1 bg-blue-500/20 rounded-full text-blue-300 cursor-default">TypeScript</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* 캐러셀로 변경된 최근 프로젝트 섹션 */}
+          <Carousel />
           
           {/* CTA 섹션 */}
           <div className="relative bg-gradient-to-r from-blue-900/40 to-purple-900/40 p-8 rounded-2xl overflow-hidden">

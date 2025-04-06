@@ -206,3 +206,21 @@ table {
   outline: 0;
   cursor: pointer;
 }
+
+@keyframes carouselScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes resumeCarousel {
+  0% {
+    transform: translateX(var(--start-position));
+  }
+  100% {
+    transform: translateX(var(--end-position));
+  }
+}

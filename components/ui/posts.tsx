@@ -75,8 +75,6 @@ export function Posts({ posts }: PostsProps) {
                   </span>
                 </div>
               </div>
-              
-              {/* 호버 효과용 그라데이션 테두리 */}
               <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 via-blue-500/0 to-purple-600/0 group-hover:from-blue-500/20 group-hover:via-indigo-500/20 group-hover:to-purple-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
             </Link>
           ))}
