@@ -11,7 +11,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <Header />
-      <Top />
+      {/* <Top /> */}
       <div>
         {children}
       </div>

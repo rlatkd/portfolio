@@ -52,10 +52,7 @@ export default function Page() {
   return (
     <div className='w-screen h-screen overflow-hidden flex items-center justify-center bg-black fixed inset-0'>
       <div className='text-center relative w-full h-full flex items-center justify-center'>
-        {/* 배경 그라데이션 효과 */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 blur-3xl -z-10"></div>
-        
-        {/* XOps 메인 타이틀 */}
+       
         <div className="mb-12">
           {xopsVisible && (
             <h1 

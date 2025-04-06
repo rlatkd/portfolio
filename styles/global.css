@@ -20,22 +20,11 @@
   --sh-entity: #61afef;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --sh-background: #1e1e1e;
-    --sh-class: #c678dd;
-    --sh-identifier: #e5c07b;
-    --sh-sign: #56b6c2;
-    --sh-string: #98c379;
-    --sh-keyword: #e06c75;
-    --sh-comment: #5c6370;
-    --sh-jsxliterals: #61afef;
-    --sh-property: #d19a66;
-    --sh-entity: #61afef;
-  }
-  html {
-    color-scheme: dark;
-  }
+html {
+  min-width: 360px;
+  color-scheme: dark;
+  background-color: #0f172a;
+  color: rgba(226, 232, 240, 0.7); /* 70% 불투명도 적용 */
 }
 
 pre {
@@ -82,11 +71,6 @@ pre {
   color: var(--sh-entity);
 }
 
-
-html {
-  min-width: 360px;
-}
-
 .prose .anchor {
   @apply absolute invisible no-underline;
 
@@ -102,11 +86,11 @@ html {
 }
 
 .prose a {
-  @apply underline transition-all decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em];
+  @apply underline transition-all decoration-neutral-600 underline-offset-2 decoration-[0.1em];
 }
 
 .prose .anchor:after {
-  @apply text-neutral-300 dark:text-neutral-700;
+  @apply text-neutral-700;
   content: '#';
 }
 
@@ -115,7 +99,7 @@ html {
 }
 
 .prose pre {
-  @apply  mx-auto bg-neutral-800 dark:bg-neutral-800 rounded overflow-x-auto py-2 px-3 text-sm;
+  @apply mx-auto bg-neutral-800 rounded overflow-x-auto py-2 px-3 text-sm;
 }
 
 .prose code {
@@ -142,35 +126,35 @@ span.sh__line {
 }
 
 .prose p {
-  @apply my-4 text-neutral-800 dark:text-neutral-200;
+  @apply my-4 text-white/70;
 }
 
 .prose h1 {
-  @apply text-4xl font-medium tracking-tight mt-6 mb-2;
+  @apply text-4xl font-medium tracking-tight mt-6 mb-2 text-white/90;
 }
 
 .prose h2 {
-  @apply text-2xl font-medium tracking-tight mt-6 mb-2;
+  @apply text-2xl font-medium tracking-tight mt-6 mb-2 text-white/90;
 }
 
 .prose h3 {
-  @apply text-xl font-medium tracking-tight mt-6 mb-2;
+  @apply text-xl font-medium tracking-tight mt-6 mb-2 text-white/90;
 }
 
 .prose h4 {
-  @apply text-lg font-medium tracking-tight mt-6 mb-2;
+  @apply text-lg font-medium tracking-tight mt-6 mb-2 text-white/90;
 }
 
 .prose strong {
-  @apply font-medium;
+  @apply font-medium text-white/90;
 }
 
 .prose ul {
-  @apply list-disc pl-6;
+  @apply list-disc pl-6 text-white/70;
 }
 
 .prose ol {
-  @apply list-decimal pl-6;
+  @apply list-decimal pl-6 text-white/70;
 }
 
 .prose > :first-child {
@@ -216,10 +200,9 @@ table {
 .button {
   padding: 0 1rem;
   font-size: 1.2rem;
-  color: #333;
+  color: rgba(255, 255, 255, 0.7); /* 70% 불투명도 적용 */
   background: transparent;
   border: 0;
   outline: 0;
   cursor: pointer;
 }
-
