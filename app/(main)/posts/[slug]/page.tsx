@@ -12,11 +12,6 @@ import { slugify } from '@/utils/slugify';
 
 export default async function Page({ params }) {
   const posts = await getPosts();
-  // console.log(posts)
-  // console.log(posts.length)
-  // console.log(posts[25].slug)
-  console.log(params.slug)
-  console.log(params)
   const post = posts.find((post) => post.slug === params.slug);  
   
   if (!post) notFound();

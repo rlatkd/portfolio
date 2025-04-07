@@ -1,27 +1,24 @@
 'use client';
 
 import { useState } from 'react';
-import { BiCopy } from 'react-icons/bi';
-import { BiCheck } from 'react-icons/bi';
+import { BiCopy, BiCheck } from 'react-icons/bi';
 import { highlight } from 'sugar-high';
 
 export function CodeCopier({ children, className, ...props }) {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = () => {
-    // Clipboard API; localhost, https 에서만 적용됨
     navigator.clipboard.writeText(children)
     setCopied(true)
     setTimeout(() => setCopied(false), 1000)
   }
 
   const language = className ? className.replace('language-', '') : 'javascript';
-
-  let codeHTML = highlight(children)
+  const codeHTML = highlight(children);
 
   return (
-    <>
-      <div className='flex justify-between items-center ml-1 mb-5'>
+    <div className="relative">
+      <div className='flex justify-between items-center mb-2 px-4 pt-3'>
         <span className='font-bold text-gray-400 capitalize'>
           {language}
         </span>
@@ -42,8 +39,11 @@ export function CodeCopier({ children, className, ...props }) {
           )}
         </button>
       </div>
-      <div dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
-      <div className='flex justify-between items-center ml-1 mb-5'></div>
-    </>
+      <div className="overflow-x-auto">
+        <pre className="p-4 pt-0">
+          <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+        </pre>
+      </div>
+    </div>
   )
 }

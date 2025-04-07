@@ -18,13 +18,14 @@
   --sh-jsxliterals: #61afef;
   --sh-property: #d19a66;
   --sh-entity: #61afef;
+  --color-white: 220 10% 75%; /* text 밝기 관리 */
 }
 
 html {
   min-width: 360px;
   color-scheme: dark;
   background-color: #0f172a;
-  color: rgba(226, 232, 240, 0.7); /* 70% 불투명도 적용 */
+  color: hsl(var(--color-white));
 }
 
 pre {
@@ -126,35 +127,43 @@ span.sh__line {
 }
 
 .prose p {
-  @apply my-4 text-white/70;
+  @apply my-4;
+  color: hsl(var(--color-white));
 }
 
 .prose h1 {
-  @apply text-4xl font-medium tracking-tight mt-6 mb-2 text-white/90;
+  @apply text-4xl font-medium tracking-tight mt-6 mb-2;
+  color: hsl(var(--color-white) / 0.9);
 }
 
 .prose h2 {
-  @apply text-2xl font-medium tracking-tight mt-6 mb-2 text-white/90;
+  @apply text-2xl font-medium tracking-tight mt-6 mb-2;
+  color: hsl(var(--color-white) / 0.9);
 }
 
 .prose h3 {
-  @apply text-xl font-medium tracking-tight mt-6 mb-2 text-white/90;
+  @apply text-xl font-medium tracking-tight mt-6 mb-2;
+  color: hsl(var(--color-white) / 0.9);
 }
 
 .prose h4 {
-  @apply text-lg font-medium tracking-tight mt-6 mb-2 text-white/90;
+  @apply text-lg font-medium tracking-tight mt-6 mb-2;
+  color: hsl(var(--color-white) / 0.9);
 }
 
 .prose strong {
-  @apply font-medium text-white/90;
+  @apply font-medium;
+  color: hsl(var(--color-white) / 0.9);
 }
 
 .prose ul {
-  @apply list-disc pl-6 text-white/70;
+  @apply list-disc pl-6;
+  color: hsl(var(--color-white));
 }
 
 .prose ol {
-  @apply list-decimal pl-6 text-white/70;
+  @apply list-decimal pl-6;
+  color: hsl(var(--color-white));
 }
 
 .prose > :first-child {
@@ -200,7 +209,7 @@ table {
 .button {
   padding: 0 1rem;
   font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.7); /* 70% 불투명도 적용 */
+  color: hsl(var(--color-white));
   background: transparent;
   border: 0;
   outline: 0;
@@ -222,5 +231,32 @@ table {
   }
   100% {
     transform: translateX(var(--end-position));
+  }
+}
+
+@layer base {
+  .text-white {
+    --tw-text-opacity: 1;
+    color: hsl(var(--color-white)) !important;
+  }
+  
+  .text-white\/90 {
+    color: hsl(var(--color-white) / 0.9) !important;
+  }
+  
+  .text-white\/80 {
+    color: hsl(var(--color-white) / 0.8) !important;
+  }
+  
+  .text-white\/70 {
+    color: hsl(var(--color-white) / 0.7) !important;
+  }
+  
+  .text-white\/60 {
+    color: hsl(var(--color-white) / 0.6) !important;
+  }
+  
+  .text-white\/50 {
+    color: hsl(var(--color-white) / 0.5) !important;
   }
 }

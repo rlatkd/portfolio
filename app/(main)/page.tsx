@@ -49,7 +49,6 @@ export default function Page() {
     <>
       <section>
         <div className="max-w-4xl mx-auto">
-          {/* 히어로 섹션 */}
           <div className="mb-16 relative">
             <div className="absolute -top-20 -left-20 w-40 h-40 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
             <div className="relative z-10">
@@ -75,8 +74,6 @@ export default function Page() {
               </div>
             </div>
           </div>
-          
-          {/* 소개 카드 섹션 */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl hover:bg-white/10 transition-all group">
               <div className="mb-4 p-3 bg-gradient-to-r from-blue-500/20 to-blue-600/20 rounded-lg inline-block">
@@ -102,11 +99,7 @@ export default function Page() {
               <p className="text-white/70 cursor-default">문제에 대한 창의적 접근과 지속적인 학습으로 혁신적 솔루션 제공</p>
             </div>
           </div>
-          
-          {/* 캐러셀로 변경된 최근 프로젝트 섹션 */}
           <Carousel />
-          
-          {/* CTA 섹션 */}
           <div className="relative bg-gradient-to-r from-blue-900/40 to-purple-900/40 p-8 rounded-2xl overflow-hidden">
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/30 rounded-full blur-3xl"></div>
             <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-blue-500/30 rounded-full blur-3xl"></div>

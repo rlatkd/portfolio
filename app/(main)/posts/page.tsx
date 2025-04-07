@@ -27,7 +27,6 @@ export default async function Page({ searchParams }: PageProps) {
 
   return (
     <section className='w-5/6 lg:w-4/6 mx-auto'>
-      {/* <h1 className='text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 tracking-wider text-center my-10'>Archive</h1> */}
       <div className='flex flex-wrap gap-3 mt-6 mb-10 items-center justify-center'>
         <Categories categories={categories} selectedCategory={searchParams.category} />
       </div>

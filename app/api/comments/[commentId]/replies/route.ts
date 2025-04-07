@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
-export async function GET(request: NextRequest, { params }: { params: { postId: string, commentId: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { commentId: string } }) {
   const { commentId } = params;
   
   if (!commentId) {
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest, { params }: { params: { postId: 
   }
 }
 
-export async function POST(request: NextRequest, { params }: { params: { postId: string, commentId: string } }) {
+export async function POST(request: NextRequest, { params }: { params: { commentId: string } }) {
   const { commentId } = params;
   const body = await request.json();
   const { userName = '익명', content } = body;

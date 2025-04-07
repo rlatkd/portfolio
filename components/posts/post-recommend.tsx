@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { dateFormatter } from '@/utils/dateFormatter';
 import Image from 'next/image';
+import { MessageSquare, Heart, BookOpen, ArrowRight } from 'lucide-react';
 
 type PostRecommendProps = {
   posts: any[];
@@ -17,7 +18,7 @@ export default function PostRecommend({ posts, currentPostIndex }: PostRecommend
   useEffect(() => {
     if (!initialized.current && posts && posts.length > 0) {
       const otherPosts = posts.filter((post) => post.metadata.index !== currentPostIndex);
-      const shuffledPosts = [...otherPosts].sort(() => Math.random() - 0.5).slice(0, 6); // 6개로 변경
+      const shuffledPosts = [...otherPosts].sort(() => Math.random() - 0.5).slice(0, 6);
       setRandomPosts(shuffledPosts);
       initialized.current = true;
     }
@@ -26,58 +27,72 @@ export default function PostRecommend({ posts, currentPostIndex }: PostRecommend
   if (randomPosts.length === 0) return null;
 
   return (
-    <div className='mt-20 mb-10'>
-      <h2 className='text-xl font-semibold mb-4'>관심 있을 만한 포스트</h2>
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-12'>
-        {randomPosts.map((post) => (
-          <Link
-            key={post.slug}
-            className='flex flex-col bg-white border border-gray-100 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow'
-            href={`/posts/${post.slug}`}
-          >
-            <div className='relative p-6 flex flex-col h-80'>
-              <div>
-                <h3 className='text-lg font-bold text-gray-900 mb-1'>{post.metadata.title}</h3>
-                <p className='text-gray-700 text-sm mb-4 line-clamp-3'>{post.metadata.description || '본 포스팅은 기술 관련 내용을 다루고 있습니다.'}</p>
-              </div>
-              
-              <div className='mt-auto'>
-                <p className='text-gray-500 text-sm mb-1'>{dateFormatter(post.metadata.publishedAt, false)} · {post.metadata.commentCount || 0}개의 댓글</p>
+    <div className='w-full mx-auto mt-20 mb-16 relative'>
+      <div className="absolute -top-40 -right-20 w-60 h-60 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
+      <div className="absolute -bottom-20 -left-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
+      <div className="relative z-10">
+        <h2 className='text-2xl font-bold mb-8 flex items-center text-white/90 cursor-default'>
+          <BookOpen className="w-5 h-5 mr-2 text-blue-400" />
+          관심 있을 만한 포스트
+        </h2>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+          {randomPosts.map((post) => (
+            <Link
+              key={post.slug}
+              href={`/posts/${post.slug}`}
+              className='bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:bg-white/8 transition-all group'
+            >
+              <div className='p-6 flex flex-col h-80 relative'>
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-blue-500/10 to-transparent rounded-bl-3xl"></div>
                 
-                <div className='flex items-center justify-between mt-2'>
-                  <div className='flex items-center'>
+                <div className="relative">
+                  <h3 className='text-lg font-bold text-white/90 mb-2 group-hover:text-blue-400 transition-colors'>{post.metadata.title}</h3>
+                  <p className='text-white/60 text-sm mb-4 line-clamp-3'>{post.metadata.description || '본 포스팅은 기술 관련 내용을 다루고 있습니다.'}</p>
+                </div>
+                
+                <div className='mt-auto'>
+                  <div className='flex items-center space-x-3 mb-3 text-white/50 text-xs'>
+                    <div className='flex items-center'>
+                      <MessageSquare className="w-3.5 h-3.5 mr-1.5 text-blue-400/70" />
+                      {post.metadata.commentCount || 0}
+                    </div>
+                    <div className='flex items-center'>
+                      <Heart className="w-3.5 h-3.5 mr-1.5 text-purple-400/70" />
+                      {post.metadata.likes || 0}
+                    </div>
+                    <span>{dateFormatter(post.metadata.publishedAt, false)}</span>
+                  </div>
+                  
+                  <div className='pt-3 border-t border-white/10 flex items-center justify-between'>
                     {post.metadata.author && (
-                      <>
-                        <div className='w-6 h-6 rounded-full overflow-hidden mr-2 bg-gray-300'>
+                      <div className='flex items-center'>
+                        <div className='w-7 h-7 rounded-full overflow-hidden mr-2 bg-gradient-to-r from-blue-500/30 to-purple-500/30 flex items-center justify-center'>
                           {post.metadata.authorImage ? (
                             <Image 
                               src={post.metadata.authorImage} 
                               alt={post.metadata.author}
-                              width={24}
-                              height={24}
+                              width={28}
+                              height={28}
                               className='object-cover'
                             />
                           ) : (
-                            <div className='w-full h-full flex items-center justify-center text-xs text-gray-600'>
+                            <span className='text-xs font-medium text-white'>
                               {post.metadata.author.charAt(0)}
-                            </div>
+                            </span>
                           )}
                         </div>
-                        <span className='text-sm font-medium'>by {post.metadata.author}</span>
-                      </>
+                        <span className='text-sm font-medium text-white/80'>by {post.metadata.author}</span>
+                      </div>
                     )}
-                  </div>
-                  <div className='flex items-center'>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                    <span className='text-sm text-gray-500'>{post.metadata.likes || 0}</span>
+                    <div className='w-6 h-6 flex items-center justify-center rounded-full bg-blue-500/20 group-hover:bg-blue-500/50 transition-colors'>
+                      <ArrowRight className="w-3.5 h-3.5 text-blue-400 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/favicon.ico',  // 또는 정확한 경로
+    icon: '/favicon.ico',
   },
 }
 
@@ -50,22 +50,18 @@ export default function RootLayout({ children }: RootLayoutProps) {
         GeistSans.variable,
         GeistMono.variable
       )}
+      suppressHydrationWarning={true}
     >
-      <head>
+      {/* <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `(${themeEffect})()`,
           }}
         />
-      </head>
+      </head> */}
       <body className='antialiased max-w-6xl mx-4 lg:mx-auto overflow-y-scroll'>
-
-
-        <div className="fixed inset-0 bg-gradient-to-r from-black/95 to-gray-900/95 blur-3xl -z-10"></div>        
-        
+        <div className="fixed inset-0 bg-gradient-to-r from-black/95 to-gray-900/95 blur-3xl -z-10"></div>
         <main className='flex-auto min-w-0 flex flex-col px-2 md:px-0'>
-         
-         
           <div>
             {children}
           </div>
