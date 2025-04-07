@@ -111,7 +111,7 @@ export default function Carousel() {
                     {project.tags.map((tag, tagIdx) => (
                       <span 
                         key={tagIdx} 
-                        className={`text-xs px-3 py-1 ${tag.bgColor} rounded-full ${tag.textColor} cursor-default`}
+                        className={`text-xs px-3 py-1 ${tag.className} cursor-default`}
                       >
                         {tag.name}
                       </span>
@@ -141,7 +141,7 @@ export default function Carousel() {
                     {project.tags.map((tag, tagIdx) => (
                       <span 
                         key={tagIdx} 
-                        className={`text-xs px-3 py-1 ${tag.bgColor} rounded-full ${tag.textColor} cursor-default`}
+                        className={`text-xs px-3 py-1 ${tag.className} cursor-default`}
                       >
                         {tag.name}
                       </span>
