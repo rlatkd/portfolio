@@ -60,8 +60,8 @@ export default function Carousel() {
     };
   }, [isPaused, dummyProjects.length]);
 
-  const cardWidth = 320;
-  const cardMargin = 16;
+  const cardWidth = 480; // 카드 너비를 더 크게 증가 (380 -> 480)
+  const cardMargin = 24; // 간격 추가 증가 (20 -> 24)
   const totalWidth = dummyProjects.length * (cardWidth + cardMargin * 2);
   
   const animationDuration = dummyProjects.length * 10; // 애니메이션 속도
@@ -74,7 +74,7 @@ export default function Carousel() {
 
   return (
     <div className="mb-12 w-screen relative left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] overflow-hidden">
-      <div className="max-w-4xl mx-auto px-4 mb-8 flex justify-between items-center">
+      <div className="max-w-6xl mx-auto px-4 mb-8 flex justify-between items-center">
         <h2 className="text-2xl font-bold text-white/90 cursor-default">최근 프로젝트</h2>
         <Link href="/projects" className="text-blue-400 hover:text-blue-300 flex items-center">
           모두 보기 <ArrowRight className="ml-1 w-4 h-4" />
@@ -94,11 +94,11 @@ export default function Carousel() {
           {dummyProjects.map((project, idx) => (
             <div 
               key={`original-${idx}`}
-              className="flex-none mx-4"
+              className="flex-none mx-6" // 마진 추가 증가 (mx-5 -> mx-6)
               style={{ width: `${cardWidth}px` }}
               onClick={() => handleProjectClick(project)}
             >
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden group hover:bg-white/10 transition-all h-full cursor-pointer">
+              <div className="w-full bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden group hover:bg-white/10 transition-all h-full cursor-pointer">
                 <div className={`aspect-video bg-gradient-to-r ${project.bgFrom} ${project.bgTo} relative overflow-hidden`}>
                   <div className="absolute inset-0 flex items-center justify-center text-white/50">
                     {project.icon}
@@ -124,11 +124,11 @@ export default function Carousel() {
           {dummyProjects.map((project, idx) => (
             <div 
               key={`duplicate-${idx}`}
-              className="flex-none mx-4"
+              className="flex-none mx-6" // 마진 추가 증가 (mx-5 -> mx-6)
               style={{ width: `${cardWidth}px` }}
               onClick={() => handleProjectClick(project)}
             >
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden group hover:bg-white/10 transition-all h-full cursor-pointer">
+              <div className="w-full bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden group hover:bg-white/10 transition-all h-full cursor-pointer">
                 <div className={`aspect-video bg-gradient-to-r ${project.bgFrom} ${project.bgTo} relative overflow-hidden`}>
                   <div className="absolute inset-0 flex items-center justify-center text-white/50">
                     {project.icon}
