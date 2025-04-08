@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function Page() {
   const router = useRouter();
   const [countdown, setCountdown] = useState(3);
-  const [xopsVisible, setXopsVisible] = useState(false);
-  const [xopsOpacity, setXopsOpacity] = useState(0);
+  const [logoVisible, setLogoVisible] = useState(false);
+  const [logoOpacity, setLogoOpacity] = useState(0);
   
   useEffect(() => {
     const hasSessionCookie = document.cookie.includes('xops=true');
@@ -18,11 +19,10 @@ export default function Page() {
     //   return;
     // }
     
-    // XOps 텍스트 페이드인 효과
     setTimeout(() => {
-      setXopsVisible(true);
+      setLogoVisible(true);
       const fadeInInterval = setInterval(() => {
-        setXopsOpacity(prev => {
+        setLogoOpacity(prev => {
           if (prev >= 1) {
             clearInterval(fadeInInterval);
             return 1;
@@ -32,7 +32,6 @@ export default function Page() {
       }, 100);
     }, 500);
 
-    // 카운트다운 타이머
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
@@ -52,15 +51,21 @@ export default function Page() {
   return (
     <div className='w-screen h-screen overflow-hidden flex items-center justify-center bg-black fixed inset-0'>
       <div className='text-center relative w-full h-full flex items-center justify-center'>
-       
         <div className="mb-12">
-          {xopsVisible && (
-            <h1 
-              className='text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 tracking-wider'
-              style={{ opacity: xopsOpacity, transition: 'opacity 0.5s ease' }}
+          {logoVisible && (
+            <div 
+              className='flex items-center justify-center'
+              style={{ opacity: logoOpacity, transition: 'opacity 0.5s ease' }}
             >
-              XOps
-            </h1>
+              <img 
+                src="/logo.svg" 
+                alt="XOps Logo" 
+                className="h-20 w-auto -mr-2" 
+              />
+              <span className='text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 tracking-wider'>
+                Ops
+              </span>
+            </div>
           )}
         </div>
       </div>

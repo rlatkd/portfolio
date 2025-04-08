@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { routing } from '@/config/routing';
-import { ThemeProvider } from '@/components/providers/theme-provider'
 
 export function Header() {
   const pathname = usePathname();
@@ -27,9 +26,14 @@ export function Header() {
             <div className='flex flex-row space-x-4'>
               <Link
                 href='/'
-                className='transition-all hover:text-neutral-200 flex items-center py-1 px-2'
+                className='transition-all hover:text-neutral-200 flex items-center'
               >
-                <span className='text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 tracking-wider font-sans'>XOps</span>
+                <div className="flex items-center">
+                  <img src="/logo.svg" alt="Logo" className="h-8 w-auto -mr-1" />
+                  <span className='text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 tracking-wider'>
+                    Ops
+                  </span>
+                </div>
               </Link>
             </div>
             <div className='flex flex-row items-center space-x-10 mr-1'>
@@ -50,7 +54,6 @@ export function Header() {
                     </Link>
                   );
                 })}
-              {/* <ThemeProvider /> */}
             </div>
           </nav>
         </div>
