@@ -12,10 +12,10 @@ export function Top({ headerText, headerImage}: TopProps) {
       {headerImage && (
         <Image 
           src={headerImage} 
-          alt={headerText || "Header image"}
+          alt={headerText || 'Header image'}
           width={0}
           height={0}
-          sizes="100vw"
+          sizes='100vw'
           className='rounded-3xl w-full h-100'
           priority
         />

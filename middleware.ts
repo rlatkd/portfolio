@@ -13,13 +13,13 @@ export function middleware(request: NextRequest) {
   const hostname = request.headers.get('host') || '';
   const isExternalReferer = !referer || !referer.includes(hostname);
   
+  if (path === '/intro') {
+    return NextResponse.next();
+  }
+  
+  // 외부에서 접속하고 쿠키가 없는 경우에만 intro로 리다이렉트
   if (isExternalReferer && !hasActiveSession) {
-    const response = NextResponse.redirect(new URL('/intro', request.url));
-    response.cookies.set('xops', 'true', { 
-      path: '/',
-      // maxAge 설정하지 않으면 브라우저 세션 쿠키가 됨
-    });
-    return response;
+    return NextResponse.redirect(new URL('/intro', request.url));
   }
   
   return NextResponse.next();

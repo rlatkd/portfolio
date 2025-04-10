@@ -17,7 +17,7 @@ export function CodeCopier({ children, className, ...props }) {
   const codeHTML = highlight(children);
 
   return (
-    <div className="relative">
+    <div className='relative'>
       <div className='flex justify-between items-center mb-2 px-4 pt-3'>
         <span className='font-bold text-gray-400 capitalize'>
           {language}
@@ -39,8 +39,8 @@ export function CodeCopier({ children, className, ...props }) {
           )}
         </button>
       </div>
-      <div className="overflow-x-auto">
-        <pre className="p-4 pt-0">
+      <div className='overflow-x-auto'>
+        <pre className='p-4 pt-0'>
           <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
         </pre>
       </div>

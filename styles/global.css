@@ -19,6 +19,7 @@
   --sh-property: #d19a66;
   --sh-entity: #61afef;
   --color-white: 220 10% 75%; /* text 밝기 관리 */
+  --carousel-width: 0px; /* 캐러셀 너비 기본값 (JS에서 동적으로 설정됨) */
 }
 
 html {
@@ -221,7 +222,7 @@ table {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(calc(-1 * var(--carousel-width)));
   }
 }
 
@@ -259,4 +260,33 @@ table {
   .text-white\/50 {
     color: hsl(var(--color-white) / 0.5) !important;
   }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes expand {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+}
+
+.animate-expand {
+  animation: expand 1.5s forwards ease-out;
 }

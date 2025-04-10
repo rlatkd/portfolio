@@ -15,8 +15,8 @@ export function Posts({ posts }: PostsProps) {
 
   return (
     <div className='grid grid-cols-1 gap-8 mb-12 relative'>
-      <div className="absolute -top-20 -left-20 w-60 h-60 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className='absolute -top-20 -left-20 w-60 h-60 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-3xl pointer-events-none'></div>
+      <div className='absolute -bottom-20 -right-20 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl pointer-events-none'></div>
       {posts
         .sort((a, b) => parseInt(b.metadata.index, 10) - parseInt(a.metadata.index, 10))
         .map((post) => (
@@ -27,7 +27,7 @@ export function Posts({ posts }: PostsProps) {
             onMouseEnter={() => setHoveredPost(post.slug)}
             onMouseLeave={() => setHoveredPost(null)}
           >
-            <div className="relative overflow-hidden">
+            <div className='relative overflow-hidden'>
               <div className={`absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10 opacity-80 group-hover:opacity-100 transition-opacity duration-300`}></div>
               <img
                 src={post.metadata.image}
@@ -35,9 +35,9 @@ export function Posts({ posts }: PostsProps) {
                 className={`w-full h-64 object-cover transition-transform duration-700 ${hoveredPost === post.slug ? 'scale-105' : 'scale-100'}`}
               />
               
-              <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
+              <div className='absolute bottom-0 left-0 right-0 p-6 z-20'>
                 <span className='text-sm px-3 py-1 rounded-full bg-blue-500/40 text-blue-300 backdrop-blur-sm inline-flex items-center'>
-                  <Tag className="w-3.5 h-3.5 mr-1" strokeWidth={2.5} />
+                  <Tag className='w-3.5 h-3.5 mr-1' strokeWidth={2.5} />
                   {post.metadata.category}
                 </span>
                 
@@ -49,29 +49,29 @@ export function Posts({ posts }: PostsProps) {
                   {post.metadata.description || `${post.metadata.title}에 대한 글입니다.`}
                 </p>
                 
-                <div className="flex items-center text-white/60 text-sm">
-                  <Calendar className="w-3.5 h-3.5 mr-1.5" strokeWidth={2} />
+                <div className='flex items-center text-white/60 text-sm'>
+                  <Calendar className='w-3.5 h-3.5 mr-1.5' strokeWidth={2} />
                   {dateFormatter(post.metadata.publishedAt, false)}
                 </div>
               </div>
             </div>
             
             <div className='flex justify-between items-center p-4'>
-              <div className="flex items-center">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center text-xs font-bold text-white">
+              <div className='flex items-center'>
+                <div className='w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center text-xs font-bold text-white'>
                   {post.metadata.author ? post.metadata.author.charAt(0).toUpperCase() : 'X'}
                 </div>
-                <span className="ml-2 text-white/70 text-sm">{post.metadata.author || 'XOps'}</span>
+                <span className='ml-2 text-white/70 text-sm'>{post.metadata.author || 'XOps'}</span>
               </div>
               
               <div className='flex items-center space-x-4'>
-                <div className="flex items-center text-white/60 text-sm">
-                  <Eye className="w-3.5 h-3.5 mr-1.5" strokeWidth={2} />
+                <div className='flex items-center text-white/60 text-sm'>
+                  <Eye className='w-3.5 h-3.5 mr-1.5' strokeWidth={2} />
                   {post.metadata.views || '0'} views
                 </div>
               </div>
             </div>
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 via-blue-500/0 to-purple-600/0 group-hover:from-blue-500/20 group-hover:via-indigo-500/20 group-hover:to-purple-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+            <div className='absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 via-blue-500/0 to-purple-600/0 group-hover:from-blue-500/20 group-hover:via-indigo-500/20 group-hover:to-purple-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none'></div>
           </Link>
         ))}
     </div>

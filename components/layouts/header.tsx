@@ -28,11 +28,11 @@ export function Header() {
                 href='/'
                 className='transition-all hover:text-neutral-200 flex items-center'
               >
-                <div className="flex items-center">
-                  <img src="/logo.svg" alt="Logo" className="h-8 w-auto -mr-1" />
-                  <span className='text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 tracking-wider'>
+                <div className='flex items-center'>
+                  <img src='/logo.svg' alt='Logo' className='h-12 w-auto -mr-1' />
+                  {/* <span className='text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 tracking-wider'>
                     Ops
-                  </span>
+                  </span> */}
                 </div>
               </Link>
             </div>
@@ -47,8 +47,10 @@ export function Header() {
                       key={path}
                       href={path}
                       className={`${
-                        isActive ? 'bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 font-bold' : 'text-white hover:text-blue-300'
-                      } transition-all py-1 px-2 text-lg font-light tracking-wide`}
+                        isActive 
+                          ? 'bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 font-extrabold' 
+                          : 'text-white opacity-80 hover:opacity-100 transition-opacity'
+                      } py-1 px-2 text-lg font-semibold tracking-wide`}
                     >
                       {name}
                     </Link>

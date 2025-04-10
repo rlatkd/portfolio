@@ -150,18 +150,18 @@ export default function Comments({ postId }: CommentsProps) {
 
   return (
     <div className='w-4/6 mx-auto mt-12 mb-20 relative'>
-      <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"></div>
-      <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl"></div>
-      <div className="relative z-10">
+      <div className='absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-3xl'></div>
+      <div className='absolute -bottom-20 -left-20 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl'></div>
+      <div className='relative z-10'>
         <h2 className='text-2xl font-bold mb-6 flex items-center text-white/90 cursor-default'>
-          <MessageSquare className="w-5 h-5 mr-2 text-blue-400" />
+          <MessageSquare className='w-5 h-5 mr-2 text-blue-400' />
           댓글
         </h2>        
         <form onSubmit={handleSubmitComment} className='mb-10 bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 relative'>
           <div className='mb-4'>
-            <div className="flex items-center mb-2">
-              <User className="w-4 h-4 mr-2 text-blue-400" />
-              <label className="text-sm text-white/70">이름 (선택사항)</label>
+            <div className='flex items-center mb-2'>
+              <User className='w-4 h-4 mr-2 text-blue-400' />
+              <label className='text-sm text-white/70'>이름 (선택사항)</label>
             </div>
             <input
               type='text'
@@ -184,14 +184,14 @@ export default function Comments({ postId }: CommentsProps) {
               className='px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-medium text-white flex items-center group hover:opacity-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed'
             >
               댓글 작성
-              <Send className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <Send className='ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform' />
             </button>
           </div>
         </form>
         <div className='space-y-6'>
           {isLoading ? (
             <div className='text-center py-12'>
-              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-400 border-r-transparent"></div>
+              <div className='inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-400 border-r-transparent'></div>
               <p className='mt-4 text-white/50'>댓글을 불러오는 중...</p>
             </div>
           ) : error ? (
@@ -203,7 +203,7 @@ export default function Comments({ postId }: CommentsProps) {
               <div key={comment._id?.toString()} className='bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/8 transition-all'>
                 <div className='flex items-center mb-3'>
                   <div className='p-2 bg-gradient-to-r from-blue-500/20 to-blue-600/20 rounded-full mr-3'>
-                    <User className="w-5 h-5 text-blue-400" />
+                    <User className='w-5 h-5 text-blue-400' />
                   </div>
                   <div>
                     <p className='font-medium'>{comment.userName}</p>
@@ -218,7 +218,7 @@ export default function Comments({ postId }: CommentsProps) {
                     onClick={() => handleShowReplyForm(comment._id?.toString() || '')}
                     className='text-sm text-blue-400 hover:text-blue-300 transition-colors flex items-center'
                   >
-                    <CornerDownRight className="w-4 h-4 mr-1" />
+                    <CornerDownRight className='w-4 h-4 mr-1' />
                     답변 달기
                   </button>
                 </div>
@@ -229,7 +229,7 @@ export default function Comments({ postId }: CommentsProps) {
                       <div key={reply._id?.toString()} className='bg-white/5 backdrop-blur-sm p-4 rounded-lg'>
                         <div className='flex items-center mb-2'>
                           <div className='p-1.5 bg-gradient-to-r from-purple-500/20 to-purple-600/20 rounded-full mr-2'>
-                            <User className="w-3.5 h-3.5 text-purple-400" />
+                            <User className='w-3.5 h-3.5 text-purple-400' />
                           </div>
                           <p className='font-medium text-sm'>{reply.userName}</p>
                           <p className='text-xs text-white/40 ml-2'>
@@ -245,9 +245,9 @@ export default function Comments({ postId }: CommentsProps) {
                   <div className='mt-4 ml-10 pl-5 border-l border-white/10'>
                     <div className='bg-white/5 backdrop-blur-sm p-4 rounded-lg'>
                       <div className='mb-3'>
-                        <div className="flex items-center mb-1">
-                          <User className="w-3.5 h-3.5 mr-1.5 text-purple-400" />
-                          <label className="text-xs text-white/60">이름 (선택사항)</label>
+                        <div className='flex items-center mb-1'>
+                          <User className='w-3.5 h-3.5 mr-1.5 text-purple-400' />
+                          <label className='text-xs text-white/60'>이름 (선택사항)</label>
                         </div>
                         <input
                           type='text'
@@ -279,7 +279,7 @@ export default function Comments({ postId }: CommentsProps) {
                           className='px-3 py-1.5 text-xs bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center disabled:opacity-50 disabled:cursor-not-allowed group'
                         >
                           답변 작성
-                          <Send className="ml-1.5 w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                          <Send className='ml-1.5 w-3 h-3 group-hover:translate-x-1 transition-transform' />
                         </button>
                       </div>
                     </div>

@@ -21,7 +21,7 @@ export default async function Page({ params }) {
   return (
     <section>
       <script
-        type="application/ld+json"
+        type='application/ld+json'
         suppressHydrationWarning
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
@@ -42,30 +42,30 @@ export default async function Page({ params }) {
           }),
         }}
       />
-      <div className="flex justify-between items-center w-4/6 mx-auto">
-        <h1 className="title font-semibold text-2xl tracking-tighter cursor-default">
+      <div className='flex justify-between items-center w-4/6 mx-auto'>
+        <h1 className='title font-semibold text-2xl tracking-tighter cursor-default'>
           {post.metadata.title}
         </h1>
-        <Link href="/posts" className="flex items-center text-neutral-700 dark:text-neutral-200 hover:text-neutral-400">
+        <Link href='/posts' className='flex items-center text-neutral-700 dark:text-neutral-200 hover:text-neutral-400'>
           <FaList />
         </Link>
       </div>
-      <div className="flex justify-between items-center mt-2 text-sm w-4/6 mx-auto">
-        <p className="mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default">
+      <div className='flex justify-between items-center mt-2 text-sm w-4/6 mx-auto'>
+        <p className='mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default'>
           {formatDate(post.metadata.publishedAt)}
         </p>
         {/* TODO DataBase(RDB or NoSQL) 연결 필요 */}
-        <p className="mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default">
+        <p className='mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default'>
           views
         </p>
       </div>
       <div className='flex justify-between'>
-        <div className="w-4/6 ">
-          <article className="prose prose-lg max-w-none w-full ml-[25%]">
+        <div className='w-4/6 '>
+          <article className='prose prose-lg max-w-none w-full ml-[25%]'>
             <MdxRenderer source={post.content} />
           </article>
         </div>
-        <div className="sticky top-20 self-start w-80 p-6 mr-[-15%]">
+        <div className='sticky top-20 self-start w-80 p-6 mr-[-15%]'>
           <TableOfContents contents={post.tableContents}></TableOfContents>
         </div>
       </div>

@@ -14,6 +14,7 @@ type PageProps = {
 
 export default async function Page({ searchParams }: PageProps) {
   const posts = await getPosts();
+  // TODO getPosts()에서 이미 Index를 parseInt 하고 있음
   const allPosts = posts.sort((a, b) => parseInt(b.metadata.index, 10) - parseInt(a.metadata.index, 10)); // 내림차순 정렬(최신글이 맨 위로)
   const categoryFilter = searchParams.category?.toLowerCase(); // 소문자 변환
   const filteredPosts = categoryFilter ? allPosts.filter((post) => post.metadata.category?.toLowerCase() === categoryFilter) : posts; // 카테고리 적용에 따른 posts 분기
@@ -28,7 +29,7 @@ export default async function Page({ searchParams }: PageProps) {
   return (
     <section className='w-5/6 lg:w-4/6 mx-auto'>
       <div className='flex flex-wrap gap-3 mt-6 mb-10 items-center justify-center'>
-        <Categories categories={categories} selectedCategory={searchParams.category} />
+        <Categories categories={categories as string[]} selectedCategory={searchParams.category as string} />
       </div>
       <Posts posts={currentPosts} />
       {totalPosts > 0 && (
