@@ -60,9 +60,9 @@ export default function Carousel() {
 
   return (
     <div className='mb-12 w-screen relative left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] overflow-hidden'>
-      <div className='max-w-6xl mx-auto px-4 mb-8 flex justify-between items-center'>
+      <div className='max-w-4xl mx-auto mb-8 flex justify-between items-center'>
         <h2 className='text-2xl font-bold text-white/90 cursor-default'>최근 프로젝트</h2>
-        <Link href='/projects' className='text-blue-400 flex items-center opacity-80 hover:opacity-100 transition-opacity'>
+        <Link href='/projects' className='text-blue-400 hover:text-blue-300 flex items-center opacity-80 hover:opacity-100 transition-opacity'>
           모두 보기 <ArrowRight className='ml-1 w-4 h-4' />
         </Link>
       </div>
@@ -92,9 +92,6 @@ export default function Carousel() {
                     </div>
                     {hoveredProject === `original-${idx}` && (
                       <div className='absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 flex items-center justify-center'>
-                        <span className='bg-white/90 text-gray-900 px-4 py-2 rounded-lg font-medium'>
-                          자세히 보기
-                        </span>
                       </div>
                     )}
                   </div>
@@ -139,9 +136,6 @@ export default function Carousel() {
                     </div>
                     {hoveredProject === `duplicate-${idx}` && (
                       <div className='absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 flex items-center justify-center'>
-                        <span className='bg-white/90 text-gray-900 px-4 py-2 rounded-lg font-medium'>
-                          자세히 보기
-                        </span>
                       </div>
                     )}
                   </div>

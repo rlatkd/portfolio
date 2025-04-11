@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Calendar, Clock, Bookmark } from 'lucide-react';
 
-// 임시 블로그 데이터
 const dummyBlogPosts = [
   {
     id: 1,
@@ -14,7 +13,7 @@ const dummyBlogPosts = [
     readTime: '8분',
     category: { name: '웹 개발', color: 'bg-blue-400/20 text-blue-400' },
     featured: true,
-    image: 'https://via.placeholder.com/800x450' // 실제로는 로컬 이미지 사용 권장
+    image: 'https://via.placeholder.com/800x450' // TODO 실제로는 로컬 이미지
   },
   {
     id: 2,
@@ -44,21 +43,17 @@ const dummyBlogPosts = [
 
 export default function Blog() {
   const [isHovering, setIsHovering] = useState(null);
-
-  // 특성 게시물(첫 번째)과 나머지 게시물 분리
   const featuredPost = dummyBlogPosts.find(post => post.featured);
   const regularPosts = dummyBlogPosts.filter(post => !post.featured).slice(0, 3);
 
   return (
     <div className='mb-20 max-w-4xl mx-auto'>
       <div className='flex justify-between items-center mb-8'>
-        <h2 className='text-2xl font-bold text-white/90 cursor-default'>최근 블로그 포스트</h2>
+        <h2 className='text-2xl font-bold text-white/90 cursor-default'>최근 포스트</h2>
         <Link href='/blog' className='text-blue-400 hover:text-blue-300 flex items-center opacity-80 hover:opacity-100 transition-opacity'>
-          모든 글 보기 <ArrowRight className='ml-1 w-4 h-4' />
+          모두 보기 <ArrowRight className='ml-1 w-4 h-4' />
         </Link>
       </div>
-
-      {/* 특성 게시물 */}
       {featuredPost && (
         <Link href={`/blog/${featuredPost.id}`} passHref>
           <div 
@@ -91,9 +86,6 @@ export default function Blog() {
                 </div>
                 {isHovering === 'featured' && (
                   <div className='absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 flex items-center justify-center'>
-                    <span className='bg-white/90 text-gray-900 px-4 py-2 rounded-lg font-medium'>
-                      읽어보기
-                    </span>
                   </div>
                 )}
               </div>
@@ -101,8 +93,6 @@ export default function Blog() {
           </div>
         </Link>
       )}
-
-      {/* 일반 게시물 그리드 */}
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
         {regularPosts.map((post, index) => (
           <Link key={post.id} href={`/blog/${post.id}`} passHref>
@@ -117,9 +107,6 @@ export default function Blog() {
                 </div>
                 {isHovering === post.id && (
                   <div className='absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 flex items-center justify-center'>
-                    <span className='bg-white/90 text-gray-900 px-3 py-1 rounded-lg text-sm font-medium'>
-                      읽어보기
-                    </span>
                   </div>
                 )}
               </div>

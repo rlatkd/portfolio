@@ -2,9 +2,8 @@
 
 import Link from 'next/link';
 import { dateFormatter } from '@/utils/dateFormatter';
-import { slugify } from '@/utils/slugify';
-import { ArrowRight, Calendar, Tag, Eye } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { Calendar, Tag, Eye } from 'lucide-react';
+import { useState } from 'react';
 
 type PostsProps = {
   posts: any[];
@@ -36,12 +35,12 @@ export function Posts({ posts }: PostsProps) {
               />
               
               <div className='absolute bottom-0 left-0 right-0 p-6 z-20'>
-                <span className='text-sm px-3 py-1 rounded-full bg-blue-500/40 text-blue-300 backdrop-blur-sm inline-flex items-center'>
+                <span className='text-xs px-3 py-1 rounded-full bg-blue-500/40 text-blue-300 backdrop-blur-sm inline-flex items-center'>
                   <Tag className='w-3.5 h-3.5 mr-1' strokeWidth={2.5} />
                   {post.metadata.category}
                 </span>
                 
-                <h2 className='text-white text-2xl font-semibold mt-3 mb-1 group-hover:text-white/90'>
+                <h2 className='text-2xl font-semibold mt-3 mb-1 text-white/90 group-hover:text-white transition-colors'>
                   {post.metadata.title}
                 </h2>
                 
