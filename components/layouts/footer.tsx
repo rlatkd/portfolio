@@ -8,8 +8,9 @@ export default function Footer() {
   const router = useRouter();
 
   return (
-    <footer className='max-w-6xl mx-auto px-4 mt-20 mb-12'>
-      <div className='py-8 border-t border-white/10'>
+    <footer className='max-w-6xl mx-auto px-4 mt-20 mb-12 relative'>
+      <div className='absolute left-0 right-0 top-0 border-t border-white/10 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-[calc((100vw-72rem)/2+1rem)]'></div>
+      <div className='py-12 relative'>
         <div className='flex flex-col md:flex-row gap-6 md:items-center'>
           <p className='text-white/70 text-sm leading-relaxed cursor-default tracking-wide'>
             주소 : 서울특별시 노원구 동일로 245길 162 (문의 :{' '}
