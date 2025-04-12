@@ -181,7 +181,7 @@ export default function Comments({ postId }: CommentsProps) {
             <button
               type='submit'
               disabled={!newComment.trim() || !postId}
-              className='px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-medium text-white flex items-center group hover:opacity-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed'
+              className='px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-medium text-white flex items-center group hover:opacity-95 transition-all disabled:opacity-50'
             >
               댓글 작성
               <Send className='ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform' />
@@ -276,7 +276,7 @@ export default function Comments({ postId }: CommentsProps) {
                           type='button'
                           onClick={() => handleSubmitReply(comment._id?.toString() || '')}
                           disabled={!replyContent.trim()}
-                          className='px-3 py-1.5 text-xs bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center disabled:opacity-50 disabled:cursor-not-allowed group'
+                          className='px-3 py-1.5 text-xs bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center disabled:opacity-50 group'
                         >
                           답변 작성
                           <Send className='ml-1.5 w-3 h-3 group-hover:translate-x-1 transition-transform' />

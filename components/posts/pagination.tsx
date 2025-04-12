@@ -47,10 +47,10 @@ export default function Pagination({ currentPage, lastPage, category }: Paginati
           </>
         ) : (
           <>
-            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/20 cursor-not-allowed'>
+            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/20'>
               <ChevronsLeft className='w-5 h-5' />
             </span>
-            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/20 cursor-not-allowed'>
+            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/20'>
               <ChevronLeft className='w-5 h-5' />
             </span>
           </>
@@ -93,10 +93,10 @@ export default function Pagination({ currentPage, lastPage, category }: Paginati
           </>
         ) : (
           <>
-            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/20 cursor-not-allowed'>
+            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/20'>
               <ChevronRight className='w-5 h-5' />
             </span>
-            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/20 cursor-not-allowed'>
+            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/20'>
               <ChevronsRight className='w-5 h-5' />
             </span>
           </>

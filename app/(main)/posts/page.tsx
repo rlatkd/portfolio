@@ -37,7 +37,7 @@ export default async function Page({ searchParams }: PageProps) {
 
   return (
     <section>
-      <div className='max-w-4xl mx-auto px-4 mb-12'>
+      <div className='max-w-4xl mx-auto'>
         <div className='mb-16 relative'>
           <div className='absolute -top-20 -left-20 w-40 h-40 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-3xl'></div>
           <div className='relative z-10'>
