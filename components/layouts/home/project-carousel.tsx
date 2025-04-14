@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { dummyProjects } from '@/data/dummy-projects';
 
-export default function Carousel() {
+export default function ProjectCarousel() {
   const carouselRef = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
   const [hoveredProject, setHoveredProject] = useState(null);

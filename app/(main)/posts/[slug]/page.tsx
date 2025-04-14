@@ -8,7 +8,6 @@ import Navigation from '@/components/posts/navigation';
 import { formatDate, getPosts } from '@/lib/markdown';
 import { baseUrl } from '@/utils/sitemap';
 import { TableOfContents } from '@/components/posts/table-of-contents';
-import { slugify } from '@/utils/slugify';
 
 export default async function Page({ params }) {
   const posts = await getPosts();
@@ -37,7 +36,7 @@ export default async function Page({ params }) {
             url: `${baseUrl}/posts/${post.metadata.index}`,
             author: {
               '@type': 'Person',
-              name: 'kata',
+              name: 'xops',
             },
           }),
         }}
@@ -72,7 +71,7 @@ export default async function Page({ params }) {
       <div className='w-4/6 mx-auto'>
         <Navigation currentPost={currentPost} />
       </div>
-      <Comments postId={currentPost}/>
+      <Comments postId={currentPost.toString()}/>
       <PostRecommends posts={posts} currentPostIndex={currentPost} />
     </section>
   )

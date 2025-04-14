@@ -1,8 +1,11 @@
 import Hero from '@/components/layouts/home/hero';
-import Blog from '@/components/layouts/home/blog';
-import Carousel from '@/components/layouts/home/carousel';
 import Skills from '@/components/layouts/home/skills';
-import CTA from '@/components/layouts/home/cta';
+import RecentPosts from '@/components/layouts/home/recent-posts';
+import ProjectCarousel from '@/components/layouts/home/project-carousel';
+import Newsletter from '@/components/layouts/home/newsletter';
+import Timeline from '@/components/layouts/home/timeline';
+import AchievementCounter from '@/components/layouts/home/achievement-counter';
+import TechStack from '@/components/layouts/home/tech-stack';
 
 export default function Page() {
   return (
@@ -11,8 +14,12 @@ export default function Page() {
         <div className='max-w-4xl mx-auto'>
           <Hero />
           <Skills />
-          <Blog />
-          <Carousel />
+          <AchievementCounter />
+          <Timeline />
+          <TechStack />
+          <RecentPosts />
+          <ProjectCarousel />
+          <Newsletter />
           {/* <CTA /> */}
         </div>
       </section>

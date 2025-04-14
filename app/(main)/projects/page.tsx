@@ -42,7 +42,7 @@ const categories = [
 export default function Projects() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredProjects, setFilteredProjects] = useState(dummyProjects);
-  const [hoveredProject, setHoveredProject] = useState(null);
+  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   
   useEffect(() => {
     if (selectedCategory === 'all') {

@@ -19,17 +19,7 @@ export default function Footer() {
             </a>
             ) <br />
             © {new Date().getFullYear()}.{' '}
-            <span className='inline-flex items-center'>
-              <img
-                src='/logo.svg'
-                alt='Logo'
-                className='h-4 w-auto -mr-0.5 inline-block translate-y-[3.5px]'
-              />
-              <span className='font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 tracking-wider translate-y-[3px] '>
-                Ops
-              </span>
-            </span>{' '}
-            All rights reserved.
+            xops All rights reserved.
           </p>
 
           <div className='flex items-center md:ml-auto gap-6'>
