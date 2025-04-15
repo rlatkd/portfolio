@@ -9,6 +9,8 @@
 - ~~캐싱 다시 한번~~
 - ~~폴더 구조 변경~~
 - ~~MySQL에서 MongoDB로 변경~~
+- @fullpage/react-fullpage 적용
+- IntersectionObserver 적용
 - skeleton 적용 (메인페이지 포스트 3개 참조)
 - middleware.ts 수정
 - Nextjs 버전 올려야 됨 (보안이슈)

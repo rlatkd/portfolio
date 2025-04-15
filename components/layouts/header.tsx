@@ -2,20 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { routing } from '@/config/routing';
 
 export function Header() {
   const pathname = usePathname();
 
-  const [mounted, setMounted] = useState<boolean>(false);
-  
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
-    mounted && pathname && 
     <aside className='tracking-tight mb-32'>
       <div className='fixed top-0 left-0 right-0 z-50 h-16 bg-gradient-to-r from-black/90 to-gray-900/90 backdrop-blur-sm'>
         <div className='mx-auto max-w-6xl px-4'>
@@ -30,14 +22,11 @@ export function Header() {
               >
                 <div className='flex items-center'>
                   <img src='/logo.svg' alt='Logo' className='h-12 w-auto -mr-1' />
-                  {/* <span className='text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 tracking-wider'>
-                    Ops
-                  </span> */}
                 </div>
               </Link>
             </div>
             <div className='flex flex-row items-center space-x-10 mr-1'>
-              {Object.entries(routing)
+              {pathname && Object.entries(routing)
                 .filter(([path]) => path !== '/')
                 .map(([path, { name }]) => {
                   const isActive =

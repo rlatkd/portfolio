@@ -1,9 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Code, CheckCircle, CircleSlash } from 'lucide-react';
 
-// 기술 스택 데이터
 const techStack = {
   frontend: [
     { name: 'React', level: 90 },
@@ -29,7 +27,6 @@ const techStack = {
   ]
 };
 
-// 색상 매핑
 const categoryColors = {
   frontend: {
     primary: 'text-blue-400',
@@ -51,21 +48,9 @@ const categoryColors = {
 export default function TechStack() {
   const [selectedCategory, setSelectedCategory] = useState('frontend');
   const [animatedSkills, setAnimatedSkills] = useState([]);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   
-  // 클라이언트 사이드에서만 렌더링하기 위한 효과
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  
-  // 스킬 레벨을 애니메이션으로 표시하기 위한 효과
-  useEffect(() => {
-    if (!isMounted) return;
-    
     setAnimatedSkills([]);
-    
-    // 선택된 카테고리가 변경될 때 애니메이션 리셋
     const timer = setTimeout(() => {
       let delay = 100;
       const interval = setInterval(() => {
@@ -84,51 +69,15 @@ export default function TechStack() {
     }, 300);
     
     return () => clearTimeout(timer);
-  }, [selectedCategory, isMounted]);
-  
-  // 스크롤시 컴포넌트 보이는 효과
-  useEffect(() => {
-    if (!isMounted) return;
-    
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    
-    const element = document.getElementById('tech-stack-section');
-    if (element) observer.observe(element);
-    
-    return () => {
-      if (element) observer.unobserve(element);
-    };
-  }, [isMounted]);
-  
-  // 클라이언트 사이드에서만 렌더링
-  if (!isMounted) {
-    return (
-      <div id="tech-stack-section" className="mb-20 relative opacity-0">
-        <div className='flex justify-between items-center mb-8'>
-          <h2 className='text-2xl font-bold text-white/90 cursor-default'>기술 스택</h2>
-        </div>
-        <div className='w-full h-80 bg-white/5 backdrop-blur-sm rounded-xl'></div>
-      </div>
-    );
-  }
+  }, [selectedCategory]);
   
   return (
-    <div id="tech-stack-section" className={`mb-20 relative transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+    <div id="tech-stack-section" className="mb-20 relative">
       <div className='absolute -bottom-20 -right-20 w-40 h-40 bg-gradient-to-r from-blue-400/20 to-green-400/20 rounded-full blur-3xl'></div>
       
       <div className='flex justify-between items-center mb-8'>
         <h2 className='text-2xl font-bold text-white/90 cursor-default'>기술 스택</h2>
       </div>
-      
-      {/* 카테고리 탭 */}
       <div className='flex flex-wrap gap-4 mb-8'>
         {Object.keys(techStack).map((category) => (
           <button
@@ -145,12 +94,9 @@ export default function TechStack() {
           </button>
         ))}
       </div>
-      
-      {/* 스킬 레이더 차트 (모바일에서는 숨김) */}
       <div className='hidden md:block mb-8 relative'>
         <div className='w-full h-80 bg-white/5 backdrop-blur-sm rounded-xl p-4 flex items-center justify-center'>
           <div className='relative w-64 h-64'>
-            {/* 배경 원 */}
             {[20, 40, 60, 80, 100].map((level) => (
               <div 
                 key={level}
@@ -167,12 +113,9 @@ export default function TechStack() {
                 </div>
               </div>
             ))}
-            
-            {/* 스킬 점 */}
             {techStack[selectedCategory].map((skill, index) => {
               const angle = (index * (360 / techStack[selectedCategory].length)) * (Math.PI / 180);
-              // 소수점 반올림으로 하이드레이션 불일치 방지
-              const radius = (skill.level / 100) * 32;
+              const radius = (skill.level / 100) * 8;
               const x = Math.round(Math.cos(angle) * radius * 100) / 100;
               const y = Math.round(Math.sin(angle) * radius * 100) / 100;
               
@@ -188,7 +131,6 @@ export default function TechStack() {
                     marginLeft: '-0.375rem',
                     marginTop: '-0.375rem',
                   }}
-                  suppressHydrationWarning
                 >
                   <div className={`absolute whitespace-nowrap transform ${
                     angle > Math.PI ? 'translate-y-4 -translate-x-1/2' : '-translate-y-6 -translate-x-1/2'
@@ -198,8 +140,6 @@ export default function TechStack() {
                 </div>
               );
             })}
-            
-            {/* 연결선 */}
             <svg 
               className='absolute inset-0 w-full h-full' 
               style={{ transform: 'rotate(-90deg)' }}
@@ -210,7 +150,6 @@ export default function TechStack() {
                     if (!animatedSkills.includes(index)) return '';
                     const angle = (index * (360 / techStack[selectedCategory].length)) * (Math.PI / 180);
                     const radius = (skill.level / 100) * 32;
-                    // 소수점 반올림으로 하이드레이션 불일치 방지
                     const x = Math.round((32 + Math.cos(angle) * radius) * 100) / 100;
                     const y = Math.round((32 + Math.sin(angle) * radius) * 100) / 100;
                     return `${x},${y}`;
@@ -222,14 +161,11 @@ export default function TechStack() {
                 strokeWidth="1"
                 stroke={categoryColors[selectedCategory].progress}
                 fill={categoryColors[selectedCategory].progress}
-                suppressHydrationWarning
               />
             </svg>
           </div>
         </div>
       </div>
-      
-      {/* 스킬 바 (모든 화면 크기에서 표시) */}
       <div className='space-y-4'>
         {techStack[selectedCategory].map((skill, index) => (
           <div 

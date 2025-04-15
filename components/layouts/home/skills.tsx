@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
 import { Code, Pencil, Sparkles } from 'lucide-react';
 
 const skillItems = [
@@ -24,16 +23,9 @@ const skillItems = [
   }
 ];
 
-const SkillCard = ({ icon, title, description, gradient, isVisible, index }) => {
+const SkillCard = ({ icon, title, description, gradient }) => {
   return (
-    <div 
-      className={`bg-white/5 backdrop-blur-sm p-6 rounded-xl hover:bg-white/10 transition-all group
-                 ${isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-10'}`}
-      style={{ 
-        transitionDelay: `${index * 100}ms`,
-        transitionDuration: '500ms' 
-      }}
-    >
+    <div className='bg-white/5 backdrop-blur-sm p-6 rounded-xl hover:bg-white/10 transition-all group'>
       <div className={`mb-4 p-3 bg-gradient-to-r ${gradient} rounded-lg inline-block`}>
         {icon}
       </div>
@@ -44,59 +36,8 @@ const SkillCard = ({ icon, title, description, gradient, isVisible, index }) => 
 }
 
 export default function Skills() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-  const sectionRef = useRef(null);
-
-  // 클라이언트 사이드에서만 렌더링
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // IntersectionObserver 설정
-  useEffect(() => {
-    if (!isMounted) return;
-    
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    
-    const element = sectionRef.current;
-    if (element) observer.observe(element);
-    
-    return () => {
-      if (element) observer.unobserve(element);
-    };
-  }, [isMounted]);
-
-  // 스켈레톤 UI
-  if (!isMounted) {
-    return (
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-16'>
-        {[1, 2, 3].map((_, index) => (
-          <div key={index} className='bg-white/5 backdrop-blur-sm p-6 rounded-xl animate-pulse'>
-            <div className='w-12 h-12 rounded-lg bg-white/10 mb-4'></div>
-            <div className='w-3/4 h-6 bg-white/10 rounded-lg mb-4'></div>
-            <div className='w-full h-4 bg-white/10 rounded-lg mb-2'></div>
-            <div className='w-full h-4 bg-white/10 rounded-lg mb-2'></div>
-            <div className='w-3/4 h-4 bg-white/10 rounded-lg'></div>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
   return (
-    <div 
-      ref={sectionRef}
-      className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-16'
-    >
+    <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-16'>
       {skillItems.map((skill, index) => (
         <SkillCard 
           key={index}
@@ -104,8 +45,6 @@ export default function Skills() {
           title={skill.title}
           description={skill.description}
           gradient={skill.gradient}
-          isVisible={isVisible}
-          index={index}
         />
       ))}
     </div>

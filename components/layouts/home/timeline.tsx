@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { Calendar, Briefcase, GraduationCap, Code } from 'lucide-react';
 
 const timelineItems = [
@@ -32,77 +32,9 @@ const timelineItems = [
 
 export default function Timeline() {
   const [activeItem, setActiveItem] = useState(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-  const sectionRef = useRef(null);
-  
-  // 클라이언트 사이드에서만 렌더링
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // IntersectionObserver 설정
-  useEffect(() => {
-    if (!isMounted) return;
-    
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    
-    const element = sectionRef.current;
-    if (element) observer.observe(element);
-    
-    return () => {
-      if (element) observer.unobserve(element);
-    };
-  }, [isMounted]);
-
-  // 스켈레톤 UI
-  if (!isMounted) {
-    return (
-      <div className='mb-20 relative'>
-        <div className='absolute -bottom-20 -right-20 w-40 h-40 bg-gradient-to-r from-purple-400/20 to-blue-400/20 rounded-full blur-3xl'></div>
-        
-        <div className='flex justify-between items-center mb-8'>
-          <div className='w-48 h-8 bg-white/5 rounded-lg animate-pulse'></div>
-        </div>
-        
-        <div className='relative z-10'>
-          <div className='absolute left-8 top-6 bottom-6 w-px bg-white/10'></div>
-          
-          <div className='space-y-10'>
-            {[1, 2, 3].map((_, index) => (
-              <div key={index} className='relative pl-16'>
-                <div className='absolute left-0 top-0 w-16 h-16 rounded-full bg-white/5 animate-pulse'></div>
-                
-                <div className='bg-white/5 backdrop-blur-sm p-6 rounded-xl animate-pulse'>
-                  <div className='w-full md:flex md:justify-between md:items-center mb-4'>
-                    <div className='w-3/4 h-6 bg-white/10 rounded-lg mb-2 md:mb-0'></div>
-                    <div className='w-1/3 h-4 bg-white/10 rounded-lg'></div>
-                  </div>
-                  
-                  <div className='w-1/2 h-5 bg-white/10 rounded-lg mb-3'></div>
-                  <div className='w-full h-4 bg-white/10 rounded-lg'></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
   
   return (
-    <div 
-      ref={sectionRef}
-      className={`mb-20 relative transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
-    >
+    <div className='mb-20 relative'>
       <div className='absolute -bottom-20 -right-20 w-40 h-40 bg-gradient-to-r from-purple-400/20 to-blue-400/20 rounded-full blur-3xl'></div>
       
       <div className='flex justify-between items-center mb-8'>
@@ -116,11 +48,7 @@ export default function Timeline() {
           {timelineItems.map((item, index) => (
             <div 
               key={index}
-              className={`relative pl-16 transition-all duration-700 transform
-                         ${isVisible 
-                            ? 'opacity-100 translate-x-0' 
-                            : 'opacity-0 -translate-x-10'}`}
-              style={{ transitionDelay: `${index * 200}ms` }}
+              className='relative pl-16'
               onMouseEnter={() => setActiveItem(index)}
               onMouseLeave={() => setActiveItem(null)}
             >
@@ -130,15 +58,15 @@ export default function Timeline() {
               
               <div className='bg-white/5 backdrop-blur-sm p-6 rounded-xl hover:bg-white/10 transition-all'>
                 <div className='flex flex-col md:flex-row md:justify-between md:items-center mb-3'>
-                  <h3 className='text-xl font-semibold text-white/90'>{item.title}</h3>
-                  <div className='flex items-center text-white/60 text-sm mt-2 md:mt-0'>
+                  <h3 className='text-xl font-semibold text-white/90 cursor-default'>{item.title}</h3>
+                  <div className='flex items-center text-white/60 text-sm mt-2 md:mt-0 cursor-default'>
                     <Calendar className='w-4 h-4 mr-1' />
                     <span>{item.period}</span>
                   </div>
                 </div>
                 
-                <p className='text-white/70 font-medium mb-2'>{item.organization}</p>
-                <p className='text-white/70'>{item.description}</p>
+                <p className='text-white/70 font-medium mb-2 cursor-default'>{item.organization}</p>
+                <p className='text-white/70 cursor-default'>{item.description}</p>
               </div>
             </div>
           ))}

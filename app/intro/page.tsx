@@ -1,5 +1,6 @@
 'use client';
 
+import '@/styles/global.css'; // 클라이언트 컴포넌트가 렌더링될 때, 루트 레이아웃 css가 늦게 나오는걸 방지
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 

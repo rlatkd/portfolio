@@ -15,7 +15,7 @@ export default function RecentPosts() {
       try {
         const allPosts = await getPosts();
         const sortedPosts = allPosts.sort((a, b) => b.metadata.index - a.metadata.index);
-        const recentPosts = sortedPosts.slice(0, 3);
+        const recentPosts = sortedPosts.slice(0, 1); // 가져올 post 수
         
         setPosts(recentPosts);
       } catch (error) {
@@ -28,39 +28,39 @@ export default function RecentPosts() {
     loadPosts();
   }, []);
 
+  // 스켈레톤
   if (isLoading) {
     return (
       <div className='mb-20 max-w-4xl mx-auto'>
         <div className='flex justify-between items-center mb-8'>
-          <h2 className='text-2xl font-bold text-white/90 cursor-default'>최근 포스트</h2>
+          <h2 className='text-2xl font-bold text-white/90 cursor-default'>최신 포스트</h2>
           <Link href='/posts' className='text-blue-400 hover:text-blue-300 flex items-center opacity-80 hover:opacity-100 transition-opacity'>
             모두 보기 <ArrowRight className='ml-1 w-4 h-4' />
           </Link>
         </div>
-        <div className='space-y-12'>
-          {[1, 2, 3].map((_, index) => (
-            <div key={index} className='bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden h-64 animate-pulse'>
-              <div className='md:flex h-full'>
-                <div className='md:w-3/5 p-8 flex flex-col justify-center'>
-                  <div className='w-24 h-6 bg-white/10 rounded-full mb-4'></div>
-                  <div className='w-full h-8 bg-white/10 rounded-lg mb-4'></div>
-                  <div className='w-full h-4 bg-white/10 rounded-lg mb-2'></div>
-                  <div className='w-3/4 h-4 bg-white/10 rounded-lg mb-6'></div>
-                  <div className='w-48 h-4 bg-white/10 rounded-lg'></div>
-                </div>
-                <div className='md:w-2/5 h-full bg-white/10'></div>
+        <div>
+          <div className='bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden h-64 animate-pulse'>
+            <div className='md:flex h-full'>
+              <div className='md:w-3/5 p-8 flex flex-col justify-center'>
+                <div className='w-24 h-6 bg-white/10 rounded-full mb-4'></div>
+                <div className='w-full h-8 bg-white/10 rounded-lg mb-4'></div>
+                <div className='w-full h-4 bg-white/10 rounded-lg mb-2'></div>
+                <div className='w-3/4 h-4 bg-white/10 rounded-lg mb-6'></div>
+                <div className='w-48 h-4 bg-white/10 rounded-lg'></div>
               </div>
+              <div className='md:w-2/5 h-full bg-white/10'></div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     );
   }
+
   if (posts.length === 0) {
     return (
       <div className='mb-20 max-w-4xl mx-auto'>
         <div className='flex justify-between items-center mb-8'>
-          <h2 className='text-2xl font-bold text-white/90 cursor-default'>최근 포스트</h2>
+          <h2 className='text-2xl font-bold text-white/90 cursor-default'>최신 포스트</h2>
           <Link href='/posts' className='text-blue-400 hover:text-blue-300 flex items-center opacity-80 hover:opacity-100 transition-opacity'>
             모두 보기 <ArrowRight className='ml-1 w-4 h-4' />
           </Link>
@@ -74,13 +74,12 @@ export default function RecentPosts() {
   return (
     <div className='mb-20 max-w-4xl mx-auto'>
       <div className='flex justify-between items-center mb-8'>
-        <h2 className='text-2xl font-bold text-white/90 cursor-default'>최근 포스트</h2>
+        <h2 className='text-2xl font-bold text-white/90 cursor-default'>최신 포스트</h2>
         <Link href='/posts' className='text-blue-400 hover:text-blue-300 flex items-center opacity-80 hover:opacity-100 transition-opacity'>
           모두 보기 <ArrowRight className='ml-1 w-4 h-4' />
         </Link>
       </div>
-      
-      <div className='space-y-12'>
+      <div>
         {posts.map((post) => (
           <div key={post.slug}>
             <Link href={`/posts/${post.slug}`}>
@@ -119,7 +118,6 @@ export default function RecentPosts() {
                       )}
                     </div>
                   </div>
-                  
                   <div className='md:w-2/5 h-full relative overflow-hidden'>
                     {post.metadata.image ? (
                       <img
