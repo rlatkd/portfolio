@@ -3,17 +3,17 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { dummyProjects } from '@/data/dummy-projects';
+import { projectData } from '@/data/site-data';
 
-export default function ProjectCarousel() {
+export default function Project() {
   const carouselRef = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
   const [hoveredProject, setHoveredProject] = useState(null);
 
   const cardWidth = 480;
   const cardMargin = 24;
-  const totalWidth = dummyProjects.length * (cardWidth + cardMargin * 2);
-  const animationDuration = dummyProjects.length * 10;
+  const totalWidth = projectData.length * (cardWidth + cardMargin * 2);
+  const animationDuration = projectData.length * 10;
 
   useEffect(() => {
     const carousel = carouselRef.current;
@@ -74,7 +74,7 @@ export default function ProjectCarousel() {
             width: `${totalWidth * 2}px`,
           }}
         >
-          {dummyProjects.map((project, idx) => {
+          {projectData.map((project, idx) => {
             const colorStyle = getCategoryColor(idx);
             return (
               <div 
@@ -118,7 +118,7 @@ export default function ProjectCarousel() {
               </div>
             );
           })}
-          {dummyProjects.map((project, idx) => {
+          {projectData.map((project, idx) => {
             const colorStyle = getCategoryColor(idx);
             return (
               <div 

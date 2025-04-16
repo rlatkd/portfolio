@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, Calendar, Clock, Bookmark } from 'lucide-react';
 import { getPosts } from '@/lib/markdown';
 
-export default function RecentPosts() {
+export default function Post() {
   const [isHovering, setIsHovering] = useState(null);
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

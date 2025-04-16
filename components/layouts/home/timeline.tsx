@@ -1,34 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Calendar, Briefcase, GraduationCap, Code } from 'lucide-react';
-
-const timelineItems = [
-  {
-    icon: <Briefcase className='w-5 h-5 text-blue-400' />,
-    title: '시니어 프론트엔드 개발자',
-    organization: '테크 기업',
-    period: '2023 - 현재',
-    description: '핵심 웹 애플리케이션 개발 및 최적화, 주니어 개발자 멘토링',
-    gradient: 'from-blue-500/20 to-blue-600/20',
-  },
-  {
-    icon: <Code className='w-5 h-5 text-purple-400' />,
-    title: '프론트엔드 개발자',
-    organization: '스타트업',
-    period: '2020 - 2023',
-    description: 'React 기반 사용자 인터페이스 구축 및 UX 개선 프로젝트 주도',
-    gradient: 'from-purple-500/20 to-purple-600/20',
-  },
-  {
-    icon: <GraduationCap className='w-5 h-5 text-green-400' />,
-    title: '컴퓨터 공학 학사',
-    organization: '대학교',
-    period: '2016 - 2020',
-    description: '웹 개발 및 사용자 경험 디자인 집중 과정 이수',
-    gradient: 'from-green-500/20 to-green-600/20',
-  }
-];
+import { Calendar } from 'lucide-react';
+import { timelineData } from '@/data/site-data';
 
 export default function Timeline() {
   const [activeItem, setActiveItem] = useState(null);
@@ -45,7 +19,7 @@ export default function Timeline() {
         <div className='absolute left-8 top-6 bottom-6 w-px bg-white/10'></div>
         
         <div className='space-y-10'>
-          {timelineItems.map((item, index) => (
+          {timelineData.map((item, index) => (
             <div 
               key={index}
               className='relative pl-16'

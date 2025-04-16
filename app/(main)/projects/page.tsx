@@ -29,7 +29,7 @@
 
 import { useState, useEffect } from 'react';
 import { Filter, Code, Briefcase, GraduationCap, ArrowRight, LucideIcon } from 'lucide-react';
-import { dummyProjects } from '@/data/dummy-projects';
+import { projectData } from '@/data/site-data';
 import Link from 'next/link';
 
 const categories = [
@@ -41,14 +41,14 @@ const categories = [
 
 export default function Projects() {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [filteredProjects, setFilteredProjects] = useState(dummyProjects);
+  const [filteredProjects, setFilteredProjects] = useState(projectData);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   
   useEffect(() => {
     if (selectedCategory === 'all') {
-      setFilteredProjects(dummyProjects);
+      setFilteredProjects(projectData);
     } else {
-      setFilteredProjects(dummyProjects.filter(project => 
+      setFilteredProjects(projectData.filter(project => 
         project.category?.toLowerCase() === selectedCategory
       ));
     }
@@ -71,7 +71,7 @@ export default function Projects() {
     // TODO: 프로젝트 상세 페이지로 이동
   };
 
-  const specialProject = dummyProjects[0];
+  const specialProject = projectData[0];
   const specialProjectColor = getCategoryColor(specialProject.category);
 
   return (

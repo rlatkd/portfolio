@@ -1,11 +1,11 @@
 import Hero from '@/components/layouts/home/hero';
-import Skills from '@/components/layouts/home/skills';
-import RecentPosts from '@/components/layouts/home/recent-posts';
-import ProjectCarousel from '@/components/layouts/home/project-carousel';
+import Characteristics from '@/components/layouts/home/characteristic';
 import Newsletter from '@/components/layouts/home/newsletter';
 import Timeline from '@/components/layouts/home/timeline';
-import AchievementCounter from '@/components/layouts/home/achievement-counter';
-import TechStack from '@/components/layouts/home/tech-stack';
+import Achievement from '@/components/layouts/home/achievement';
+import Technique from '@/components/layouts/home/technique';
+import Project from '@/components/layouts/home/project';
+import Post from '@/components/layouts/home/recent-posts';
 
 export default function Page() {
   return (
@@ -13,12 +13,12 @@ export default function Page() {
       <section>
         <div className='max-w-4xl mx-auto'>
           <Hero />
-          <Skills />
-          <AchievementCounter />
+          <Characteristics />
+          <Achievement />
           <Timeline />
-          <TechStack />
-          <RecentPosts />
-          <ProjectCarousel />
+          <Technique />
+          <Post />
+          <Project />
           <Newsletter />
           {/* <CTA /> */}
         </div>

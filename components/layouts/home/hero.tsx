@@ -1,24 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { heroData } from '@/data/site-data';
 
 export default function Hero() {
   const [typedText, setTypedText] = useState('');
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
-  
-  const textOptions = [
-    '개발자.',
-    '문제 해결사.',
-    '경험 디자이너.',
-    '지속적 학습자.'
-  ];
 
   useEffect(() => {
     if (isTyping) {
-      if (typedText.length < textOptions[currentTextIndex].length) {
+      if (typedText.length < heroData[currentTextIndex].length) {
         const timeout = setTimeout(() => {
-          setTypedText(textOptions[currentTextIndex].substring(0, typedText.length + 1));
+          setTypedText(heroData[currentTextIndex].substring(0, typedText.length + 1));
         }, 100);
         return () => clearTimeout(timeout);
       } else {
@@ -31,15 +25,15 @@ export default function Hero() {
     } else {
       if (typedText.length > 0) {
         const timeout = setTimeout(() => {
-          setTypedText(textOptions[currentTextIndex].substring(0, typedText.length - 1));
+          setTypedText(heroData[currentTextIndex].substring(0, typedText.length - 1));
         }, 50);
         return () => clearTimeout(timeout);
       } else {
         setIsTyping(true);
-        setCurrentTextIndex((currentTextIndex + 1) % textOptions.length);
+        setCurrentTextIndex((currentTextIndex + 1) % heroData.length);
       }
     }
-  }, [typedText, isTyping, currentTextIndex, textOptions]);
+  }, [typedText, isTyping, currentTextIndex, heroData]);
 
   return (
     <div className='mb-16 relative'>

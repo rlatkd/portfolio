@@ -1,41 +1,10 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { BarChart, Zap, Users, Coffee } from 'lucide-react';
+import { achievementData } from '@/data/site-data';
 
-const achievements = [
-  {
-    icon: <BarChart className='w-6 h-6 text-blue-400' />,
-    label: '완료 프로젝트',
-    endValue: 25,
-    suffix: '+',
-    gradient: 'from-blue-500/20 to-blue-600/20',
-  },
-  {
-    icon: <Users className='w-6 h-6 text-purple-400' />,
-    label: '만족 고객',
-    endValue: 18,
-    suffix: '',
-    gradient: 'from-purple-500/20 to-purple-600/20',
-  },
-  {
-    icon: <Zap className='w-6 h-6 text-green-400' />,
-    label: '개발 경력',
-    endValue: 5,
-    suffix: '년',
-    gradient: 'from-green-500/20 to-green-600/20',
-  },
-  {
-    icon: <Coffee className='w-6 h-6 text-orange-400' />,
-    label: '커피 소비량',
-    endValue: 1382,
-    suffix: '잔',
-    gradient: 'from-orange-500/20 to-orange-600/20',
-  }
-];
-
-export default function AchievementCounter() {
-  const [counts, setCounts] = useState(achievements.map(() => 0));
+export default function Achievement() {
+  const [counts, setCounts] = useState(achievementData.map(() => 0));
   const [hasAnimated, setHasAnimated] = useState(false);
   const sectionRef = useRef(null);
   
@@ -66,7 +35,7 @@ export default function AchievementCounter() {
   }, [hasAnimated]);
   
   const startCounting = () => {
-    achievements.forEach((achievement, index) => {
+    achievementData.forEach((achievement, index) => {
       const duration = 2000; // 애니메이션 지속 시간 (ms)
       const frameDuration = 1000 / 60; // 60fps
       const totalFrames = Math.round(duration / frameDuration);
@@ -98,7 +67,7 @@ export default function AchievementCounter() {
       </div>
       
       <div className='grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6'>
-        {achievements.map((achievement, index) => (
+        {achievementData.map((achievement, index) => (
           <div 
             key={index} 
             className='bg-white/5 backdrop-blur-sm rounded-xl p-6 hover:bg-white/10 transition-all text-center'

@@ -1,19 +1,168 @@
-import { ReactNode } from 'react';
-import { CreditCard, Users, ShoppingBag, MessageSquare, LineChart, Database, LayoutGrid, Image, Globe, Server, Briefcase, Shirt } from 'lucide-react';
+'use client';
 
-export interface ProjectTag {
-  name: string;
-  className: string;
-}
+import {
+  Briefcase, 
+  GraduationCap, 
+  Code, 
+  Pencil, 
+  Sparkles,
+  CreditCard, 
+  Users, 
+  ShoppingBag, 
+  MessageSquare, 
+  LineChart, 
+  Database, 
+  LayoutGrid, 
+  Image, 
+  Server, 
+  Shirt,
+  BarChart,
+  Zap,
+  Coffee
+} from 'lucide-react';
 
-export interface Project {
-  title: string;
-  description: string;
-  icon: ReactNode;
-  tags: ProjectTag[];
-}
+// 히어로
+export const heroData = [
+  '개발자.',
+  '문제 해결사.',
+  '경험 디자이너.',
+  '지속적 학습자.'
+];
 
-export const dummyProjects: Project[] = [
+// 특성
+export const characteristicData = [
+  {
+    icon: <Code className='w-6 h-6 text-blue-400' />,
+    title: '개발 & 기술',
+    description: '최신 웹 기술과 프레임워크를 활용한 확장 가능한 솔루션 구축',
+    gradient: 'from-blue-500/20 to-blue-600/20',
+  },
+  {
+    icon: <Pencil className='w-6 h-6 text-purple-400' />,
+    title: '디자인 & UX',
+    description: '사용자 중심의 직관적이고 접근성 높은 인터페이스 설계',
+    gradient: 'from-purple-500/20 to-purple-600/20',
+  },
+  {
+    icon: <Sparkles className='w-6 h-6 text-green-400' />,
+    title: '혁신 & 창의성',
+    description: '문제에 대한 창의적 접근과 지속적인 학습으로 혁신적 솔루션 제공',
+    gradient: 'from-green-500/20 to-green-600/20',
+  }
+];
+
+// 주요 성과
+export const achievementData = [
+  {
+    icon: <BarChart className='w-6 h-6 text-blue-400' />,
+    label: '완료 프로젝트',
+    endValue: 25,
+    suffix: '+',
+    gradient: 'from-blue-500/20 to-blue-600/20',
+  },
+  {
+    icon: <Users className='w-6 h-6 text-purple-400' />,
+    label: '만족 고객',
+    endValue: 18,
+    suffix: '',
+    gradient: 'from-purple-500/20 to-purple-600/20',
+  },
+  {
+    icon: <Zap className='w-6 h-6 text-green-400' />,
+    label: '개발 경력',
+    endValue: 5,
+    suffix: '년',
+    gradient: 'from-green-500/20 to-green-600/20',
+  },
+  {
+    icon: <Coffee className='w-6 h-6 text-orange-400' />,
+    label: '커피 소비량',
+    endValue: 1382,
+    suffix: '잔',
+    gradient: 'from-orange-500/20 to-orange-600/20',
+  }
+];
+
+// 타임라인
+export const timelineData = [
+  {
+    icon: <Briefcase className='w-5 h-5 text-blue-400' />,
+    title: '시니어 프론트엔드 개발자',
+    organization: '테크 기업',
+    period: '2023 - 현재',
+    description: '핵심 웹 애플리케이션 개발 및 최적화, 주니어 개발자 멘토링',
+    gradient: 'from-blue-500/20 to-blue-600/20',
+  },
+  {
+    icon: <Code className='w-5 h-5 text-purple-400' />,
+    title: '프론트엔드 개발자',
+    organization: '스타트업',
+    period: '2020 - 2023',
+    description: 'React 기반 사용자 인터페이스 구축 및 UX 개선 프로젝트 주도',
+    gradient: 'from-purple-500/20 to-purple-600/20',
+  },
+  {
+    icon: <GraduationCap className='w-5 h-5 text-green-400' />,
+    title: '컴퓨터 공학 학사',
+    organization: '대학교',
+    period: '2016 - 2020',
+    description: '웹 개발 및 사용자 경험 디자인 집중 과정 이수',
+    gradient: 'from-green-500/20 to-green-600/20',
+  }
+];
+
+// 기술 스택
+export const techniqueData = {
+  frontend: {
+    items: [
+      { name: 'React', level: 90 },
+      { name: 'Next.js', level: 85 },
+      { name: 'TypeScript', level: 80 },
+      { name: 'Tailwind CSS', level: 95 },
+      { name: 'CSS/SCSS', level: 90 },
+      { name: 'JavaScript', level: 95 }
+    ],
+    styles: {
+      primary: 'text-blue-400',
+      gradient: 'from-blue-500/20 to-blue-600/20',
+      progress: 'bg-blue-400'
+    },
+    label: '프론트엔드'
+  },
+  backend: {
+    items: [
+      { name: 'Node.js', level: 75 },
+      { name: 'Express', level: 70 },
+      { name: 'GraphQL', level: 65 },
+      { name: 'REST API', level: 85 },
+      { name: 'Firebase', level: 80 }
+    ],
+    styles: {
+      primary: 'text-purple-400',
+      gradient: 'from-purple-500/20 to-purple-600/20',
+      progress: 'bg-purple-400'
+    },
+    label: '백엔드'
+  },
+  tools: {
+    items: [
+      { name: 'Git', level: 90 },
+      { name: 'Figma', level: 75 },
+      { name: 'Docker', level: 65 },
+      { name: 'AWS', level: 60 },
+      { name: 'Testing', level: 70 }
+    ],
+    styles: {
+      primary: 'text-green-400',
+      gradient: 'from-green-500/20 to-green-600/20',
+      progress: 'bg-green-400'
+    },
+    label: '도구 & 기타'
+  }
+};
+
+// 프로젝트
+export const projectData = [
   {
     title: '자동 청구/결제 솔루션',
     description: '기업을 위한 자동화된 결제 및 청구 시스템으로, 구독 관리와 결제 프로세스를 간소화',
