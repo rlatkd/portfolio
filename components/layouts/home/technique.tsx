@@ -13,7 +13,6 @@ export default function Technique() {
 
   const handleCategoryChange = (category) => {
     if (category !== selectedCategory) {
-      // 언제든지 카테고리 변경 허용
       cleanupAnimations();
       setSelectedCategory(category);
       setShowPolygon(false);
@@ -21,7 +20,6 @@ export default function Technique() {
     }
   };
 
-  // 애니메이션 정리 함수
   const cleanupAnimations = () => {
     if (animationTimeoutRef.current) {
       clearTimeout(animationTimeoutRef.current);
@@ -42,7 +40,6 @@ export default function Technique() {
       let nextIndex = 0;
       animationIntervalRef.current = setInterval(() => {
         if (nextIndex >= techniqueData[selectedCategory].items.length) {
-          // 애니메이션 완료 처리
           clearInterval(animationIntervalRef.current);
           animationIntervalRef.current = null;
           return;
@@ -58,33 +55,44 @@ export default function Technique() {
       }, 100);
     }, 300);
 
-    // 컴포넌트 언마운트 또는 의존성 변경 시 정리
     return () => {
       cleanupAnimations();
     };
   }, [selectedCategory]);
 
+  const categoryStyles = techniqueData[visibleCategory].styles;
+
   return (
     <div id="tech-stack-section" className="mb-20 relative">
-      <div className='absolute -bottom-20 -right-20 w-40 h-40 bg-gradient-to-r from-blue-400/20 to-green-400/20 rounded-full blur-3xl'></div>
+      <div className='absolute -bottom-20 -right-20 w-40 h-40 rounded-full blur-3xl' style={{
+        background: `linear-gradient(to right, ${categoryStyles.gradientFrom}, ${categoryStyles.gradientTo})`,
+      }}></div>
 
       <div className='flex justify-between items-center mb-8'>
         <h2 className='text-2xl font-bold text-white/90 cursor-default'>기술 스택</h2>
       </div>
       <div className='flex flex-wrap gap-4 mb-8'>
-        {Object.keys(techniqueData).map((category) => (
-          <button
-            key={category}
-            onClick={() => handleCategoryChange(category)}
-            className={`px-4 py-2 rounded-lg transition-all ${
-              selectedCategory === category 
-                ? `bg-gradient-to-r ${techniqueData[category].styles.gradient} ${techniqueData[category].styles.primary}`
-                : 'bg-white/5 text-white/70 hover:bg-white/10'
-            }`}
-          >
-            {techniqueData[category].label}
-          </button>
-        ))}
+        {Object.keys(techniqueData).map((category) => {
+          const isSelected = selectedCategory === category;
+          const styles = techniqueData[category].styles;
+
+          return (
+            <button
+              key={category}
+              onClick={() => handleCategoryChange(category)}
+              className="px-4 py-2 rounded-lg transition-all"
+              style={isSelected ? {
+                background: `linear-gradient(to right, ${styles.gradientFrom}, ${styles.gradientTo})`,
+                color: styles.color,
+              } : {
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                color: 'rgba(255, 255, 255, 0.7)',
+              }}
+            >
+              {techniqueData[category].label}
+            </button>
+          );
+        })}
       </div>
       <div className='hidden md:block mb-8 relative'>
         <div className='w-full h-80 bg-white/5 backdrop-blur-sm rounded-xl p-4 flex items-center justify-center'>
@@ -92,8 +100,9 @@ export default function Technique() {
             {[20, 40, 60, 80, 100].map((level) => (
               <div 
                 key={level}
-                className='absolute rounded-full border border-white/10'
+                className='absolute rounded-full border'
                 style={{
+                  borderColor: 'rgba(255, 255, 255, 0.1)',
                   top: `${50 - level/2}%`,
                   left: `${50 - level/2}%`,
                   width: `${level}%`,
@@ -114,8 +123,9 @@ export default function Technique() {
               return (
                 <div 
                   key={skill.name}
-                  className={`absolute h-3 w-3 rounded-full ${techniqueData[visibleCategory].styles.progress} transition-all duration-700`}
+                  className='absolute h-3 w-3 rounded-full transition-all duration-700'
                   style={{
+                    backgroundColor: categoryStyles.backgroundColor,
                     opacity: animatedSkills.includes(index) ? 1 : 0,
                     transform: `translate(${x}rem, ${y}rem)`,
                     top: '50%',
@@ -124,9 +134,12 @@ export default function Technique() {
                     marginTop: '-0.375rem',
                   }}
                 >
-                  <div className={`absolute whitespace-nowrap transform ${
-                    angle > Math.PI ? 'translate-y-4 -translate-x-1/2' : '-translate-y-6 -translate-x-1/2'
-                  } text-sm font-medium ${techniqueData[visibleCategory].styles.primary}`}>
+                  <div
+                    className={`absolute whitespace-nowrap transform ${
+                      angle > Math.PI ? 'translate-y-4 -translate-x-1/2' : '-translate-y-6 -translate-x-1/2'
+                    } text-sm font-medium`}
+                    style={{ color: categoryStyles.color }}
+                  >
                     {skill.name}
                   </div>
                 </div>
@@ -137,24 +150,27 @@ export default function Technique() {
                 className='absolute inset-0 w-full h-full' 
                 style={{ transform: 'rotate(-90deg)' }}
               >
-                <polygon 
+                {/* <polygon 
                   points={techniqueData[visibleCategory].items
                     .map((skill, index) => {
                       if (!animatedSkills.includes(index)) return '';
                       const angle = (index * (360 / techniqueData[visibleCategory].items.length)) * (Math.PI / 180);
                       const radius = (skill.level / 100) * 32;
-                      const x = Math.round((32 + Math.cos(angle) * radius) * 100) / 100;
-                      const y = Math.round((32 + Math.sin(angle) * radius) * 100) / 100;
+                      const x = (32 + Math.cos(angle) * radius).toFixed(2);
+                      const y = (32 + Math.sin(angle) * radius).toFixed(2);
                       return `${x},${y}`;
                     })
                     .filter(Boolean)
                     .join(' ')
                   }
-                  className={`${techniqueData[visibleCategory].styles.progress} opacity-20 transition-all duration-500`}
+                  style={{
+                    fill: categoryStyles.backgroundColor,
+                    stroke: categoryStyles.backgroundColor,
+                    opacity: 0.2,
+                    transition: 'all 0.5s',
+                  }}
                   strokeWidth="1"
-                  stroke={techniqueData[visibleCategory].styles.progress}
-                  fill={techniqueData[visibleCategory].styles.progress}
-                />
+                /> */}
               </svg>
             )}
           </div>
@@ -168,13 +184,14 @@ export default function Technique() {
           >
             <div className='flex justify-between mb-2'>
               <span className='font-medium text-white/90'>{skill.name}</span>
-              <span className={`${techniqueData[visibleCategory].styles.primary}`}>{skill.level}%</span>
+              <span style={{ color: categoryStyles.color }}>{skill.level}%</span>
             </div>
             <div className='w-full h-2 bg-white/10 rounded-full overflow-hidden'>
               <div 
-                className={`h-full ${techniqueData[visibleCategory].styles.progress} transition-all duration-1000 ease-out`}
+                className='h-full transition-all duration-1000 ease-out'
                 style={{ 
                   width: animatedSkills.includes(index) ? `${skill.level}%` : '0%',
+                  backgroundColor: categoryStyles.backgroundColor,
                 }}
               ></div>
             </div>

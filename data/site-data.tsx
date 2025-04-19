@@ -111,7 +111,6 @@ export const timelineData = [
   }
 ];
 
-// 기술 스택
 export const techniqueData = {
   frontend: {
     items: [
@@ -123,9 +122,10 @@ export const techniqueData = {
       { name: 'JavaScript', level: 95 }
     ],
     styles: {
-      primary: 'text-blue-400',
-      gradient: 'from-blue-500/20 to-blue-600/20',
-      progress: 'bg-blue-400'
+      color: '#60A5FA',
+      backgroundColor: '#60A5FA',
+      gradientFrom: 'rgba(96, 165, 250, 0.2)',
+      gradientTo: 'rgba(37, 99, 235, 0.2)',
     },
     label: '프론트엔드'
   },
@@ -138,9 +138,10 @@ export const techniqueData = {
       { name: 'Firebase', level: 80 }
     ],
     styles: {
-      primary: 'text-purple-400',
-      gradient: 'from-purple-500/20 to-purple-600/20',
-      progress: 'bg-purple-400'
+      color: '#C084FC',
+      backgroundColor: '#C084FC',
+      gradientFrom: 'rgba(192, 132, 252, 0.2)',
+      gradientTo: 'rgba(139, 92, 246, 0.2)',
     },
     label: '백엔드'
   },
@@ -153,9 +154,10 @@ export const techniqueData = {
       { name: 'Testing', level: 70 }
     ],
     styles: {
-      primary: 'text-green-400',
-      gradient: 'from-green-500/20 to-green-600/20',
-      progress: 'bg-green-400'
+      color: '#4ADE80',
+      backgroundColor: '#4ADE80',
+      gradientFrom: 'rgba(74, 222, 128, 0.2)',
+      gradientTo: 'rgba(34, 197, 94, 0.2)',
     },
     label: '도구 & 기타'
   }
