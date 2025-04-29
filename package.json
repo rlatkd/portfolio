@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "npm run open && next dev",
     "open": "node opener.js",
-    "build": "next build --no-lint",
+    "build": "next build",
     "start": "next start"
   },
   "dependencies": {

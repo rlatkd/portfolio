@@ -20,7 +20,7 @@
         "name": "next"
       }
     ],
-    "strictNullChecks": false, // TODO 나중에 true 원복(임시배포)
+    "strictNullChecks": true,
     "paths": {
       "@/*": ["./*"]
     },
