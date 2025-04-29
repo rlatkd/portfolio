@@ -7,8 +7,8 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   title: {
-    default: 'xops',
-    template: 'xops',
+    default: 'sanghunkim',
+    template: 'shk',
   },
   description: 'This is my portfolio.',
   openGraph: {

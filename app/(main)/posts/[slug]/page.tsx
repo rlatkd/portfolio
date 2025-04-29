@@ -36,7 +36,7 @@ export default async function Page({ params }) {
             url: `${baseUrl}/posts/${post.metadata.index}`,
             author: {
               '@type': 'Person',
-              name: 'xops',
+              name: 'shk',
             },
           }),
         }}

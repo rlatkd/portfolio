@@ -19,7 +19,7 @@ export default function Footer() {
             </a>
             ) <br />
             © {new Date().getFullYear()}.{' '}
-            xops All rights reserved.
+            Sanghun Kim All rights reserved.
           </p>
 
           <div className='flex items-center md:ml-auto gap-6'>

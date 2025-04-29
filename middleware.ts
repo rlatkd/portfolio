@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  const hasActiveSession = request.cookies.has('xops');
+  const hasActiveSession = request.cookies.has('shk');
   const referer = request.headers.get('referer') || '';
   const hostname = request.headers.get('host') || '';
   const isExternalReferer = !referer || !referer.includes(hostname);

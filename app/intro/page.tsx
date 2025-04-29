@@ -45,7 +45,7 @@ export default function Page() {
   }, [router]);
   
   const setCookieAndRedirect = () => {
-    document.cookie = 'xops=true; path=/';
+    document.cookie = 'shk=true; path=/';
     router.push('/');
   };
   
@@ -80,7 +80,7 @@ export default function Page() {
                               backgroundSize: '200% 100%',
                               animation: 'shimmer 2s infinite linear'
                             }}>
-                        X-Operations
+                        SANG HUN KIM
                       </span>
                       <div className='h-0.5 w-0 bg-gradient-to-r from-blue-400 to-purple-600 mt-1 mx-auto
                                     animate-expand'
