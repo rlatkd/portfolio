@@ -87,26 +87,59 @@ export const achievementData = [
 export const timelineData = [
   {
     icon: <Briefcase className='w-5 h-5 text-blue-400' />,
-    title: '시니어 프론트엔드 개발자',
-    organization: '테크 기업',
-    period: '2023 - 현재',
-    description: '핵심 웹 애플리케이션 개발 및 최적화, 주니어 개발자 멘토링',
+    title: 'Full-stack Developer',
+    organization: 'HyosungFMS Inc.',
+    period: '2024/09 - 현재',
+    description: (
+      <ul className="list-disc pl-5 space-y-1">
+        <li>풀스택 개발자</li>
+      </ul>
+    ),
     gradient: 'from-blue-500/20 to-blue-600/20',
   },
   {
     icon: <Code className='w-5 h-5 text-purple-400' />,
-    title: '프론트엔드 개발자',
-    organization: '스타트업',
-    period: '2020 - 2023',
-    description: 'React 기반 사용자 인터페이스 구축 및 UX 개선 프로젝트 주도',
+    title: '교육 이수',
+    organization: '효성에프엠에스',
+    period: '2024/02 - 2024/08',
+    description: (
+      <ul className="list-disc pl-5 space-y-1">
+        <li>Spring Boot</li>
+        <li>MATLAB</li>
+        <li>DeepLearning</li>
+      </ul>
+    ),
+    gradient: 'from-purple-500/20 to-purple-600/20',
+  },
+  {
+    icon: <Code className='w-5 h-5 text-purple-400' />,
+    title: '교육 이수',
+    organization: '신세계아이앤씨',
+    period: '2023/08 - 2024/02',
+    description: (
+      <ul className="list-disc pl-5 space-y-1">
+        <li>Flask</li>
+        <li>React</li>
+        <li>Docker</li>
+        <li>Kubernetes</li>
+        <li>AWS</li>
+        <li>Terraform</li>
+      </ul>
+    ),
     gradient: 'from-purple-500/20 to-purple-600/20',
   },
   {
     icon: <GraduationCap className='w-5 h-5 text-green-400' />,
-    title: '컴퓨터 공학 학사',
-    organization: '대학교',
-    period: '2016 - 2020',
-    description: '웹 개발 및 사용자 경험 디자인 집중 과정 이수',
+    title: '생체의공학 학사',
+    organization: '경희대학교',
+    period: '2016/03 - 2023/02',
+    description: (
+      <ul className="list-disc pl-5 space-y-1">
+        <li>Embeded HW</li>
+        <li>MATLAB</li>
+        <li>DeepLearning</li>
+      </ul>
+    ),
     gradient: 'from-green-500/20 to-green-600/20',
   }
 ];

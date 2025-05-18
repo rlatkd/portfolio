@@ -31,7 +31,7 @@ export async function GET() {
     <channel>
         <title>shk</title>
         <link>${baseUrl}</link>
-        <description>Catalog for Sanghun Kim</description>
+        <description>sanghunkim</description>
         ${itemsXml}
     </channel>
   </rss>`

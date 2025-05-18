@@ -12,7 +12,7 @@ export default function Timeline() {
       <div className='absolute -bottom-20 -right-20 w-40 h-40 bg-gradient-to-r from-purple-400/20 to-blue-400/20 rounded-full blur-3xl'></div>
       
       <div className='flex justify-between items-center mb-8'>
-        <h2 className='text-2xl font-bold text-white/90 cursor-default'>경력 타임라인</h2>
+        <h2 className='text-2xl font-bold text-white/90 cursor-default'>타임라인</h2>
       </div>
       
       <div className='relative z-10'>

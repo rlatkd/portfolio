@@ -19,7 +19,7 @@ export default function Footer() {
             </a>
             ) <br />
             © {new Date().getFullYear()}.{' '}
-            Sanghun Kim All rights reserved.
+            sanghunkim All rights reserved.
           </p>
 
           <div className='flex items-center md:ml-auto gap-6'>
