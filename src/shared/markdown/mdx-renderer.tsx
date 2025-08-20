@@ -1,8 +1,8 @@
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { CodeCopier } from '@/components/posts/code-copier';
-import { ContentTable } from '@/components/markdown/content-table';
-import { Linker } from '@/components/markdown/linker';
-import { HashLevel } from '@/components/markdown/hash-level';
+import { CodeCopier } from '@/entities/Post/ui/CodeCopier';
+import { ContentTable } from '@/shared/markdown/content-table';
+import { Linker } from '@/shared/markdown/linker';
+import { HashLevel } from '@/shared/markdown/hash-level';
 
 export function MdxRenderer(props) {
   return (

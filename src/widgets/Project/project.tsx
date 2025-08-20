@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { projectData } from '@/data/site-data';
+import { projectData } from '@/shared/data/site-data';
 
 export default function Project() {
   const carouselRef = useRef(null);

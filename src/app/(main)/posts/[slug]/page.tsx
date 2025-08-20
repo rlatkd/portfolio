@@ -1,13 +1,13 @@
 import { FaList } from 'react-icons/fa';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import Comments from '@/components/posts/comments';
-import { MdxRenderer } from '@/components/markdown/mdx-renderer';
-import PostRecommends from '@/components/posts/post-recommend';
-import Navigation from '@/components/posts/navigation';
+import Comments from '@/features/CommentForm/CommentForm';
+import { MdxRenderer } from '@/shared/markdown/mdx-renderer';
+import PostRecommends from '@/features/PostRecommend/PostRecommend';
+import Navigation from '@/entities/Post/ui/Navigation';
 import { formatDate, getPosts } from '@/shared/lib/markdown';
 import { baseUrl } from '@/shared/utils/sitemap';
-import { TableOfContents } from '@/components/posts/table-of-contents';
+import { TableOfContents } from '@/entities/Post/ui/TableOfContents';
 
 export default async function Page({ params }) {
   const posts = await getPosts();

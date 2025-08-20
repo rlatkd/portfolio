@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { achievementData } from '@/data/site-data';
+import { achievementData } from '@/shared/data/site-data';
 
 export default function Achievement() {
   const [counts, setCounts] = useState(achievementData.map(() => 0));

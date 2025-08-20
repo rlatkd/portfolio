@@ -3,7 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 import { unstable_noStore as noStore } from 'next/cache';
-import { getPostContents } from '@/shared/utils/postContents';
+import { getPostContents } from '@/shared/markdown/postContents';
 
 type Metadata = {
   index: string

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Calendar } from 'lucide-react';
-import { timelineData } from '@/data/site-data';
+import { timelineData } from '@/shared/data/site-data';
 
 export default function Timeline() {
   const [activeItem, setActiveItem] = useState(null);

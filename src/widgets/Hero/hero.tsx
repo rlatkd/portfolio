@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { heroData } from '@/data/site-data';
+import { heroData } from '@/shared/data/site-data';
 
 export default function Hero() {
   const [typedText, setTypedText] = useState('');

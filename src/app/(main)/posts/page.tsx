@@ -1,7 +1,7 @@
 import { getPosts } from '@/shared/lib/markdown';
-import { Posts } from '@/components/ui/posts';
-import Pagination from '@/components/posts/pagination';
-import Categories from '@/components/posts/categories';
+import { Posts } from '@/entities/Post/ui/Posts';
+import Pagination from '@/entities/Post/ui/Pagination';
+import Categories from '@/entities/Post/ui/Categories';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 

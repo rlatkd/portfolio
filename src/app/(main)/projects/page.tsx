@@ -29,7 +29,7 @@
 
 import { useState, useEffect } from 'react';
 import { Filter, Code, Briefcase, GraduationCap, ArrowRight, LucideIcon } from 'lucide-react';
-import { projectData } from '@/data/site-data';
+import { projectData } from '@/shared/data/site-data';
 import Link from 'next/link';
 
 const categories = [

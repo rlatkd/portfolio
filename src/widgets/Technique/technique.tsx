@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { techniqueData } from '@/data/site-data';
+import { techniqueData } from '@/shared/data/site-data';
 
 export default function Technique() {
   const [selectedCategory, setSelectedCategory] = useState('frontend');

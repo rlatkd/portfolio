@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { FaList } from 'react-icons/fa';
 import Link from 'next/link';
-import { MdxRenderer } from '@/components/markdown/mdx-renderer';
+import { MdxRenderer } from '@/shared/markdown/mdx-renderer';
 import { formatDate, getProjects } from '@/shared/lib/markdown';
 
 export default async function Page({ params }) {

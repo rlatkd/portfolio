@@ -1,6 +1,6 @@
 'use client';
 
-import { characteristicData } from '@/data/site-data';
+import { characteristicData } from '@/shared/data/site-data';
 
 export default function Characteristics() {
   return (
