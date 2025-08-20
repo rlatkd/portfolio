@@ -1,3 +1,14 @@
+#
+```bash
+if use pnpm (recommend)
+pnpm install
+pnpm run dev
+
+if use npm
+npm install
+npm run dev
+```
+
 ### TODO
 
 - ~~Interceptor로 라우팅 벗어나는거 캐치~~
