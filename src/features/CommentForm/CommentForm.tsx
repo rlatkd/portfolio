@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { CommentType } from '@/shared/lib/models';
+import { CommentType } from '@/shared/lib/database/models';
 import { MessageSquare, CornerDownRight, Send, User } from 'lucide-react';
 
 interface CommentsProps {
