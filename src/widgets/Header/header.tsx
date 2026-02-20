@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
@@ -9,8 +9,20 @@ import { routing } from '@/shared/config/routing';
 export function Header() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isOpen && menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
 
   return (
     <aside className='tracking-tight mb-32'>
@@ -67,12 +79,10 @@ export function Header() {
 
         {/* Mobile Menu Dropdown */}
         {isOpen && (
-          <>
-            <div 
-              className='md:hidden fixed inset-0 top-16 bg-black/50 z-40' 
-              onClick={() => setIsOpen(false)}
-            />
-            <div className='md:hidden absolute top-16 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-white/10 z-50'>
+          <div 
+            ref={menuRef}
+            className='md:hidden absolute top-16 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-white/10 z-50'
+          >
             <div className='flex flex-col py-4 px-4 space-y-4'>
               {pathname && Object.entries(routing)
                 .filter(([path]) => path !== '/')
@@ -94,9 +104,8 @@ export function Header() {
                     </Link>
                   );
                 })}
-              </div>
             </div>
-          </>
+          </div>
         )}
       </div>
     </aside>
