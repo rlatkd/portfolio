@@ -23,7 +23,6 @@
 }
 
 html {
-  min-width: 360px;
   color-scheme: dark;
   background-color: #0f172a;
   color: hsl(var(--color-white));
