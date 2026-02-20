@@ -75,7 +75,7 @@ export default function Projects() {
   const specialProjectColor = getCategoryColor(specialProject.category);
 
   return (
-    <section className='max-w-4xl mx-auto'>
+    <section className='max-w-4xl mx-auto px-4 md:px-0'>
       <div className='mb-16 relative'>
         <div className='absolute -top-20 -left-20 w-60 h-60 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-3xl'></div>
         <div className='relative z-10'>

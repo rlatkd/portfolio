@@ -13,7 +13,7 @@ export default async function Page({ params }) {
   if (!project) notFound()
 
   return (
-    <section>
+    <section className='max-w-4xl mx-auto px-4 md:px-0'>
        <div className='flex justify-between items-center'>
         <h1 className='title font-semibold text-2xl tracking-tighter'>
           {project.metadata.title}
@@ -31,7 +31,7 @@ export default async function Page({ params }) {
           views
         </p>
       </div>
-      <article className='prose w-4/6 mx-auto'>
+      <article className='prose w-full'>
         <MdxRenderer source={project.content} />
       </article>
     </section>

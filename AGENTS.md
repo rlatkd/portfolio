@@ -49,6 +49,17 @@
    - 모바일에서 `max-w-6xl` 제한 제거 (데스크톱에서만 적용)
    - html에 `overflow-x: hidden` 추가
 
+### 2026-02-21 (KST): 페이지 레이아웃 통일
+1. **모든 페이지 레이아웃统一** (`src/app/(main)/*/page.tsx`)
+   - 메인 페이지와 동일하게 `max-w-4xl mx-auto px-4 md:px-0` 패턴 적용
+   - 수정된 파일:
+     - `posts/[slug]/page.tsx`: w-4/6 → max-w-4xl
+     - `posts/page.tsx`: px-4 md:px-0 추가
+     - `projects/page.tsx`: px-4 md:px-0 추가
+     - `projects/[projectId]/page.tsx`: w-4/6 → max-w-4xl
+     - `career/page.tsx`: 레이아웃 클래스 추가
+     - `contact/page.tsx`: 레이아웃 클래스 추가
+
 ### 2026-02-20 (KST): TOC 스크롤 위치 이동 수정
 1. **TOC 위치 이동 구현** (`src/entities/Post/ui/TableOfContents.tsx`)
    - 헤더 스크롤 위치에 따라 TOC가 위아래로 움직이도록 수정

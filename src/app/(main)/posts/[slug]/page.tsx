@@ -41,38 +41,35 @@ export default async function Page({ params }) {
           }),
         }}
       />
-      <div className='flex justify-between items-center w-4/6 mx-auto'>
-        <h1 className='title font-semibold text-2xl tracking-tighter cursor-default'>
-          {post.metadata.title}
-        </h1>
-        <Link href='/posts' className='flex items-center text-neutral-700 dark:text-neutral-200 hover:text-neutral-400'>
-          <FaList />
-        </Link>
-      </div>
-      <div className='flex justify-between items-center mt-2 text-sm w-4/6 mx-auto'>
-        <p className='mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default'>
-          {formatDate(post.metadata.publishedAt)}
-        </p>
-        {/* TODO DataBase(RDB or NoSQL) 연결 필요 */}
-        <p className='mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default'>
-          views
-        </p>
-      </div>
-      <div className='flex'>
-        <div className='w-4/6'>
-          <article className='prose prose-lg max-w-none w-full ml-[25%]'>
-            <MdxRenderer source={post.content} />
-          </article>
+      <div className='max-w-4xl mx-auto px-4 md:px-0'>
+        <div className='flex justify-between items-center'>
+          <h1 className='title font-semibold text-2xl tracking-tighter cursor-default'>
+            {post.metadata.title}
+          </h1>
+          <Link href='/posts' className='flex items-center text-neutral-700 dark:text-neutral-200 hover:text-neutral-400'>
+            <FaList />
+          </Link>
         </div>
-        <div className='hidden md:block fixed top-60 right-[max(0px,calc(50%-690px))] w-80 p-6'>
+        <div className='flex justify-between items-center mt-2 text-sm'>
+          <p className='mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default'>
+            {formatDate(post.metadata.publishedAt)}
+          </p>
+          <p className='mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default'>
+            views
+          </p>
+        </div>
+        <article className='prose prose-lg max-w-none w-full'>
+          <MdxRenderer source={post.content} />
+        </article>
+        <div className='hidden md:block fixed top-60 right-[max(0px,calc(50%-750px))] w-80 p-6'>
           <TableOfContents contents={post.tableContents}></TableOfContents>
         </div>
-      </div>
-      <div className='w-4/6 mx-auto'>
         <Navigation currentPost={currentPost} />
       </div>
-      <Comments postId={currentPost.toString()}/>
-      <PostRecommends posts={posts} currentPostIndex={currentPost} />
+      <div className='max-w-4xl mx-auto px-4 md:px-0'>
+        <Comments postId={currentPost.toString()}/>
+        <PostRecommends posts={posts} currentPostIndex={currentPost} />
+      </div>
     </section>
   )
 }
