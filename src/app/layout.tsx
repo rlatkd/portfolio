@@ -59,14 +59,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head> */}
       <body className='antialiased max-w-6xl mx-auto px-4 md:px-0 overflow-x-hidden'>
-        <div className='fixed inset-0 bg-gradient-to-r from-black/95 to-gray-900/95 blur-3xl -z-10'></div>
         <main className='flex-auto min-w-0 flex flex-col'>
-          <div>
-            {children}
-          </div>
+          {children}
           <Analytics />
           <SpeedInsights />
-       </main>
+        </main>
       </body>
     </html>
   )
