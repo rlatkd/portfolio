@@ -59,12 +59,14 @@ export const CircleSkeleton = ({
 export const ImageSkeleton = ({ 
   width = '100%', 
   height = '200px', 
-  className = '' 
+  className = '',
+  rounded = 'rounded-lg'
 }) => {
   return (
     <Skeleton 
       width={width} 
       height={height}
+      rounded={rounded}
       className={className}
     />
   );

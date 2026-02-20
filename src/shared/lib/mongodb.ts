@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'development') {
     client = new MongoClient(uri, options);
     globalWithMongo._mongoClientPromise = client.connect();
   }
-  clientPromise = globalWithMongo._mongoClientPromise;
+  clientPromise = globalWithMongo._mongoClientPromise as Promise<MongoClient>;
 } else {
   // 프로덕션 환경에서는 새 연결 생성
   client = new MongoClient(uri, options);

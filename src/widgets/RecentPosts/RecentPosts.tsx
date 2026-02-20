@@ -6,8 +6,8 @@ import { ArrowRight, Calendar, Clock, Bookmark } from 'lucide-react';
 import { getPosts } from '@/shared/lib/markdown';
 
 export default function Post() {
-  const [isHovering, setIsHovering] = useState(null);
-  const [posts, setPosts] = useState([]);
+  const [isHovering, setIsHovering] = useState<string | null>(null);
+  const [posts, setPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

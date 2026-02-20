@@ -5,11 +5,11 @@ import { techniqueData } from '@/shared/data/site-data';
 
 export default function Technique() {
   const [selectedCategory, setSelectedCategory] = useState('frontend');
-  const [animatedSkills, setAnimatedSkills] = useState([]);
+  const [animatedSkills, setAnimatedSkills] = useState<number[]>([]);
   const [visibleCategory, setVisibleCategory] = useState('frontend');
   const [showPolygon, setShowPolygon] = useState(false);
-  const animationTimeoutRef = useRef(null);
-  const animationIntervalRef = useRef(null);
+  const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const animationIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const handleCategoryChange = (category) => {
     if (category !== selectedCategory) {
@@ -40,7 +40,9 @@ export default function Technique() {
       let nextIndex = 0;
       animationIntervalRef.current = setInterval(() => {
         if (nextIndex >= techniqueData[selectedCategory].items.length) {
-          clearInterval(animationIntervalRef.current);
+          if (animationIntervalRef.current) {
+            clearInterval(animationIntervalRef.current);
+          }
           animationIntervalRef.current = null;
           return;
         }

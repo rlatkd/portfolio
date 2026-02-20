@@ -5,7 +5,7 @@ import { Mail, Send } from 'lucide-react';
 
 export default function Newsletter() {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState(null); // null, 'success', 'error', 'loading'
+  const [status, setStatus] = useState<string | null>(null); // null, 'success', 'error', 'loading'
   
   const handleSubmit = (e) => {
     e.preventDefault();

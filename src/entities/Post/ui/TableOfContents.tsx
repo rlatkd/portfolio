@@ -11,8 +11,12 @@ export function TableOfContents({ contents }) {
   const pathname = usePathname();
   const headerHeight = 80;
   
-  const lastUserActionRef = useRef({
-    type: null, // 'click' 또는 'scroll'
+  const lastUserActionRef = useRef<{
+    type: string | null;
+    time: number;
+    section: string;
+  }>({
+    type: null,
     time: 0,
     section: ''
   });

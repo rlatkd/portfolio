@@ -40,7 +40,7 @@ export async function POST(request: NextRequest, { params }: { params: { postId:
     const client = await clientPromise;
     const db = client.db('posts');
     const now = new Date();
-    const newComment: CommentType = {
+    const newComment = {
       postId: postId,
       userName,
       content,

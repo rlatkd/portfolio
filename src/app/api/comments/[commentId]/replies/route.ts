@@ -69,7 +69,7 @@ export async function POST(request: NextRequest, { params }: { params: { comment
   
     const result = await db.collection('comments').updateOne(
       { _id: objectCommentId },
-      { $push: { replies: newReply } }
+      { $push: { replies: newReply } } as any
     );
     
     if (result.matchedCount === 0) {

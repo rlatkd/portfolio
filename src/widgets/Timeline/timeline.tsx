@@ -5,7 +5,7 @@ import { Calendar } from 'lucide-react';
 import { timelineData } from '@/shared/data/site-data';
 
 export default function Timeline() {
-  const [activeItem, setActiveItem] = useState(null);
+  const [activeItem, setActiveItem] = useState<number | null>(null);
   
   return (
     <div className='mb-20 relative'>
@@ -40,7 +40,7 @@ export default function Timeline() {
                 </div>
                 
                 <p className='text-white/70 font-medium mb-2 cursor-default'>{item.organization}</p>
-                <p className='text-white/70 cursor-default'>{item.description}</p>
+                <div className='text-white/70 cursor-default'>{item.description}</div>
               </div>
             </div>
           ))}

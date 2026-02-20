@@ -6,9 +6,9 @@ import { ArrowRight } from 'lucide-react';
 import { projectData } from '@/shared/data/site-data';
 
 export default function Project() {
-  const carouselRef = useRef(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const [isPaused, setIsPaused] = useState(false);
-  const [hoveredProject, setHoveredProject] = useState(null);
+  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
 
   const cardWidth = 480;
   const cardMargin = 24;

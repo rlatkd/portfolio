@@ -32,7 +32,7 @@ export default async function Page({ params }) {
             description: post.metadata.summary,
             image: post.metadata.image
               ? `${baseUrl}${post.metadata.image}`
-              : `/og?title=${encodeURIComponent(post.metadata.title)}`,
+              : `/og?title=${encodeURIComponent(post.metadata.title || '')}`,
             url: `${baseUrl}/posts/${post.metadata.index}`,
             author: {
               '@type': 'Person',
@@ -64,7 +64,7 @@ export default async function Page({ params }) {
             <MdxRenderer source={post.content} />
           </article>
         </div>
-        <div className='sticky top-20 self-start w-80 p-6 mr-[-15%]'>
+        <div className='hidden md:block sticky top-20 self-start w-80 p-6 mr-[-15%]'>
           <TableOfContents contents={post.tableContents}></TableOfContents>
         </div>
       </div>

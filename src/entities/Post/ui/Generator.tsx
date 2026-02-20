@@ -4,15 +4,15 @@ import { getPosts } from '@/shared/lib/markdown';
 const baseUrl = 'localhost:3000'
 
 export async function generateStaticParams() {
-  let posts = getPosts()
+  let posts = await getPosts()
 
   return posts.map((post) => ({
     slug: post.metadata.index.toString(),
   }))
 }
 
-export function generateMetadata({ params }) {
-  let post = getPosts().find((post) => post.metadata.index.toString() === params.slug)
+export async function generateMetadata({ params }) {
+  let post = (await getPosts()).find((post) => post.metadata.index.toString() === params.slug)
   if (!post) {
     return;
   }
@@ -25,7 +25,7 @@ export function generateMetadata({ params }) {
   } = post.metadata
   let ogImage = image
     ? image
-    : `${baseUrl}/og?title=${encodeURIComponent(title)}`
+    : `${baseUrl}/og?title=${encodeURIComponent(title || '')}`
 
   return {
     title,

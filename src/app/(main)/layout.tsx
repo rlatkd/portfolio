@@ -1,6 +1,6 @@
 import '/styles/global.css';
-import Footer from '@/widgets/Footer/Footer';
-import { Header } from '@/widgets/Header/Header';
+import Footer from '@/widgets/Footer/footer';
+import { Header } from '@/widgets/Header/header';
 
 type LayoutProps = {
   children: React.ReactNode,

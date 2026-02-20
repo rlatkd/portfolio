@@ -22,7 +22,8 @@
     ],
     "strictNullChecks": true,
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@/styles/*": ["styles/*"]
     },
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "opener.js"],

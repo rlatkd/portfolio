@@ -6,7 +6,7 @@ import { getPosts } from '@/shared/lib/markdown';
 export const baseUrl = 'http://localhost:3000'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  let blogs = getPosts().map((post) => ({
+  let blogs = (await getPosts()).map((post) => ({
     url: `${baseUrl}/posts/${post.slug}`,
     lastModified: post.metadata.publishedAt,
   }))

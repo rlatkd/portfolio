@@ -1,10 +1,10 @@
-import Hero from '@/widgets/Hero/Hero';
-import Characteristics from '@/widgets/Characteristic/Characteristic';
-import Newsletter from '@/widgets/Newsletter/Newsletter';
-import Timeline from '@/widgets/Timeline/Timeline';
+import Hero from '@/widgets/Hero/hero';
+import Characteristics from '@/widgets/Characteristic/characteristic';
+import Newsletter from '@/widgets/Newsletter/newsletter';
+import Timeline from '@/widgets/Timeline/timeline';
 import Achievement from '@/widgets/Achievement/Achievement';
-import Technique from '@/widgets/Technique/Technique';
-import Project from '@/widgets/Project/Project';
+import Technique from '@/widgets/Technique/technique';
+import Project from '@/widgets/Project/project';
 import Post from '@/widgets/RecentPosts/RecentPosts';
 
 export default function Page() {
