@@ -6,7 +6,7 @@ import { MdxRenderer } from '@/shared/markdown/mdx-renderer';
 import PostRecommends from '@/features/PostRecommend/PostRecommend';
 import Navigation from '@/entities/Post/ui/Navigation';
 import { formatDate, getPosts } from '@/shared/lib/markdown';
-import { baseUrl } from '@/shared/utils/sitemap';
+import { baseUrl } from '@/app/sitemap';
 import { TableOfContents } from '@/entities/Post/ui/TableOfContents';
 
 export default async function Page({ params }) {

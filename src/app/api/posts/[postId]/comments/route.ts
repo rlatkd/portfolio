@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import clientPromise from '@/shared/lib/mongodb';
-import { CommentType } from '@/shared/lib/models';
+import clientPromise from '@/shared/lib/database/mongodb';
+import { CommentType } from '@/shared/lib/database/models';
 
 export async function GET(request: NextRequest, { params }: { params: { postId: string } }) {
   const { postId } = params;

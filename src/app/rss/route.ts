@@ -1,4 +1,4 @@
-import { baseUrl } from '@/shared/utils/sitemap';
+import { baseUrl } from '@/app/sitemap';
 import { getPosts } from '@/shared/lib/markdown';
 
 // baseURL/rss

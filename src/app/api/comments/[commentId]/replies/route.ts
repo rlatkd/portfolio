@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import clientPromise from '@/shared/lib/mongodb';
+import clientPromise from '@/shared/lib/database/mongodb';
 import { ObjectId } from 'mongodb';
 
 export async function GET(request: NextRequest, { params }: { params: { commentId: string } }) {
