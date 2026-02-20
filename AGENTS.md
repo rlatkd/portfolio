@@ -49,9 +49,18 @@
    - 모바일에서 `max-w-6xl` 제한 제거 (데스크톱에서만 적용)
    - html에 `overflow-x: hidden` 추가
 
-## 다음 작업
-- 모바일 환경 추가 테스트
--其它 레이아웃 이슈 수정 필요시 진행
+### 2026-02-20 (KST): TOC 스크롤 위치 이동 수정
+1. **TOC 위치 이동 구현** (`src/entities/Post/ui/TableOfContents.tsx`)
+   - 헤더 스크롤 위치에 따라 TOC가 위아래로 움직이도록 수정
+   - `tocTranslate` 상태 추가 및 `checkNavigationVisibility` 로직 변경
+   - 헤더가 화면에서 사라지면 TOC도 따라내려오고, 나타나면 원래 위치로 복귀
+   - 后来改为opacity만 변경, 위치 이동 제거
+
+2. **TOC 컨테이너 수정** (`src/app/(main)/posts/[slug]/page.tsx`)
+   - sticky → fixed로 변경하여 자유로운 위치 이동 가능
+   - 모바일에서는 숨기고 데스크톱에서만 표시 (`hidden md:block`)
+   - 우측 위치 조정을 위해 `right-[max(0px,calc(50%-640px))]` 사용
+   - 상단 위치 `top-28`로 조정
 
 ## 작업 규칙 (Rule)
 - 코드 수정/추가 작업이 끝날 때마다, 변경 사항을 AGENTS.md의 "현재 작업 내용" 섹션에 날짜와 함께 기록할 것

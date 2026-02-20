@@ -58,13 +58,13 @@ export default async function Page({ params }) {
           views
         </p>
       </div>
-      <div className='flex justify-between'>
-        <div className='w-4/6 '>
+      <div className='flex'>
+        <div className='w-4/6'>
           <article className='prose prose-lg max-w-none w-full ml-[25%]'>
             <MdxRenderer source={post.content} />
           </article>
         </div>
-        <div className=' sticky top-20 self-start w-80 p-6 mr-[-10%]'>
+        <div className='hidden md:block fixed top-60 right-[max(0px,calc(50%-690px))] w-80 p-6'>
           <TableOfContents contents={post.tableContents}></TableOfContents>
         </div>
       </div>

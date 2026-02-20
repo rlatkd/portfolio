@@ -8,6 +8,7 @@ export function TableOfContents({ contents }) {
   const [scrolling, setScrolling] = useState(false);
   const [visible, setVisible] = useState(true);
   const [opacity, setOpacity] = useState(1);
+  const [tocTranslate, setTocTranslate] = useState(0);
   const pathname = usePathname();
   const headerHeight = 80;
   
@@ -81,26 +82,19 @@ export function TableOfContents({ contents }) {
     };
 
     const checkNavigationVisibility = () => {
-      // 네비게이션 위치 파싱
       const navigationElement = document.querySelector('div#navigation') || document.querySelector('.navigation');
       
       if (navigationElement) {
         const navigationTop = navigationElement.getBoundingClientRect().top;
-        const threshold = 500;
-        const fadeDistance = 200;
+        const threshold = 250;
         
-        if (navigationTop < threshold) {
-          const newOpacity = Math.max(0, Math.min(1, (navigationTop - (threshold - fadeDistance)) / fadeDistance));
-          setOpacity(newOpacity);
-        
-          if (newOpacity < 0.05) {
-            setVisible(false);
-          } else {
-            setVisible(true);
-          }
+        if (navigationTop <= threshold) {
+          const offset = threshold - navigationTop;
+          setTocTranslate(0);
+          setOpacity(Math.max(0, 1 - offset / 200));
         } else {
+          setTocTranslate(0);
           setOpacity(1);
-          setVisible(true);
         }
       }
     };
@@ -163,8 +157,8 @@ export function TableOfContents({ contents }) {
 
   return (
     <nav 
-      className='text-sm w-full transition-opacity duration-300' 
-      style={{ opacity: opacity }}
+      className='text-sm w-full transition-all duration-300' 
+      style={{ opacity: opacity, transform: `translateY(${tocTranslate}px)` }}
     >
       <ul className='ml-2 space-y-1'>
         {contents.map(({ level, text, id }) => (
