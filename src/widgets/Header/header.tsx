@@ -67,7 +67,12 @@ export function Header() {
 
         {/* Mobile Menu Dropdown */}
         {isOpen && (
-          <div className='md:hidden absolute top-16 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-white/10'>
+          <>
+            <div 
+              className='md:hidden fixed inset-0 top-16 bg-black/50 z-40' 
+              onClick={() => setIsOpen(false)}
+            />
+            <div className='md:hidden absolute top-16 left-0 right-0 bg-gray-900/95 backdrop-blur-sm border-t border-white/10 z-50'>
             <div className='flex flex-col py-4 px-4 space-y-4'>
               {pathname && Object.entries(routing)
                 .filter(([path]) => path !== '/')
@@ -89,8 +94,9 @@ export function Header() {
                     </Link>
                   );
                 })}
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
     </aside>
