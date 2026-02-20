@@ -149,7 +149,7 @@ export default function Comments({ postId }: CommentsProps) {
   };
 
   return (
-    <div className='w-4/6 mx-auto mt-12 mb-20 relative'>
+    <div className='w-full mt-12 mb-20 relative'>
       <div className='absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-3xl'></div>
       <div className='absolute -bottom-20 -left-20 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl'></div>
       <div className='relative z-10'>
