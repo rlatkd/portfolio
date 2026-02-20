@@ -1,4 +1,4 @@
-LINK[https://www.sanghunkim.com]
+https://www.sanghunkim.com
 
 ---
 
