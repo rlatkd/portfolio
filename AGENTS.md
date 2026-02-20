@@ -35,6 +35,16 @@
 - AGENTS.md 파일 생성 (프로젝트 개요, 기술 스택, 현재 작업 내용 기재)
 - 작업 규칙 추가 (코드 수정 시 AGENTS.md에 기록)
 
+### 2026-02-20 (KST): 모바일 가로 스크롤 및 중앙 정렬 수정
+1. **가로 스크롤 방지** (`src/app/layout.tsx`, `styles/global.css`)
+   - `overflow-y-scroll` → `overflow-x-hidden` 변경
+   - `min-width: 360px` 제거
+   - `mx-4` → `mx-auto` 변경
+
+2. **중앙 정렬 패딩 추가** (`src/app/(main)/page.tsx`, `src/app/layout.tsx`)
+   - 모바일에서 좌우 패딩 `px-4` 추가
+   - 이중 패딩 문제 해결
+
 ## 다음 작업
 - 모바일 환경 추가 테스트
 -其它 레이아웃 이슈 수정 필요시 진행

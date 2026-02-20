@@ -58,7 +58,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           }}
         />
       </head> */}
-      <body className='antialiased max-w-6xl mx-auto px-4 md:px-0 overflow-x-hidden'>
+      <body className='antialiased max-w-6xl mx-auto md:px-0 overflow-x-hidden'>
         <main className='flex-auto min-w-0 flex flex-col'>
           {children}
           <Analytics />
