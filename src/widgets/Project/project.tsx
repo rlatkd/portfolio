@@ -9,15 +9,25 @@ export default function Project() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
-
-  const cardWidth = 480;
+  const [cardWidth, setCardWidth] = useState(480);
   const cardMargin = 24;
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 768;
+      setCardWidth(isMobile ? 300 : 480);
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const totalWidth = projectData.length * (cardWidth + cardMargin * 2);
   const animationDuration = projectData.length * 10;
 
   useEffect(() => {
     const carousel = carouselRef.current;
-
     if (!carousel) return;
 
     document.documentElement.style.setProperty('--carousel-width', `${totalWidth}px`);
@@ -42,13 +52,7 @@ export default function Project() {
     };
   }, [animationDuration, totalWidth]);
 
-  const handleProjectClick = (project) => {
-    console.log(`프로젝트 클릭: ${project.title}`);
-    // TODO 여기에 클릭 시 수행할 작업 추가 (예: 라우팅 등)
-  };
-
-  // TODO 이거 제대로 매핑; 팀 / 개인 / 학부에 따라 카테고리에 따른 색상 결정
-  const getCategoryColor = (index) => {
+  const getCategoryColor = (index: number) => {
     const colors = [
       { bg: 'from-blue-500/30 to-purple-500/30', text: 'text-blue-400' },
       { bg: 'from-purple-500/30 to-blue-500/30', text: 'text-purple-400' },
@@ -58,9 +62,53 @@ export default function Project() {
     return colors[index % colors.length];
   };
 
+  const renderProjectCard = (project: typeof projectData[0], idx: number, keyPrefix: string) => {
+    const colorStyle = getCategoryColor(idx);
+    return (
+      <div 
+        key={`${keyPrefix}-${idx}`}
+        className='flex-none mx-6'
+        style={{ width: `${cardWidth}px` }}
+        onMouseEnter={() => setHoveredProject(`${keyPrefix}-${idx}`)}
+        onMouseLeave={() => setHoveredProject(null)}
+      >
+        <div className='w-full bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden group hover:bg-white/10 transition-all h-full cursor-pointer'>
+          <div className={`aspect-video bg-gradient-to-r ${colorStyle.bg} relative overflow-hidden`}>
+            <div className='absolute inset-0 flex items-center justify-center text-white/30'>
+              {project.icon}
+            </div>
+            {hoveredProject === `${keyPrefix}-${idx}` && (
+              <div className='absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 flex items-center justify-center'>
+              </div>
+            )}
+          </div>
+          <div className='p-6'>
+            <div className='mb-3'>
+              <span className={`text-xs px-3 py-1 rounded-full bg-${colorStyle.text.split('-')[1]}-400/20 ${colorStyle.text}`}>
+                {project.category || '프로젝트'}
+              </span>
+            </div>
+            <h3 className='text-xl font-semibold mb-2 text-white/90 group-hover:text-white transition-colors'>{project.title}</h3>
+            <p className='text-white/70 mb-4 line-clamp-2'>{project.description}</p>
+            <div className='flex flex-wrap gap-2'>
+              {project.tags && project.tags.map((tag, tagIdx) => (
+                <span 
+                  key={tagIdx} 
+                  className={`text-xs px-2 py-1 ${tag.className || 'bg-white/10 text-white/70'} cursor-default`}
+                >
+                  {tag.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div className='mb-12 w-screen relative left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] overflow-hidden'>
-      <div className='max-w-4xl mx-auto mb-8 flex justify-between items-center'>
+    <div className='mb-12 w-full overflow-hidden'>
+      <div className='max-w-4xl mx-auto mb-8 flex justify-between items-center px-4'>
         <h2 className='text-2xl font-bold text-white/90 cursor-default'>최근 프로젝트</h2>
         <Link href='/projects' className='text-blue-400 hover:text-blue-300 flex items-center opacity-80 hover:opacity-100 transition-opacity'>
           모두 보기 <ArrowRight className='ml-1 w-4 h-4' />
@@ -74,94 +122,8 @@ export default function Project() {
             width: `${totalWidth * 2}px`,
           }}
         >
-          {projectData.map((project, idx) => {
-            const colorStyle = getCategoryColor(idx);
-            return (
-              <div 
-                key={`original-${idx}`}
-                className='flex-none mx-6'
-                style={{ width: `${cardWidth}px` }}
-                onClick={() => handleProjectClick(project)}
-                onMouseEnter={() => setHoveredProject(`original-${idx}`)}
-                onMouseLeave={() => setHoveredProject(null)}
-              >
-                <div className='w-full bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden group hover:bg-white/10 transition-all h-full cursor-pointer'>
-                  <div className={`aspect-video bg-gradient-to-r ${colorStyle.bg} relative overflow-hidden`}>
-                    <div className='absolute inset-0 flex items-center justify-center text-white/30'>
-                      {project.icon}
-                    </div>
-                    {hoveredProject === `original-${idx}` && (
-                      <div className='absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 flex items-center justify-center'>
-                      </div>
-                    )}
-                  </div>
-                  <div className='p-6'>
-                    <div className='mb-3'>
-                      <span className={`text-xs px-3 py-1 rounded-full bg-${colorStyle.text.split('-')[1]}-400/20 ${colorStyle.text}`}>
-                        {project.category || '프로젝트'}
-                      </span>
-                    </div>
-                    <h3 className='text-xl font-semibold mb-2 text-white/90 group-hover:text-white transition-colors'>{project.title}</h3>
-                    <p className='text-white/70 mb-4 line-clamp-2'>{project.description}</p>
-                    <div className='flex flex-wrap gap-2'>
-                      {project.tags && project.tags.map((tag, tagIdx) => (
-                        <span 
-                          key={tagIdx} 
-                          className={`text-xs px-2 py-1 ${tag.className || 'bg-white/10 text-white/70'} cursor-default`}
-                        >
-                          {tag.name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-          {projectData.map((project, idx) => {
-            const colorStyle = getCategoryColor(idx);
-            return (
-              <div 
-                key={`duplicate-${idx}`}
-                className='flex-none mx-6'
-                style={{ width: `${cardWidth}px` }}
-                onClick={() => handleProjectClick(project)}
-                onMouseEnter={() => setHoveredProject(`duplicate-${idx}`)}
-                onMouseLeave={() => setHoveredProject(null)}
-              >
-                <div className='w-full bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden group hover:bg-white/10 transition-all h-full cursor-pointer'>
-                  <div className={`aspect-video bg-gradient-to-r ${colorStyle.bg} relative overflow-hidden`}>
-                    <div className='absolute inset-0 flex items-center justify-center text-white/30'>
-                      {project.icon}
-                    </div>
-                    {hoveredProject === `duplicate-${idx}` && (
-                      <div className='absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 flex items-center justify-center'>
-                      </div>
-                    )}
-                  </div>
-                  <div className='p-6'>
-                    <div className='mb-3'>
-                      <span className={`text-xs px-3 py-1 rounded-full bg-${colorStyle.text.split('-')[1]}-400/20 ${colorStyle.text}`}>
-                        {project.category || '프로젝트'}
-                      </span>
-                    </div>
-                    <h3 className='text-xl font-semibold mb-2 text-white/90 group-hover:text-white transition-colors'>{project.title}</h3>
-                    <p className='text-white/70 mb-4 line-clamp-2'>{project.description}</p>
-                    <div className='flex flex-wrap gap-2'>
-                      {project.tags && project.tags.map((tag, tagIdx) => (
-                        <span 
-                          key={tagIdx} 
-                          className={`text-xs px-2 py-1 ${tag.className || 'bg-white/10 text-white/70'} cursor-default`}
-                        >
-                          {tag.name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {projectData.map((project, idx) => renderProjectCard(project, idx, 'original'))}
+          {projectData.map((project, idx) => renderProjectCard(project, idx, 'duplicate'))}
         </div>
       </div>
     </div>
