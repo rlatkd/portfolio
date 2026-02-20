@@ -64,7 +64,7 @@ export default async function Page({ params }) {
             <MdxRenderer source={post.content} />
           </article>
         </div>
-        <div className='hidden md:block sticky top-20 self-start w-80 p-6 mr-[-15%]'>
+        <div className=' sticky top-20 self-start w-80 p-6 mr-[-10%]'>
           <TableOfContents contents={post.tableContents}></TableOfContents>
         </div>
       </div>
