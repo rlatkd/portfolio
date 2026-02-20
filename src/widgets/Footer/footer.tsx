@@ -15,7 +15,7 @@ export default function Footer() {
           <p className='text-white/70 text-sm leading-relaxed cursor-default tracking-wide'>
             주소 : 서울특별시 노원구 동일로 245길 162 (문의 :{' '}
             <a className='underline hover:text-blue-400 transition-colors' href='mailto:rlatkdgns042@gmail.com'>
-              rlatkdgns042@gmail.com
+              rlatkdgns042@naver.com
             </a>
             ) <br />
             © {new Date().getFullYear()}.{' '}
