@@ -12,7 +12,7 @@ export default async function Navigation({ currentPost }: NavigationProps) {
   const nextPost = posts.find((post) => post.metadata.index === currentPost + 1)
   
   return (
-    <div id='navigation' className='max-w-4xl mx-auto mt-20 mb-20 flex justify-between relative'>
+    <div id='navigation' className='max-w-3xl mx-auto mt-20 mb-20 flex justify-between relative'>
       <div className='absolute -left-20 top-1/2 -translate-y-1/2 w-40 h-40 bg-gradient-to-r from-blue-400/20 to-blue-500/10 rounded-full blur-3xl'></div>
       <div className='absolute -right-20 top-1/2 -translate-y-1/2 w-40 h-40 bg-gradient-to-r from-purple-500/10 to-purple-400/20 rounded-full blur-3xl'></div>
       <div className='flex justify-between w-full relative z-10'>

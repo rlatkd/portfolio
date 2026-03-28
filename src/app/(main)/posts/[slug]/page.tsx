@@ -41,7 +41,7 @@ export default async function Page({ params }) {
           }),
         }}
       />
-      <div className='max-w-4xl mx-auto px-4 md:px-0'>
+      <div className='max-w-3xl mx-auto px-4 md:px-0'>
         <div className='flex justify-between items-center'>
           <h1 className='title font-semibold text-2xl tracking-tighter cursor-default'>
             {post.metadata.title}
@@ -66,7 +66,7 @@ export default async function Page({ params }) {
         </div>
         <Navigation currentPost={currentPost} />
       </div>
-      <div className='max-w-4xl mx-auto px-4 md:px-0'>
+      <div className='max-w-3xl mx-auto px-4 md:px-0'>
         <Comments postId={currentPost.toString()}/>
         <PostRecommends posts={posts} currentPostIndex={currentPost} />
       </div>

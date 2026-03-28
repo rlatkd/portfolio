@@ -31,7 +31,7 @@ export default function Post() {
   // 스켈레톤
   if (isLoading) {
     return (
-      <div className='mb-20 max-w-4xl mx-auto'>
+      <div className='mb-20 max-w-3xl mx-auto'>
         <div className='flex justify-between items-center mb-8'>
           <h2 className='text-2xl font-bold text-white/90 cursor-default'>최신 포스트</h2>
           <Link href='/posts' className='text-blue-400 hover:text-blue-300 flex items-center opacity-80 hover:opacity-100 transition-opacity'>
@@ -58,7 +58,7 @@ export default function Post() {
 
   if (posts.length === 0) {
     return (
-      <div className='mb-20 max-w-4xl mx-auto'>
+      <div className='mb-20 max-w-3xl mx-auto'>
         <div className='flex justify-between items-center mb-8'>
           <h2 className='text-2xl font-bold text-white/90 cursor-default'>최신 포스트</h2>
           <Link href='/posts' className='text-blue-400 hover:text-blue-300 flex items-center opacity-80 hover:opacity-100 transition-opacity'>
@@ -72,7 +72,7 @@ export default function Post() {
     );
   }
   return (
-    <div className='mb-20 max-w-4xl mx-auto'>
+    <div className='mb-20 max-w-3xl mx-auto'>
       <div className='flex justify-between items-center mb-8'>
         <h2 className='text-2xl font-bold text-white/90 cursor-default'>최신 포스트</h2>
         <Link href='/posts' className='text-blue-400 hover:text-blue-300 flex items-center opacity-80 hover:opacity-100 transition-opacity'>

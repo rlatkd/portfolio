@@ -108,7 +108,7 @@ export default function Project() {
 
   return (
     <div className='mb-12 w-full overflow-hidden'>
-      <div className='max-w-4xl mx-auto mb-8 flex justify-between items-center px-4'>
+      <div className='max-w-3xl mx-auto mb-8 flex justify-between items-center px-4'>
         <h2 className='text-2xl font-bold text-white/90 cursor-default'>최근 프로젝트</h2>
         <Link href='/projects' className='text-blue-400 hover:text-blue-300 flex items-center opacity-80 hover:opacity-100 transition-opacity'>
           모두 보기 <ArrowRight className='ml-1 w-4 h-4' />
