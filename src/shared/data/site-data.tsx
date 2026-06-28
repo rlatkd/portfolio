@@ -201,18 +201,6 @@ export const experience = [
 
 export const projects = [
   {
-    title: '대용량 자동 청구/결제 시스템',
-    context: 'cms-plus · MSA 성능 최적화 · 4인 팀',
-    points: [
-      'Kafka 비동기 아키텍처 전환으로 5만 건 처리 12초 → 7초 (약 70%↑)',
-      'ECS 기반 MSA 구축, RDS Read Replica로 부하 분산',
-      'Prometheus·Grafana·ELK로 실시간 관측성 확보',
-    ],
-    tags: ['Spring Boot', 'Kafka', 'ECS', 'Elasticsearch', 'Grafana'],
-    href: 'https://github.com/rlatkd/cms-plus',
-    image: '/images/portfolio/cms-plus.png',
-  },
-  {
     title: 'UPquant · 암호화폐 퀀트 분석 대시보드',
     context: '개인 · 퀀트 분석',
     points: [
@@ -222,7 +210,19 @@ export const projects = [
     ],
     tags: ['FastAPI', 'Python', 'React', 'TypeScript', 'WebSocket', 'AWS'],
     href: 'https://github.com/rlatkd/up-quant',
-    image: '/images/portfolio/upquant.png',
+    image: '/images/up-quant/preview.png',
+  },
+  {
+    title: '대용량 자동 청구/결제 시스템',
+    context: 'cms-plus · MSA 성능 최적화 · 4인 팀',
+    points: [
+      'Kafka 비동기 아키텍처 전환으로 5만 건 처리 12초 → 7초 (약 70%↑)',
+      'ECS 기반 MSA 구축, RDS Read Replica로 부하 분산',
+      'Prometheus·Grafana·ELK로 실시간 관측성 확보',
+    ],
+    tags: ['Spring Boot', 'Kafka', 'ECS', 'Elasticsearch', 'Grafana'],
+    href: 'https://github.com/rlatkd/cms-plus',
+    image: '/images/cms-plus/preview.jpg',
   },
   {
     title: 'Sale-Sync · MSA 클라우드 POS',
@@ -234,7 +234,7 @@ export const projects = [
     ],
     tags: ['React', 'Recoil', 'MSA', 'Kafka', 'AWS', 'GitHub Actions'],
     href: 'https://github.com/rlatkd/sale-sync',
-    image: '/images/portfolio/sale-sync.png',
+    image: '/images/sale-sync/preview.png',
   },
   {
     title: '포트폴리오 & 기술 블로그',
@@ -246,7 +246,7 @@ export const projects = [
     ],
     tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'MongoDB'],
     href: 'https://github.com/rlatkd',
-    image: '',
+    image: '/images/portfolio/preview.png',
   },
 ];
 

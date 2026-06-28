@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Github, Linkedin, PenLine, Mail, Phone, MapPin, FileText } from 'lucide-react';
+import { Github, Linkedin, Mail, Phone, MapPin, FileText } from 'lucide-react';
+import { SiVelog } from 'react-icons/si';
 import { profile, navItems } from '@/shared/data/site-data';
 import { ThemeToggle } from '@/features/ThemeToggle/ThemeToggle';
 
@@ -29,7 +30,7 @@ export default function Sidebar() {
   const socials = [
     { Icon: Github, href: profile.github, label: 'GitHub' },
     { Icon: Linkedin, href: profile.linkedin, label: 'LinkedIn' },
-    { Icon: PenLine, href: profile.velog, label: 'Velog' },
+    { Icon: SiVelog, href: profile.velog, label: 'Velog' },
   ];
 
   return (
