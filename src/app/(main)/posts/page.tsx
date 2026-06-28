@@ -15,6 +15,7 @@ type PageProps = {
 export const metadata = {
   title: 'Archive',
   description: '개발, 설계, 경험에 대한 기록.',
+  alternates: { canonical: '/posts' },
 };
 
 export default async function Page({ searchParams }: PageProps) {

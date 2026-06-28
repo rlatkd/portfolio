@@ -7,6 +7,10 @@ import Skills from '@/widgets/Skills/skills';
 import Writing from '@/widgets/Writing/writing';
 import Contact from '@/widgets/Contact/contact';
 
+export const metadata = {
+  alternates: { canonical: '/' },
+};
+
 export default function Page() {
   return (
     <div className='mx-auto max-w-6xl px-6 md:px-12 lg:flex lg:justify-between lg:gap-16 lg:px-16'>
