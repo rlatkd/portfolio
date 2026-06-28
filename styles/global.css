@@ -2,13 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-::selection {
-  background-color: #47a3f3;
-  color: #fefefe;
+/* ───────────────────────── 폰트 (restyart 동일: 산세리프 Pretendard) ───────────────────────── */
+:root {
+  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  --font-code: ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, monospace;
 }
 
+/* ───────────────────────── 브랜드 팔레트 ───────────────────────── */
 :root {
-  --sh-background: #282c34;
+  --navy: #0a1628;
+  --navy-mid: #132040;
+  --gold: #c49a3c;
+  --gold-light: #e8c97a;
+  --cream: #f7f4ef;
+  --cream-dark: #ede9e1;
+}
+
+/* ───────────────────────── 시맨틱 토큰 (라이트) ───────────────────────── */
+:root {
+  --bg: #f7f4ef;
+  --surface: #ffffff;
+  --surface-2: #ede9e1;
+  --fg: #1a1a2e;
+  --fg-strong: #0a1628;
+  --muted: #4a4a6a;
+  --line: #d4cfc6;
+  --accent: #c49a3c;
+
+  /* sugar-high 코드 하이라이팅 */
+  --sh-background: #0a1628;
   --sh-class: #c678dd;
   --sh-identifier: #e5c07b;
   --sh-sign: #56b6c2;
@@ -18,64 +40,77 @@
   --sh-jsxliterals: #61afef;
   --sh-property: #d19a66;
   --sh-entity: #61afef;
-  --color-white: 220 10% 75%; /* text 밝기 관리 */
-  --carousel-width: 0px; /* 캐러셀 너비 기본값 (JS에서 동적으로 설정됨) */
+
+  --carousel-width: 0px;
 }
 
+/* ───────────────────────── 시맨틱 토큰 (다크) ───────────────────────── */
+.dark {
+  --bg: #0a1628;
+  --surface: #132040;
+  --surface-2: #182a52;
+  --fg: #ece8df;
+  --fg-strong: #ffffff;
+  --muted: #9aa0b5;
+  --line: rgba(232, 201, 122, 0.14);
+  --accent: #e8c97a;
+}
+
+/* ───────────────────────── 기본 ───────────────────────── */
 html {
-  overflow-x: hidden;
-  color-scheme: dark;
-  background-color: #0f172a;
-  color: hsl(var(--color-white));
+  scroll-behavior: smooth;
+  scroll-padding-top: 1.5rem;
 }
 
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background-color: var(--gold);
+  color: #fff;
+}
+
+/* ───────────────────────── 코드 하이라이팅 ───────────────────────── */
 pre {
   background-color: var(--sh-background);
   color: var(--sh-identifier);
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-family: var(--font-code);
   padding: 1em;
   overflow: auto;
 }
 
-.token.class {
-  color: var(--sh-class);
+.token.class { color: var(--sh-class); }
+.token.identifier { color: var(--sh-identifier); }
+.token.sign { color: var(--sh-sign); }
+.token.string { color: var(--sh-string); }
+.token.keyword { color: var(--sh-keyword); }
+.token.comment { color: var(--sh-comment); }
+.token.jsx-literals { color: var(--sh-jsxliterals); }
+.token.property { color: var(--sh-property); }
+.token.entity { color: var(--sh-entity); }
+
+span.sh__line {
+  display: block;
+  line-height: 0;
 }
 
-.token.identifier {
-  color: var(--sh-identifier);
-}
+pre::-webkit-scrollbar { width: 7px; height: 7px; }
+pre::-webkit-scrollbar-thumb { background-color: #b1b1b1; border-radius: 4px; }
 
-.token.sign {
-  color: var(--sh-sign);
-}
-
-.token.string {
-  color: var(--sh-string);
-}
-
-.token.keyword {
-  color: var(--sh-keyword);
-}
-
-.token.comment {
-  color: var(--sh-comment);
-}
-
-.token.jsx-literals {
-  color: var(--sh-jsxliterals);
-}
-
-.token.property {
-  color: var(--sh-property);
-}
-
-.token.entity {
-  color: var(--sh-entity);
+/* ───────────────────────── prose (마크다운 본문) ───────────────────────── */
+.prose {
+  color: var(--fg);
 }
 
 .prose .anchor {
   @apply absolute invisible no-underline;
-
   margin-left: -1em;
   padding-right: 0.5em;
   width: 100%;
@@ -83,88 +118,72 @@ pre {
   cursor: pointer;
 }
 
-.anchor:hover {
-  @apply visible;
-}
+.anchor:hover { @apply visible; }
 
 .prose a {
-  @apply underline transition-all decoration-neutral-600 underline-offset-2 decoration-[0.1em];
+  color: var(--accent);
+  @apply underline transition-all underline-offset-2 decoration-[0.1em];
 }
 
 .prose .anchor:after {
-  @apply text-neutral-700;
   content: '#';
+  color: var(--muted);
 }
 
-.prose *:hover > .anchor {
-  @apply visible;
-}
+.prose *:hover > .anchor { @apply visible; }
 
 .prose pre {
-  @apply mx-auto bg-neutral-800 rounded overflow-x-auto py-2 px-3 text-sm;
+  @apply mx-auto rounded overflow-x-auto py-2 px-3 text-sm;
+  background-color: var(--sh-background);
 }
 
 .prose code {
   @apply px-1 py-0.5 rounded-lg;
+  background-color: var(--surface-2);
+  color: var(--fg-strong);
+  font-family: var(--font-code);
 }
 
 .prose pre code {
   @apply p-0;
   border: initial;
   line-height: 1.5;
+  background-color: transparent;
+  color: inherit;
 }
 
-span.sh__line {
-  display: block;
-  line-height: 0;
-}
+.prose code span { @apply font-medium; }
 
-.prose code span {
-  @apply font-medium;
-}
-
-.prose img {
-  @apply m-0;
-}
+.prose img { @apply m-0 rounded-lg; }
 
 .prose p {
   @apply my-4;
-  color: hsl(var(--color-white));
+  color: var(--fg);
 }
 
-.prose h1 {
-  @apply text-4xl font-medium tracking-tight mt-6 mb-2;
-  color: hsl(var(--color-white) / 0.9);
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-weight: 700;
+  color: var(--fg-strong);
+  letter-spacing: -0.01em;
 }
-
-.prose h2 {
-  @apply text-2xl font-medium tracking-tight mt-6 mb-2;
-  color: hsl(var(--color-white) / 0.9);
-}
-
-.prose h3 {
-  @apply text-xl font-medium tracking-tight mt-6 mb-2;
-  color: hsl(var(--color-white) / 0.9);
-}
-
-.prose h4 {
-  @apply text-lg font-medium tracking-tight mt-6 mb-2;
-  color: hsl(var(--color-white) / 0.9);
-}
+.prose h1 { @apply text-4xl mt-8 mb-3; }
+.prose h2 { @apply text-2xl mt-7 mb-2; }
+.prose h3 { @apply text-xl mt-6 mb-2; }
+.prose h4 { @apply text-lg mt-6 mb-2; }
 
 .prose strong {
-  @apply font-medium;
-  color: hsl(var(--color-white) / 0.9);
+  @apply font-semibold;
+  color: var(--fg-strong);
 }
 
-.prose ul {
-  @apply list-disc pl-6;
-  color: hsl(var(--color-white));
-}
+.prose ul { @apply list-disc pl-6; color: var(--fg); }
+.prose ol { @apply list-decimal pl-6; color: var(--fg); }
 
-.prose ol {
-  @apply list-decimal pl-6;
-  color: hsl(var(--color-white));
+.prose blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  color: var(--muted);
+  font-style: italic;
 }
 
 .prose > :first-child {
@@ -172,18 +191,9 @@ span.sh__line {
   margin-bottom: 1.25em !important;
 }
 
-pre::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-}
-
-pre::-webkit-scrollbar-thumb {
-  background-color: #b1b1b1;
-  border-radius: 4px;
-}
-
 input[type='text'],
-input[type='email'] {
+input[type='email'],
+textarea {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -196,183 +206,35 @@ table {
   white-space: nowrap;
 }
 
-.title {
-  text-wrap: balance;
-}
+.title { text-wrap: balance; }
 
-.buttons {
-  position: relative;
-  padding: 1rem 0;
-  display: inline-flex;
-  justify-content: center;
-}
+/* ───────────────────────── 유틸 / 애니메이션 ───────────────────────── */
+.font-serif-display { font-family: var(--font-serif); }
+.tracking-label { letter-spacing: 0.25em; }
 
-.button {
-  padding: 0 1rem;
-  font-size: 1.2rem;
-  color: hsl(var(--color-white));
-  background: transparent;
-  border: 0;
-  outline: 0;
-  cursor: pointer;
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-@keyframes carouselScroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(-1 * var(--carousel-width)));
-  }
-}
-
-@keyframes resumeCarousel {
-  0% {
-    transform: translateX(var(--start-position));
-  }
-  100% {
-    transform: translateX(var(--end-position));
-  }
-}
-
-@layer base {
-  .text-white {
-    --tw-text-opacity: 1;
-    color: hsl(var(--color-white)) !important;
-  }
-  
-  .text-white\/90 {
-    color: hsl(var(--color-white) / 0.9) !important;
-  }
-  
-  .text-white\/80 {
-    color: hsl(var(--color-white) / 0.8) !important;
-  }
-  
-  .text-white\/70 {
-    color: hsl(var(--color-white) / 0.7) !important;
-  }
-  
-  .text-white\/60 {
-    color: hsl(var(--color-white) / 0.6) !important;
-  }
-  
-  .text-white\/50 {
-    color: hsl(var(--color-white) / 0.5) !important;
-  }
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.7s ease-out forwards;
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-shimmer { animation: shimmer 3s infinite linear; }
+
+@keyframes carouselScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-1 * var(--carousel-width))); }
 }
 
-@keyframes expand {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: 100%;
-  }
-}
-
-.animate-shimmer {
-  animation: shimmer 2s infinite linear;
-}
-
-.animate-expand {
-  animation: expand 1.5s forwards ease-out;
-}
-
-
-
-
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-/* 순차적 페이드인을 위한 지연 클래스들 */
-.delay-100 {
-  animation-delay: 0.1s;
-}
-
-.delay-200 {
-  animation-delay: 0.2s;
-}
-
-.delay-300 {
-  animation-delay: 0.3s;
-}
-
-.delay-400 {
-  animation-delay: 0.4s;
-}
-
-.delay-500 {
-  animation-delay: 0.5s;
-}
-
-/* 타이핑 커서 애니메이션 */
-@keyframes blink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
-
-.animate-blink {
-  animation: blink 1s infinite;
-}
-
-/* 카운터 애니메이션 */
-@keyframes countUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.animate-count-up {
-  animation: countUp 0.5s ease-out forwards;
-}
-
-/* 스케일 애니메이션 */
-@keyframes scaleIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.5s ease-out forwards;
-}
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }

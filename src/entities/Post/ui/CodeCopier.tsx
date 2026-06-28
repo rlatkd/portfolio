@@ -19,12 +19,12 @@ export function CodeCopier({ children, className, ...props }) {
   return (
     <div className='relative'>
       <div className='flex justify-between items-center mb-2 px-4 pt-3'>
-        <span className='font-bold text-gray-400 capitalize'>
+        <span className='font-mono text-xs tracking-label uppercase text-muted'>
           {language}
         </span>
         <button
           onClick={handleCopy}
-          className='px-2 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded-md text-xs flex items-center space-x-1.5'
+          className='px-2 py-1 border border-line bg-surface-2 hover:border-accent hover:text-accent text-fg rounded-md font-mono text-xs flex items-center space-x-1.5 transition-colors'
         >
           {copied ? (
             <>

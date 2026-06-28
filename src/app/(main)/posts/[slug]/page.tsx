@@ -9,16 +9,34 @@ import { formatDate, getPosts } from '@/shared/lib/markdown';
 import { baseUrl } from '@/app/sitemap';
 import { TableOfContents } from '@/entities/Post/ui/TableOfContents';
 
-export default async function Page({ params }) {
+export async function generateMetadata({ params }: { params: { slug: string } }) {
   const posts = await getPosts();
-  const post = posts.find((post) => post.slug === params.slug);  
-  
+  const post = posts.find((p) => p.slug === params.slug);
+  if (!post) return {};
+  const description = post.metadata.summary || '';
+  return {
+    title: post.metadata.title,
+    description,
+    openGraph: {
+      title: post.metadata.title,
+      description,
+      type: 'article',
+      publishedTime: post.metadata.publishedAt,
+      url: `${baseUrl}/posts/${post.slug}`,
+    },
+  };
+}
+
+export default async function Page({ params }: { params: { slug: string } }) {
+  const posts = await getPosts();
+  const post = posts.find((post) => post.slug === params.slug);
+
   if (!post) notFound();
-  
+
   const currentPost = post.metadata.index;
 
   return (
-    <section>
+    <section className='py-12 md:py-16'>
       <script
         type='application/ld+json'
         suppressHydrationWarning
@@ -32,44 +50,42 @@ export default async function Page({ params }) {
             description: post.metadata.summary,
             image: post.metadata.image
               ? `${baseUrl}${post.metadata.image}`
-              : `/og?title=${encodeURIComponent(post.metadata.title || '')}`,
-            url: `${baseUrl}/posts/${post.metadata.index}`,
-            author: {
-              '@type': 'Person',
-              name: 'shk',
-            },
+              : `${baseUrl}/og?title=${encodeURIComponent(post.metadata.title || '')}`,
+            url: `${baseUrl}/posts/${post.slug}`,
+            author: { '@type': 'Person', name: 'Sanghun Kim' },
           }),
         }}
       />
-      <div className='max-w-4xl mx-auto px-4 md:px-0'>
-        <div className='flex justify-between items-center'>
-          <h1 className='title font-semibold text-2xl tracking-tighter cursor-default'>
+
+      <div className='mx-auto max-w-content px-5 md:px-8'>
+        <div className='flex items-center justify-between'>
+          <h1 className='title font-serif text-3xl text-fg-strong md:text-4xl'>
             {post.metadata.title}
           </h1>
-          <Link href='/posts' className='flex items-center text-neutral-700 dark:text-neutral-200 hover:text-neutral-400'>
+          <Link href='/posts' className='text-muted transition-colors hover:text-accent' aria-label='목록'>
             <FaList />
           </Link>
         </div>
-        <div className='flex justify-between items-center mt-2 text-sm'>
-          <p className='mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default'>
-            {formatDate(post.metadata.publishedAt)}
-          </p>
-          <p className='mb-8 text-sm text-neutral-600 dark:text-neutral-400 cursor-default'>
-            views
-          </p>
+        <div className='mb-10 mt-3 flex items-center justify-between border-b border-line pb-4 font-mono text-xs text-muted'>
+          <span>{formatDate(post.metadata.publishedAt)}</span>
         </div>
-        <article className='prose prose-lg max-w-none w-full'>
+
+        <article className='prose prose-lg w-full max-w-none'>
           <MdxRenderer source={post.content} />
         </article>
-        <div className='hidden md:block fixed top-60 right-[max(0px,calc(50%-750px))] w-80 p-6'>
-          <TableOfContents contents={post.tableContents}></TableOfContents>
+
+        {/* 데스크톱 TOC (넓은 화면 우측 여백) */}
+        <div className='fixed top-28 right-8 hidden w-56 2xl:block'>
+          <TableOfContents contents={post.tableContents} />
         </div>
+
         <Navigation currentPost={currentPost} />
       </div>
-      <div className='max-w-4xl mx-auto px-4 md:px-0'>
-        <Comments postId={currentPost.toString()}/>
+
+      <div className='mx-auto max-w-content px-5 md:px-8'>
+        <Comments postId={currentPost.toString()} />
         <PostRecommends posts={posts} currentPostIndex={currentPost} />
       </div>
     </section>
-  )
+  );
 }

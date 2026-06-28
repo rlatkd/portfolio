@@ -1,398 +1,298 @@
-'use client';
+// 포트폴리오 콘텐츠 (실제 경력기술서/포트폴리오 기준 · 단일 소스)
+// 레이아웃 구조는 restyart 참고, 색/콘텐츠는 본인 것.
 
-import {
-  Briefcase, 
-  GraduationCap, 
-  Code, 
-  Pencil, 
-  Sparkles,
-  CreditCard, 
-  Users, 
-  ShoppingBag, 
-  MessageSquare, 
-  LineChart, 
-  Database, 
-  LayoutGrid, 
-  Image, 
-  Server, 
-  Shirt,
-  BarChart,
-  Zap,
-  Coffee
-} from 'lucide-react';
-
-// 히어로
-export const heroData = [
-  '개발자.',
-  '문제 해결사.',
-  '경험 디자이너.',
-  '지속적 학습자.'
-];
-
-// 특성
-export const characteristicData = [
-  {
-    icon: <Code className='w-6 h-6 text-blue-400' />,
-    title: '개발 & 기술',
-    description: '최신 웹 기술과 프레임워크를 활용한 확장 가능한 솔루션 구축',
-    gradient: 'from-blue-500/20 to-blue-600/20',
-  },
-  {
-    icon: <Pencil className='w-6 h-6 text-purple-400' />,
-    title: '디자인 & UX',
-    description: '사용자 중심의 직관적이고 접근성 높은 인터페이스 설계',
-    gradient: 'from-purple-500/20 to-purple-600/20',
-  },
-  {
-    icon: <Sparkles className='w-6 h-6 text-green-400' />,
-    title: '혁신 & 창의성',
-    description: '문제에 대한 창의적 접근과 지속적인 학습으로 혁신적 솔루션 제공',
-    gradient: 'from-green-500/20 to-green-600/20',
-  }
-];
-
-// 주요 성과
-export const achievementData = [
-  {
-    icon: <BarChart className='w-6 h-6 text-blue-400' />,
-    label: '완료 프로젝트',
-    endValue: 25,
-    suffix: '+',
-    gradient: 'from-blue-500/20 to-blue-600/20',
-  },
-  {
-    icon: <Users className='w-6 h-6 text-purple-400' />,
-    label: '만족 고객',
-    endValue: 18,
-    suffix: '',
-    gradient: 'from-purple-500/20 to-purple-600/20',
-  },
-  {
-    icon: <Zap className='w-6 h-6 text-green-400' />,
-    label: '개발 경력',
-    endValue: 5,
-    suffix: '년',
-    gradient: 'from-green-500/20 to-green-600/20',
-  },
-  {
-    icon: <Coffee className='w-6 h-6 text-orange-400' />,
-    label: '커피 소비량',
-    endValue: 1382,
-    suffix: '잔',
-    gradient: 'from-orange-500/20 to-orange-600/20',
-  }
-];
-
-// 타임라인
-export const timelineData = [
-  {
-    icon: <GraduationCap className='w-5 h-5 text-green-400' />,
-    title: '퀀트응용경제학 석사',
-    organization: '성균관대학교',
-    period: '2026/03 - 현재',
-    description: (
-      <ul className="list-disc pl-5 space-y-1">
-        <li>퀀트 금융</li>
-        <li>시계열 분석</li>
-        <li>DeepLearning</li>
-      </ul>
-    ),
-    gradient: 'from-green-500/20 to-green-600/20',
-  },
-  {
-    icon: <Briefcase className='w-5 h-5 text-blue-400' />,
-    title: 'Full-stack Developer',
-    organization: 'HyosungFMS Inc.',
-    period: '2024/09 - 현재',
-    description: (
-      <ul className="list-disc pl-5 space-y-1">
-        <li>풀스택 개발자</li>
-      </ul>
-    ),
-    gradient: 'from-blue-500/20 to-blue-600/20',
-  },
-  {
-    icon: <Code className='w-5 h-5 text-purple-400' />,
-    title: '교육 이수',
-    organization: '효성에프엠에스',
-    period: '2024/02 - 2024/08',
-    description: (
-      <ul className="list-disc pl-5 space-y-1">
-        <li>Spring Boot</li>
-        <li>MATLAB</li>
-        <li>DeepLearning</li>
-      </ul>
-    ),
-    gradient: 'from-purple-500/20 to-purple-600/20',
-  },
-  {
-    icon: <Code className='w-5 h-5 text-purple-400' />,
-    title: '교육 이수',
-    organization: '신세계아이앤씨',
-    period: '2023/08 - 2024/02',
-    description: (
-      <ul className="list-disc pl-5 space-y-1">
-        <li>Flask</li>
-        <li>React</li>
-        <li>Docker</li>
-        <li>Kubernetes</li>
-        <li>AWS</li>
-        <li>Terraform</li>
-      </ul>
-    ),
-    gradient: 'from-purple-500/20 to-purple-600/20',
-  },
-  {
-    icon: <GraduationCap className='w-5 h-5 text-green-400' />,
-    title: '생체의공학 학사',
-    organization: '경희대학교',
-    period: '2016/03 - 2023/02',
-    description: (
-      <ul className="list-disc pl-5 space-y-1">
-        <li>Embeded HW</li>
-        <li>MATLAB</li>
-        <li>DeepLearning</li>
-      </ul>
-    ),
-    gradient: 'from-green-500/20 to-green-600/20',
-  }
-];
-
-export const techniqueData = {
-  frontend: {
-    items: [
-      { name: 'React', level: 90 },
-      { name: 'Next.js', level: 85 },
-      { name: 'TypeScript', level: 80 },
-      { name: 'Tailwind CSS', level: 95 },
-      { name: 'CSS/SCSS', level: 90 },
-      { name: 'JavaScript', level: 95 }
-    ],
-    styles: {
-      color: '#60A5FA',
-      backgroundColor: '#60A5FA',
-      gradientFrom: 'rgba(96, 165, 250, 0.2)',
-      gradientTo: 'rgba(37, 99, 235, 0.2)',
-    },
-    label: '프론트엔드'
-  },
-  backend: {
-    items: [
-      { name: 'Node.js', level: 75 },
-      { name: 'Express', level: 70 },
-      { name: 'GraphQL', level: 65 },
-      { name: 'REST API', level: 85 },
-      { name: 'Firebase', level: 80 }
-    ],
-    styles: {
-      color: '#C084FC',
-      backgroundColor: '#C084FC',
-      gradientFrom: 'rgba(192, 132, 252, 0.2)',
-      gradientTo: 'rgba(139, 92, 246, 0.2)',
-    },
-    label: '백엔드'
-  },
-  tools: {
-    items: [
-      { name: 'Git', level: 90 },
-      { name: 'Figma', level: 75 },
-      { name: 'Docker', level: 65 },
-      { name: 'AWS', level: 60 },
-      { name: 'Testing', level: 70 }
-    ],
-    styles: {
-      color: '#4ADE80',
-      backgroundColor: '#4ADE80',
-      gradientFrom: 'rgba(74, 222, 128, 0.2)',
-      gradientTo: 'rgba(34, 197, 94, 0.2)',
-    },
-    label: '도구 & 기타'
-  }
+export const profile = {
+  name: '김상훈',
+  nameEn: 'Sanghun Kim',
+  role: 'Software Engineer',
+  intro: '데이터 정합성과 시스템 신뢰성을 최우선으로 설계하는 금융 도메인 백엔드 엔지니어입니다.',
+  email: 'rlatkdgns042@naver.com',
+  mobile: '+82 10-2627-0378',
+  location: '서울특별시',
+  github: 'https://github.com/rlatkd',
+  githubLabel: 'github.com/rlatkd',
+  linkedin: 'https://linkedin.com/in/sanghunkim96',
+  linkedinLabel: 'linkedin.com/in/sanghunkim96',
+  velog: 'https://velog.io/@kata',
+  velogLabel: 'velog.io/@kata',
 };
 
-// 프로젝트
-export const projectData = [
+export const aboutIntro = [
+  '‘왜 이렇게 동작하는가’가 논리적으로 완전히 풀리기 전에는 다음으로 넘어가지 못하는 편입니다. 그럴듯한 추측으로 덮기보다 근거와 데이터로 판단하고, 모르는 것은 모른다고 인정한 뒤 끝까지 파고듭니다.',
+  '금융 도메인에서는 작은 오차 하나가 곧 사고로 이어진다고 생각합니다. 그래서 당장 동작하는 코드보다 변경에 강한 설계를, 화려한 기능보다 데이터 정합성과 시스템 신뢰성을 먼저 둡니다.',
+  '동시에 구현 속도와 유지보수성 사이의 트레이드오프를 분명히 인지하려 합니다. 문제를 막아낸 뒤에도 ‘더 나은 방법은 없었는가’를 회고하며 다음 설계를 다듬습니다.',
+];
+
+export const aboutQuote = {
+  text: '단 한 건의 데이터 불일치도 허용하지 않는 설계가 금융 시스템 신뢰성의 근간입니다.',
+};
+
+// 실무 시작일 (경력 자동 계산용)
+export const careerStart = '2024-09-01';
+
+export const stats = [
+  { value: '5', label: '담당 금융 서비스' },
+  { value: '2', label: '참여 프로젝트' },
+  { value: '2', label: '보유 자격증' },
+];
+
+export type Strength = {
+  title: string;
+  desc: string;
+  tags: string[];
+  detail: {
+    period?: string;
+    problem: string;
+    solution: string;
+    impact: string;
+    insight: string;
+  };
+};
+
+export const strengths: Strength[] = [
   {
-    title: '자동 청구/결제 솔루션',
-    description: '기업을 위한 자동화된 결제 및 청구 시스템으로, 구독 관리와 결제 프로세스를 간소화',
-    icon: <CreditCard className='w-16 h-16' />,
-    category: 'team',
-    status: '완료',
-    tags: [
-      { name: 'Spring Boot', className: 'text-white font-medium border rounded-full' },
-      { name: 'JPA', className: 'text-white font-medium border rounded-full' },
-      { name: 'QueryDSL', className: 'text-white font-medium border rounded-full' },
-      { name: 'Kafka', className: 'text-white font-medium border rounded-full' },
-      { name: 'Elasticsearch', className: 'text-white font-medium border rounded-full' },
-      { name: 'React', className: 'text-white font-medium border rounded-full' },
-      { name: 'ECS', className: 'text-white font-medium border rounded-full' },
-    ]
+    title: '동시성 제어 & 데이터 정합성',
+    desc: '멀티스레드 배치에서 ConcurrentHashMap 기반 Thread-safe 저장소로 레이스 컨디션을 해결하고 데이터 유실률을 80% 개선했습니다.',
+    tags: ['ConcurrentHashMap', 'Spring Batch', 'Thread-safe'],
+    detail: {
+      period: '2026.02 · 효성에프엠에스 CMS+',
+      problem:
+        '대량의 요금 청구·정산이 멀티스레드 비동기 배치로 집중되는 환경에서, 레이스 컨디션으로 결제 데이터가 누락·중복 처리되는 심각한 데이터 정합성 훼손이 발생했습니다.',
+      solution:
+        'ConcurrentHashMap 기반의 Thread-safe한 커스텀 로컬 저장소를 설계·구현했습니다. 각 스레드가 처리 상태를 독립적으로 관리하고, 처리 완료·실패 지점을 정확히 기록하는 동시성 제어 로직을 추가했습니다.',
+      impact:
+        '동시성 이슈로 인한 배치 데이터 유실률을 80% 개선했습니다. 장애 시 실패 지점을 즉시 추적할 수 있어 운영 담당자의 수동 보정 리소스를 완전히 제거했습니다.',
+      insight:
+        '커스텀 저장소로 해결했으나, Spring Batch의 JobExecutionContext 등 프레임워크 자체 메커니즘을 깊이 활용했다면 더 견고했을 것이라는 점을 깨달았습니다.',
+    },
   },
   {
-    title: 'MSA 기반 웹 POS 서비스',
-    description: '마이크로서비스 아키텍처를 활용한 웹 기반 POS 시스템으로 매장 운영 효율화',
-    icon: <ShoppingBag className='w-16 h-16' />,
-    category: 'team',
-    tags: [
-      { name: 'React', className: 'text-white font-medium border rounded-full' },
-      { name: 'styled-components', className: 'text-white font-medium border rounded-full' },
-      { name: 'recoil', className: 'text-white font-medium border rounded-full' },
-      { name: 'S3', className: 'text-white font-medium border rounded-full' },
-      { name: 'CloudFront', className: 'text-white font-medium border rounded-full' },
-      { name: 'Route53', className: 'text-white font-medium border rounded-full' },
-      { name: 'ACM', className: 'text-white font-medium border rounded-full' },
-      { name: 'WAF', className: 'text-white font-medium border rounded-full' },
-    ]
+    title: 'MSA 장애 격리 & 복원력',
+    desc: 'AOP 기반 보상 트랜잭션으로 타 서비스 장애 시에도 결제 정합성을 자동 보장하고 장애성 VoC를 제거했습니다.',
+    tags: ['AOP', '보상 트랜잭션', 'Saga Pattern'],
+    detail: {
+      period: '2025.10 · 효성에프엠에스 CMS+',
+      problem:
+        '내부 4개 마이크로서비스와 실시간 동기 통신을 수행하는 환경에서, 타 서비스 장애 시 화면에는 "결제 완료"로 노출되나 실제 데이터는 결제되지 않는 불일치가 발생해 치명적인 고객 VoC를 유발했습니다.',
+      solution:
+        'AOP로 내부 API 통신 실패 지점을 인터셉트하고, 트랜잭션 보상 및 결제 상태 롤백 로직을 설계·구현했습니다. 장애 발생 시 자동으로 후속 보상 트랜잭션이 실행되도록 했습니다.',
+      impact:
+        '네트워크 장애 발생 시에도 결제 데이터 정합성을 자동으로 보장했습니다. 장애성 고객 VoC가 획기적으로 감소하고 수작업 보정 리소스를 완전히 제거했습니다.',
+      insight:
+        '빠른 구현을 위해 AOP를 택했으나, 결합도를 낮추고 모니터링 가시성을 높이려면 Resilience4j 기반 Circuit Breaker가 더 적절함을 파악했습니다.',
+    },
   },
   {
-    title: 'X-Operations',
-    description: '개발 진행 중인 통합 운영 관리 플랫폼으로 비즈니스 프로세스 자동화 구현',
-    icon: <Server className='w-16 h-16' />,
-    category: 'team',
-    tags: [
-      { name: 'Nextjs', className: 'text-white font-medium border rounded-full' },
-      { name: 'TypeScript', className: 'text-white font-medium border rounded-full' },
-      { name: 'MongoDB', className: 'text-white font-medium border rounded-full' }
-    ]
+    title: '도메인 주도 설계 & 레거시 개선',
+    desc: '결합도 높은 레거시의 비즈니스 규칙을 도메인 레이어로 분리하고 계층 책임을 재정의해 변경 영향 범위를 최소화했습니다.',
+    tags: ['DDD', '리팩토링', '계층 설계'],
+    detail: {
+      period: '2025.12 · 효성에프엠에스 Connect',
+      problem:
+        '하나의 메서드에 수많은 로직이 결합된 레거시 환경에서 신규 기능 추가 시 사이드 이펙트가 빈번했습니다.',
+      solution:
+        '비즈니스 규칙을 도메인 레이어로 분리하고 계층 간 책임을 재정의했습니다.',
+      impact:
+        '신규 피처 개발 속도가 증가하고 배포 후 장애 리스크가 감소했습니다.',
+      insight:
+        '리팩토링 시 단위 테스트 부재의 위험성을 체감하여, 이후 주요 로직에 테스트 코드를 먼저 작성한 뒤 리팩토링하는 방식으로 프로세스를 개선했습니다.',
+    },
   },
   {
-    title: '풋살 자동 매칭 서비스',
-    description: '풋살 팀과 플레이어를 자동으로 매칭해주는 서비스로 스포츠 활동 참여 촉진',
-    icon: <Users className='w-16 h-16' />,
-    category: 'team',
-    tags: [
-      { name: 'Spring Boot', className: 'text-white font-medium border rounded-full' },
-      { name: 'Oracle Cloud', className: 'text-white font-medium border rounded-full' },
-      { name: 'Mybatis', className: 'text-white font-medium border rounded-full' },
-      { name: 'Kakao API', className: 'text-white font-medium border rounded-full' },
-      { name: 'GitLab Runner', className: 'text-white font-medium border rounded-full' },
-      { name: 'EC2', className: 'text-white font-medium border rounded-full' },
-      { name: 'S3', className: 'text-white font-medium border rounded-full' },
-    ]
+    title: 'DB 성능 & 쿼리 튜닝',
+    desc: '실행 계획 분석, 불필요한 JOIN 제거, 인덱스 최적화, Cursor 페이지네이션으로 배치 처리를 38초에서 4초로 단축했습니다.',
+    tags: ['Oracle', '인덱스 최적화', 'Cursor Pagination'],
+    detail: {
+      period: '2025.12 · 효성에프엠에스 Connect',
+      problem: '비효율적인 쿼리로 주요 조회 화면의 응답 지연이 발생했습니다.',
+      solution:
+        '쿼리 실행 계획을 분석해 불필요한 JOIN을 제거하고 인덱스를 최적화했으며, Cursor 기반 페이지네이션을 적용했습니다.',
+      impact: '주요 조회 화면 렌더링 응답 속도가 대폭 개선되고, 배치 처리 시간을 38초에서 4초로 단축했습니다.',
+      insight: '직관이 아닌 실행 계획·측정 기반의 최적화가 성능 개선의 핵심임을 다시 체감했습니다.',
+    },
   },
   {
-    title: '인터넷 뱅킹 시스템',
-    description: '안전하고 효율적인 온라인 뱅킹 서비스를 제공하는 종합 금융 플랫폼',
-    icon: <Briefcase className='w-16 h-16' />,
-    category: 'team',
-    tags: [
-      { name: 'Java', className: 'text-white font-medium border rounded-full' },
-    ]
+    title: '대용량 비동기 처리',
+    desc: 'Kafka 기반 메시지 큐로 동기식 Back-pressure 한계를 극복하고, batch.size·linger.ms 튜닝으로 처리 성능을 70% 높였습니다.',
+    tags: ['Apache Kafka', '비동기', '성능 튜닝'],
+    detail: {
+      period: '2024.08 · 사이드 프로젝트 (cms-plus)',
+      problem:
+        '피크 타임에 수만 건의 청구서를 동시 발송할 때 외부 API 처리 지연이 스레드 고갈·커넥션 타임아웃으로 전파되는 문제가 있었습니다.',
+      solution:
+        '동기식 의존성을 끊고 Kafka 기반 비동기 메시지 큐로 전환했습니다. 메시지를 Batch 단위로 묶어 네트워크 왕복 비용을 최소화했습니다.',
+      impact:
+        '외부 시스템 장애 시에도 메인 서버의 안정적 응답성을 확보했고, batch.size·linger.ms 튜닝으로 5만 건 처리를 12초에서 7초로 단축(약 70%↑)했습니다.',
+      insight:
+        '기본 설정으로는 처리량이 극대화되지 않아, 직관이 아닌 데이터 기반(3D 그래프 시각화) 파라미터 튜닝으로 최적 균형점을 도출했습니다.',
+    },
   },
   {
-    title: '중고 경매 플랫폼 v0',
-    description: '중고 물품을 경매 방식으로 거래할 수 있는 온라인 플랫폼의 초기 버전',
-    icon: <Database className='w-16 h-16' />,
-    category: 'personal',
-    tags: [
-      { name: 'Flask', className: 'text-white font-medium border rounded-full' },
-      { name: 'MySQL', className: 'text-white font-medium border rounded-full' },
-      { name: 'React', className: 'text-white font-medium border rounded-full' }
-    ]
+    title: '보안 & 인증',
+    desc: 'PreparedStatement 전환으로 SQL Injection 취약점을 차단하고, JWT·OAuth 2.0 기반 외부 연동 인증을 설계·구현했습니다.',
+    tags: ['Spring Security', 'JWT', 'OAuth 2.0'],
+    detail: {
+      period: '2024.09 — 2025.06 · 효성에프엠에스 CMS+',
+      problem:
+        '동적 쿼리의 SQL Injection 취약점이 존재했고, 수기·오프라인 중심 전자계약은 휴먼 에러와 컴플라이언스 리스크가 있었습니다.',
+      solution:
+        'PreparedStatement 전환으로 인젝션을 차단하고, JWT·OAuth 2.0 기반 외부 연동 API와 자체 전자서명 링크 시스템을 설계·구현했습니다.',
+      impact:
+        'SQL Injection 취약점을 완전히 차단하고, 전자계약 프로세스를 전면 디지털화하며 데이터 처리 속도를 30% 이상 향상시켰습니다.',
+      insight: '보안은 기능 완성 후가 아니라 설계 단계에서 기본값으로 두어야 한다는 원칙을 체득했습니다.',
+    },
+  },
+];
+
+export const experience = [
+  {
+    period: '2026.03 — 현재',
+    role: '퀀트응용경제학과 · 석사 재학',
+    org: '성균관대학교 일반대학원',
+    desc: '퀀트 금융, 시계열 분석, 딥러닝을 연구하고 있습니다.',
+    points: [],
+    tags: [],
   },
   {
-    title: '패션 커뮤니티',
-    description: '패션 애호가들이 스타일과 정보를 공유하고 소통할 수 있는 커뮤니티 플랫폼',
-    icon: <Shirt className='w-16 h-16' />,
-    category: 'personal',
-    tags: [
-      { name: 'Flask', className: 'text-white font-medium border rounded-full' },
-      { name: 'MySQL', className: 'text-white font-medium border rounded-full' },
-      { name: 'SSR', className: 'text-white font-medium border rounded-full' }
-    ]
+    period: '2024.09 — 현재',
+    role: 'Backend Engineer · 효성에프엠에스',
+    org: '개발팀 (Application Platform) · 선임',
+    desc: '채널계 백엔드·프론트엔드 개발 및 운영. CMS+(통합 PG 결제)·Customer API·Square(정기 배송)·Ibill(교육비 수납)·Connect(Core계 웹뷰)를 담당합니다.',
+    points: [
+      '멀티스레드 배치 동시성 제어로 데이터 유실률 80% 개선 (ConcurrentHashMap Thread-safe 저장소)',
+      'AOP 기반 보상 트랜잭션으로 MSA 결제 정합성 자동 보장, 장애성 고객 VoC 제거',
+      '도메인 모델 기반 레거시 리팩토링·인덱스 최적화로 배치 처리 38초 → 4초 단축',
+      '신규 전자계약 시스템 MVP~v2 설계·구축 (Spring Batch, JWT/OAuth 2.0, 처리 속도 30%↑)',
+    ],
+    tags: ['Spring Boot', 'Spring Batch', 'Oracle', 'MyBatis', 'AOP', 'JWT'],
   },
   {
-    title: 'Robust Payment System',
-    description: '개발 중인 안정적이고 보안성 높은 결제 시스템으로 다양한 결제 방식 지원',
-    icon: <CreditCard className='w-16 h-16' />,
-    category: 'personal',
-    tags: [
-      { name: 'Go', className: 'text-white font-medium border rounded-full' },
-      { name: 'gRPC', className: 'text-white font-medium border rounded-full' },
-      { name: 'PostgreSQL', className: 'text-white font-medium border rounded-full' }
-    ]
+    period: '2024.02 — 2024.08',
+    role: 'MSA Full Stack 개발 전문가 양성 과정',
+    org: '한국소프트웨어산업협회 · 960h',
+    desc: '대용량 자동 청구/결제 시스템을 4인 팀으로 구축하며 아키텍처 설계와 성능 최적화를 주도했습니다. 파이널 프로젝트 최우수상·우수 수료.',
+    points: [
+      'Kafka 기반 비동기 메시지 큐 아키텍처로 전환해 외부 장애 시에도 응답성 확보',
+      '데이터 기반 파라미터 튜닝으로 5만 건 처리 12초 → 7초 (약 70% 향상)',
+      'ECS 기반 MSA 구축, Prometheus·Grafana 연동으로 실시간 관측성 확보',
+    ],
+    tags: ['Kafka', 'Spring Boot', 'ECS', 'Elasticsearch', 'Grafana'],
   },
   {
-    title: '모니터링 시스템',
-    description: '서버 및 애플리케이션 성능을 실시간으로 모니터링하는 대시보드 시스템',
-    icon: <LineChart className='w-16 h-16' />,
-    category: 'team',
-    tags: [
-      { name: 'Spring Boot', className: 'text-white font-medium border rounded-full' },
-      { name: 'React', className: 'text-white font-medium border rounded-full' },
-      { name: 'Kafka', className: 'text-white font-medium border rounded-full' },
-      { name: 'Logback', className: 'text-white font-medium border rounded-full' },
-      { name: 'Elasticsearch', className: 'text-white font-medium border rounded-full' },
-      { name: 'Logstash', className: 'text-white font-medium border rounded-full' },
-      { name: 'Kibana', className: 'text-white font-medium border rounded-full' },
-    ]
+    period: '2023.08 — 2024.02',
+    role: '클라우드 엔지니어 양성 과정',
+    org: '㈜신세계아이앤씨 · 920h',
+    desc: 'AWS·Docker·Kubernetes 기반 클라우드 인프라와 컨테이너 오케스트레이션, IaC를 학습하고 실습했습니다.',
+    points: [
+      'Docker·Kubernetes 컨테이너 오케스트레이션 및 AWS 인프라 구성',
+      'Terraform 기반 IaC, CI/CD 파이프라인 실습',
+    ],
+    tags: ['AWS', 'Docker', 'Kubernetes', 'Terraform'],
   },
   {
-    title: 'Real-time Chat Platform',
-    description: '웹소켓 기술을 활용한 실시간 채팅 플랫폼으로 즉각적인 메시지 전송 지원',
-    icon: <MessageSquare className='w-16 h-16' />,
-    category: 'academic',
-    tags: [
-      { name: 'Socket.io', className: 'text-white font-medium border rounded-full' },
-      { name: 'Express', className: 'text-white font-medium border rounded-full' },
-      { name: 'Vue.js', className: 'text-white font-medium border rounded-full' }
-    ]
+    period: '2018.03 — 2023.02',
+    role: '생체의공학과 · 학사 졸업',
+    org: '경희대학교',
+    desc: '논문: Comparative Study of CNN Models for Liver Tumor Image Classification (2022)',
+    points: [],
+    tags: [],
+  },
+];
+
+export const projects = [
+  {
+    title: '대용량 자동 청구/결제 시스템',
+    context: 'cms-plus · MSA 성능 최적화 · 4인 팀',
+    points: [
+      'Kafka 비동기 아키텍처 전환으로 5만 건 처리 12초 → 7초 (약 70%↑)',
+      'ECS 기반 MSA 구축, RDS Read Replica로 부하 분산',
+      'Prometheus·Grafana·ELK로 실시간 관측성 확보',
+    ],
+    tags: ['Spring Boot', 'Kafka', 'ECS', 'Elasticsearch', 'Grafana'],
+    href: 'https://github.com/rlatkd/cms-plus',
+    image: '/images/portfolio/cms-plus.png',
   },
   {
-    title: 'Customer Management System v2',
-    description: '고객 정보와 상호작용을 효율적으로 관리하는 CRM 솔루션의 개선 버전',
-    icon: <LayoutGrid className='w-16 h-16' />,
-    category: 'academic',
-    tags: [
-      { name: 'Angular', className: 'text-white font-medium border rounded-full' },
-      { name: 'Spring Boot', className: 'text-white font-medium border rounded-full' },
-      { name: 'Redis', className: 'text-white font-medium border rounded-full' }
-    ]
+    title: 'UPquant · 암호화폐 퀀트 분석 대시보드',
+    context: '개인 · 퀀트 분석',
+    points: [
+      '업비트 KRW ~260종 대상 시장 국면(HMM)·포트폴리오 최적화(Markowitz)·팩터·백테스팅 등 9개 기법 통합',
+      '시장 국면 → 자산 구조 → 팩터 검증 → 최적화 → 전략 검증 5단계 파이프라인 구성',
+      'stale-while-revalidate 캐싱 + 단일 WebSocket 허브로 콜드스타트·연결 폭증 제거',
+    ],
+    tags: ['FastAPI', 'Python', 'React', 'TypeScript', 'WebSocket', 'AWS'],
+    href: 'https://github.com/rlatkd/up-quant',
+    image: '/images/portfolio/upquant.png',
   },
   {
-    title: 'Second-hand Auction Platform v2',
-    description: '중고 경매 플랫폼의 개선된 버전으로, 실시간 입찰과 결제 기능 강화',
-    icon: <Database className='w-16 h-16' />,
-    category: 'academic',
-    tags: [
-      { name: 'React', className: 'text-white font-medium border rounded-full' },
-      { name: 'Node.js', className: 'text-white font-medium border rounded-full' },
-      { name: 'MongoDB', className: 'text-white font-medium border rounded-full' }
-    ]
+    title: 'Sale-Sync · MSA 클라우드 POS',
+    context: '4인 팀 · 신세계I&C 클라우드 과정',
+    points: [
+      '매장·상품·주문·매출·대시보드·컨설팅 서비스를 MSA로 분리',
+      'Kafka 이벤트 기반 비동기 통신, 서비스별 DB 분리',
+      'AWS(S3·CloudFront·WAF·Route53) + GitHub Actions CI/CD 배포',
+    ],
+    tags: ['React', 'Recoil', 'MSA', 'Kafka', 'AWS', 'GitHub Actions'],
+    href: 'https://github.com/rlatkd/sale-sync',
+    image: '/images/portfolio/sale-sync.png',
   },
   {
-    title: 'Second-hand Auction Platform v1',
-    description: '중고 물품 경매를 위한 웹 플랫폼의 첫 번째 버전',
-    icon: <Database className='w-16 h-16' />,
-    category: 'academic',
-    tags: [
-      { name: 'PHP', className: 'text-white font-medium border rounded-full' },
-      { name: 'MySQL', className: 'text-white font-medium border rounded-full' },
-      { name: 'jQuery', className: 'text-white font-medium border rounded-full' }
-    ]
+    title: '포트폴리오 & 기술 블로그',
+    context: '개인 · Next.js',
+    points: [
+      'Next.js 14 App Router 기반 단일 페이지 포트폴리오',
+      'MDX 기술 블로그 + MongoDB 댓글',
+      '라이트/다크 테마, FSD 아키텍처',
+    ],
+    tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'MongoDB'],
+    href: 'https://github.com/rlatkd',
+    image: '',
+  },
+];
+
+export const skillGroups = [
+  { label: 'Language', items: ['Java', 'Python', 'JavaScript'] },
+  { label: 'Backend', items: ['Spring Boot', 'FastAPI', 'Spring Batch', 'Spring Data JPA', 'Spring Security'] },
+  { label: 'Frontend', items: ['React', 'Vue.js', 'Recoil', 'Zustand', 'Tailwind CSS'] },
+  { label: 'Database', items: ['Oracle', 'MySQL', 'Redis'] },
+  { label: 'Infra', items: ['AWS', 'Docker', 'Kubernetes', 'Apache Kafka', 'Linux'] },
+  { label: 'DevOps & Tools', items: ['GitHub Actions', 'GitLab Runner', 'Bamboo', 'Git', 'Bitbucket', 'Jira', 'Confluence'] },
+];
+
+export const education = [
+  {
+    period: '2026.03 — 현재',
+    org: '성균관대학교 일반대학원',
+    detail: '퀀트응용경제학과 · 석사 재학',
   },
   {
-    title: 'Customer Management System v1',
-    description: '기본적인 고객 정보 관리 기능을 제공하는 CRM 시스템의 첫 버전',
-    icon: <LayoutGrid className='w-16 h-16' />,
-    category: 'academic',
-    tags: [
-      { name: 'jQuery', className: 'text-white font-medium border rounded-full' },
-      { name: 'Express', className: 'text-white font-medium border rounded-full' },
-      { name: 'MySQL', className: 'text-white font-medium border rounded-full' }
-    ]
+    period: '2018.03 — 2023.02',
+    org: '경희대학교',
+    detail: '생체의공학과 · 학사 졸업',
+    note: '논문: Comparative Study of CNN Models for Liver Tumor Image Classification (2022)',
   },
-  
-  // Undergraduate Projects
-  {
-    title: 'CT Image Reconstruction',
-    description: '컴퓨터 단층촬영(CT) 이미지를 복원하고 분석하는 알고리즘 개발 프로젝트',
-    icon: <Image className='w-16 h-16' />,
-    category: 'academic',
-    tags: [
-      { name: 'Python', className: 'text-white font-medium border rounded-full' },
-      { name: 'TensorFlow', className: 'text-white font-medium border rounded-full' },
-      { name: 'OpenCV', className: 'text-white font-medium border rounded-full' }
-    ]
-  }
+];
+
+export const awards = [
+  { date: '2024.08', title: 'SW전문인재양성 우수성과 컨퍼런스 우수상', org: '정보통신기획평가원' },
+  { date: '2024.08', title: '우수 수료생 · 파이널 프로젝트 최우수상', org: '한국소프트웨어산업협회' },
+];
+
+export const certifications = ['데이터분석 준전문가 (ADsP)', 'SQL 개발자 (SQLD)'];
+
+export const contactLinks = [
+  { label: 'GitHub', sub: profile.githubLabel, href: profile.github },
+  { label: 'LinkedIn', sub: profile.linkedinLabel, href: profile.linkedin },
+  { label: 'Velog', sub: profile.velogLabel, href: profile.velog },
+  { label: 'RSS', sub: '구독 피드', href: '/rss' },
+];
+
+export const navItems = [
+  { id: 'about', label: 'About' },
+  { id: 'strengths', label: 'Strengths' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'writing', label: 'Writing' },
+  { id: 'contact', label: 'Contact' },
 ];

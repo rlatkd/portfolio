@@ -1,13 +1,11 @@
 export const themeEffect = () => {
-  const isDarkMode = () => {
-    return localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) && 
-      window.matchMedia('(prefers-color-scheme: dark)').matches);
-  };
+  // 저장된 선택이 있으면 그걸, 없으면 기본 라이트(PDF 크림 톤)
+  const stored = localStorage.getItem('theme');
+  const isDark = stored === 'dark';
 
-  if (isDarkMode()) {
+  if (isDark) {
     document.documentElement.classList.add('dark');
   } else {
     document.documentElement.classList.remove('dark');
   }
-}
+};

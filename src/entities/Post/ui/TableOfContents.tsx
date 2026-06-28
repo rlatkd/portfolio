@@ -170,7 +170,7 @@ export function TableOfContents({ contents }) {
                 handleSectionClick(id);
               }}
               className={`hover:underline transition-all duration-300 ${
-                id === section ? 'font-bold text-white/90 text-base' : 'text-white/70 text-sm'
+                id === section ? 'font-bold text-accent text-base' : 'text-muted text-sm'
               }`}
             >
               {text}

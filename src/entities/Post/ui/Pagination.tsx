@@ -26,20 +26,19 @@ export default function Pagination({ currentPage, lastPage, category }: Paginati
 
   return (
     <div className='flex items-center justify-center space-x-2 my-12 relative'>
-      <div className='absolute -bottom-10 left-1/2 -translate-x-1/2 w-40 h-40 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-3xl pointer-events-none'></div>
       <div className='flex items-center relative z-10'>
         {currentPage > 1 ? (
           <>
-            <Link 
-              href={`${queryPrefix}1`} 
-              className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/60 hover:text-white hover:bg-white/10 transition-all backdrop-blur-sm'
+            <Link
+              href={`${queryPrefix}1`}
+              className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted hover:text-accent transition-colors'
               aria-label='처음 페이지로'
             >
               <ChevronsLeft className='w-5 h-5' />
             </Link>
-            <Link 
-              href={`${queryPrefix}${currentPage - 1}`} 
-              className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/60 hover:text-white hover:bg-white/10 transition-all backdrop-blur-sm'
+            <Link
+              href={`${queryPrefix}${currentPage - 1}`}
+              className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted hover:text-accent transition-colors'
               aria-label='이전 페이지로'
             >
               <ChevronLeft className='w-5 h-5' />
@@ -47,10 +46,10 @@ export default function Pagination({ currentPage, lastPage, category }: Paginati
           </>
         ) : (
           <>
-            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/20'>
+            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted/40'>
               <ChevronsLeft className='w-5 h-5' />
             </span>
-            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/20'>
+            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted/40'>
               <ChevronLeft className='w-5 h-5' />
             </span>
           </>
@@ -61,10 +60,10 @@ export default function Pagination({ currentPage, lastPage, category }: Paginati
           <Link
             key={page}
             href={`${queryPrefix}${page}`}
-            className={`flex items-center justify-center w-10 h-10 rounded-full text-center transition-all ${
+            className={`flex items-center justify-center w-10 h-10 rounded-full text-center font-mono text-sm transition-colors ${
               page === currentPage
-                ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium shadow-md shadow-blue-500/20'
-                : 'text-white/70 hover:text-white hover:bg-white/10 backdrop-blur-sm'
+                ? 'bg-accent text-navy font-medium'
+                : 'text-muted hover:text-accent'
             }`}
             aria-label={`${page} 페이지로`}
             aria-current={page === currentPage ? 'page' : undefined}
@@ -76,16 +75,16 @@ export default function Pagination({ currentPage, lastPage, category }: Paginati
       <div className='flex items-center'>
         {currentPage < lastPage ? (
           <>
-            <Link 
-              href={`${queryPrefix}${currentPage + 1}`} 
-              className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/60 hover:text-white hover:bg-white/10 transition-all backdrop-blur-sm'
+            <Link
+              href={`${queryPrefix}${currentPage + 1}`}
+              className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted hover:text-accent transition-colors'
               aria-label='다음 페이지로'
             >
               <ChevronRight className='w-5 h-5' />
             </Link>
-            <Link 
-              href={`${queryPrefix}${lastPage}`} 
-              className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/60 hover:text-white hover:bg-white/10 transition-all backdrop-blur-sm'
+            <Link
+              href={`${queryPrefix}${lastPage}`}
+              className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted hover:text-accent transition-colors'
               aria-label='마지막 페이지로'
             >
               <ChevronsRight className='w-5 h-5' />
@@ -93,10 +92,10 @@ export default function Pagination({ currentPage, lastPage, category }: Paginati
           </>
         ) : (
           <>
-            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/20'>
+            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted/40'>
               <ChevronRight className='w-5 h-5' />
             </span>
-            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-white/20'>
+            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted/40'>
               <ChevronsRight className='w-5 h-5' />
             </span>
           </>

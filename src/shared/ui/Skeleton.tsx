@@ -12,7 +12,7 @@ export const Skeleton = ({
 }) => {
   return (
     <div 
-      className={`bg-white/5 ${rounded} ${animate ? 'animate-pulse' : ''} ${className}`}
+      className={`bg-surface-2 ${rounded} ${animate ? 'animate-pulse' : ''} ${className}`}
       style={{ width, height }}
     ></div>
   );
@@ -80,7 +80,7 @@ export const CardSkeleton = ({
   className = ''
 }) => {
   return (
-    <div className={`bg-white/5 backdrop-blur-sm ${roundedCard} overflow-hidden ${className}`}>
+    <div className={`border border-line bg-surface ${roundedCard} overflow-hidden ${className}`}>
       <ImageSkeleton height={imageHeight} rounded="rounded-none" />
       <div className={padding}>
         <TextSkeleton lines={3} widths={['60%', '100%', '80%']} />
