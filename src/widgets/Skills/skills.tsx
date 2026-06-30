@@ -3,7 +3,7 @@ import { skillGroups } from '@/shared/data/site-data';
 
 export default function Skills() {
   return (
-    <Section id='skills' label='Skills & Tools'>
+    <Section id='skills' label='Skills'>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
         {skillGroups.map((g) => (
           <div key={g.label} className='rounded-lg border border-line bg-surface p-6'>

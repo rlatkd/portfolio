@@ -1,5 +1,5 @@
 import { Section } from '@/shared/ui/Section';
-import { aboutIntro, aboutQuote, stats, careerStart, education, awards, certifications } from '@/shared/data/site-data';
+import { aboutIntro, aboutQuote, stats, careerStart, education, training, awards, certifications } from '@/shared/data/site-data';
 
 function careerDuration() {
   const start = new Date(careerStart);
@@ -12,10 +12,17 @@ function careerDuration() {
 }
 
 export default function About() {
-  const allStats = [{ value: careerDuration(), label: '실무 경력' }, ...stats];
+  const allStats = [{ value: careerDuration(), label: '경력' }, ...stats];
 
   return (
-    <Section id='about'>
+    <Section id='about' label='About' className='!pt-0'>
+      {/* 인용 (최상단) */}
+      <blockquote className='mb-8 rounded-lg border border-line bg-surface p-6'>
+        <p className='whitespace-pre-line border-l-2 border-accent pl-4 italic leading-relaxed text-fg'>
+          “{aboutQuote.text}”
+        </p>
+      </blockquote>
+
       <div className='space-y-4'>
         {aboutIntro.map((p, i) => (
           <p key={i} className='leading-relaxed text-fg'>
@@ -24,18 +31,13 @@ export default function About() {
         ))}
       </div>
 
-      {/* 인용 */}
-      <blockquote className='mt-8 rounded-lg border border-line bg-surface p-6'>
-        <p className='border-l-2 border-accent pl-4 italic leading-relaxed text-fg'>
-          “{aboutQuote.text}”
-        </p>
-      </blockquote>
-
       {/* 통계 */}
       <div className='mt-8 grid grid-cols-2 gap-3 md:grid-cols-4'>
         {allStats.map((s) => (
           <div key={s.label} className='rounded-lg border border-line bg-surface p-5'>
-            <div className='text-2xl font-bold text-accent'>{s.value}</div>
+            <div className='whitespace-nowrap text-lg font-bold tracking-tight text-accent md:text-xl'>
+              {s.value}
+            </div>
             <div className='mt-1 text-xs leading-snug text-muted'>{s.label}</div>
           </div>
         ))}
@@ -58,10 +60,25 @@ export default function About() {
         </div>
 
         <div className='rounded-lg border border-line bg-surface p-6'>
+          <div className='mb-3 text-xs uppercase tracking-[0.2em] text-muted'>Training</div>
+          <div className='space-y-4'>
+            {training.map((t) => (
+              <div key={t.title}>
+                <div className='text-xs text-accent'>{t.period}</div>
+                <div className='mt-0.5 font-medium text-fg-strong'>
+                  {t.title} ({t.hours})
+                </div>
+                <div className='text-sm text-muted'>{t.org}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className='rounded-lg border border-line bg-surface p-6'>
           <div className='mb-3 text-xs uppercase tracking-[0.2em] text-muted'>Awards</div>
           <div className='space-y-3'>
             {awards.map((a) => (
-              <div key={a.title}>
+              <div key={`${a.date}-${a.org}-${a.title}`}>
                 <div className='text-sm font-medium text-fg-strong'>{a.title}</div>
                 <div className='text-xs text-muted'>
                   {a.date} · {a.org}
@@ -73,14 +90,17 @@ export default function About() {
 
         <div className='rounded-lg border border-line bg-surface p-6'>
           <div className='mb-3 text-xs uppercase tracking-[0.2em] text-muted'>Certifications</div>
-          <div className='flex flex-wrap gap-2'>
+          <div className='space-y-3'>
             {certifications.map((c) => (
-              <span
-                key={c}
-                className='rounded-full border border-accent/30 bg-accent/5 px-3 py-1 text-xs font-medium text-accent'
-              >
-                {c}
-              </span>
+              <div key={c.name} className='flex items-start justify-between gap-3'>
+                <div>
+                  <div className='text-sm font-medium text-fg-strong'>{c.name}</div>
+                  <div className='text-xs text-muted'>
+                    {c.date} · {c.org}
+                  </div>
+                </div>
+                <div className='shrink-0 pt-0.5 font-mono text-xs text-muted'>{c.id}</div>
+              </div>
             ))}
           </div>
         </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { X } from 'lucide-react';
+import { X, ArrowUpRight } from 'lucide-react';
 import { Section } from '@/shared/ui/Section';
 import { strengths, type Strength } from '@/shared/data/site-data';
 
@@ -77,17 +77,25 @@ export default function Strengths() {
   const [selected, setSelected] = useState<Strength | null>(null);
 
   return (
-    <Section id='strengths' label='Core Strengths'>
+    <Section id='strengths' label='Strengths'>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
         {strengths.map((s) => (
           <button
             key={s.title}
             onClick={() => setSelected(s)}
-            className='flex flex-col rounded-lg border border-line bg-surface p-6 text-left transition-colors hover:border-accent'
+            className='group flex h-full flex-col rounded-lg border border-line bg-surface p-6 text-left transition-colors hover:border-accent'
           >
-            <h3 className='font-bold text-fg-strong'>{s.title}</h3>
+            <div className='flex items-start justify-between gap-3'>
+              <h3 className='min-h-[2.75rem] font-bold leading-snug text-fg-strong group-hover:text-accent'>
+                {s.title}
+              </h3>
+              <ArrowUpRight
+                size={16}
+                className='mt-0.5 shrink-0 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent'
+              />
+            </div>
             <p className='mt-2 flex-1 text-sm leading-relaxed text-muted'>{s.desc}</p>
-            <div className='mt-4 flex flex-wrap items-center gap-2'>
+            <div className='mt-5 flex flex-wrap gap-2 border-t border-line pt-4'>
               {s.tags.map((t) => (
                 <span
                   key={t}
@@ -96,7 +104,6 @@ export default function Strengths() {
                   {t}
                 </span>
               ))}
-              <span className='ml-auto text-xs text-muted'>자세히 →</span>
             </div>
           </button>
         ))}

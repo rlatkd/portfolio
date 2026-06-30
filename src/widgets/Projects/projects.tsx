@@ -4,7 +4,7 @@ import { projects } from '@/shared/data/site-data';
 
 export default function Projects() {
   return (
-    <Section id='projects' label='Selected Projects'>
+    <Section id='projects' label='Projects'>
       <div className='space-y-5'>
         {projects.map((p) => {
           const Wrapper = p.href ? 'a' : 'div';

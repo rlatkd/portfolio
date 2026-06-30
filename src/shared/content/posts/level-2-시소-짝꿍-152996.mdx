@@ -1,0 +1,128 @@
+---
+index: '26'
+title: '[level 2] 시소 짝꿍 - 152996'
+category: 'Algorithm'
+publishedAt: '2024-07-07'
+summary: '문제 링크 메모리: 75.1 MB, 시간: 0.44 ms코딩테스트 연습 > 연습문제정확성: 100.0합계: 100.0 / 100.02024년 07월 07일 21:45:16출처: 프로그래머스 코딩 테스트 연습, ...'
+---
+
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/152996) 
+
+### 성능 요약
+
+메모리: 75.1 MB, 시간: 0.44 ms
+
+### 구분
+
+코딩테스트 연습 > 연습문제
+
+### 채점결과
+
+정확성: 100.0&lt;br/>합계: 100.0 / 100.0
+
+### 제출 일자
+
+2024년 07월 07일 21:45:16
+
+### 문제 설명
+
+&lt;p>어느 공원 놀이터에는 시소가 하나 설치되어 있습니다. 이 시소는 중심으로부터 2(m), 3(m), 4(m) 거리의 지점에 좌석이 하나씩 있습니다.&lt;br>
+이 시소를 두 명이 마주 보고 탄다고 할 때, 시소가 평형인 상태에서 각각에 의해 시소에 걸리는 토크의 크기가 서로 상쇄되어 완전한 균형을 이룰 수 있다면 그 두 사람을 시소 짝꿍이라고 합니다. 즉, 탑승한 사람의 무게와 시소 축과 좌석 간의 거리의 곱이 양쪽 다 같다면 시소 짝꿍이라고 할 수 있습니다.&lt;br>
+사람들의 몸무게 목록 &lt;code>weights&lt;/code>이 주어질 때, 시소 짝꿍이 몇 쌍 존재하는지 구하여 return 하도록 solution 함수를 완성해주세요.&lt;/p>
+
+&lt;hr>
+
+&lt;h5>제한 사항&lt;/h5>
+
+&lt;ul>
+&lt;li>2 ≤ &lt;code>weights&lt;/code>의 길이 ≤ 100,000&lt;/li>
+&lt;li>100 ≤ &lt;code>weights&lt;/code>[i] ≤ 1,000
+
+&lt;ul>
+&lt;li>몸무게 단위는 N(뉴턴)으로 주어집니다.&lt;/li>
+&lt;li>몸무게는 모두 정수입니다.&lt;/li>
+&lt;/ul>&lt;/li>
+&lt;/ul>
+
+&lt;hr>
+
+&lt;h5>입출력 예&lt;/h5>
+&lt;table class="table">
+        &lt;thead>&lt;tr>
+&lt;th>weights&lt;/th>
+&lt;th>result&lt;/th>
+&lt;/tr>
+&lt;/thead>
+        &lt;tbody>&lt;tr>
+&lt;td>[100,180,360,100,270]&lt;/td>
+&lt;td>4&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+      &lt;/table>
+&lt;hr>
+
+&lt;h5>입출력 예 설명&lt;/h5>
+
+&lt;p>&#123;100, 100&#125; 은 서로 같은 거리에 마주보고 앉으면 균형을 이룹니다.&lt;br>
+&#123;180, 360&#125; 은 각각 4(m), 2(m) 거리에 마주보고 앉으면 균형을 이룹니다.&lt;br>
+&#123;180, 270&#125; 은 각각 3(m), 2(m) 거리에 마주보고 앉으면 균형을 이룹니다.&lt;br>
+&#123;270, 360&#125; 은 각각 4(m), 3(m) 거리에 마주보고 앉으면 균형을 이룹니다.&lt;/p>
+
+
+> 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+### 풀이
+
+```java
+import java.util.*;
+
+class Solution {
+    
+    public long solution(int[] weights) {
+        
+        long answer = 0;
+        
+        // 정렬하여 무게를 오름차순으로 정렬
+        Arrays.sort(weights);
+        
+        // 특정 무게에 대한 등장 횟수를 저장하기 위한 해시맵 생성
+        HashMap<Double, Integer> map = new HashMap<>();
+
+        // 각 무게에 대해 반복
+        for(int w : weights) {
+            
+            double a = (double) w; // 현재 무게를 double형으로 변환하여 저장
+            double b = ((double) w * 2.0) / 3.0; // 현재 무게의 2/3 값을 저장
+            double c = (double) w / 2.0; // 현재 무게의 절반 값을 저장
+            double d = ((double) w * 3.0) / 4.0; // 현재 무게의 3/4 값을 저장
+
+            // map에 a가 존재하는 경우 answer에 해당 무게의 등장 횟수를 더함
+            if(map.containsKey(a)) {
+                answer += map.get(a);
+            }
+            
+            // map에 b가 존재하는 경우 answer에 해당 무게의 등장 횟수를 더함
+            if(map.containsKey(b)) {
+                answer += map.get(b);
+            }
+            
+            // map에 c가 존재하는 경우 answer에 해당 무게의 등장 횟수를 더함
+            if(map.containsKey(c)) {
+                answer += map.get(c);
+            }
+            
+            // map에 d가 존재하는 경우 answer에 해당 무게의 등장 횟수를 더함
+            if(map.containsKey(d)) {
+                answer += map.get(d);
+            }
+
+            // 현재 무게 a의 등장 횟수를 1 증가시켜 map에 저장
+            map.put(a, map.getOrDefault(a, 0) + 1);
+        }
+        
+        return answer;
+        
+    }
+    
+}
+```

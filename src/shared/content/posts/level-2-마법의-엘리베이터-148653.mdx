@@ -1,0 +1,122 @@
+---
+index: '27'
+title: '[level 2] 마법의 엘리베이터 - 148653'
+category: 'Algorithm'
+publishedAt: '2024-07-08'
+summary: '문제 링크 메모리: 72.4 MB, 시간: 0.02 ms코딩테스트 연습 > 연습문제정확성: 100.0합계: 100.0 / 100.02024년 07월 09일 00:14:32출처: 프로그래머스 코딩 테스트 연습, ...'
+---
+
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/148653) 
+
+### 성능 요약
+
+메모리: 72.4 MB, 시간: 0.02 ms
+
+### 구분
+
+코딩테스트 연습 > 연습문제
+
+### 채점결과
+
+정확성: 100.0&lt;br/>합계: 100.0 / 100.0
+
+### 제출 일자
+
+2024년 07월 09일 00:14:32
+
+### 문제 설명
+
+&lt;p>마법의 세계에 사는 민수는 아주 높은 탑에 살고 있습니다. 탑이 너무 높아서 걸어 다니기 힘든 민수는 마법의 엘리베이터를 만들었습니다. 마법의 엘리베이터의 버튼은 특별합니다. 마법의 엘리베이터에는 -1, +1, -10, +10, -100, +100 등과 같이 절댓값이 10&lt;sup>c&lt;/sup> (c ≥ 0 인 정수) 형태인 정수들이 적힌 버튼이 있습니다. 마법의 엘리베이터의 버튼을 누르면 현재 층 수에 버튼에 적혀 있는 값을 더한 층으로 이동하게 됩니다. 단, 엘리베이터가 위치해 있는 층과 버튼의 값을 더한 결과가 0보다 작으면 엘리베이터는 움직이지 않습니다. 민수의 세계에서는 0층이 가장 아래층이며 엘리베이터는 현재 민수가 있는 층에 있습니다.&lt;/p>
+
+&lt;p>마법의 엘리베이터를 움직이기 위해서 버튼 한 번당 마법의 돌 한 개를 사용하게 됩니다.예를 들어, 16층에 있는 민수가 0층으로 가려면 -1이 적힌 버튼을 6번, -10이 적힌 버튼을 1번 눌러 마법의 돌 7개를 소모하여 0층으로 갈 수 있습니다. 하지만, +1이 적힌 버튼을 4번, -10이 적힌 버튼 2번을 누르면 마법의 돌 6개를 소모하여 0층으로 갈 수 있습니다.&lt;/p>
+
+&lt;p>마법의 돌을 아끼기 위해 민수는 항상 최소한의 버튼을 눌러서 이동하려고 합니다. 민수가 어떤 층에서 엘리베이터를 타고 0층으로 내려가는데 필요한 마법의 돌의 최소 개수를 알고 싶습니다. 민수와 마법의 엘리베이터가 있는 층을 나타내는 정수 &lt;code>storey&lt;/code> 가 주어졌을 때, 0층으로 가기 위해 필요한 마법의 돌의 최소값을 return 하도록 solution 함수를 완성하세요.&lt;/p>
+
+&lt;hr>
+
+&lt;h5>제한사항&lt;/h5>
+
+&lt;ul>
+&lt;li>1 ≤ &lt;code>storey&lt;/code> ≤ 100,000,000&lt;/li>
+&lt;/ul>
+
+&lt;hr>
+
+&lt;h5>입출력 예&lt;/h5>
+&lt;table class="table">
+        &lt;thead>&lt;tr>
+&lt;th>storey&lt;/th>
+&lt;th>result&lt;/th>
+&lt;/tr>
+&lt;/thead>
+        &lt;tbody>&lt;tr>
+&lt;td>16&lt;/td>
+&lt;td>6&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>2554&lt;/td>
+&lt;td>16&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+      &lt;/table>
+&lt;hr>
+
+&lt;h5>입출력 예 설명&lt;/h5>
+
+&lt;p>&lt;strong>입출력 예 #1&lt;/strong>&lt;/p>
+
+&lt;ul>
+&lt;li>문제 예시와 같습니다.&lt;/li>
+&lt;/ul>
+
+&lt;p>&lt;strong>입출력 예 #2&lt;/strong>&lt;/p>
+
+&lt;ul>
+&lt;li>-1, +100이 적힌 버튼을 4번, +10이 적힌 버튼을 5번, -1000이 적힌 버튼을 3번 누르면 0층에 도착 할 수 있습니다. 그러므로 16을 return 합니다.&lt;/li>
+&lt;/ul>
+
+
+> 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+### 풀이
+
+```java
+class Solution {
+    
+    public int solution(int storey) {
+        
+        int answer = 0;
+
+        while (storey > 0) {
+            int digit = storey % 10;
+            storey /= 10;
+
+            // 5일 때 앞자리 숫자가 5이상이면 올려주는게 유리함
+            if (digit == 5) {
+                if (storey%10 >= 5) {
+                    answer += (10 - digit);
+                    storey++;
+                }
+                else {
+                    answer += digit;    
+                }
+            }
+            
+            // 더하는게 유리
+            else if (digit > 5) {
+                answer += (10 - digit);
+                storey++;
+            }
+            
+            // 빼는게 유리
+            else {
+                answer += digit;
+            }
+
+        }
+        
+        return answer;
+    }
+    
+}
+```

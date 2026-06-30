@@ -1,0 +1,192 @@
+---
+index: '17'
+title: 'Deployment'
+category: 'DevOps'
+publishedAt: '2024-06-23'
+summary: 'Deployment는 Pod와 ReplicaSet에 대한 선언적 업데이트를 제공Deployment에서 의도하는 상태를 설명하고, 디플로이먼트 컨트롤러(Controller)는 현재 상태에서 의도하는 상태로 비율을...'
+image: 'https://velog.velcdn.com/images/kata/post/246b2cc2-77f4-43ec-bafc-49b00a3a761d/image.png'
+---
+
+# Deployment
+
+- Deployment는 Pod와 ReplicaSet에 대한 선언적 업데이트를 제공
+- Deployment에서 의도하는 상태를 설명하고, 디플로이먼트 컨트롤러(Controller)는 현재 상태에서 의도하는 상태로 비율을 조정하며 변경
+
+> 참고: 디플로이먼트가 소유하는 레플리카셋은 관리하지 말아야 함
+> 
+
+# The "Deployment" Object
+
+- Deployment 객체는 쿠버네티스로 작업할 때 작업하는 주요 객체 중 하나
+    - 일반적으로 수동으로 Pod 객체를 직접 생성하여 특정 워커 노드로 이동하지는 않음
+    - 대신 deployment 객체를 생성하고, 생성하고 관리해야 하는 pod의 수와 컨테이너 수에 대한 지침을 제공
+- Deployment 객체는 하나 이상의 Pod를 제어할 수 있음
+    - 따라서 이를 사용하여, 한 번에 여러 Pod를 생성하여 Deployment 객체의 핵심 철학인 내부적으로 컨트롤러 객체를 생성할 수 있음
+
+## 특징
+
+### 원하는 목표를 설정하면 쿠버네티스가 이를 수행
+
+- 예시
+    - 구동중인 컨테이너와 두 개의 포드를 가지고 있다면 쿠버네티스가 이 목표 상태에 도달하기 위해 필요한 모든 작업을 수행
+    - 그래서 원하는 것을 정의할 수 있고, 쿠버네티스가 수행
+- 수동으로 리모트 머신을 선택하여 거기에 Pod를 배치할 필요가 없음
+    - 쿠버네티스가 대신 이 작업을 수행
+
+### Deployment를 일시 중지하거나, 삭제하고, 롤백할 수 있음
+
+- 무언가 엉망이 되어 애플리케이션이 실패하더라도, 코드를 변경하고, 오류를 수정하고, 실패한 Pod를 새 것으로 교체하기 위해 서두르지 않아도 됨
+- 대신 실패한 Deployment를 롤백하고 이전에 작동했던 Deployment로 돌아갈 수 있음
+- 서두르지 않고 버그를 수정한 뒤 업데이트된 컨테이너 이미지의 업데이트된 코드로 새 Deployment를 시작하기만 하면 됨
+- 스케일은 변경되어도 버전이 바뀌지는 않음
+
+### Deployment도 Pod를 스케일링할 수 있음
+
+- 더 많은 Pod 또는 더 적은 Pod를 갖고 싶다고 쿠버네티스에 알릴 수 있으며, 특정 메트릭을 설정할 수 있는 오토 스케일링 기능을 사용할 수도 있음
+    - 예를 들어 메트릭엔 수신 트래픽과 CPU 사용률이 있음
+- 메트릭을 초과하면, 쿠버네티스가 자동으로 더 많은 Pod를 생성하므로 들어오는 요청을 처리하기 위해 더 많은 실행 중인 컨테이너 인스턴스가 생성됨
+    - 트래픽이 저하되어 줄어들면, 불필요한 Pod는 다시 제거됨
+
+### 자동 복구
+
+- Pod 내의 컨테이너가 종료되는 경우
+    - Pod는 컨테이너 수준의 장애에 대해 자동 복구를 시도
+    - Deployment는 파드 단위로 복구를 시도
+- 예시
+    - 노드에 장애가 발생하여 종료됨
+    - 5~6분 정도 경과하면 배포한 Deployment가 활성화 노드에 대체 Pod를 생성
+        - Deployment 말고 Pod를 단독으로 기동하면 원래 노드에서 계속 Terminating 되어 있음
+    - 중지되었던 노드가 복원되면, Terminating 상태였던 Pod가 모드 제거됨
+    - 노드와의 통신이 회복되어 상태가 불분명했던 Pod의 상태가 확인되어 삭제되는 것으로 단독으로 기동한 파드는 완전히 소멸됨
+- 일시적인 장애로 자동 복구가 발동되었을 때 더 불안한 상태로 빠지는 것을 막기 위해서, 디플로이먼트는 천천히 복구를 수행하도록 만들어져 있음
+
+## 정리
+
+- Deployment를 생성할 때, Deployment로 하나의 Pod를 관리하지만 쿠버네티스가 관리하는 여러 포드를 갖기 위해 여러 개의 deployment를 생성할 수도 있음
+    - 따라서 일반적으로 pod를 직접 생성하지 않으며, 직접 관리하지도 않음
+- 대신, Deployment를 사용하여 Deployment 객체를 생성하고 이를 쿠버네티스 클러스터에 전송하여 쿠버네티스가 이를 수행하도록 함
+
+## Deployment 배포 전략
+
+### Recreate
+
+- 업데이트 시 모든 레플리카를 종료하고 다시 새로운 레플리카를 띄움
+- 예시
+
+```yaml
+# deployment-recreate.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-deployment-recreate
+spec:
+  strategy:
+    type: Recreate
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sample-app
+  template:
+    metadata:
+      labels:
+        app: sample-app
+    spec:
+      containers:
+      - name: nginx-container
+        image: docker.io/nginx:1.16
+      imagePullSecrets:
+      - name: regcred
+
+```
+
+- 업데이트 시 기존 RS의 레플리카 수를 0으로 하고 리소스를 반환
+- 신규 RS를 생성하고 레플리카의 수를 늘림
+
+### Rolling Update
+
+- 여러 개의 가동 중인 Pod를 점진적으로 업데이트하는 방법
+- 예시
+
+```yaml
+# deployment-rollingupdate.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-deployment-rollingupdate
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sample-app
+  template:
+    metadata:
+      labels:
+        app: sample-app
+    spec:
+      containers:
+      - name: nginx-container
+        image: docker.io/nginx:1.16
+      imagePullSecrets:
+      - name: regcred
+
+```
+
+- maxUnavailable: 업데이트 중 동시에 정지 가능한 최대 Pod
+- maxSurge: 업데이트 중 동시에 생성할 수 있는 최대 Pod
+- maxUnavailable과 maxSurge를 모두 0으로 설정할 수는 없음
+
+### Blue / Green
+
+- Deployment 전략에서 제공하는 것은 아니고 Service를 이용해서 구현
+1. 블루 버전의 애플리케이션 실행 및 서비스를 통한 외부 노출
+2. 업데이트된 그린 버전 애플리케이션 실행 (외부 노출 X)
+    - 이 과정에서 블루와 그린 애플리케이션이 공존
+3. 서비스의 selector 등을 수정해 그린 버전 배포
+    - 블루 버전의 외부 노출이 그린 버전으로 옮겨감
+    - 공개 포트나 주소 등이 변경되지 않음
+    - 클라이언트 사이드에서 변경할 것이 없음
+
+# In-place Deployment
+
+![](https://velog.velcdn.com/images/kata/post/246b2cc2-77f4-43ec-bafc-49b00a3a761d/image.png)
+
+
+- 사용 중인 환경에 새로운 변경 사항이 포함된 애플리케이션만 반영하는 방법
+- 배포 그룹의 각 환경(인스턴스)에 있는 애플리케이션을 일시정지한 후, 최신 상태의 애플리케이션의 변경 사항이 설치되면 새 버전의 앱을 실행하는 형식으로 이루어짐
+- 로드 밸런서를 사용하면 각 인스턴스가 배포 중이더라도 등록을 해제할 수 있으며, 배포 완료 후에 이전 버전으로 복원도 가능
+- 이것은 배포 방식 상 EC2, 온프레미스 환경에만 사용 가능한 배포 전략
+- 쿠버네티스에서는 Recreate라고 함
+
+# Rolling Update Deployment
+![](https://velog.velcdn.com/images/kata/post/4039695f-ec35-43cf-882e-7a3a71671116/image.png)
+
+- 여러 개의 가동중인 서버(인스턴스)를 갖춘 환경에서 한 번에 정해진 수만큼의 서버에 새로운 변경 사항이 포함된 애플리케이션을 배포하는 방법
+- 구 버전에서 새 버전으로 트래픽을 점진적으로 전환하며, 구 버전의 인스턴스도 점차 삭제됨
+- 그렇기 때문에 **서버 수의 제약이 있을 경우에는 유용한 방법**이 될 수 있지만 배포 중 인스턴스의 수가 감소 되기 때문에 서버 처리 용량을 미리 고려해야 함
+- EC2, 온프레미스의 경우, 인플레이스 배포가 롤링 배포와 혼합된 방식을 따르고 있고, Lambda나 ECS의 경우는 롤링 배포가 기본적인 배포 방식이 됨
+
+# Blue / Green Deployment
+
+![](https://velog.velcdn.com/images/kata/post/841ddeae-b1bb-416b-a4da-259f33af5d8a/image.png)
+
+- 새로운 변경사항이 포함된 애플리케이션을 위한 새로운 환경을 구축하고 교체하는 방법
+- 흔히 블루/그린 배포를 "구 버전의 환경을 새 버전의 환경으로 똑같이 구축해서 한 번에 전환한다" 라고 생각하는데, 사실 이것은 Red/Black 배포의 정의임
+- 그래서 실제로는 "신 버전과 구 버전의 어플리케이션이 한 순간이라도 공존하였다" 라고 하는 것이 더 올바르다고 할 수 있음
+- 블루/그린 배포는 하나의 버전만 프로덕션 되기 때문에 **버전 관리 문제를 방지**할 수 있고, **운영 환경에 영향을 주지 않고 실제 서비스 환경으로 새 버전 테스트가 가능**
+- 또, 주로 인플레이스 배포와 비교될 때 언급되는 장점으로 새 버전으로 전환 후에 문제가 생겼을 시에 구 버전으로 되돌리기 위한 **롤백도 인플레이스 배포보다 더 빠르다**는 점이 있음
+- 단, 구 버전과 새 버전 두 환경 모두 갖출 필요가 있기 때문에 시스템 자원이 두 배로 필요해지며, 비용이 그만큼 비싸지기 때문에 비용을 고려한 구성을 필요로 함
+    - 이런 단점은 AWS와 같은 클라우드 서비스에서는 종량 과금이라는 메리트가 있어 큰 부담 요소로 작용되지 않으니 그리 신경 쓸 부분은 아님
+
+# Canary Deployment
+
+![](https://velog.velcdn.com/images/kata/post/b4080e3a-4c12-401c-b85f-9cb5637d6e5c/image.png)
+
+- 가동 중인 서버들의 일부에만 새로운 앱을 배포하여, 일부 트래픽을 새 버전의 환경으로 분산하는 방법
+- **A/B 테스트가 가능**하고, **오류율 및 성능 모니터링**에 유용하게 사용할 수 있다는 장점이 있음
+- 트래픽을 분산시킬 라우팅은 임의적 또는 사용자 프로필 등을 기반으로 분류할 수 있음
+- 분산 후에 결과에 따라 새 버전이 운영 환경을 대체할 수도 있고, 다시 구 버전으로 되돌릴 수도 있음

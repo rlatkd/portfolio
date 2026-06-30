@@ -1,0 +1,137 @@
+---
+index: '8'
+title: '[level 2] 연속된 부분 수열의 합 - 178870'
+category: 'Algorithm'
+publishedAt: '2024-06-20'
+summary: '문제 링크 메모리: 76.5 MB, 시간: 0.02 ms코딩테스트 연습 > 연습문제정확성: 100.0합계: 100.0 / 100.02024년 06월 19일 23:58:36출처: 프로그래머스 코딩 테스트 연습, ...'
+---
+
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/178870?language=java) 
+
+### 성능 요약
+
+메모리: 76.5 MB, 시간: 0.02 ms
+
+### 구분
+
+코딩테스트 연습 > 연습문제
+
+### 채점결과
+
+정확성: 100.0&lt;br/>합계: 100.0 / 100.0
+
+### 제출 일자
+
+2024년 06월 19일 23:58:36
+
+### 문제 설명
+
+&lt;p>비내림차순으로 정렬된 수열이 주어질 때, 다음 조건을 만족하는 부분 수열을 찾으려고 합니다.&lt;/p>
+
+&lt;ul>
+&lt;li>기존 수열에서 임의의 두 인덱스의 원소와 그 사이의 원소를 모두 포함하는 부분 수열이어야 합니다.&lt;/li>
+&lt;li>부분 수열의 합은 &lt;code>k&lt;/code>입니다.&lt;/li>
+&lt;li>합이 &lt;code>k&lt;/code>인 부분 수열이 여러 개인 경우 길이가 짧은 수열을 찾습니다.&lt;/li>
+&lt;li>길이가 짧은 수열이 여러 개인 경우 앞쪽(시작 인덱스가 작은)에 나오는 수열을 찾습니다.&lt;/li>
+&lt;/ul>
+
+&lt;p>수열을 나타내는 정수 배열 &lt;code>sequence&lt;/code>와 부분 수열의 합을 나타내는 정수 &lt;code>k&lt;/code>가 매개변수로 주어질 때, 위 조건을 만족하는 부분 수열의 시작 인덱스와 마지막 인덱스를 배열에 담아 return 하는 solution 함수를 완성해주세요. 이때 수열의 인덱스는 0부터 시작합니다.&lt;/p>
+
+&lt;hr>
+
+&lt;h5>제한사항&lt;/h5>
+
+&lt;ul>
+&lt;li>5 ≤ &lt;code>sequence&lt;/code>의 길이 ≤ 1,000,000
+
+&lt;ul>
+&lt;li>1 ≤ &lt;code>sequence&lt;/code>의 원소 ≤ 1,000&lt;/li>
+&lt;li>&lt;code>sequence&lt;/code>는 비내림차순으로 정렬되어 있습니다.&lt;/li>
+&lt;/ul>&lt;/li>
+&lt;li>5 ≤ &lt;code>k&lt;/code> ≤ 1,000,000,000
+
+&lt;ul>
+&lt;li>&lt;code>k&lt;/code>는 항상 &lt;code>sequence&lt;/code>의 부분 수열로 만들 수 있는 값입니다.&lt;/li>
+&lt;/ul>&lt;/li>
+&lt;/ul>
+
+&lt;hr>
+
+&lt;h5>입출력 예&lt;/h5>
+&lt;table class="table">
+        &lt;thead>&lt;tr>
+&lt;th>sequence&lt;/th>
+&lt;th>k&lt;/th>
+&lt;th>result&lt;/th>
+&lt;/tr>
+&lt;/thead>
+        &lt;tbody>&lt;tr>
+&lt;td>[1, 2, 3, 4, 5]&lt;/td>
+&lt;td>7&lt;/td>
+&lt;td>[2, 3]&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>[1, 1, 1, 2, 3, 4, 5]&lt;/td>
+&lt;td>5&lt;/td>
+&lt;td>[6, 6]&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>[2, 2, 2, 2, 2]&lt;/td>
+&lt;td>6&lt;/td>
+&lt;td>[0, 2]&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+      &lt;/table>
+&lt;hr>
+
+&lt;h5>입출력 예 설명&lt;/h5>
+
+&lt;p>입출력 예 #1&lt;/p>
+
+&lt;p>[1, 2, 3, 4, 5]에서 합이 7인 연속된 부분 수열은 [3, 4]뿐이므로 해당 수열의 시작 인덱스인 2와 마지막 인덱스 3을 배열에 담아 [2, 3]을 반환합니다.&lt;/p>
+
+&lt;p>입출력 예 #2&lt;/p>
+
+&lt;p>[1, 1, 1, 2, 3, 4, 5]에서 합이 5인 연속된 부분 수열은 [1, 1, 1, 2], [2, 3], [5]가 있습니다. 이 중 [5]의 길이가 제일 짧으므로 해당 수열의 시작 인덱스와 마지막 인덱스를 담은 [6, 6]을 반환합니다.&lt;/p>
+
+&lt;p>입출력 예 #3&lt;/p>
+
+&lt;p>[2, 2, 2, 2, 2]에서 합이 6인 연속된 부분 수열은 [2, 2, 2]로 3가지 경우가 있는데, 길이가 짧은 수열이 여러 개인 경우 앞쪽에 나온 수열을 찾으므로 [0, 2]를 반환합니다.&lt;/p>
+
+
+> 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+### 풀이
+
+```java
+class Solution {
+    
+    public int[] solution(int[] sequence, int k) {
+        
+        int[] answer = {-1,-1};
+        int start=0;
+        int end, num=0;
+
+        for(int i=0;i<sequence.length;i++){
+            
+            end=i;
+            num+=sequence[end];
+
+            while(num>k){
+                num-=sequence[start++];
+            }
+
+            if(num==k){
+                if((answer[0]==-1 && answer[1]==-1) || end-start<answer[1]-answer[0]){
+                    answer[0]=start;
+                    answer[1]=end;
+                }
+            }
+        }
+
+        return answer;
+        
+    }
+    
+}
+```

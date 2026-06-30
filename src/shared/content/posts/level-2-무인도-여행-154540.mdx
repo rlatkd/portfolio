@@ -1,0 +1,163 @@
+---
+index: '23'
+title: '[level 2] 무인도 여행 - 154540'
+category: 'Algorithm'
+publishedAt: '2024-06-29'
+summary: '문제 링크 메모리: 66.8 MB, 시간: 3.43 ms코딩테스트 연습 > 연습문제정확성: 100.0합계: 100.0 / 100.02024년 06월 30일 01:04:12출처: 프로그래머스 코딩 테스트 연습, ...'
+---
+
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/154540) 
+
+### 성능 요약
+
+메모리: 66.8 MB, 시간: 3.43 ms
+
+### 구분
+
+코딩테스트 연습 > 연습문제
+
+### 채점결과
+
+정확성: 100.0&lt;br/>합계: 100.0 / 100.0
+
+### 제출 일자
+
+2024년 06월 30일 01:04:12
+
+### 문제 설명
+
+&lt;p>메리는 여름을 맞아 무인도로 여행을 가기 위해 지도를 보고 있습니다. 지도에는 바다와 무인도들에 대한 정보가 표시돼 있습니다. 지도는 1 x 1크기의 사각형들로 이루어진 직사각형 격자 형태이며, 격자의 각 칸에는 'X' 또는 1에서 9 사이의 자연수가 적혀있습니다. 지도의 'X'는 바다를 나타내며, 숫자는 무인도를 나타냅니다. 이때, 상, 하, 좌, 우로 연결되는 땅들은 하나의 무인도를 이룹니다. 지도의 각 칸에 적힌 숫자는 식량을 나타내는데, 상, 하, 좌, 우로 연결되는 칸에 적힌 숫자를 모두 합한 값은 해당 무인도에서 최대 며칠동안 머물 수 있는지를 나타냅니다. 어떤 섬으로 놀러 갈지 못 정한 메리는 우선 각 섬에서 최대 며칠씩 머물 수 있는지 알아본 후 놀러갈 섬을 결정하려 합니다.&lt;/p>
+
+&lt;p>지도를 나타내는 문자열 배열 &lt;code>maps&lt;/code>가 매개변수로 주어질 때, 각 섬에서 최대 며칠씩 머무를 수 있는지 배열에 오름차순으로 담아 return 하는 solution 함수를 완성해주세요. 만약 지낼 수 있는 무인도가 없다면 -1을 배열에 담아 return 해주세요.&lt;/p>
+
+&lt;hr>
+
+&lt;h5>제한사항&lt;/h5>
+
+&lt;ul>
+&lt;li>3 ≤ &lt;code>maps&lt;/code>의 길이 ≤ 100
+
+&lt;ul>
+&lt;li>3 ≤ &lt;code>maps[i]&lt;/code>의 길이 ≤ 100&lt;/li>
+&lt;li>&lt;code>maps[i]&lt;/code>는 'X' 또는 1 과 9 사이의 자연수로 이루어진 문자열입니다.&lt;/li>
+&lt;li>지도는 직사각형 형태입니다.&lt;/li>
+&lt;/ul>&lt;/li>
+&lt;/ul>
+
+&lt;hr>
+
+&lt;h5>입출력 예&lt;/h5>
+&lt;table class="table">
+        &lt;thead>&lt;tr>
+&lt;th>maps&lt;/th>
+&lt;th>result&lt;/th>
+&lt;/tr>
+&lt;/thead>
+        &lt;tbody>&lt;tr>
+&lt;td>["X591X","X1X5X","X231X", "1XXX1"]&lt;/td>
+&lt;td>[1, 1, 27]&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>["XXX","XXX","XXX"]&lt;/td>
+&lt;td>[-1]&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+      &lt;/table>
+&lt;hr>
+
+&lt;h5>입출력 예 설명&lt;/h5>
+
+&lt;p>입출력 예 #1&lt;/p>
+
+&lt;p>위 문자열은 다음과 같은 지도를 나타냅니다.&lt;/p>
+
+&lt;p>&lt;img src="https://user-images.githubusercontent.com/62426665/206862823-4633fbf1-c075-4d35-b577-26f504dcd332.png" title="" alt="image1">&lt;/p>
+
+&lt;p>연결된 땅들의 값을 합치면 다음과 같으며&lt;/p>
+
+&lt;p>&lt;img src="https://user-images.githubusercontent.com/62426665/209070615-ae568f20-cf06-4f88-8d4f-8e9861af2d36.png" title="" alt="image2">&lt;/p>
+
+&lt;p>이를 오름차순으로 정렬하면 [1, 1, 27]이 됩니다.&lt;/p>
+
+&lt;p>입출력 예 #2&lt;/p>
+
+&lt;p>위 문자열은 다음과 같은 지도를 나타냅니다.&lt;/p>
+
+&lt;p>&lt;img src="https://user-images.githubusercontent.com/62426665/206863265-0a371c69-d4b5-411a-972f-bdc36b90c917.png" title="" alt="image3">&lt;/p>
+
+&lt;p>섬이 존재하지 않기 때문에 -1을 배열에 담아 반환합니다.&lt;/p>
+
+
+> 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+### 풀이
+
+```java
+import java.util.*;
+
+class Solution {
+    
+    public int[] solution(String[] maps) {
+        
+        int n = maps.length;
+        int m = maps[0].length();
+        String[][] map = new String[n][m];
+        
+        for (int i=0; i< maps.length; i++) {
+            String s = maps[i];
+            map[i] = s.split("");
+        }
+    
+        List<Integer> answer = new ArrayList<Integer>();
+        Queue<int[]> queue = new LinkedList<>();
+        boolean[][] visited = new boolean[n][m];
+        int[] di = {1, -1, 0, 0};
+        int[] dj = {0, 0, 1, -1};
+        
+        for (int i=0; i<n; i++) {
+            for (int j=0; j<m; j++) {
+                
+                int count = 0;
+                
+                if (!visited[i][j] && !"X".equals(map[i][j])){
+                    queue.add(new int[]{i,j}); 
+                    visited[i][j] = true;
+                    count += Integer.parseInt(map[i][j]);
+                }
+                
+                //인접 무인도 탐색
+                while (!queue.isEmpty()) {
+                    
+                    int[] tmp = queue.poll();
+                    
+                    for (int k=0; k<4; k++) {
+                        int next_i = di[k] + tmp[0];
+                        int next_j = dj[k] + tmp[1];
+                        
+                        //상하좌우 및 방문 확인 후 탐색
+                        if (next_i>=0 && next_i<n && next_j>=0 && next_j<m && !visited[next_i][next_j] && !"X".equals(map[next_i][next_j])) {
+                            queue.add(new int[]{next_i, next_j});
+                            visited[next_i][next_j] = true;
+                            count += Integer.parseInt(map[next_i][next_j]);
+                        }
+                    }
+                }
+                
+                if (count > 0) {
+                    answer.add(count);
+                }
+                
+            }
+        }
+        
+        Collections.sort(answer);
+        if (answer.isEmpty()) {
+            answer.add(-1);
+        }
+        
+        return answer.stream().mapToInt(Integer::intValue).toArray();
+        
+    }
+    
+}
+```

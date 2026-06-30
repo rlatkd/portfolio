@@ -1,0 +1,115 @@
+---
+index: '37'
+title: '[Gold V] 트리 - 1068'
+category: 'Algorithm'
+publishedAt: '2024-08-18'
+summary: '문제 링크 메모리: 14336 KB, 시간: 104 ms깊이 우선 탐색, 그래프 이론, 그래프 탐색, 트리2024년 8월 18일 19:42:57'
+---
+
+[문제 링크](https://www.acmicpc.net/problem/1068) 
+
+### 성능 요약
+
+메모리: 14336 KB, 시간: 104 ms
+
+### 분류
+
+깊이 우선 탐색, 그래프 이론, 그래프 탐색, 트리
+
+### 제출 일자
+
+2024년 8월 18일 19:42:57
+
+### 문제 설명
+
+&lt;p>트리에서 리프 노드란, 자식의 개수가 0인 노드를 말한다.&lt;/p>
+
+&lt;p>트리가 주어졌을 때, 노드 하나를 지울 것이다. 그 때, 남은 트리에서 리프 노드의 개수를 구하는 프로그램을 작성하시오. 노드를 지우면 그 노드와 노드의 모든 자손이 트리에서 제거된다.&lt;/p>
+
+&lt;p>예를 들어, 다음과 같은 트리가 있다고 하자.&lt;/p>
+
+&lt;p style="text-align: center">&lt;img alt="" src="" style="width: 200px; height: 185px;">&lt;/p>
+
+&lt;p>현재 리프 노드의 개수는 3개이다. (초록색 색칠된 노드) 이때, 1번을 지우면, 다음과 같이 변한다. 검정색으로 색칠된 노드가 트리에서 제거된 노드이다.&lt;/p>
+
+&lt;p style="text-align: center">&lt;img alt="" src="" style="width: 200px; height: 185px;">&lt;/p>
+
+&lt;p>이제 리프 노드의 개수는 1개이다.&lt;/p>
+
+### 입력 
+
+ &lt;p>첫째 줄에 트리의 노드의 개수 N이 주어진다. N은 50보다 작거나 같은 자연수이다. 둘째 줄에는 0번 노드부터 N-1번 노드까지, 각 노드의 부모가 주어진다. 만약 부모가 없다면 (루트) -1이 주어진다. 셋째 줄에는 지울 노드의 번호가 주어진다.&lt;/p>
+
+### 출력 
+
+ &lt;p>첫째 줄에 입력으로 주어진 트리에서 입력으로 주어진 노드를 지웠을 때, 리프 노드의 개수를 출력한다.&lt;/p>
+
+### 풀이
+
+```java
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    
+    static ArrayList<ArrayList<Integer>> tree = new ArrayList<>();	// 트리 정보 저장 리스트
+    static int answer = 0; // 리프 노드 개수 변수
+    
+    public static void main(String[] args) throws IOException {
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        
+        int N = Integer.parseInt(br.readLine()); // 노드의 개수 입력값
+        int root = 0; //루트 노드 기본값
+        
+        //트리에 대한 ArrayList
+        for (int i=0; i<=N; i++)
+            tree.add(new ArrayList<>());
+        
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        
+        // 트리정보
+        for (int i=0; i<N; i++) {
+            int node = Integer.parseInt(st.nextToken());
+            if(node == -1){ // 루트 노드
+                root = i;
+                continue;
+            }
+            tree.get(node).add(i); // 일반 노드
+        }
+        
+        // 삭제할 노드
+        int remove = Integer.parseInt(br.readLine());
+        
+        if (remove == root)
+            answer = 0;		// 트리가 없으면 리프 노드도 0개
+        else // 루트 노드가 아닌 다른 노드 삭제시
+            search(remove, root);
+        bw.write(answer + "");
+        bw.flush();
+        bw.close();
+        br.close();
+    }
+    
+    // dfs
+    static void search(int remove, int node){
+        
+        // 현재 노드의 삭제할 노드 포함시 삭제
+        if(tree.get(node).contains(remove))
+            tree.get(node).remove(Integer.valueOf(remove));
+ 
+        // 현재 노드가 리프 노드일 때
+        if(tree.get(node).isEmpty()){
+            answer++;
+            return;
+        }
+        
+        // 자식 노드가 존재할 때
+        for(int next : tree.get(node)){
+            search(remove, next);
+        }
+    }
+    
+}
+```

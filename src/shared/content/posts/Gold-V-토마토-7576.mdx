@@ -1,0 +1,119 @@
+---
+index: '33'
+title: '[Gold V] 토마토 - 7576'
+category: 'Algorithm'
+publishedAt: '2024-08-14'
+summary: '문제 링크 메모리: 120268 KB, 시간: 540 ms너비 우선 탐색, 그래프 이론, 그래프 탐색2024년 8월 14일 22:44:57'
+---
+
+[문제 링크](https://www.acmicpc.net/problem/7576) 
+
+### 성능 요약
+
+메모리: 120268 KB, 시간: 540 ms
+
+### 분류
+
+너비 우선 탐색, 그래프 이론, 그래프 탐색
+
+### 제출 일자
+
+2024년 8월 14일 22:44:57
+
+### 문제 설명
+
+&lt;p>철수의 토마토 농장에서는 토마토를 보관하는 큰 창고를 가지고 있다. 토마토는 아래의 그림과 같이 격자 모양 상자의 칸에 하나씩 넣어서 창고에 보관한다. &lt;/p>
+
+&lt;p style="text-align: center;">&lt;img alt="" src="https://u.acmicpc.net/de29c64f-dee7-4fe0-afa9-afd6fc4aad3a/Screen%20Shot%202021-06-22%20at%202.41.22%20PM.png" style="width: 215px; height: 194px;">&lt;/p>
+
+&lt;p>창고에 보관되는 토마토들 중에는 잘 익은 것도 있지만, 아직 익지 않은 토마토들도 있을 수 있다. 보관 후 하루가 지나면, 익은 토마토들의 인접한 곳에 있는 익지 않은 토마토들은 익은 토마토의 영향을 받아 익게 된다. 하나의 토마토의 인접한 곳은 왼쪽, 오른쪽, 앞, 뒤 네 방향에 있는 토마토를 의미한다. 대각선 방향에 있는 토마토들에게는 영향을 주지 못하며, 토마토가 혼자 저절로 익는 경우는 없다고 가정한다. 철수는 창고에 보관된 토마토들이 며칠이 지나면 다 익게 되는지, 그 최소 일수를 알고 싶어 한다.&lt;/p>
+
+&lt;p>토마토를 창고에 보관하는 격자모양의 상자들의 크기와 익은 토마토들과 익지 않은 토마토들의 정보가 주어졌을 때, 며칠이 지나면 토마토들이 모두 익는지, 그 최소 일수를 구하는 프로그램을 작성하라. 단, 상자의 일부 칸에는 토마토가 들어있지 않을 수도 있다.&lt;/p>
+
+### 입력 
+
+ &lt;p>첫 줄에는 상자의 크기를 나타내는 두 정수 M,N이 주어진다. M은 상자의 가로 칸의 수, N은 상자의 세로 칸의 수를 나타낸다. 단, 2 ≤ M,N ≤ 1,000 이다. 둘째 줄부터는 하나의 상자에 저장된 토마토들의 정보가 주어진다. 즉, 둘째 줄부터 N개의 줄에는 상자에 담긴 토마토의 정보가 주어진다. 하나의 줄에는 상자 가로줄에 들어있는 토마토의 상태가 M개의 정수로 주어진다. 정수 1은 익은 토마토, 정수 0은 익지 않은 토마토, 정수 -1은 토마토가 들어있지 않은 칸을 나타낸다.&lt;/p>
+
+&lt;p>토마토가 하나 이상 있는 경우만 입력으로 주어진다.&lt;/p>
+
+### 출력 
+
+ &lt;p>여러분은 토마토가 모두 익을 때까지의 최소 날짜를 출력해야 한다. 만약, 저장될 때부터 모든 토마토가 익어있는 상태이면 0을 출력해야 하고, 토마토가 모두 익지는 못하는 상황이면 -1을 출력해야 한다.&lt;/p>
+
+### 풀이
+
+```java
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static int N; // 세로 칸의 수
+    static int M; // 가로 칸의 수
+    static int[][] graph; // 그래프배열
+    static boolean[][] visited; //방문한 자리
+    static int count = 0; // 최소 날짜
+    static int[] dx = {0, 0, 1, -1};
+    static int[] dy = {1, -1, 0, 0};
+    static Queue<int[]> queue = new LinkedList<>();
+
+    public static void main(String[] args) throws Exception {
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+
+        M = Integer.parseInt(st.nextToken()); // 세로 칸  초기화
+        N = Integer.parseInt(st.nextToken()); // 가로 칸 초기화
+
+        // 그래프 초기화
+        graph = new int[N][M];
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine(), " ");
+            for (int j = 0; j < M; j++) {
+                graph[i][j] = Integer.parseInt(st.nextToken());
+                if (graph[i][j] == 1) { // 1일 경우 큐에 삽입
+                    queue.add(new int[]{i, j});
+                }
+            }
+        }
+        System.out.println(bfs());
+    }
+
+    public static int bfs() {
+        while (!queue.isEmpty()) { // 큐가 다 빌때까지 실행
+            int[] tmp = queue.poll();
+            int x = tmp[0];
+            int y = tmp[1];
+            // 4방 탐색
+            for (int i = 0; i < 4; i++) {
+                int nx = x + dx[i];
+                int ny = y + dy[i];
+                //그래프 범위 안에 있을 경우
+                if (nx >= 0 && ny >= 0 && nx < N && ny < M) {
+                    if (graph[nx][ny] == 0) {
+                        queue.add(new int[]{nx, ny});
+                        graph[nx][ny] = graph[x][y] + 1; // 새로 추가된 곳은 원래 있던 수 + 1
+                        // 그 이유는 날짜를 세기 위해
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (graph[i][j] == 0) { // 그래프안에 0 이 존재하면 답은 -1
+                    return -1;
+                }
+                // 그래프의 날짜중에 가장 큰 수를 찾으면 그것이 최종날짜
+                count = Math.max(count, graph[i][j]);
+            }
+        }
+
+        // 저장될 때부터 모든 토마토가 익어익는상태라면
+        if (count == 1) {
+            return 0;
+        } else { // 아닐 경우 최종날짜 - 1 출력
+            return count-1;
+        }
+    }
+}
+```

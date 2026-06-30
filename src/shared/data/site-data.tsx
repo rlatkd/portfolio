@@ -5,10 +5,10 @@ export const profile = {
   name: '김상훈',
   nameEn: 'Sanghun Kim',
   role: 'Software Engineer',
-  intro: '데이터 정합성과 시스템 신뢰성을 최우선으로 설계하는 금융 도메인 백엔드 엔지니어입니다.',
+  intro: '데이터 정합성과 시스템 신뢰성을 최우선으로 설계하는 금융 도메인 소프트웨어 엔지니어입니다.',
   email: 'rlatkdgns042@naver.com',
   mobile: '+82 10-2627-0378',
-  location: '서울특별시',
+  location: '대한민국 서울특별시 성동구',
   github: 'https://github.com/rlatkd',
   githubLabel: 'github.com/rlatkd',
   linkedin: 'https://linkedin.com/in/sanghunkim96',
@@ -24,16 +24,16 @@ export const aboutIntro = [
 ];
 
 export const aboutQuote = {
-  text: '단 한 건의 데이터 불일치도 허용하지 않는 설계가 금융 시스템 신뢰성의 근간입니다.',
+  text: '단 한 건의 데이터 불일치도 허용하지 않는 설계가\n금융 시스템 신뢰성의 근간입니다.',
 };
 
 // 실무 시작일 (경력 자동 계산용)
 export const careerStart = '2024-09-01';
 
 export const stats = [
-  { value: '5', label: '담당 금융 서비스' },
-  { value: '2', label: '참여 프로젝트' },
-  { value: '2', label: '보유 자격증' },
+  { value: '5', label: '담당 서비스' },
+  { value: '2', label: '실무 프로젝트' },
+  { value: '2', label: '자격증' },
 ];
 
 export type Strength = {
@@ -201,48 +201,48 @@ export const experience = [
 
 export const projects = [
   {
-    title: 'UPquant · 암호화폐 퀀트 분석 대시보드',
-    context: '개인 · 퀀트 분석',
+    title: '암호화폐 퀀트 분석 대시보드',
+    context: '개인 프로젝트 · 2025',
     points: [
-      '업비트 KRW ~260종 대상 시장 국면(HMM)·포트폴리오 최적화(Markowitz)·팩터·백테스팅 등 9개 기법 통합',
-      '시장 국면 → 자산 구조 → 팩터 검증 → 최적화 → 전략 검증 5단계 파이프라인 구성',
-      'stale-while-revalidate 캐싱 + 단일 WebSocket 허브로 콜드스타트·연결 폭증 제거',
+      '업비트 KRW 마켓 약 260종을 대상으로 HMM 시장 국면 탐지, 마코위츠 포트폴리오 최적화, 팩터 분석, 백테스팅 등 9개 퀀트 기법을 하나의 분석 파이프라인으로 통합했습니다.',
+      '“시장 국면 → 자산 구조 → 팩터 검증 → 최적화 → 전략 검증”의 5단계로 의사결정 흐름을 구조화해, 어떤 근거로 포트폴리오가 도출됐는지 한눈에 추적할 수 있게 설계했습니다.',
+      'stale-while-revalidate 캐싱과 단일 WebSocket 허브로 콜드스타트 지연과 동시 연결 폭증을 제거해, 수백 종목 실시간 시세를 안정적으로 갱신합니다.',
     ],
     tags: ['FastAPI', 'Python', 'React', 'TypeScript', 'WebSocket', 'AWS'],
     href: 'https://github.com/rlatkd/up-quant',
     image: '/images/up-quant/preview.png',
   },
   {
-    title: '대용량 자동 청구/결제 시스템',
-    context: 'cms-plus · MSA 성능 최적화 · 4인 팀',
+    title: '자동 청구/결제 시스템',
+    context: 'cms-plus · 4인 팀 · 성능 최적화 담당',
     points: [
-      'Kafka 비동기 아키텍처 전환으로 5만 건 처리 12초 → 7초 (약 70%↑)',
-      'ECS 기반 MSA 구축, RDS Read Replica로 부하 분산',
-      'Prometheus·Grafana·ELK로 실시간 관측성 확보',
+      '피크 타임에 외부 결제 API 지연이 스레드 고갈로 전파되던 구조를, Kafka 비동기 메시지 큐로 분리해 장애 전파를 차단했습니다.',
+      'batch.size·linger.ms를 데이터 기반으로 튜닝해 5만 건 청구 처리를 12초 → 7초(약 70%↑)로 단축했습니다.',
+      'ECS 기반 MSA로 서비스를 독립 배포하고 RDS Read Replica로 조회 부하를 분산, Prometheus·Grafana·ELK로 처리량·지연·에러를 실시간 관측했습니다.',
     ],
     tags: ['Spring Boot', 'Kafka', 'ECS', 'Elasticsearch', 'Grafana'],
     href: 'https://github.com/rlatkd/cms-plus',
     image: '/images/cms-plus/preview.jpg',
   },
   {
-    title: 'Sale-Sync · MSA 클라우드 POS',
-    context: '4인 팀 · 신세계I&C 클라우드 과정',
+    title: 'MSA 클라우드 POS',
+    context: 'Sale-Sync · 4인 팀 · 신세계I&C 클라우드 과정',
     points: [
-      '매장·상품·주문·매출·대시보드·컨설팅 서비스를 MSA로 분리',
-      'Kafka 이벤트 기반 비동기 통신, 서비스별 DB 분리',
-      'AWS(S3·CloudFront·WAF·Route53) + GitHub Actions CI/CD 배포',
+      '매장·상품·주문·매출·대시보드·컨설팅 6개 도메인을 독립 서비스로 분리하고 서비스별 DB를 두어 결합도를 최소화했습니다.',
+      'Kafka 이벤트 기반 비동기 통신으로 주문 → 매출 집계 흐름을 느슨하게 연결해, 한 서비스의 장애가 전체로 번지지 않도록 했습니다.',
+      'AWS(S3·CloudFront·WAF·Route53)와 GitHub Actions CI/CD로 무중단 배포 파이프라인을 구성했습니다.',
     ],
     tags: ['React', 'Recoil', 'MSA', 'Kafka', 'AWS', 'GitHub Actions'],
     href: 'https://github.com/rlatkd/sale-sync',
     image: '/images/sale-sync/preview.png',
   },
   {
-    title: '포트폴리오 & 기술 블로그',
-    context: '개인 · Next.js',
+    title: '포트폴리오',
+    context: '개인 프로젝트 · Next.js',
     points: [
-      'Next.js 14 App Router 기반 단일 페이지 포트폴리오',
-      'MDX 기술 블로그 + MongoDB 댓글',
-      '라이트/다크 테마, FSD 아키텍처',
+      'Next.js 14 App Router·RSC 기반 단일 페이지 포트폴리오와 MDX 파일시스템 블로그를 한 코드베이스로 운영합니다.',
+      'MongoDB 댓글·대댓글, 시맨틱 토큰 기반 라이트/다크 테마, FSD(Feature-Sliced Design) 아키텍처로 확장성을 확보했습니다.',
+      '마크다운을 서버 컴포넌트에서 렌더링해 클라이언트 번들을 최소화하고 초기 로딩 성능을 높였습니다.',
     ],
     tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'MongoDB'],
     href: 'https://github.com/rlatkd',
@@ -256,35 +256,49 @@ export const skillGroups = [
   { label: 'Frontend', items: ['React', 'Vue.js', 'Recoil', 'Zustand', 'Tailwind CSS'] },
   { label: 'Database', items: ['Oracle', 'MySQL', 'Redis'] },
   { label: 'Infra', items: ['AWS', 'Docker', 'Kubernetes', 'Apache Kafka', 'Linux'] },
-  { label: 'DevOps & Tools', items: ['GitHub Actions', 'GitLab Runner', 'Bamboo', 'Git', 'Bitbucket', 'Jira', 'Confluence'] },
+  { label: 'DevOps', items: ['GitHub Actions', 'GitLab Runner', 'Bamboo', 'Git', 'Bitbucket', 'Jira', 'Confluence'] },
 ];
 
 export const education = [
   {
     period: '2026.03 — 현재',
     org: '성균관대학교 일반대학원',
-    detail: '퀀트응용경제학과 · 석사 재학',
+    detail: 'Master of Science, Quantitative Applied Economics',
+    note: 'GPA 4.5 / 4.5',
   },
   {
     period: '2018.03 — 2023.02',
-    org: '경희대학교',
-    detail: '생체의공학과 · 학사 졸업',
-    note: '논문: Comparative Study of CNN Models for Liver Tumor Image Classification (2022)',
+    org: '경희대학교 전자정보대학',
+    detail: 'Bachelor of Engineering, Biomedical Engineering',
+    note: 'Thesis: Comparative Study of CNN Models for Liver Tumor Image Classification (2022)',
+  },
+];
+
+export const training = [
+  {
+    period: '2024.02 — 2024.08',
+    title: 'MSA 기반 Full Stack 개발 전문가 양성 과정',
+    org: '한국소프트웨어산업협회',
+    hours: '960h',
+  },
+  {
+    period: '2023.08 — 2024.02',
+    title: '클라우드 엔지니어 양성 과정',
+    org: '신세계아이앤씨',
+    hours: '920h',
   },
 ];
 
 export const awards = [
   { date: '2024.08', title: 'SW전문인재양성 우수성과 컨퍼런스 우수상', org: '정보통신기획평가원' },
-  { date: '2024.08', title: '우수 수료생 · 파이널 프로젝트 최우수상', org: '한국소프트웨어산업협회' },
+  { date: '2024.08', title: '파이널 프로젝트 최우수상', org: '한국소프트웨어산업협회' },
+  { date: '2024.08', title: '우수 수료생', org: '한국소프트웨어산업협회' },
+  { date: '2024.02', title: '파이널 프로젝트 최우수상', org: '신세계아이앤씨' },
 ];
 
-export const certifications = ['데이터분석 준전문가 (ADsP)', 'SQL 개발자 (SQLD)'];
-
-export const contactLinks = [
-  { label: 'GitHub', sub: profile.githubLabel, href: profile.github },
-  { label: 'LinkedIn', sub: profile.linkedinLabel, href: profile.linkedin },
-  { label: 'Velog', sub: profile.velogLabel, href: profile.velog },
-  { label: 'RSS', sub: '구독 피드', href: '/rss' },
+export const certifications = [
+  { name: '데이터분석 준전문가 (ADsP)', org: '한국데이터산업진흥원', date: '2025.06', id: 'ADsP-045011461' },
+  { name: 'SQL 개발자 (SQLD)', org: '한국데이터산업진흥원', date: '2024.06', id: 'SQLD-053001728' },
 ];
 
 export const navItems = [
@@ -293,6 +307,5 @@ export const navItems = [
   { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
-  { id: 'writing', label: 'Writing' },
   { id: 'contact', label: 'Contact' },
 ];

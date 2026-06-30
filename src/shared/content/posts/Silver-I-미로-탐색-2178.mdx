@@ -1,0 +1,135 @@
+---
+index: '43'
+title: '[Silver I] 미로 탐색 - 2178'
+category: 'Algorithm'
+publishedAt: '2024-08-25'
+summary: '문제 링크 메모리: 19036 KB, 시간: 204 ms너비 우선 탐색, 그래프 이론, 그래프 탐색2024년 8월 25일 16:23:31'
+---
+
+[문제 링크](https://www.acmicpc.net/problem/2178) 
+
+### 성능 요약
+
+메모리: 19036 KB, 시간: 204 ms
+
+### 분류
+
+너비 우선 탐색, 그래프 이론, 그래프 탐색
+
+### 제출 일자
+
+2024년 8월 25일 16:23:31
+
+### 문제 설명
+
+&lt;p>N×M크기의 배열로 표현되는 미로가 있다.&lt;/p>
+
+&lt;table class="table table-bordered" style="width:18%">
+	&lt;tbody>
+		&lt;tr>
+			&lt;td style="width:3%">1&lt;/td>
+			&lt;td style="width:3%">0&lt;/td>
+			&lt;td style="width:3%">1&lt;/td>
+			&lt;td style="width:3%">1&lt;/td>
+			&lt;td style="width:3%">1&lt;/td>
+			&lt;td style="width:3%">1&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td>1&lt;/td>
+			&lt;td>0&lt;/td>
+			&lt;td>1&lt;/td>
+			&lt;td>0&lt;/td>
+			&lt;td>1&lt;/td>
+			&lt;td>0&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td>1&lt;/td>
+			&lt;td>0&lt;/td>
+			&lt;td>1&lt;/td>
+			&lt;td>0&lt;/td>
+			&lt;td>1&lt;/td>
+			&lt;td>1&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td>1&lt;/td>
+			&lt;td>1&lt;/td>
+			&lt;td>1&lt;/td>
+			&lt;td>0&lt;/td>
+			&lt;td>1&lt;/td>
+			&lt;td>1&lt;/td>
+		&lt;/tr>
+	&lt;/tbody>
+&lt;/table>
+
+&lt;p>미로에서 1은 이동할 수 있는 칸을 나타내고, 0은 이동할 수 없는 칸을 나타낸다. 이러한 미로가 주어졌을 때, (1, 1)에서 출발하여 (N, M)의 위치로 이동할 때 지나야 하는 최소의 칸 수를 구하는 프로그램을 작성하시오. 한 칸에서 다른 칸으로 이동할 때, 서로 인접한 칸으로만 이동할 수 있다.&lt;/p>
+
+&lt;p>위의 예에서는 15칸을 지나야 (N, M)의 위치로 이동할 수 있다. 칸을 셀 때에는 시작 위치와 도착 위치도 포함한다.&lt;/p>
+
+### 입력 
+
+ &lt;p>첫째 줄에 두 정수 N, M(2 ≤ N, M ≤ 100)이 주어진다. 다음 N개의 줄에는 M개의 정수로 미로가 주어진다. 각각의 수들은 &lt;strong>붙어서&lt;/strong> 입력으로 주어진다.&lt;/p>
+
+### 출력 
+
+ &lt;p>첫째 줄에 지나야 하는 최소의 칸 수를 출력한다. 항상 도착위치로 이동할 수 있는 경우만 입력으로 주어진다.&lt;/p>
+
+### 풀이
+
+```java
+import java.util.*;
+
+public class Main {
+    static int n;
+    static int m;
+    static int[][] arr;
+    static boolean[][] visited;
+
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
+        m = sc.nextInt();
+
+        arr = new int[n][m];
+        visited = new boolean[n][m];
+
+        for (int i=0; i<n; i++) {
+            String input = sc.next();
+            for (int j=0; j<m; j++) {
+                arr[i][j] = input.charAt(j) - '0';
+            }
+        }
+
+        visited[0][0] = true;
+        bfs(0, 0);
+        System.out.println(arr[n-1][m-1]);
+    }
+
+    // bfs
+    public static void bfs(int x, int y) {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{x,y});
+
+        while(!queue.isEmpty()) {
+            int now[] = queue.poll();
+            int nx = now[0];
+            int ny = now[1];
+
+            for (int i=0; i<4; i++) {
+                int nextX = nx + dx[i];
+                int nextY = ny + dy[i];
+
+                if (nextX>=0 && nextX<n && nextY>=0 && nextY<m) {
+                    if (arr[nextX][nextY]==1 && !visited[nextX][nextY]) {
+                        queue.add(new int[] {nextX, nextY});
+                        visited[nextX][nextY]=true;
+                        arr[nextX][nextY] = arr[nx][ny]+1;
+                    }
+                }
+            }
+        }
+     }
+}
+```

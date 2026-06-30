@@ -1,0 +1,149 @@
+---
+index: '29'
+title: '[level 2] 디펜스 게임 - 142085'
+category: 'Algorithm'
+publishedAt: '2024-07-14'
+summary: '문제 링크 메모리: 142 MB, 시간: 126.11 ms코딩테스트 연습 > 연습문제정확성: 100.0합계: 100.0 / 100.02024년 07월 15일 00:20:56출처: 프로그래머스 코딩 테스트 연습,...'
+---
+
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/142085) 
+
+### 성능 요약
+
+메모리: 142 MB, 시간: 126.11 ms
+
+### 구분
+
+코딩테스트 연습 > 연습문제
+
+### 채점결과
+
+정확성: 100.0&lt;br/>합계: 100.0 / 100.0
+
+### 제출 일자
+
+2024년 07월 15일 00:20:56
+
+### 문제 설명
+
+&lt;p>준호는 요즘 디펜스 게임에 푹 빠져 있습니다. 디펜스 게임은 준호가 보유한 병사 &lt;code>n&lt;/code>명으로 연속되는 적의 공격을 순서대로 막는 게임입니다. 디펜스 게임은 다음과 같은 규칙으로 진행됩니다.&lt;/p>
+
+&lt;ul>
+&lt;li>준호는 처음에 병사 &lt;code>n&lt;/code>명을 가지고 있습니다.&lt;/li>
+&lt;li>매 라운드마다 &lt;code>enemy[i]&lt;/code>마리의 적이 등장합니다.&lt;/li>
+&lt;li>남은 병사 중 &lt;code>enemy[i]&lt;/code>명 만큼 소모하여 &lt;code>enemy[i]&lt;/code>마리의 적을 막을 수 있습니다.
+
+&lt;ul>
+&lt;li>예를 들어 남은 병사가 7명이고, 적의 수가 2마리인 경우, 현재 라운드를 막으면 7 - 2 = 5명의 병사가 남습니다.&lt;/li>
+&lt;li>남은 병사의 수보다 현재 라운드의 적의 수가 더 많으면 게임이 종료됩니다.&lt;/li>
+&lt;/ul>&lt;/li>
+&lt;li>게임에는 &lt;code>무적권&lt;/code>이라는 스킬이 있으며, &lt;code>무적권&lt;/code>을 사용하면 병사의 소모없이 한 라운드의 공격을 막을 수 있습니다.&lt;/li>
+&lt;li>&lt;code>무적권&lt;/code>은 최대 &lt;code>k&lt;/code>번 사용할 수 있습니다.&lt;/li>
+&lt;/ul>
+
+&lt;p>준호는 &lt;code>무적권&lt;/code>을 적절한 시기에 사용하여 최대한 많은 라운드를 진행하고 싶습니다.&lt;/p>
+
+&lt;p>준호가 처음 가지고 있는 병사의 수 &lt;code>n&lt;/code>, 사용 가능한 무적권의 횟수 &lt;code>k&lt;/code>, 매 라운드마다 공격해오는 적의 수가 순서대로 담긴 정수 배열 &lt;code>enemy&lt;/code>가 매개변수로 주어집니다. 준호가 몇 라운드까지 막을 수 있는지 return 하도록 solution 함수를 완성해주세요.&lt;/p>
+
+&lt;hr>
+
+&lt;h5>제한사항&lt;/h5>
+
+&lt;ul>
+&lt;li>1 ≤ &lt;code>n&lt;/code> ≤ 1,000,000,000&lt;/li>
+&lt;li>1 ≤ &lt;code>k&lt;/code> ≤ 500,000&lt;/li>
+&lt;li>1 ≤ &lt;code>enemy&lt;/code>의 길이 ≤ 1,000,000&lt;/li>
+&lt;li>1 ≤ &lt;code>enemy[i]&lt;/code> ≤ 1,000,000&lt;/li>
+&lt;li>&lt;code>enemy[i]&lt;/code>에는 i + 1 라운드에서 공격해오는 적의 수가 담겨있습니다.&lt;/li>
+&lt;li>모든 라운드를 막을 수 있는 경우에는 &lt;code>enemy[i]&lt;/code>의 길이를 return 해주세요.&lt;/li>
+&lt;/ul>
+
+&lt;hr>
+
+&lt;h5>입출력 예&lt;/h5>
+&lt;table class="table">
+        &lt;thead>&lt;tr>
+&lt;th>n&lt;/th>
+&lt;th>k&lt;/th>
+&lt;th>enemy&lt;/th>
+&lt;th>result&lt;/th>
+&lt;/tr>
+&lt;/thead>
+        &lt;tbody>&lt;tr>
+&lt;td>7&lt;/td>
+&lt;td>3&lt;/td>
+&lt;td>[4, 2, 4, 5, 3, 3, 1]&lt;/td>
+&lt;td>5&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>2&lt;/td>
+&lt;td>4&lt;/td>
+&lt;td>[3, 3, 3, 3]&lt;/td>
+&lt;td>4&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+      &lt;/table>
+&lt;hr>
+
+&lt;h5>입출력 예 설명&lt;/h5>
+
+&lt;p>&lt;strong>입출력 예#1&lt;/strong>&lt;/p>
+
+&lt;ul>
+&lt;li>1, 3, 5 라운드의 공격을 무적권으로 막아내고, 2, 4 라운드에 각각 병사를 2명, 5명 소모하면 5라운드까지 공격을 막을 수 있습니다. 또, 1, 3, 4번째 공격을 무적권으로 막아내고, 2, 5 번째 공격에 각각 병사를 2명, 3명 소모하여 5라운드까지 공격을 막을 수 있습니다. 그보다 많은 라운드를 막는 방법은 없으므로 5를 return 합니다.&lt;/li>
+&lt;/ul>
+
+&lt;p>&lt;strong>입출력 예#2&lt;/strong>&lt;/p>
+
+&lt;ul>
+&lt;li>준호는 모든 공격에 무적권을 사용하여 4라운드까지 막을 수 있습니다.&lt;/li>
+&lt;/ul>
+
+
+> 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+### 풀이
+
+```java
+import java.util.PriorityQueue;
+
+class Solution {
+    public int solution(int n, int k, int[] enemy) {
+        
+        int result = 0;
+
+        // 무적권을 소모한 라운드 정보
+		PriorityQueue<Integer> queue = new PriorityQueue<>();
+        
+        // 1라운드에 무적권 사용(무적권 1번 이상)
+		queue.add(enemy[0]);
+		k--;
+		result++;
+        
+		// 무적권을 사용할 수 있으면 무적권을 사용
+		for (int i = 1; i < enemy.length; i++) {
+			if (k > 0) {
+				queue.add(enemy[i]);
+				k--;
+			} else { // 무적권을 사용할 수 없다면
+                // 현재 라운드의 적 수 > 무적권을 소모한 라운드의 적 수인 경우 스왑
+				int tmp = queue.poll();
+				if (enemy[i] > tmp) {
+					queue.add(enemy[i]);
+					n-=tmp;
+				} else {
+					queue.add(tmp);
+					n-=enemy[i];
+				}
+			}
+
+			if (n < 0) // 현재 라운드를 버티지 못한 경우
+				return result;
+			result++; // 현재 라운드를 버틴 경우
+		}
+
+		return result;
+        
+    }
+}
+```

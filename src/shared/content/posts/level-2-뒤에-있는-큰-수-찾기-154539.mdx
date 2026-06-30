@@ -1,0 +1,115 @@
+---
+index: '24'
+title: '[level 2] 뒤에 있는 큰 수 찾기 - 154539'
+category: 'Algorithm'
+publishedAt: '2024-07-02'
+summary: '문제 링크 메모리: 0.0 MB, 시간: 0.00 ms코딩테스트 연습 > 연습문제정확성: 100.0합계: 100.0 / 100.02024년 07월 02일 22:52:03출처: 프로그래머스 코딩 테스트 연습, h...'
+---
+
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/154539) 
+
+### 성능 요약
+
+메모리: 0.0 MB, 시간: 0.00 ms
+
+### 구분
+
+코딩테스트 연습 > 연습문제
+
+### 채점결과
+
+정확성: 100.0&lt;br/>합계: 100.0 / 100.0
+
+### 제출 일자
+
+2024년 07월 02일 22:52:03
+
+### 문제 설명
+
+&lt;p>정수로 이루어진 배열 &lt;code>numbers&lt;/code>가 있습니다. 배열 의 각 원소들에 대해 자신보다 뒤에 있는 숫자 중에서 자신보다 크면서 가장 가까이 있는 수를 뒷 큰수라고 합니다.&lt;br>
+정수 배열 &lt;code>numbers&lt;/code>가 매개변수로 주어질 때, 모든 원소에 대한 뒷 큰수들을 차례로 담은 배열을 return 하도록 solution 함수를 완성해주세요. 단, 뒷 큰수가 존재하지 않는 원소는 -1을 담습니다.&lt;/p>
+
+&lt;hr>
+
+&lt;h5>제한사항&lt;/h5>
+
+&lt;ul>
+&lt;li>4 ≤ &lt;code>numbers&lt;/code>의 길이 ≤ 1,000,000
+
+&lt;ul>
+&lt;li>1 ≤ &lt;code>numbers[i]&lt;/code> ≤ 1,000,000&lt;/li>
+&lt;/ul>&lt;/li>
+&lt;/ul>
+
+&lt;hr>
+
+&lt;h5>입출력 예&lt;/h5>
+&lt;table class="table">
+        &lt;thead>&lt;tr>
+&lt;th>numbers&lt;/th>
+&lt;th>result&lt;/th>
+&lt;/tr>
+&lt;/thead>
+        &lt;tbody>&lt;tr>
+&lt;td>[2, 3, 3, 5]&lt;/td>
+&lt;td>[3, 5, 5, -1]&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>[9, 1, 5, 3, 6, 2]&lt;/td>
+&lt;td>[-1, 5, 6, 6, -1, -1]&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+      &lt;/table>
+&lt;hr>
+
+&lt;h5>입출력 예 설명&lt;/h5>
+
+&lt;p>입출력 예 #1&lt;br>
+2의 뒷 큰수는 3입니다. 첫 번째 3의 뒷 큰수는 5입니다. 두 번째 3 또한 마찬가지입니다. 5는 뒷 큰수가 없으므로 -1입니다. 위 수들을 차례대로 배열에 담으면 [3, 5, 5, -1]이 됩니다.&lt;/p>
+
+&lt;p>입출력 예 #2&lt;br>
+9는 뒷 큰수가 없으므로 -1입니다. 1의 뒷 큰수는 5이며, 5와 3의 뒷 큰수는 6입니다. 6과 2는 뒷 큰수가 없으므로 -1입니다. 위 수들을 차례대로 배열에 담으면 [-1, 5, 6, 6, -1, -1]이 됩니다.&lt;/p>
+
+
+> 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+### 풀이
+
+```java
+import java.util.Stack;
+import java.util.Arrays;
+
+class Solution {
+    
+    public int[] solution(int[] numbers) {
+        
+        Stack<Integer> stack = new Stack<Integer>();
+
+        //-1로 원소 채우기
+        int[] result = new int[numbers.length];
+        Arrays.fill(result, -1);
+       
+
+        //뒤에서부터 검사
+        for (int i=numbers.length-1; i>-1; i--) {
+
+            //스택이 비어있지 않고 현재 숫자가 맨 위 원소 이상이면
+            while (!stack.empty() && numbers[i] >= stack.peek()) {
+                stack.pop();
+            }
+
+            //스택이 비어있지 않은 경우
+            if (!stack.empty()) {
+                result[i] = stack.peek();
+            }
+
+            //스택에 현재 숫자 추가
+            stack.push(numbers[i]);
+        }
+
+        return result;
+        
+    }
+    
+}
+```

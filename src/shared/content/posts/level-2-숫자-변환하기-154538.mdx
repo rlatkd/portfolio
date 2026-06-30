@@ -1,0 +1,142 @@
+---
+index: '25'
+title: '[level 2] 숫자 변환하기 - 154538'
+category: 'Algorithm'
+publishedAt: '2024-07-04'
+summary: '문제 링크 메모리: 88.1 MB, 시간: 26.85 ms코딩테스트 연습 > 연습문제정확성: 100.0합계: 100.0 / 100.02024년 07월 04일 23:45:25출처: 프로그래머스 코딩 테스트 연습,...'
+---
+
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/154538) 
+
+### 성능 요약
+
+메모리: 88.1 MB, 시간: 26.85 ms
+
+### 구분
+
+코딩테스트 연습 > 연습문제
+
+### 채점결과
+
+정확성: 100.0&lt;br/>합계: 100.0 / 100.0
+
+### 제출 일자
+
+2024년 07월 04일 23:45:25
+
+### 문제 설명
+
+&lt;p>자연수 &lt;code>x&lt;/code>를 &lt;code>y&lt;/code>로 변환하려고 합니다. 사용할 수 있는 연산은 다음과 같습니다.&lt;/p>
+
+&lt;ul>
+&lt;li>&lt;code>x&lt;/code>에 &lt;code>n&lt;/code>을 더합니다&lt;/li>
+&lt;li>&lt;code>x&lt;/code>에 2를 곱합니다.&lt;/li>
+&lt;li>&lt;code>x&lt;/code>에 3을 곱합니다.&lt;/li>
+&lt;/ul>
+
+&lt;p>자연수 &lt;code>x&lt;/code>, &lt;code>y&lt;/code>, &lt;code>n&lt;/code>이 매개변수로 주어질 때, &lt;code>x&lt;/code>를 &lt;code>y&lt;/code>로 변환하기 위해 필요한 최소 연산 횟수를 return하도록 solution 함수를 완성해주세요. 이때 &lt;code>x&lt;/code>를 &lt;code>y&lt;/code>로 만들 수 없다면 -1을 return 해주세요.&lt;/p>
+
+&lt;hr>
+
+&lt;h5>제한사항&lt;/h5>
+
+&lt;ul>
+&lt;li>1&nbsp;≤&nbsp;&lt;code>x&lt;/code> ≤ &lt;code>y&lt;/code>&nbsp;≤ 1,000,000&lt;/li>
+&lt;li>1 ≤ &lt;code>n&lt;/code> &lt; &lt;code>y&lt;/code>&lt;/li>
+&lt;/ul>
+
+&lt;hr>
+
+&lt;h5>입출력 예&lt;/h5>
+&lt;table class="table">
+        &lt;thead>&lt;tr>
+&lt;th>x&lt;/th>
+&lt;th>y&lt;/th>
+&lt;th>n&lt;/th>
+&lt;th>result&lt;/th>
+&lt;/tr>
+&lt;/thead>
+        &lt;tbody>&lt;tr>
+&lt;td>10&lt;/td>
+&lt;td>40&lt;/td>
+&lt;td>5&lt;/td>
+&lt;td>2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>10&lt;/td>
+&lt;td>40&lt;/td>
+&lt;td>30&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>2&lt;/td>
+&lt;td>5&lt;/td>
+&lt;td>4&lt;/td>
+&lt;td>-1&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+      &lt;/table>
+&lt;hr>
+
+&lt;h5>입출력 예 설명&lt;/h5>
+
+&lt;p>입출력 예 #1&lt;br>
+&lt;code>x&lt;/code>에 2를 2번 곱하면 40이 되고 이때가 최소 횟수입니다.&lt;/p>
+
+&lt;p>입출력 예 #2&lt;br>
+&lt;code>x&lt;/code>에 &lt;code>n&lt;/code>인 30을 1번 더하면 40이 되고 이때가 최소 횟수입니다.&lt;/p>
+
+&lt;p>입출력 예 #3&lt;br>
+&lt;code>x&lt;/code>를 &lt;code>y&lt;/code>로 변환할 수 없기 때문에 -1을 return합니다.&lt;/p>
+
+
+> 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+### 풀이
+
+```java
+class Solution {
+    
+    private static final int MAX = Integer.MAX_VALUE;
+
+    public static int solution(int x, int y, int n) {
+        
+        int answer = 0;
+
+        int[] dp = new int[y + 1];
+
+        for (int i=x+1; i<y+1; i++) {
+            int a = MAX, b = MAX, c = MAX, d;
+
+            if (isDivided(i, 2) && aboveX(x, i/2)) a = dp[i/2];
+            if (isDivided(i, 3) && aboveX(x, i/3)) b = dp[i/3];
+            if (aboveX(x, i-n)) c = dp[i-n];
+
+            //숫자 i를 만들기 위한 최소 방법을 찾음
+            d = Math.min(a, b);
+            d = Math.min(d, c);
+
+            //만들 수 있으면 d+1 저장
+            //만들 수 없다면 MAX 저장
+            dp[i] = (d < MAX) ? d + 1 : MAX;
+        }
+
+        //y를 만들 수 없다면 -1 반환
+        answer = (dp[y] < MAX) ? dp[y] : -1;
+
+        return answer;
+        
+    }
+
+    //x 보다 작은 위치의 값을 비교하지 않게 함
+    private static boolean aboveX(int x, int num) {
+        return (num >= x);
+    }
+
+    //(i/2), (i/3)의 연산 결과가 자연수인지 확인
+    private static boolean isDivided(int num, int divide) {
+        return (num/divide>0 && num%divide==0);
+    }
+
+}
+```

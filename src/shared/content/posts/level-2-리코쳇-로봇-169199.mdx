@@ -1,0 +1,194 @@
+---
+index: '11'
+title: '[level 2] 리코쳇 로봇 - 169199'
+category: 'Algorithm'
+publishedAt: '2024-06-23'
+summary: '문제 링크 메모리: 78.6 MB, 시간: 0.77 ms코딩테스트 연습 > 연습문제정확성: 100.0합계: 100.0 / 100.02024년 06월 23일 19:47:47출처: 프로그래머스 코딩 테스트 연습, ...'
+---
+
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/169199) 
+
+### 성능 요약
+
+메모리: 78.6 MB, 시간: 0.77 ms
+
+### 구분
+
+코딩테스트 연습 > 연습문제
+
+### 채점결과
+
+정확성: 100.0&lt;br/>합계: 100.0 / 100.0
+
+### 제출 일자
+
+2024년 06월 23일 19:47:47
+
+### 문제 설명
+
+&lt;p>리코쳇 로봇이라는 보드게임이 있습니다. &lt;/p>
+
+&lt;p>이 보드게임은 격자모양 게임판 위에서 말을 움직이는 게임으로, 시작 위치에서 목표 위치까지 최소 몇 번만에 도달할 수 있는지 말하는 게임입니다. &lt;/p>
+
+&lt;p>이 게임에서 말의 움직임은 상, 하, 좌, 우 4방향 중 하나를 선택해서 게임판 위의 장애물이나 맨 끝에 부딪힐 때까지 미끄러져 이동하는 것을 한 번의 이동으로 칩니다. &lt;/p>
+
+&lt;p>다음은 보드게임판을 나타낸 예시입니다.&lt;/p>
+&lt;div class="highlight">&lt;pre class="codehilite">&lt;code>...D..R
+.D.G...
+....D.D
+D....D.
+..D....
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;p>여기서 "."은 빈 공간을, "R"은 로봇의 처음 위치를, "D"는 장애물의 위치를, "G"는 목표지점을 나타냅니다.&lt;br>
+위 예시에서는 "R" 위치에서 아래, 왼쪽, 위, 왼쪽, 아래, 오른쪽, 위 순서로 움직이면 7번 만에 "G" 위치에 멈춰 설 수 있으며, 이것이 최소 움직임 중 하나입니다.&lt;/p>
+
+&lt;p>게임판의 상태를 나타내는 문자열 배열 &lt;code>board&lt;/code>가 주어졌을 때, 말이 목표위치에 도달하는데 최소 몇 번 이동해야 하는지 return 하는 solution함수를 완성하세요. 만약 목표위치에 도달할 수 없다면 -1을 return 해주세요.&lt;/p>
+
+&lt;hr>
+
+&lt;h5>제한 사항&lt;/h5>
+
+&lt;ul>
+&lt;li>3 ≤ &lt;code>board&lt;/code>의 길이 ≤ 100
+
+&lt;ul>
+&lt;li>3 ≤ &lt;code>board&lt;/code>의 원소의 길이 ≤ 100&lt;/li>
+&lt;li>&lt;code>board&lt;/code>의 원소의 길이는 모두 동일합니다.&lt;/li>
+&lt;li>문자열은 ".", "D", "R", "G"로만 구성되어 있으며 각각 빈 공간, 장애물, 로봇의 처음 위치, 목표 지점을 나타냅니다.&lt;/li>
+&lt;li>"R"과 "G"는 한 번씩 등장합니다.&lt;/li>
+&lt;/ul>&lt;/li>
+&lt;/ul>
+
+&lt;hr>
+
+&lt;h5>입출력 예&lt;/h5>
+&lt;table class="table">
+        &lt;thead>&lt;tr>
+&lt;th>board&lt;/th>
+&lt;th>result&lt;/th>
+&lt;/tr>
+&lt;/thead>
+        &lt;tbody>&lt;tr>
+&lt;td>["...D..R", ".D.G...", "....D.D", "D....D.", "..D...."]&lt;/td>
+&lt;td>7&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>[".D.R", "....", ".G..", "...D"]&lt;/td>
+&lt;td>-1&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+      &lt;/table>
+&lt;hr>
+
+&lt;h5>입출력 예 설명&lt;/h5>
+
+&lt;p>입출력 예 #1&lt;/p>
+
+&lt;ul>
+&lt;li>문제 설명의 예시와 같습니다.&lt;/li>
+&lt;/ul>
+
+&lt;p>입출력 예 #2&lt;/p>
+&lt;div class="highlight">&lt;pre class="codehilite">&lt;code>.D.R
+....
+.G..
+...D
+&lt;/code>&lt;/pre>&lt;/div>
+&lt;ul>
+&lt;li>"R" 위치에 있는 말을 어떻게 움직여도 "G" 에 도달시킬 수 없습니다.&lt;/li>
+&lt;li>따라서 -1을 return 합니다.&lt;/li>
+&lt;/ul>
+
+
+> 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+### 풀이
+
+```java
+import java.util.*;
+
+//좌표
+class Point{
+    
+    int x;
+    int y;
+    
+    Point(int a, int b) {
+        x = a;
+        y = b;
+    }
+    
+}
+
+class Solution {
+    
+    int N, M;
+    int[] dx = {-1,1,0,0};
+    int[] dy = {0,0,-1,1};
+    
+    public int solution(String[] board) {
+        
+        N = board.length;
+        M = board[0].length();
+        int[][] visit = new int[N][M];
+        Queue<Point> q = new ArrayDeque();
+        
+        //출발점의 좌표를 찾음
+        for (int i=0; i<N; ++i) {
+            String s = board[i];
+            for(int j = 0 ; j < M; ++j){
+                if(s.charAt(j) == 'R'){
+                    q.add(new Point(i,j));
+                    visit[i][j] = 1;
+                    break;
+                }
+            }
+        }
+        
+        //도착지점에 도달하지 못한다면 -1을 반환
+        int answer = -1;
+        while (!q.isEmpty()) {
+            Point cur = q.poll();
+            //if 현재 지점 == 도착지점
+            if (board[cur.x].charAt(cur.y) == 'G') {
+                answer = visit[cur.x][cur.y] - 1;
+                break;
+            }
+            
+            //4가지 방향으로 탐색
+            for (int d=0; d<4; ++d) {
+                int nextX = cur.x + dx[d];
+                int nextY = cur.y + dy[d];
+                while (true) { //해당 방향으로 최대한 끝까지 이동
+                    if (isInRange(nextX, nextY) && board[nextX].charAt(nextY) != 'D') {
+                        nextX += dx[d];
+                        nextY += dy[d];
+                    } else {
+                    	//현재 지점은 보드 밖이거나, 장애물이 있는 지점
+                        //직전의 좌표가 이동할 수 있는 좌표
+                        nextX -= dx[d];
+                        nextY -= dy[d];
+                        break;
+                    }
+                }
+                
+                //해당 지점에 방문한적이 없다면, 해당 지점에서 탐색
+                if (visit[nextX][nextY] == 0) {
+                    q.add(new Point(nextX, nextY));
+                    visit[nextX][nextY] = visit[cur.x][cur.y] + 1;
+                }
+            }
+        }
+        
+        return answer;
+        
+    }
+    
+    public boolean isInRange(int x, int y) {
+        if(0<=x && x<N && 0<=y && y<M)
+            return true;
+        return false;
+    }
+    
+}
+```

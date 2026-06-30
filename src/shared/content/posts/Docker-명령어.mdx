@@ -1,0 +1,194 @@
+---
+index: '14'
+title: 'Docker 명령어'
+category: 'DevOps'
+publishedAt: '2024-06-23'
+summary: 'Dockerfile을 이용해서 이미지 생성 (제일 많이 쓰는 이미지 생성 방법) docker build -t {이미지명:태그명} {dockerfile의 경로} 도커 단일 이미지 삭제 docker image rm...'
+---
+
+## Docker Image 관련 명령어
+
+### 이미지 빌드
+
+- Dockerfile을 이용해서 이미지 생성 (제일 많이 쓰는 이미지 생성 방법)
+    
+    `docker build -t {이미지명:태그명} {dockerfile의 경로}`
+    
+
+### 이미지 삭제
+
+- 도커 단일 이미지 삭제
+    
+    `docker image rm {이미지 ID 또는 이름}`
+    
+- 모든 도커 이미지 삭제 (컨테이너가 있어서 이미지 삭제가 안될 시 -f 옵션을 붙여서 강제 삭제가능함)
+    
+    `docker rmi {옵션} {이미지 ID 또는 이름}`
+    
+
+### 이미지 조회
+
+- 도커 이미지들 보기
+    
+    `docker images`
+    
+- 현재 이미지 목록 확인
+    
+    `docker image ls`
+    
+- 도커 허브에서 이미지 검색
+    
+    `docker search {이미지 이름}`
+    
+
+### 이미지 다운
+
+- Dockerhub에서 이미지 가져오기
+    
+    `docker image pull {이미지명:태그}`
+    
+
+### 실행한 도커 컨테이너를 이미지로 생성
+
+- 구동한 Docker Container를 commit (변경사항을 다시 이미지로 만듬)
+    
+    `docker container commit {컨테이너 이름} {커밋내용}`
+    
+
+## Docker Container 관련 명령어
+
+### 컨테이너 생성
+
+- 도커 컨테이너 생성 후 실행
+    
+    `docker run {옵션} --name {컨테이너 이름} {이미지 Repository}`
+    
+    - 주로 사용하는 생성 후 실행 명령어
+        
+        `docker run -it --name {컨테이너 이름} -p {호스트 포트} : {컨테이너 포트} {이미지 Repository}`
+        
+- 도커 컨테이너 생성
+    
+    `docker create {옵션} --name {컨테이너 이름} {이미지 Repository}`
+    
+
+| 옵션 | 설명 |
+| --- | --- |
+| -i | 표준 입력(stdin)을 활성화보통 이 옵션을 사용하여 Bash 에 명령을 입력한다. |
+| -t | TTY 모드(pseudo-TTY)를 사용Bash를 사용하려면 이 옵션을 설정해야 한다.이 옵션을 설정하지 않으면 명령을 입력할 수는 있지만, Shell이 표시되지 않는다. |
+| -d | 데몬 프로세스로 실행(백그라운드)해 프로세스가 끝나도 유지 |
+| —name &#123;이름&#125; | 컨테이너 이름 지정 |
+| -p | 호스트와 컨테이너의 포트를 연결 - 외부 접근 설정(도커 컨테이너는 기본적으로 외부에서 접근할 수 없게 구성되어 있다.) |
+| -rm | 컨테이너가 종료되면&#123;내부에서 돌아가는 작업이 끝나면&#125; 컨테이너를 제거 |
+| -v | 호스트와 컨테이너의 디렉토리를 연결 |
+- 컨테이너 이름 변경
+    
+    `docker rename {기존 이름} {변경할 이름}`
+    
+
+### 컨테이너 구동 확인
+
+- 실행중인 컨테이너 리스트
+    
+    `docker ps`
+    
+- 모든 컨테이너의 리스트 출력
+    
+    `docker container ps -a`
+    
+
+### 컨테이너 삭제
+
+- 단일 컨테이너 삭제
+    
+    `docker rm {컨테이너 ID 또는 이름}`
+    
+- 모든 컨테이너 삭제
+    
+    `docker rm $(docker ps -a -q)` 또는 `docker rmi $(docker images -q) -f`
+    
+
+### 컨테이너 실행, 종료
+
+- 컨테이너 실행
+    
+    `docker start {이미지 이름:태그}`
+    
+- 단일 컨테이너 중지
+    
+    `docker stop {컨테이너 ID 또는 이름}`
+    
+- 모든 컨테이너 중지
+    
+    `docker stop $(docker ps -aq)`
+    
+
+### 컨테이너 내부 접속, 내부 접속 종료
+
+- 실행중인 컨테이너 접속
+    
+    `docker exec -it {컨테이너 ID 또는 이름} /bin/bash` 또는 `docker attach {이미지 이름:태그}`
+    
+- 실행중인 컨테이너 접속 종료
+    
+    `exit` 또는 `Ctrl + D`
+    
+
+## Docker Compose 관련 명령어
+
+### 실행
+
+- 컴포즈 파일에 정의된 컨테이너들을 빌드 후 실행
+    
+    `docker-compose up`
+    
+- 컴포즈 파일에 정의된 컨테이너들을 빌드 후 백그라운드로 실행
+    
+    `docker-compose up -d`
+    
+
+### 재시작
+
+- 컴포즈 파일로 실행된 컨테이너들을 재시작
+    
+    `docker-compose restart`
+    
+- 컴포즈 파일로 실행된 컨테이너들 중 해당 컨테이너만 재시작
+    
+    `docker-compose restart {컨테이너 이름 또는 ID}`
+    
+
+### 종료
+
+- 컴포즈 파일로 실행된 컨테이너들을 종료
+    
+    `docker-compose down`
+    
+- 컴포즈 파일로 실행된 컨테이너들을 종료 및 볼륨 제거
+    
+    `docker-compose down -v`
+    
+
+### 삭제
+
+- 컴포즈 파일로 실행된 컨테이너들을 종료하고 삭제
+    
+    `docker-compose down`
+    
+
+### 조회
+
+- 컴포즈 파일로 실행된 컨테이너들을 확인
+    
+    `docker-compose ps`
+    
+
+### 빌드
+
+- 컴포즈 파일에 정의된 컨테이너들을 빌드
+    
+    `docker-compose build`
+    
+- 컴포즈 파일에 정의된 컨테이너들 중 해당 컨테이너만 빌드
+    
+    `docker-compose build {컨테이너 이름 또는 ID}`
