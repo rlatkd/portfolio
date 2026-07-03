@@ -2,7 +2,6 @@ import About from '@/widgets/About/about';
 import Strengths from '@/widgets/Strengths/strengths';
 import Experience from '@/widgets/Experience/experience';
 import Projects from '@/widgets/Projects/projects';
-import Skills from '@/widgets/Skills/skills';
 import Contact from '@/widgets/Contact/contact';
 import HomeView from '@/widgets/HomeView/home-view';
 import BlogList from '@/widgets/BlogList/blog-list';
@@ -32,7 +31,6 @@ export default async function Page() {
           <Strengths />
           <Experience />
           <Projects />
-          <Skills />
           <Contact />
         </>
       }

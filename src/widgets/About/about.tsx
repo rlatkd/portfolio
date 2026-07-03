@@ -1,5 +1,5 @@
 import { Section } from '@/shared/ui/Section';
-import { aboutIntro, aboutQuote, stats, careerStart, education, training, awards, certifications } from '@/shared/data/site-data';
+import { aboutIntro, aboutQuote, stats, careerStart, education, training, awards, certifications, skillGroups } from '@/shared/data/site-data';
 
 function careerDuration() {
   const start = new Date(careerStart);
@@ -100,6 +100,23 @@ export default function About() {
                   </div>
                 </div>
                 <div className='shrink-0 pt-0.5 font-mono text-xs text-muted'>{c.id}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className='rounded-lg border border-line bg-surface p-6'>
+          <div className='mb-3 text-xs uppercase tracking-[0.2em] text-muted'>Skills</div>
+          <div>
+            {skillGroups.map((g) => (
+              <div
+                key={g.label}
+                className='grid grid-cols-1 gap-1 border-b border-line py-3 first:pt-0 last:border-b-0 last:pb-0 sm:grid-cols-[140px_1fr] sm:gap-4'
+              >
+                <div className='whitespace-nowrap pt-0.5 font-mono text-xs uppercase tracking-[0.08em] text-accent'>
+                  {g.label}
+                </div>
+                <div className='text-sm leading-relaxed text-fg'>{g.items.join('  ·  ')}</div>
               </div>
             ))}
           </div>

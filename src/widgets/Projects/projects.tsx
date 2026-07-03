@@ -45,7 +45,11 @@ export default function Projects() {
                     src={p.image}
                     alt={`${p.title} 메인 화면`}
                     loading='lazy'
-                    className='block max-h-80 w-full bg-white object-cover object-top'
+                    className={`block w-full bg-white ${
+                      p.imageFit === 'contain'
+                        ? 'h-80 object-contain pb-2 pt-10'
+                        : 'max-h-80 object-cover object-top'
+                    }`}
                   />
                 </div>
               )}

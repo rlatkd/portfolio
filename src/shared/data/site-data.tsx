@@ -5,7 +5,7 @@ export const profile = {
   name: '김상훈',
   nameEn: 'Sanghun Kim',
   role: 'Software Engineer',
-  intro: '데이터 정합성과 시스템 신뢰성을 최우선으로 설계하는 금융 도메인 소프트웨어 엔지니어입니다.',
+  intro: '데이터 정합성과 시스템 신뢰성을 최우선으로 설계하는\n금융 도메인 소프트웨어 엔지니어입니다.',
   email: 'rlatkdgns042@naver.com',
   mobile: '+82 10-2627-0378',
   location: '대한민국 서울특별시 성동구',
@@ -147,17 +147,21 @@ export const strengths: Strength[] = [
 export const experience = [
   {
     period: '2026.03 — 현재',
-    role: '퀀트응용경제학과 · 석사 재학',
-    org: '성균관대학교 일반대학원',
-    desc: '퀀트 금융, 시계열 분석, 딥러닝을 연구하고 있습니다.',
-    points: [],
-    tags: [],
+    role: '성균관대학교',
+    org: '일반대학원 퀀트응용경제학과',
+    desc: '백엔드 엔지니어로 일하며, 금융 도메인으로 역량을 확장하기 위해 실무와 석사 과정을 병행하고 있습니다.',
+    points: [
+      '계량경제·시계열 분석으로 금융 데이터의 통계적 특성과 예측 방법론 학습',
+      '머신러닝 기반 자산 가격 예측·포트폴리오 최적화, 암호화폐 퀀트 대시보드 프로젝트로 구현',
+      '실무 데이터 처리·시스템 설계 경험을 정량 분석 파이프라인에 접목',
+    ],
+    tags: ['계량경제', '머신러닝', '시계열 분석', 'Python'],
   },
   {
     period: '2024.09 — 현재',
-    role: 'Backend Engineer · 효성에프엠에스',
+    role: 'Software Engineer · 효성에프엠에스',
     org: '개발팀 (Application Platform) · 선임',
-    desc: '채널계 백엔드·프론트엔드 개발 및 운영. CMS+(통합 PG 결제)·Customer API·Square(정기 배송)·Ibill(교육비 수납)·Connect(Core계 웹뷰)를 담당합니다.',
+    desc: '채널계 백엔드·프론트엔드 개발 및 운영. CMS+(통합 PG 결제)·Customer API·Square(정기 배송)·Ibill(교육비 수납)·Connect(정보계 웹뷰)를 담당합니다.',
     points: [
       '멀티스레드 배치 동시성 제어로 데이터 유실률 80% 개선 (ConcurrentHashMap Thread-safe 저장소)',
       'AOP 기반 보상 트랜잭션으로 MSA 결제 정합성 자동 보장, 장애성 고객 VoC 제거',
@@ -170,7 +174,7 @@ export const experience = [
     period: '2024.02 — 2024.08',
     role: 'MSA Full Stack 개발 전문가 양성 과정',
     org: '한국소프트웨어산업협회 · 960h',
-    desc: '대용량 자동 청구/결제 시스템을 4인 팀으로 구축하며 아키텍처 설계와 성능 최적화를 주도했습니다. 파이널 프로젝트 최우수상·우수 수료.',
+    desc: '자동 청구/결제 시스템을 4인 팀으로 구축하며 아키텍처 설계와 성능 최적화를 담당했습니다.',
     points: [
       'Kafka 기반 비동기 메시지 큐 아키텍처로 전환해 외부 장애 시에도 응답성 확보',
       '데이터 기반 파라미터 튜닝으로 5만 건 처리 12초 → 7초 (약 70% 향상)',
@@ -191,9 +195,21 @@ export const experience = [
   },
   {
     period: '2018.03 — 2023.02',
-    role: '생체의공학과 · 학사 졸업',
-    org: '경희대학교',
-    desc: '논문: Comparative Study of CNN Models for Liver Tumor Image Classification (2022)',
+    role: '경희대학교',
+    org: '전자정보대학 생체의공학과',
+    desc: '의료기기·의료영상을 다루는 공학을 전공하며, 신호 처리와 딥러닝으로 이어지는 데이터 중심 사고의 기반을 다졌습니다.',
+    points: [
+      '전자기학·회로이론·신호와 시스템 등 신호·하드웨어 기반 공학 이수',
+      '의료영상·생체신호를 다루며 데이터 기반 문제 해결에 관심',
+      '졸업논문으로 CNN 기반 간종양 CT 분류(VGG19 99.3%) 수행, 딥러닝 첫 프로젝트 적용',
+    ],
+    tags: ['의료영상', '생체신호처리', '의료 AI', 'CNN'],
+  },
+  {
+    period: '2015.03 — 2017.02',
+    role: '한서항공직업전문학교',
+    org: '항공정비과',
+    desc: '항공기 정비를 전공하며 작은 오차도 허용되지 않는 안전·정밀 중심의 절차를 익혔고, 이때의 태도가 데이터 정합성과 시스템 신뢰성을 우선하는 지금의 개발 원칙으로 이어졌습니다.',
     points: [],
     tags: [],
   },
@@ -202,7 +218,7 @@ export const experience = [
 export const projects = [
   {
     title: '암호화폐 퀀트 분석 대시보드',
-    context: '개인 프로젝트 · 2025',
+    context: '개인 프로젝트 · 2026',
     points: [
       '업비트 KRW 마켓 약 260종을 대상으로 HMM 시장 국면 탐지, 마코위츠 포트폴리오 최적화, 팩터 분석, 백테스팅 등 9개 퀀트 기법을 하나의 분석 파이프라인으로 통합했습니다.',
       '“시장 국면 → 자산 구조 → 팩터 검증 → 최적화 → 전략 검증”의 5단계로 의사결정 흐름을 구조화해, 어떤 근거로 포트폴리오가 도출됐는지 한눈에 추적할 수 있게 설계했습니다.',
@@ -213,8 +229,20 @@ export const projects = [
     image: '/images/up-quant/preview.png',
   },
   {
+    title: '포트폴리오',
+    context: '개인 프로젝트 · 2025',
+    points: [
+      'Next.js 14 App Router·RSC 기반 단일 페이지 포트폴리오와 MDX 파일시스템 블로그를 한 코드베이스로 운영합니다.',
+      'MongoDB 댓글·대댓글, 시맨틱 토큰 기반 라이트/다크 테마, FSD(Feature-Sliced Design) 아키텍처로 확장성을 확보했습니다.',
+      '마크다운을 서버 컴포넌트에서 렌더링해 클라이언트 번들을 최소화하고 초기 로딩 성능을 높였습니다.',
+    ],
+    tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'MongoDB'],
+    href: 'https://github.com/rlatkd',
+    image: '/images/portfolio/preview.png',
+  },
+  {
     title: '자동 청구/결제 시스템',
-    context: 'cms-plus · 4인 팀 · 성능 최적화 담당',
+    context: '팀 프로젝트 · 2024',
     points: [
       '피크 타임에 외부 결제 API 지연이 스레드 고갈로 전파되던 구조를, Kafka 비동기 메시지 큐로 분리해 장애 전파를 차단했습니다.',
       'batch.size·linger.ms를 데이터 기반으로 튜닝해 5만 건 청구 처리를 12초 → 7초(약 70%↑)로 단축했습니다.',
@@ -226,7 +254,7 @@ export const projects = [
   },
   {
     title: 'MSA 클라우드 POS',
-    context: 'Sale-Sync · 4인 팀 · 신세계I&C 클라우드 과정',
+    context: '팀 프로젝트 · 2023',
     points: [
       '매장·상품·주문·매출·대시보드·컨설팅 6개 도메인을 독립 서비스로 분리하고 서비스별 DB를 두어 결합도를 최소화했습니다.',
       'Kafka 이벤트 기반 비동기 통신으로 주문 → 매출 집계 흐름을 느슨하게 연결해, 한 서비스의 장애가 전체로 번지지 않도록 했습니다.',
@@ -237,26 +265,43 @@ export const projects = [
     image: '/images/sale-sync/preview.png',
   },
   {
-    title: '포트폴리오',
-    context: '개인 프로젝트 · Next.js',
+    title: '간종양 CNN 분류 모델 비교',
+    context: '학부 졸업논문 · 2022',
     points: [
-      'Next.js 14 App Router·RSC 기반 단일 페이지 포트폴리오와 MDX 파일시스템 블로그를 한 코드베이스로 운영합니다.',
-      'MongoDB 댓글·대댓글, 시맨틱 토큰 기반 라이트/다크 테마, FSD(Feature-Sliced Design) 아키텍처로 확장성을 확보했습니다.',
-      '마크다운을 서버 컴포넌트에서 렌더링해 클라이언트 번들을 최소화하고 초기 로딩 성능을 높였습니다.',
+      'LiTS17 데이터셋의 간 CT 이미지 4,325장(종양 2,472·정상 1,853)을 1mm³ 등방성 재샘플링·224×224 리사이즈하고 회전·줌 증강으로 학습셋을 구성했습니다.',
+      'LeNet5·AlexNet·VGG19·ResNet50 4개 CNN 아키텍처를 동일 조건에서 학습·비교하고, Early Stopping·ModelCheckpoint로 과적합을 제어했습니다.',
+      'VGG19가 검증 정확도 99.3%로 최고 성능(AlexNet 95.6%·ResNet50 94.8%·LeNet5 93.2%)을 기록했으며, 층 깊이가 정확도에 기여하되 단순한 층수 증가가 능사는 아님을 확인했습니다.',
     ],
-    tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'MongoDB'],
-    href: 'https://github.com/rlatkd',
-    image: '/images/portfolio/preview.png',
+    tags: ['Python', 'Keras', 'CNN', 'VGG19', 'Medical Imaging'],
+    image: '/images/liver-tumor-cnn/preview.png',
+  },
+  {
+    title: 'CT 이미지 재구성',
+    context: '학부 프로젝트 · 2022',
+    points: [
+      '실제 스캐너 회전 대신 디지털 이미지를 여러 각도로 회전시켜 투영 데이터를 생성하고 사이노그램을 만든 뒤, 필터 역투영(Filtered Back-Projection)으로 원본 영상을 재구성했습니다.',
+      '5종 필터와 보간법을 비교하고 MSE로 화질을 정량 평가해, 공간 해상도에 유리한 최적 파라미터를 도출했습니다.',
+      '각도 스텝(투영 개수) 변화가 재구성 정확도에 미치는 영향을 분석했습니다.',
+    ],
+    tags: ['MATLAB', 'CT Reconstruction', 'Signal Processing'],
+    href: 'https://github.com/rlatkd/ct-image-reconstruction',
+    image: '/images/ct-image-reconstruction/preview.png',
+    imageFit: 'contain',
   },
 ];
 
 export const skillGroups = [
-  { label: 'Language', items: ['Java', 'Python', 'JavaScript'] },
-  { label: 'Backend', items: ['Spring Boot', 'FastAPI', 'Spring Batch', 'Spring Data JPA', 'Spring Security'] },
-  { label: 'Frontend', items: ['React', 'Vue.js', 'Recoil', 'Zustand', 'Tailwind CSS'] },
-  { label: 'Database', items: ['Oracle', 'MySQL', 'Redis'] },
-  { label: 'Infra', items: ['AWS', 'Docker', 'Kubernetes', 'Apache Kafka', 'Linux'] },
-  { label: 'DevOps', items: ['GitHub Actions', 'GitLab Runner', 'Bamboo', 'Git', 'Bitbucket', 'Jira', 'Confluence'] },
+  { label: 'Language', items: ['Java', 'Python', 'JavaScript', 'TypeScript'] },
+  { label: 'Framework', items: ['Spring Boot', 'FastAPI', 'React', 'Vue.js', 'Next.js'] },
+  { label: 'Backend', items: ['Spring Batch', 'Spring Data JPA', 'Spring Security'] },
+  { label: 'Frontend', items: ['Recoil', 'Zustand', 'Tailwind CSS'] },
+  { label: 'Database', items: ['Oracle', 'MySQL', 'Redis', 'Elasticsearch'] },
+  { label: 'Infra', items: ['AWS', 'Docker', 'Kubernetes', 'Linux'] },
+  { label: 'Messaging', items: ['Apache Kafka'] },
+  { label: 'CI/CD', items: ['GitHub Actions', 'GitLab Runner', 'Bamboo'] },
+  { label: 'IaC', items: ['Terraform'] },
+  { label: 'SCM', items: ['GitHub', 'GitLab', 'Bitbucket'] },
+  { label: 'Collaboration', items: ['Jira', 'Confluence'] },
 ];
 
 export const education = [
@@ -271,6 +316,11 @@ export const education = [
     org: '경희대학교 전자정보대학',
     detail: 'Bachelor of Engineering, Biomedical Engineering',
     note: 'Thesis: Comparative Study of CNN Models for Liver Tumor Image Classification (2022)',
+  },
+  {
+    period: '2015.03 — 2017.02',
+    org: '한서항공직업전문학교',
+    detail: 'Associate Degree, Aircraft Maintenance',
   },
 ];
 
@@ -306,6 +356,5 @@ export const navItems = [
   { id: 'strengths', label: 'Strengths' },
   { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Projects' },
-  { id: 'skills', label: 'Skills' },
   { id: 'contact', label: 'Contact' },
 ];

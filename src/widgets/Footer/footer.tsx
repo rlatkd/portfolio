@@ -16,7 +16,9 @@ export default function Footer() {
               {profile.name} <span className='text-muted'>·</span>{' '}
               <span className='italic text-muted'>{profile.nameEn}</span>
             </div>
-            <p className='mt-3 max-w-md text-sm leading-relaxed text-muted'>{profile.intro}</p>
+            <p className='mt-3 max-w-md whitespace-pre-line text-sm leading-relaxed text-muted'>
+              {profile.intro}
+            </p>
             <a
               href={`mailto:${profile.email}`}
               className='mt-4 inline-block text-sm text-muted transition-colors hover:text-accent'
