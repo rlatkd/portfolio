@@ -356,5 +356,6 @@ export const navItems = [
   { id: 'strengths', label: 'Strengths' },
   { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Projects' },
+  { id: 'writing', label: 'Writing' },
   { id: 'contact', label: 'Contact' },
 ];

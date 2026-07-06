@@ -1,13 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { Github, Linkedin, Mail, Phone, MapPin, Rss } from 'lucide-react';
 import { profile, navItems } from '@/shared/data/site-data';
 import { ThemeToggle } from '@/features/ThemeToggle/ThemeToggle';
-import { useView } from '@/shared/ui/view-context';
-
-type RecentPost = { slug: string; title: string; category: string; publishedAt: string };
 
 /** Velog 마크 — github/linkedin과 동일한 아웃라인(stroke) 스타일 */
 function VelogIcon({ size = 19 }: { size?: number }) {
@@ -29,52 +25,46 @@ function VelogIcon({ size = 19 }: { size?: number }) {
   );
 }
 
-export default function Sidebar({ recent = [] }: { recent?: RecentPost[] }) {
+export default function Sidebar() {
   const [active, setActive] = useState('about');
-  const { view, setView } = useView();
 
   useEffect(() => {
-    if (view !== 'portfolio') return;
-    const sections = navItems
-      .map((n) => document.getElementById(n.id))
-      .filter(Boolean) as HTMLElement[];
-    if (sections.length === 0) return;
+    const ids = navItems.map((n) => n.id);
+    if (ids.length === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { rootMargin: '-30% 0px -60% 0px', threshold: 0 }
-    );
-    sections.forEach((s) => observer.observe(s));
+    const updateActive = () => {
+      // 페이지 최하단 도달 시 마지막 섹션(Contact)을 강제로 활성화
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+        setActive(ids[ids.length - 1]);
+        return;
+      }
+      // 뷰포트 35% 기준선을 지난 '마지막' 섹션을 활성화.
+      // 섹션 높이·경계와 무관하게 항상 정확히 하나만 선택되어 흔들리지 않는다.
+      const line = window.innerHeight * 0.35;
+      let current = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= line) current = id;
+      }
+      setActive(current);
+    };
 
-    // 페이지 최하단 도달 시 마지막 섹션(Contact)을 강제로 활성화
+    // 스크롤은 rAF로 스로틀
+    let ticking = false;
     const onScroll = () => {
-      const nearBottom =
-        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
-      if (nearBottom) setActive(navItems[navItems.length - 1].id);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateActive();
+        ticking = false;
+      });
     };
+
     window.addEventListener('scroll', onScroll, { passive: true });
+    updateActive(); // 초기 1회
 
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, [view]);
-
-  // blog 뷰에서 nav 클릭 시 → portfolio로 전환 후 해당 섹션으로 스크롤
-  const onNavClick = (e: React.MouseEvent, id: string) => {
-    if (view !== 'portfolio') {
-      e.preventDefault();
-      setView('portfolio');
-      setActive(id);
-      setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-      }, 60);
-    }
-  };
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const socials = [
     { Icon: Github, href: profile.github, label: 'GitHub' },
@@ -98,14 +88,10 @@ export default function Sidebar({ recent = [] }: { recent?: RecentPost[] }) {
           <p className='font-mono text-xs uppercase tracking-[0.2em] text-muted'>Contents</p>
           <ul className='mt-4 space-y-1'>
             {navItems.map((item) => {
-              const on = view === 'portfolio' && active === item.id;
+              const on = active === item.id;
               return (
                 <li key={item.id}>
-                  <a
-                    href={`/#${item.id}`}
-                    onClick={(e) => onNavClick(e, item.id)}
-                    className='group flex items-center py-2'
-                  >
+                  <a href={`/#${item.id}`} className='group flex items-center py-2'>
                     <span
                       className={`mr-4 h-px transition-all ${
                         on ? 'w-14 bg-accent' : 'w-8 bg-muted group-hover:w-14 group-hover:bg-fg'
@@ -124,27 +110,6 @@ export default function Sidebar({ recent = [] }: { recent?: RecentPost[] }) {
             })}
           </ul>
         </nav>
-
-        {/* 최근 글 (데스크톱, 미니멀) */}
-        {recent.length > 0 && (
-          <div className='mt-12 hidden lg:block'>
-            <p className='font-mono text-xs uppercase tracking-[0.2em] text-muted'>Writing</p>
-            <ul className='mt-4 space-y-3'>
-              {recent.map((p) => (
-                <li key={p.slug}>
-                  <Link href={`/posts/${p.slug}`} className='group block'>
-                    <span className='block truncate text-sm text-fg transition-colors group-hover:text-accent'>
-                      {p.title}
-                    </span>
-                    <span className='mt-0.5 block font-mono text-[11px] text-muted'>
-                      {p.publishedAt}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
 
       {/* 하단: 연락처 · 소셜 */}

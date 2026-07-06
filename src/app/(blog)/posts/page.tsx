@@ -3,7 +3,7 @@ import { Posts } from '@/entities/Post/ui/Posts';
 import Pagination from '@/entities/Post/ui/Pagination';
 import Categories from '@/entities/Post/ui/Categories';
 
-const POSTS_PER_PAGE = 5;
+const POSTS_PER_PAGE = 10;
 
 type PageProps = {
   searchParams: {
@@ -13,7 +13,7 @@ type PageProps = {
 };
 
 export const metadata = {
-  title: 'Archive',
+  title: 'Writing',
   description: '개발, 설계, 경험에 대한 기록.',
   alternates: { canonical: '/posts' },
 };
@@ -36,16 +36,15 @@ export default async function Page({ searchParams }: PageProps) {
   );
 
   return (
-    <section className='mx-auto max-w-content px-5 py-16 md:px-8 md:py-24'>
-      <header className='mb-12'>
-        <div className='font-mono text-xs uppercase tracking-label text-accent'>Writing</div>
-        <h1 className='mt-3 font-serif text-4xl text-fg-strong md:text-5xl'>Archive</h1>
-        <p className='mt-4 max-w-2xl text-base text-muted md:text-lg'>
+    <section className='mx-auto max-w-content px-5 py-10 md:px-8 md:py-14'>
+      <header className='mb-8'>
+        <h1 className='font-serif text-4xl text-fg-strong md:text-5xl'>Writing</h1>
+        <p className='mt-3 max-w-2xl text-base text-muted md:text-lg'>
           개발, 설계, 그리고 경험에 대한 기록을 남깁니다.
         </p>
       </header>
 
-      <div className='mb-10 flex flex-wrap items-center justify-center gap-3'>
+      <div className='mb-8'>
         <Categories categories={categories as string[]} selectedCategory={searchParams.category as string} />
       </div>
 
