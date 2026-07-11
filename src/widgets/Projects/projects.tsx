@@ -2,9 +2,30 @@ import { ArrowUpRight } from 'lucide-react';
 import { Section } from '@/shared/ui/Section';
 import { projects } from '@/shared/data/site-data';
 
+// Claude 브랜드 마크(선버스트) — 사이트 팔레트가 아닌 Claude 코럴을 의도적으로 사용
+function ClaudeMark({ size = 12 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox='0 0 24 24' fill='none' aria-hidden>
+      {Array.from({ length: 12 }).map((_, i) => (
+        <line
+          key={i}
+          x1='12'
+          y1='3'
+          x2='12'
+          y2='9'
+          stroke='currentColor'
+          strokeWidth='2.2'
+          strokeLinecap='round'
+          transform={`rotate(${i * 30} 12 12)`}
+        />
+      ))}
+    </svg>
+  );
+}
+
 export default function Projects() {
   return (
-    <Section id='projects' label='Projects'>
+    <Section id='projects' label='Side Projects'>
       <div className='space-y-5'>
         {projects.map((p) => {
           const Wrapper = p.href ? 'a' : 'div';
@@ -27,6 +48,12 @@ export default function Projects() {
                   </h3>
                   <div className='mt-0.5 text-xs text-muted'>{p.context}</div>
                 </div>
+                {p.badge && (
+                  <span className='inline-flex shrink-0 items-center gap-1 rounded-full border border-[#D97757] bg-[#D97757]/10 px-2.5 py-1 text-xs font-semibold text-[#D97757]'>
+                    <ClaudeMark size={12} />
+                    {p.badge}
+                  </span>
+                )}
               </div>
 
               <ul className='mt-3 space-y-1.5'>

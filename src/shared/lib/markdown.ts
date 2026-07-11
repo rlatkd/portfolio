@@ -50,7 +50,7 @@ function getMDXData(dir) {
   let mdxFiles = getMDXFiles(dir)
   return mdxFiles.map((file) => {
     let { metadata, content } = readMDXFile(path.join(dir, file));
-    let slug = path.basename(file, path.extname(file));
+    let slug = path.basename(file, path.extname(file)).normalize('NFC');
     let tableContents = getPostContents(content);
     return {
       metadata: { ...metadata, index: parseInt(metadata.index ?? '0', 10) },

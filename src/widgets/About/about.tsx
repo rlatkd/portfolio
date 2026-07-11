@@ -1,5 +1,21 @@
 import { Section } from '@/shared/ui/Section';
-import { aboutIntro, aboutQuote, stats, careerStart, education, training, awards, certifications, skillGroups } from '@/shared/data/site-data';
+import { aboutIntro, aboutQuote, careerServices, careerProjects, careerStart, education, training, awards, skillGroups } from '@/shared/data/site-data';
+
+// 실무(효성에프엠에스)에서 사용한 기술
+const proSkills = new Set([
+  'Java',
+  'JavaScript',
+  'Spring Boot',
+  'Spring Batch',
+  'Spring Data JPA',
+  'Spring Security',
+  'Vue.js',
+  'Oracle',
+  'Bamboo',
+  'Bitbucket',
+  'Jira',
+  'Confluence',
+]);
 
 function careerDuration() {
   const start = new Date(careerStart);
@@ -12,8 +28,6 @@ function careerDuration() {
 }
 
 export default function About() {
-  const allStats = [{ value: careerDuration(), label: '경력' }, ...stats];
-
   return (
     <Section id='about' label='About' className='!pt-0'>
       {/* 인용 (최상단) */}
@@ -31,16 +45,53 @@ export default function About() {
         ))}
       </div>
 
-      {/* 통계 */}
-      <div className='mt-8 grid grid-cols-2 gap-3 md:grid-cols-4'>
-        {allStats.map((s) => (
-          <div key={s.label} className='rounded-lg border border-line bg-surface p-5'>
-            <div className='whitespace-nowrap text-lg font-bold tracking-tight text-accent md:text-xl'>
-              {s.value}
-            </div>
-            <div className='mt-1 text-xs leading-snug text-muted'>{s.label}</div>
+      {/* 경력 / 담당 서비스 / 실무 프로젝트 (3열) */}
+      <div className='mt-8 grid grid-cols-3 gap-3'>
+        {/* 경력 */}
+        <div className='rounded-lg border border-line bg-surface p-4 sm:p-5'>
+          <div className='mb-3 text-xs uppercase tracking-[0.2em] text-muted'>경력</div>
+          <div className='text-xl font-bold tracking-tight text-accent md:text-2xl'>
+            {careerDuration()}
           </div>
-        ))}
+          <div className='mt-1.5 text-xs font-semibold text-fg-strong'>Fullstack Developer</div>
+          <div className='mt-1 text-xs leading-relaxed text-muted'>
+            효성에프엠에스
+            <br />
+            2024.09 ~ 현재
+          </div>
+        </div>
+
+        {/* 담당 서비스 */}
+        <div className='rounded-lg border border-line bg-surface p-4 sm:p-5'>
+          <div className='mb-3 flex items-baseline gap-2'>
+            <span className='text-xs uppercase tracking-[0.2em] text-muted'>서비스</span>
+            <span className='font-mono text-xs text-accent'>{careerServices.length}</span>
+          </div>
+          <ul className='space-y-2.5'>
+            {careerServices.map((s) => (
+              <li key={s.name}>
+                <div className='text-sm font-semibold leading-snug text-fg-strong'>{s.name}</div>
+                <div className='mt-0.5 text-xs leading-snug text-muted'>{s.kind}</div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* 실무 프로젝트 */}
+        <div className='rounded-lg border border-line bg-surface p-4 sm:p-5'>
+          <div className='mb-3 flex items-baseline gap-2'>
+            <span className='text-xs uppercase tracking-[0.2em] text-muted'>프로젝트</span>
+            <span className='font-mono text-xs text-accent'>{careerProjects.length}</span>
+          </div>
+          <ul className='space-y-2.5'>
+            {careerProjects.map((p) => (
+              <li key={p.name}>
+                <div className='text-sm font-semibold leading-snug text-fg-strong'>{p.name}</div>
+                <div className='mt-0.5 text-xs leading-snug text-muted'>{p.kind}</div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       {/* Education / Awards / Certifications (단일 컬럼 나열) */}
@@ -89,24 +140,13 @@ export default function About() {
         </div>
 
         <div className='rounded-lg border border-line bg-surface p-6'>
-          <div className='mb-3 text-xs uppercase tracking-[0.2em] text-muted'>Certifications</div>
-          <div className='space-y-3'>
-            {certifications.map((c) => (
-              <div key={c.name} className='flex items-start justify-between gap-3'>
-                <div>
-                  <div className='text-sm font-medium text-fg-strong'>{c.name}</div>
-                  <div className='text-xs text-muted'>
-                    {c.date} · {c.org}
-                  </div>
-                </div>
-                <div className='shrink-0 pt-0.5 font-mono text-xs text-muted'>{c.id}</div>
-              </div>
-            ))}
+          <div className='mb-3 flex flex-wrap items-center gap-x-3 gap-y-1'>
+            <span className='text-xs uppercase tracking-[0.2em] text-muted'>Skills</span>
+            <span className='inline-flex items-center gap-1.5 text-xs text-muted'>
+              <span className='inline-block h-2 w-2 rounded-full bg-accent' aria-hidden />
+              실무
+            </span>
           </div>
-        </div>
-
-        <div className='rounded-lg border border-line bg-surface p-6'>
-          <div className='mb-3 text-xs uppercase tracking-[0.2em] text-muted'>Skills</div>
           <div>
             {skillGroups.map((g) => (
               <div
@@ -116,7 +156,16 @@ export default function About() {
                 <div className='whitespace-nowrap pt-0.5 font-mono text-xs uppercase tracking-[0.08em] text-accent'>
                   {g.label}
                 </div>
-                <div className='text-sm leading-relaxed text-fg'>{g.items.join('  ·  ')}</div>
+                <div className='text-sm leading-relaxed text-muted'>
+                  {g.items.map((item, i) => (
+                    <span key={item}>
+                      {i > 0 && <span className='text-line'>{'  ·  '}</span>}
+                      <span className={proSkills.has(item) ? 'font-semibold text-accent' : ''}>
+                        {item}
+                      </span>
+                    </span>
+                  ))}
+                </div>
               </div>
             ))}
           </div>

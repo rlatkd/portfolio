@@ -9,9 +9,19 @@ import { formatDate, getPosts } from '@/shared/lib/markdown';
 import { baseUrl } from '@/app/sitemap';
 import { TableOfContents } from '@/entities/Post/ui/TableOfContents';
 
+// URL 파라미터는 퍼센트 인코딩되어 넘어올 수 있으므로 디코딩 + NFC 정규화 후 매칭
+function resolveSlug(raw: string) {
+  try {
+    return decodeURIComponent(raw).normalize('NFC');
+  } catch {
+    return raw.normalize('NFC');
+  }
+}
+
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const posts = await getPosts();
-  const post = posts.find((p) => p.slug === params.slug);
+  const slug = resolveSlug(params.slug);
+  const post = posts.find((p) => p.slug === slug);
   if (!post) return {};
   const description = post.metadata.summary || '';
   return {
@@ -30,7 +40,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const posts = await getPosts();
-  const post = posts.find((post) => post.slug === params.slug);
+  const slug = resolveSlug(params.slug);
+  const post = posts.find((post) => post.slug === slug);
 
   if (!post) notFound();
 

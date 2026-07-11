@@ -61,12 +61,22 @@ function Modal({ item, onClose }: { item: Strength; onClose: () => void }) {
               </span>
             ))}
           </div>
+          {item.detail.context && <DetailRow label='Context'>{item.detail.context}</DetailRow>}
           <DetailRow label='Problem'>{item.detail.problem}</DetailRow>
+          {item.detail.constraint && (
+            <DetailRow label='제약'>{item.detail.constraint}</DetailRow>
+          )}
           <DetailRow label='Solution'>{item.detail.solution}</DetailRow>
           <DetailRow label='Impact'>{item.detail.impact}</DetailRow>
           <div className='my-5 border-l-2 border-accent bg-surface-2 px-4 py-3 text-sm italic leading-relaxed text-muted'>
             {item.detail.insight}
           </div>
+          {item.detail.tech && (
+            <div className='border-t border-line py-4 text-xs text-muted'>
+              <span className='font-semibold uppercase tracking-[0.2em] text-accent'>Tech</span>
+              <span className='ml-3'>{item.detail.tech}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -78,7 +88,7 @@ export default function Strengths() {
 
   return (
     <Section id='strengths' label='Strengths'>
-      <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+      <div className='grid grid-cols-1 gap-4'>
         {strengths.map((s) => (
           <button
             key={s.title}
@@ -86,7 +96,7 @@ export default function Strengths() {
             className='group flex h-full flex-col rounded-lg border border-line bg-surface p-6 text-left transition-colors hover:border-accent'
           >
             <div className='flex items-start justify-between gap-3'>
-              <h3 className='min-h-[2.75rem] font-bold leading-snug text-fg-strong group-hover:text-accent'>
+              <h3 className='font-bold leading-snug text-fg-strong group-hover:text-accent'>
                 {s.title}
               </h3>
               <ArrowUpRight
@@ -94,7 +104,18 @@ export default function Strengths() {
                 className='mt-0.5 shrink-0 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent'
               />
             </div>
-            <p className='mt-2 flex-1 text-sm leading-relaxed text-muted'>{s.desc}</p>
+            <ul className='mt-2 flex-1 space-y-1.5'>
+              {s.points
+                .flatMap((p) => p.split(/(?<=\.)\s+/))
+                .map((line, i) => (
+                  <li key={i} className='flex gap-2 text-sm leading-relaxed text-muted'>
+                    <span aria-hidden className='shrink-0 text-lg leading-[1.42rem] text-accent'>
+                      ·
+                    </span>
+                    <span>{line.replace(/\.$/, '')}</span>
+                  </li>
+                ))}
+            </ul>
             <div className='mt-5 flex flex-wrap gap-2 border-t border-line pt-4'>
               {s.tags.map((t) => (
                 <span
