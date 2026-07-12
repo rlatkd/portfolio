@@ -81,7 +81,7 @@ export default function Sidebar() {
           {profile.name}
         </h1>
         <p className='mt-2 text-xl italic text-muted'>{profile.nameEn}</p>
-        <p className='mt-5 max-w-xs leading-relaxed text-muted'>{profile.intro}</p>
+        <p className='mt-5 max-w-xs whitespace-pre-line leading-relaxed text-muted'>{profile.intro}</p>
 
         {/* 목차 (데스크톱) */}
         <nav className='mt-12 hidden lg:block'>

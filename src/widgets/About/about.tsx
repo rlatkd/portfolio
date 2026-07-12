@@ -1,5 +1,5 @@
 import { Section } from '@/shared/ui/Section';
-import { aboutIntro, aboutQuote, careerServices, careerProjects, careerStart, education, training, awards, skillGroups } from '@/shared/data/site-data';
+import { aboutIntro, aboutQuote, careerServices, careerProjects, careerStart, education, training, awards, certifications, skillGroups } from '@/shared/data/site-data';
 
 // 실무(효성에프엠에스)에서 사용한 기술
 const proSkills = new Set([
@@ -133,6 +133,20 @@ export default function About() {
                 <div className='text-sm font-medium text-fg-strong'>{a.title}</div>
                 <div className='text-xs text-muted'>
                   {a.date} · {a.org}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className='rounded-lg border border-line bg-surface p-6'>
+          <div className='mb-3 text-xs uppercase tracking-[0.2em] text-muted'>Certifications</div>
+          <div className='space-y-3'>
+            {certifications.map((c) => (
+              <div key={c.id}>
+                <div className='text-sm font-medium text-fg-strong'>{c.name}</div>
+                <div className='text-xs text-muted'>
+                  {c.date} · {c.org} · <span className='font-mono'>{c.id}</span>
                 </div>
               </div>
             ))}
