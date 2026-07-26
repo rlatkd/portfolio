@@ -15,8 +15,9 @@ export default function Experience() {
 
               {job.points.length > 0 && (
                 <ul className='mt-3 space-y-1.5'>
+                  {/* overflow-wrap:anywhere — ·/→로 이어진 긴 토큰이 좁은 화면에서 안 끊겨 넘치는 것 방지 */}
                   {job.points.map((p) => (
-                    <li key={p} className='flex gap-2 text-sm leading-relaxed text-muted'>
+                    <li key={p} className='flex gap-2 text-sm leading-relaxed text-muted [overflow-wrap:anywhere]'>
                       <span className='mt-2 h-1 w-1 shrink-0 rounded-full bg-accent' />
                       {p}
                     </li>
