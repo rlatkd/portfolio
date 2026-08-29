@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { X, ArrowUpRight } from 'lucide-react';
 import { Section } from '@/shared/ui/Section';
-import { strengths, type Strength } from '@/shared/data/site-data';
+import { strengths, trackRecord, type Strength } from '@/shared/data/site-data';
 
 function DetailRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -128,6 +128,25 @@ export default function Strengths() {
             </div>
           </button>
         ))}
+      </div>
+
+      <div className='mt-10 border-t border-line pt-8'>
+        <div className='mb-4 flex items-baseline gap-3'>
+          <h3 className='font-mono text-xs uppercase tracking-[0.2em] text-accent'>Track Record</h3>
+          <span className='text-xs text-muted'>그 외 담당 과제 {trackRecord.length}건</span>
+        </div>
+        <ul>
+          {trackRecord.map((t, i) => (
+            <li
+              key={i}
+              className='flex flex-col gap-1 border-b border-line py-2.5 last:border-b-0 sm:flex-row sm:items-baseline sm:gap-4'
+            >
+              <span className='shrink-0 font-mono text-xs text-accent sm:w-[68px]'>{t.period}</span>
+              <span className='flex-1 text-sm leading-snug text-fg'>{t.title}</span>
+              <span className='shrink-0 font-mono text-[11px] text-muted'>{t.service}</span>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {selected && <Modal item={selected} onClose={() => setSelected(null)} />}
