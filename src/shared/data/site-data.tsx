@@ -381,7 +381,7 @@ export const skillGroups = [
   { label: 'Language', items: ['Java', 'Python', 'JavaScript', 'TypeScript'] },
   { label: 'Framework', items: ['Spring Boot', 'FastAPI', 'React', 'Vue.js', 'Next.js'] },
   { label: 'Backend', items: ['Spring Batch', 'Spring AOP', 'Spring Security', 'MyBatis', 'Apache POI', 'Spring Data JPA'] },
-  { label: 'Frontend', items: ['Recoil', 'Zustand', 'Tailwind CSS'] },
+  { label: 'Frontend', items: ['Kendo UI', 'Recoil', 'Zustand', 'Tailwind CSS'] },
   { label: 'Database', items: ['Oracle', 'MySQL', 'Redis', 'Elasticsearch'] },
   { label: 'Infra', items: ['AWS', 'Docker', 'Kubernetes', 'Linux'] },
   { label: 'Messaging', items: ['Apache Kafka'] },
