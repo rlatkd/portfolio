@@ -380,7 +380,7 @@ export const projects = [
 export const skillGroups = [
   { label: 'Language', items: ['Java', 'JavaScript', 'Python', 'TypeScript'] },
   { label: 'Framework', items: ['Spring Boot', 'Vue.js', 'FastAPI', 'Next.js', 'React'] },
-  { label: 'Backend', items: ['Apache POI', 'JdbcTemplate', 'MyBatis', 'Spring AOP', 'Spring Batch', 'Spring Data JPA', 'Spring Security'] },
+  { label: 'Backend', items: ['Spring AOP', 'Spring Batch', 'Spring Data JPA', 'Spring Security', 'Apache POI', 'JdbcTemplate', 'MyBatis'] },
   { label: 'Frontend', items: ['Kendo UI', 'Recoil', 'Tailwind CSS', 'Zustand'] },
   { label: 'Database', items: ['Oracle', 'Redis', 'Elasticsearch', 'MySQL'] },
   { label: 'Infra', items: ['Linux', 'AWS', 'Docker', 'Kubernetes'] },
