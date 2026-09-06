@@ -378,18 +378,18 @@ export const projects = [
 ];
 
 export const skillGroups = [
-  { label: 'Language', items: ['Java', 'Python', 'JavaScript', 'TypeScript'] },
-  { label: 'Framework', items: ['Spring Boot', 'FastAPI', 'React', 'Vue.js', 'Next.js'] },
-  { label: 'Backend', items: ['Spring Batch', 'Spring AOP', 'Spring Security', 'MyBatis', 'Apache POI', 'Spring Data JPA'] },
-  { label: 'Frontend', items: ['Kendo UI', 'Recoil', 'Zustand', 'Tailwind CSS'] },
-  { label: 'Database', items: ['Oracle', 'MySQL', 'Redis', 'Elasticsearch'] },
-  { label: 'Infra', items: ['AWS', 'Docker', 'Kubernetes', 'Linux'] },
+  { label: 'Language', items: ['Java', 'JavaScript', 'Python', 'TypeScript'] },
+  { label: 'Framework', items: ['Spring Boot', 'Vue.js', 'FastAPI', 'Next.js', 'React'] },
+  { label: 'Backend', items: ['Apache POI', 'JdbcTemplate', 'MyBatis', 'Spring AOP', 'Spring Batch', 'Spring Data JPA', 'Spring Security'] },
+  { label: 'Frontend', items: ['Kendo UI', 'Recoil', 'Tailwind CSS', 'Zustand'] },
+  { label: 'Database', items: ['Oracle', 'Redis', 'Elasticsearch', 'MySQL'] },
+  { label: 'Infra', items: ['Linux', 'AWS', 'Docker', 'Kubernetes'] },
   { label: 'Messaging', items: ['Apache Kafka'] },
-  { label: 'Observability', items: ['Prometheus', 'Grafana', 'Kibana'] },
-  { label: 'CI/CD', items: ['GitHub Actions', 'Argo CD', 'GitLab Runner', 'Bamboo'] },
+  { label: 'Observability', items: ['Grafana', 'Kibana', 'Prometheus'] },
+  { label: 'CI/CD', items: ['Bamboo', 'Argo CD', 'GitHub Actions', 'GitLab Runner'] },
   { label: 'IaC', items: ['Terraform'] },
-  { label: 'SCM', items: ['GitHub', 'GitLab', 'Bitbucket'] },
-  { label: 'Collaboration', items: ['Jira', 'Confluence'] },
+  { label: 'SCM', items: ['Bitbucket', 'GitHub', 'GitLab'] },
+  { label: 'Collaboration', items: ['Confluence', 'Jira'] },
 ];
 
 export const education = [
