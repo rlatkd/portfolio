@@ -60,7 +60,7 @@ export default function About() {
           <div className='text-xl font-bold tracking-tight text-accent md:text-2xl'>
             {careerDuration()}
           </div>
-          <div className='mt-1.5 text-xs font-semibold text-fg-strong'>Fullstack Developer</div>
+          <div className='mt-1.5 text-xs font-semibold text-fg-strong'>Full-stack Developer</div>
           <div className='mt-1 text-xs leading-relaxed text-muted'>
             효성에프엠에스
             <br />

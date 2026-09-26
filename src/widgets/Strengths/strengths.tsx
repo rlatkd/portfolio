@@ -5,6 +5,9 @@ import { X, ArrowUpRight } from 'lucide-react';
 import { Section } from '@/shared/ui/Section';
 import { strengths, trackRecord, type Strength } from '@/shared/data/site-data';
 
+// 상세 모달 임시 비활성화. true 로 바꾸면 카드 클릭 시 다시 열린다.
+const SHOW_DETAIL = false;
+
 function DetailRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className='grid grid-cols-1 gap-1.5 border-b border-line py-4 last:border-b-0 sm:grid-cols-[104px_1fr] sm:gap-5'>
@@ -82,20 +85,25 @@ export default function Strengths() {
   return (
     <Section id='strengths' label='Strengths'>
       <div className='grid grid-cols-1 gap-4'>
-        {strengths.map((s) => (
-          <button
+        {strengths.map((s) => {
+          const Card = SHOW_DETAIL ? 'button' : 'div';
+          return (
+          <Card
             key={s.title}
-            onClick={() => setSelected(s)}
-            className='group flex h-full flex-col rounded-lg border border-line bg-surface p-6 text-left transition-colors hover:border-accent'
+            {...(SHOW_DETAIL
+              ? { onClick: () => setSelected(s), className: 'group flex h-full flex-col rounded-lg border border-line bg-surface p-6 text-left transition-colors hover:border-accent' }
+              : { className: 'flex h-full flex-col rounded-lg border border-line bg-surface p-6 text-left' })}
           >
             <div className='flex items-start justify-between gap-3'>
-              <h3 className='font-bold leading-snug text-fg-strong group-hover:text-accent'>
+              <h3 className='font-bold leading-snug text-fg-strong'>
                 {s.title}
               </h3>
-              <ArrowUpRight
-                size={16}
-                className='mt-0.5 shrink-0 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent'
-              />
+              {SHOW_DETAIL && (
+                <ArrowUpRight
+                  size={16}
+                  className='mt-0.5 shrink-0 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent'
+                />
+              )}
             </div>
             <ul className='mt-2 flex-1 space-y-1.5'>
               {s.points
@@ -126,8 +134,9 @@ export default function Strengths() {
                 </span>
               ))}
             </div>
-          </button>
-        ))}
+          </Card>
+          );
+        })}
       </div>
 
       <div className='mt-10 border-t border-line pt-8'>
@@ -149,7 +158,7 @@ export default function Strengths() {
         </ul>
       </div>
 
-      {selected && <Modal item={selected} onClose={() => setSelected(null)} />}
+      {SHOW_DETAIL && selected && <Modal item={selected} onClose={() => setSelected(null)} />}
     </Section>
   );
 }
