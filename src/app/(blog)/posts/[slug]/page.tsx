@@ -61,7 +61,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             dateModified: post.metadata.publishedAt,
             description: post.metadata.summary,
             image: post.metadata.image
-              ? `${baseUrl}${post.metadata.image}`
+              ? new URL(post.metadata.image, baseUrl).toString()
               : `${baseUrl}/api/og?title=${encodeURIComponent(post.metadata.title || '')}`,
             url: `${baseUrl}/posts/${post.slug}`,
             author: { '@type': 'Person', name: 'Sanghun Kim' },
