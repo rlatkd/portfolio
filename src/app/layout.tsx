@@ -8,7 +8,7 @@ import { baseUrl } from '@/app/sitemap';
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: '김상훈',
+    default: '김상훈 · Software Engineer',
     template: '%s · 김상훈',
   },
   description: '데이터 정합성과 시스템 신뢰성을 우선하는 소프트웨어 엔지니어 김상훈의 포트폴리오.',

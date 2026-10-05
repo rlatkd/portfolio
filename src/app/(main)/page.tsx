@@ -5,6 +5,8 @@ import Projects from '@/widgets/Projects/projects';
 import Writing from '@/widgets/Writing/writing';
 import Contact from '@/widgets/Contact/contact';
 import { getPosts } from '@/shared/lib/markdown';
+import { profile } from '@/shared/data/site-data';
+import { baseUrl } from '@/app/sitemap';
 
 export const metadata = {
   alternates: { canonical: '/' },
@@ -25,6 +27,21 @@ export default async function Page() {
 
   return (
     <div className='lg:pt-24'>
+      <script
+        type='application/ld+json'
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Person',
+            name: profile.name,
+            alternateName: profile.nameEn,
+            jobTitle: profile.role,
+            url: baseUrl,
+            sameAs: [profile.github, profile.linkedin, profile.velog],
+          }),
+        }}
+      />
       <About />
       <Strengths />
       <Experience />
