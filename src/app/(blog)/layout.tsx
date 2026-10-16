@@ -25,7 +25,7 @@ export default function BlogLayout({ children }: LayoutProps) {
         </div>
       </header>
 
-      {children}
+      <main id='main-content' className='min-w-0'>{children}</main>
 
       <Footer />
       <ScrollToTop />

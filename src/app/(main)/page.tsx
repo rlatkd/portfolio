@@ -5,8 +5,11 @@ import Projects from '@/widgets/Projects/projects';
 import Writing from '@/widgets/Writing/writing';
 import Contact from '@/widgets/Contact/contact';
 import { getPosts } from '@/shared/lib/markdown';
+import { serializeJsonLd } from '@/shared/lib/seo';
 import { profile } from '@/shared/data/site-data';
-import { baseUrl } from '@/app/sitemap';
+import { baseUrl, authorId } from '@/shared/config/site';
+
+export const revalidate = 86400;
 
 export const metadata = {
   alternates: { canonical: '/' },
@@ -15,7 +18,6 @@ export const metadata = {
 export default async function Page() {
   const posts = await getPosts();
   const recent = posts
-    .sort((a, b) => b.metadata.index - a.metadata.index)
     .slice(0, 3)
     .map((p) => ({
       slug: p.slug,
@@ -31,9 +33,10 @@ export default async function Page() {
         type='application/ld+json'
         suppressHydrationWarning
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: serializeJsonLd({
             '@context': 'https://schema.org',
             '@type': 'Person',
+            '@id': authorId,
             name: profile.name,
             alternateName: profile.nameEn,
             jobTitle: profile.role,

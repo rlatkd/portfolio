@@ -1,6 +1,8 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { ImageResponse } from 'next/og';
 import { profile } from '@/shared/data/site-data';
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 // OG 이미지는 CSS 변수를 쓸 수 없어 라이트 테마 토큰의 hex 값을 직접 쓴다.
 const color = {
@@ -11,32 +13,17 @@ const color = {
   line: '#d4cfc6',
 };
 
-// 사이트와 같은 Pretendard(layout.tsx와 같은 버전). ImageResponse는 woff2를 못 읽어 woff를 쓴다.
-// 실패하면 기본 폰트로 렌더링한다.
-const PRETENDARD = 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/web/static/woff';
-
-async function loadFont(file: string) {
-  try {
-    const res = await fetch(`${PRETENDARD}/${file}`);
-    return res.ok ? await res.arrayBuffer() : null;
-  } catch {
-    return null;
-  }
-}
+const fonts = Promise.all(['Bold', 'Medium'].map(async weight => {
+  const buffer = await fs.readFile(path.join(process.cwd(), `public/fonts/Pretendard-${weight}.woff`));
+  return { name: 'Pretendard', data: buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength) as ArrayBuffer, weight: (weight === 'Bold' ? 700 : 500) as 700 | 500, style: 'normal' as const };
+}));
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
-  const title = url.searchParams.get('title') || profile.name;
-  const subtitle = url.searchParams.get('subtitle') || (url.searchParams.has('title') ? '' : profile.nameEn);
+  const title = (url.searchParams.get('title') || profile.name).slice(0, 160);
+  const subtitle = (url.searchParams.get('subtitle') || (url.searchParams.has('title') ? '' : profile.nameEn)).slice(0, 160);
   const label = profile.role.toUpperCase();
   const site = 'www.sanghunkim.com';
-
-  const [bold, medium] = await Promise.all([loadFont('Pretendard-Bold.woff'), loadFont('Pretendard-Medium.woff')]);
-
-  const fonts = [
-    bold && { name: 'Pretendard', data: bold, weight: 700 as const, style: 'normal' as const },
-    medium && { name: 'Pretendard', data: medium, weight: 500 as const, style: 'normal' as const },
-  ].filter((f): f is NonNullable<typeof f> => Boolean(f));
 
   // 긴 블로그 제목은 글자 크기를 줄인다.
   const titleSize = title.length > 40 ? 56 : title.length > 22 ? 68 : 88;
@@ -101,7 +88,8 @@ export async function GET(request: Request) {
     {
       width: 1200,
       height: 630,
-      fonts,
+      fonts: await fonts,
+      headers: { 'Cache-Control': 'public, max-age=86400, s-maxage=86400' },
     }
   );
 }

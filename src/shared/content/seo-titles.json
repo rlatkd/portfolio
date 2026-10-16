@@ -1,0 +1,18 @@
+{
+  "graphql": "REST API와 GraphQL의 데이터 조회 방식 비교",
+  "Next.js": "Next.js 렌더링·라우팅·데이터 페칭 기초",
+  "생성자-어노테이션": "Lombok 생성자 어노테이션의 차이와 옵션",
+  "Message-Queue": "메시지 큐의 개념과 장점, 브로커 비교",
+  "Docker": "Docker와 컨테이너 가상화 기초",
+  "Docker-Layer": "Docker 이미지 레이어의 구조와 재사용",
+  "Docker-Network": "Docker 네트워크 구조와 통신 방식",
+  "Docker-명령어": "Docker 이미지·컨테이너 기본 명령어",
+  "Kubernetes": "Kubernetes 구성 요소와 역할",
+  "Deployment": "Kubernetes Deployment와 배포 전략",
+  "Ingress": "Kubernetes Ingress와 인그레스 컨트롤러",
+  "MSA": "마이크로서비스 아키텍처의 장단점과 패턴",
+  "Logback": "Spring 로깅과 Logback 설정 기초",
+  "Elasticsearch-1": "Elasticsearch 구조와 검색 API 기초",
+  "Elasticsearch-2": "Elasticsearch 필터 쿼리와 검색 결과 가공",
+  "Prometheus-Grafana": "Spring Boot 모니터링: Prometheus와 Grafana"
+}

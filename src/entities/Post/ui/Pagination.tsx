@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { listingUrl } from '@/shared/lib/post-listing';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
 type PaginationProps = {
@@ -22,22 +23,22 @@ export default function Pagination({ currentPage, lastPage, category }: Paginati
   }
 
   const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
-  const queryPrefix = category ? `?category=${category}&page=` : '?page=';
+
 
   return (
-    <div className='flex items-center justify-center space-x-2 my-12 relative'>
-      <div className='flex items-center relative z-10'>
+    <div className='flex w-full min-w-0 items-center justify-start overflow-x-auto space-x-2 my-12 relative sm:justify-center' role='navigation' aria-label='글 목록 페이지'>
+      <div className='flex shrink-0 items-center relative z-10'>
         {currentPage > 1 ? (
           <>
             <Link
-              href={`${queryPrefix}1`}
+              href={listingUrl(1, category)}
               className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted hover:text-accent transition-colors'
               aria-label='처음 페이지로'
             >
               <ChevronsLeft className='w-5 h-5' />
             </Link>
             <Link
-              href={`${queryPrefix}${currentPage - 1}`}
+              href={listingUrl(currentPage - 1, category)}
               className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted hover:text-accent transition-colors'
               aria-label='이전 페이지로'
             >
@@ -55,11 +56,11 @@ export default function Pagination({ currentPage, lastPage, category }: Paginati
           </>
         )}
       </div>
-      <div className='flex items-center gap-1 mx-2'>
+      <div className='flex shrink-0 items-center gap-1 mx-2'>
         {pages.map((page) => (
           <Link
             key={page}
-            href={`${queryPrefix}${page}`}
+            href={listingUrl(page, category)}
             className={`flex items-center justify-center w-10 h-10 rounded-full text-center font-mono text-sm transition-colors ${
               page === currentPage
                 ? 'bg-accent text-navy font-medium'
@@ -72,18 +73,18 @@ export default function Pagination({ currentPage, lastPage, category }: Paginati
           </Link>
         ))}
       </div>
-      <div className='flex items-center'>
+      <div className='flex shrink-0 items-center'>
         {currentPage < lastPage ? (
           <>
             <Link
-              href={`${queryPrefix}${currentPage + 1}`}
+              href={listingUrl(currentPage + 1, category)}
               className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted hover:text-accent transition-colors'
               aria-label='다음 페이지로'
             >
               <ChevronRight className='w-5 h-5' />
             </Link>
             <Link
-              href={`${queryPrefix}${lastPage}`}
+              href={listingUrl(lastPage, category)}
               className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted hover:text-accent transition-colors'
               aria-label='마지막 페이지로'
             >

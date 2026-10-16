@@ -1,7 +1,8 @@
 import Link from 'next/link';
+import type { AnchorHTMLAttributes } from 'react';
 
-export function Linker(props) {
-  let href = props.href
+export function Linker(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
+  let href = props.href || ''
 
   if (href.startsWith('/')) {
     return (

@@ -30,6 +30,7 @@ yarn-error.log*
 # env files
 .env
 .env.*
+!.env.example
 
 # vercel
 .vercel
@@ -39,10 +40,13 @@ yarn-error.log*
 next-env.d.ts
 
 # pnpm
-pnpm-lock.yaml
+.pnpm-store/
 
 # npm
 package-lock.json
 
 # portfolio source materials (private)
 /port
+# browser tests
+/playwright-report/
+/test-results/

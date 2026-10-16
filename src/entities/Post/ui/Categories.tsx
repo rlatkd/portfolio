@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { listingUrl } from '@/shared/lib/post-listing';
 
 interface CategoriesProps {
   categories: string[];
@@ -19,7 +20,7 @@ export default function Categories({ categories, selectedCategory }: CategoriesP
         All
       </Link>
       {categories.map((category) => (
-        <Link key={category} href={`?category=${category}`} className={pill(selectedCategory === category)}>
+        <Link key={category} href={listingUrl(1, category)} className={pill(selectedCategory === category)}>
           {category}
         </Link>
       ))}

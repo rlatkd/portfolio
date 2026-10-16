@@ -1,19 +1,12 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
 import { getPosts } from '@/shared/lib/markdown';
-
-// 배포 도메인. 환경변수로 오버라이드 가능.
-export const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sanghunkim.com';
+import { baseUrl } from '@/shared/config/site';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  let blogs = (await getPosts()).map((post) => ({
-    url: `${baseUrl}/posts/${post.slug}`,
-    lastModified: post.metadata.publishedAt,
+  const blogs = (await getPosts()).map(post => ({
+    url: `${baseUrl}/posts/${encodeURIComponent(post.slug)}`,
+    lastModified: post.metadata.updatedAt || post.metadata.publishedAt,
   }));
-
-  let routes = ['', '/posts'].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date().toISOString().split('T')[0],
-  }));
-
-  return [...routes, ...blogs];
+  // Do not claim a daily modification when the page has not changed.
+  return [{ url: baseUrl }, { url: `${baseUrl}/posts` }, ...blogs];
 }

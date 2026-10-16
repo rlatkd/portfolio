@@ -16,7 +16,9 @@ export default function ScrollToTop() {
   return (
     <button
       aria-label='맨 위로'
-      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      tabIndex={show ? 0 : -1}
+      aria-hidden={!show}
+      onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}
       className={`fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-line bg-surface text-muted shadow-lg transition-all hover:border-accent hover:text-accent ${
         show ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'
       }`}

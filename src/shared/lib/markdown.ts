@@ -1,111 +1,51 @@
-'use server';
-
-import fs from 'fs';
-import path from 'path';
-import { unstable_noStore as noStore } from 'next/cache';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { cache } from 'react';
 import { getPostContents } from '@/shared/markdown/postContents';
+import type { Post } from '@/shared/types/post';
+import sources from '@/shared/content/velog-sources.json';
 
-type Metadata = {
-  index: string
-  title?: string
-  category?: string
-  publishedAt?: string
-  summary?: string
-  image?: string
-  stack?: string
-  description1?: string
-  description2?: string
-  description3?: string
-  description4?: string
+function parseFrontmatter(fileContent: string, fileName: string) {
+  const match = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/.exec(fileContent);
+  if (!match) throw new Error(`Missing frontmatter: ${fileName}`);
+  const metadata: Record<string, string> = {};
+  for (const line of match[1].split(/\r?\n/)) {
+    const separator = line.indexOf(':');
+    if (separator < 0) continue;
+    const key = line.slice(0, separator).trim();
+    let value = line.slice(separator + 1).trim();
+    if ((value.startsWith("'") && value.endsWith("'")) || (value.startsWith('"') && value.endsWith('"'))) value = value.slice(1, -1);
+    metadata[key] = value;
+  }
+  if (!metadata.title || !metadata.category || !metadata.publishedAt || !Number.isInteger(Number(metadata.index))) {
+    throw new Error(`Invalid post metadata: ${fileName}`);
+  }
+  return { metadata, content: fileContent.slice(match[0].length).trim() };
 }
 
-function parseFrontmatter(fileContent: string) {
-  let frontmatterRegex = /---\s*([\s\S]*?)\s*---/
-  let match = frontmatterRegex.exec(fileContent)
-  let frontMatterBlock = match![1]
-  let content = fileContent.replace(frontmatterRegex, '').trim()
-  let frontMatterLines = frontMatterBlock.trim().split('\n')
-  let metadata: Partial<Metadata> = {}
-
-  frontMatterLines.forEach((line) => {
-    let [key, ...valueArr] = line.split(': ')
-    let value = valueArr.join(': ').trim()
-    value = value.replace(/^[''](.*)['']$/, '$1')
-    metadata[key.trim() as keyof Metadata] = value
-  })
-
-  return { metadata: metadata as Metadata, content }
-}
-
-function getMDXFiles(dir) {
-  return fs.readdirSync(dir).filter((file) => path.extname(file) === '.mdx')
-}
-
-function readMDXFile(filePath) {
-  let rawContent = fs.readFileSync(filePath, 'utf-8')
-  return parseFrontmatter(rawContent)
-}
-
-function getMDXData(dir) {
-  let mdxFiles = getMDXFiles(dir)
-  return mdxFiles.map((file) => {
-    let { metadata, content } = readMDXFile(path.join(dir, file));
-    let slug = path.basename(file, path.extname(file)).normalize('NFC');
-    let tableContents = getPostContents(content);
+async function readPosts(): Promise<Post[]> {
+  const directory = path.join(process.cwd(), 'src/shared/content/posts');
+  const files = (await fs.readdir(directory)).filter(file => file.endsWith('.mdx'));
+  const posts = await Promise.all(files.map(async file => {
+    const { metadata, content } = parseFrontmatter(await fs.readFile(path.join(directory, file), 'utf8'), file);
+    const slug = path.basename(file, '.mdx').normalize('NFC');
+    const source = (sources as Record<string, { url: string; updatedAt: string }>)[slug];
     return {
-      metadata: { ...metadata, index: parseInt(metadata.index ?? '0', 10) },
-      slug,
-      content,
-      tableContents,
-    }
-  })
+      metadata: {
+        index: Number(metadata.index), title: metadata.title, category: metadata.category,
+        publishedAt: metadata.publishedAt, summary: metadata.summary || '', image: metadata.image,
+        updatedAt: source?.updatedAt || metadata.publishedAt, sourceUrl: source?.url,
+      },
+      slug, content, tableContents: getPostContents(content),
+    };
+  }));
+  const indexes = new Set(posts.map(post => post.metadata.index));
+  if (indexes.size !== posts.length) throw new Error('Duplicate post indexes');
+  return posts.sort((a, b) => b.metadata.index - a.metadata.index);
 }
 
-export async function getPosts() {
-  noStore();
-  return getMDXData(path.join(process.cwd(), 'src', 'shared', 'content', 'posts')) // 정적파일경로
-}
-
-export async function getEtcMdxs() {
-  return getMDXData(path.join(process.cwd(), 'src', 'shared', 'content', 'etc'))
-}
-
-export async function getProjects() {
-  return getMDXData(path.join(process.cwd(), 'src', 'shared', 'content', 'projects'))
-}
-
-export async function formatDate(date, includeRelative = false) {
-  let currentDate = new Date()
-  if (!date.includes('T')) {
-    date = `${date}T00:00:00`
-  }
-  let targetDate = new Date(date)
-
-  let yearsAgo = currentDate.getFullYear() - targetDate.getFullYear()
-  let monthsAgo = currentDate.getMonth() - targetDate.getMonth()
-  let daysAgo = currentDate.getDate() - targetDate.getDate()
-
-  let formattedDate = ''
-
-  if (yearsAgo > 0) {
-    formattedDate = `${yearsAgo}y ago`
-  } else if (monthsAgo > 0) {
-    formattedDate = `${monthsAgo}mo ago`
-  } else if (daysAgo > 0) {
-    formattedDate = `${daysAgo}d ago`
-  } else {
-    formattedDate = 'Today'
-  }
-
-  let fullDate = targetDate.toLocaleString('en-us', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  })
-
-  if (!includeRelative) {
-    return fullDate
-  }
-
-  return `${fullDate} (${formattedDate})`
-}
+let productionPosts: Promise<Post[]> | undefined;
+export const getPosts = cache((): Promise<Post[]> => {
+  if (process.env.NODE_ENV !== 'production') return readPosts();
+  return productionPosts ??= readPosts();
+});

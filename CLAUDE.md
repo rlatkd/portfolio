@@ -1,13 +1,13 @@
 # CLAUDE.md
 
-김상훈(Sanghun Kim) 포트폴리오 — Next.js 14 단일 페이지 포트폴리오 + 기술 블로그.
+김상훈(Sanghun Kim) 포트폴리오 — Next.js 16 단일 페이지 포트폴리오 + 기술 블로그.
 
 ## 기술 스택
-- Next.js 14 (App Router, RSC) · TypeScript
+- Next.js 16 (App Router, RSC) · TypeScript
 - Tailwind CSS (라이트/다크 테마, `.dark` class 전략)
-- MDX 블로그 (`next-mdx-remote/rsc`, 파일시스템 기반)
-- MongoDB (댓글/대댓글 전용)
-- lucide-react (아이콘), sugar-high (코드 하이라이팅)
+- Markdown 블로그 (`react-markdown`, 파일시스템 기반; 기존 `.mdx` 파일명 유지)
+- DB·댓글 기능 미사용 (관련 코드 제거됨)
+- lucide-react (아이콘), highlight.js (서버에서 언어별 코드 하이라이팅)
 
 ## 디자인 시스템
 - 톤: 에디토리얼 — 네이비/골드/크림
@@ -18,17 +18,18 @@
 - 공통 섹션 래퍼: `@/shared/ui/Section` (모노 라벨 + 세리프 제목)
 
 ## 구조 (Feature-Sliced Design)
-- `src/app` — 라우팅. `(main)` 단일 페이지(`/`) + `(blog)/posts` 블로그 + `api`(comments·og·posts) + `rss`
+- `src/app` — 라우팅. `(main)` 단일 페이지(`/`) + `(blog)/posts` 블로그 + `api/og` + `rss`
 - `src/widgets` — 메인 페이지 섹션 **8개**: About, Strengths, Experience, Projects, Writing, Contact, Sidebar, Footer
   - `About` — 인용 · 소개 문단 · 3열 카드(경력/담당 서비스/실무 프로젝트) · 학력·수상·자격 · 기술 스택
   - `Strengths` — 주요 과제 카드(모달 상세) + 하단 Track Record 목록
   - `Sidebar`/`Footer` — `profile.intro`, `navItems`
-- `src/features` — CommentForm, PostRecommend, ThemeToggle
+- `src/features` — PostRecommend, ThemeToggle
 - `src/entities/Post` — 블로그 목록/페이지네이션/카테고리/TOC/네비
-- `src/shared` — lib(markdown, db), markdown 렌더러, data(site-data), ui, utils, config, hooks, content
+- `src/shared` — lib(markdown, seo), markdown 렌더러, data(site-data), ui, utils, config, hooks, content
 
 ## 콘텐츠 소스
 - 포트폴리오 콘텐츠(프로필/경력/성과/스킬 등)는 전부 `src/shared/data/site-data.tsx` 단일 소스.
+- 블로그 원문은 `https://velog.io/@kata/posts`. 본문·코드·표·이미지를 원문 그대로 유지하고 임의로 요약하거나 재작성하지 않는다. HTML 태그를 일괄 이스케이프하지 않는다. Markdown 렌더러가 원문의 HTML과 GFM을 처리한다.
 - **이력의 기준 문서는 `port/main/이력서_김상훈.html`** (사용자가 기존 `port/20260926`에서 이동). 경력 사실·수치·팀 규모·업무 명칭은 이 문서와 사용자의 최신 확인 내용을 따른다. 이전 제출본을 현재 내용에 덮어쓰지 않는다.
 - 콘텐츠 수정 시 기존 디자인, 컴포넌트 구조, 섹션 순서와 데이터 필드 형식을 유지한다. 별도 지시 없이 문단 렌더러나 강조용 컴포넌트를 추가하지 않는다.
 - 코딩테스트 문제 생성·채점 플랫폼은 사용자 요청으로 포트폴리오에서 제외했다. 다시 추가하지 않는다.
@@ -60,3 +61,8 @@
 - 색은 반드시 시맨틱 토큰으로. 라이트/다크 양쪽에서 깨지지 않게 할 것.
 - 모든 컴포넌트는 모바일 우선 반응형.
 - 커밋 메시지는 conventional commits(`type: description`). 커밋/푸시는 사용자가 명시적으로 요청할 때만.
+
+## 검증과 범위
+- `pnpm run check` 및 `pnpm run test:e2e`로 검증한다.
+- 현재 사용자 요청은 기능·운영·SEO 개선이며 색상, 폰트 크기, 섹션 순서 등 디자인 변경은 별도 논의한다.
+- 글 본문과 기존 요약은 보존한다. SEO 설명은 `seo-descriptions.json`, 출처와 실제 수정일은 `velog-sources.json`에서 관리한다.

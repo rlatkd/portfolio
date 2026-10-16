@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { getPosts } from '@/shared/lib/markdown';
 
 type NavigationProps = {
@@ -8,8 +8,9 @@ type NavigationProps = {
 
 export default async function Navigation({ currentPost }: NavigationProps) {
   const posts = await getPosts();
-  const previousPost = posts.find((post) => post.metadata.index === currentPost - 1)
-  const nextPost = posts.find((post) => post.metadata.index === currentPost + 1)
+  const index = posts.findIndex(post => post.metadata.index === currentPost);
+  const previousPost = index >= 0 ? posts[index + 1] : undefined;
+  const nextPost = index > 0 ? posts[index - 1] : undefined;
   
   return (
     <div id='navigation' className='max-w-4xl mx-auto mt-20 mb-20 flex justify-between relative'>

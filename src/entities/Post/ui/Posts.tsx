@@ -1,7 +1,8 @@
+import type { PostPreview } from '@/shared/types/post';
 import { PostCard } from './PostCard';
 
 type PostsProps = {
-  posts: any[];
+  posts: PostPreview[];
 };
 
 export function Posts({ posts }: PostsProps) {

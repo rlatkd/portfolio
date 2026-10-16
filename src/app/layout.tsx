@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { themeEffect } from '@/features/ThemeToggle/lib/themeEffect';
-import { baseUrl } from '@/app/sitemap';
+import { baseUrl, defaultOgImage, siteTitle, siteDescription } from '@/shared/config/site';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 export const metadata: Metadata = {
@@ -19,7 +19,11 @@ export const metadata: Metadata = {
     siteName: '김상훈',
     locale: 'ko_KR',
     type: 'website',
+    url: baseUrl,
+    images: [{ url: defaultOgImage, width: 1200, height: 630, alt: siteTitle }],
   },
+  twitter: { card: 'summary_large_image', title: siteTitle, description: siteDescription, images: [defaultOgImage] },
+  alternates: { types: { 'application/rss+xml': '/rss' } },
   robots: {
     index: true,
     follow: true,
@@ -60,11 +64,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body className='bg-bg text-fg antialiased min-h-screen'>
-        <main className='flex-auto min-w-0 flex flex-col'>
+        <div className='flex-auto min-w-0 flex flex-col'>
           {children}
           <Analytics />
           <SpeedInsights />
-        </main>
+        </div>
         <GoogleAnalytics gaId="G-8ZK16NWL6K" />
       </body>
     </html>

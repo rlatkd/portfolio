@@ -1,6 +1,16 @@
+import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { Section } from '@/shared/ui/Section';
 import { projects } from '@/shared/data/site-data';
+
+const imageSizes: Record<string, [number, number]> = {
+  '/images/up-quant/preview.png': [2880, 4430],
+  '/images/portfolio/preview.png': [1127, 1265],
+  '/images/cms-plus/preview.jpg': [2560, 1400],
+  '/images/sale-sync/preview.png': [326, 200],
+  '/images/liver-tumor-cnn/preview.png': [1400, 2100],
+  '/images/ct-image-reconstruction/preview.png': [364, 369],
+};
 
 // Claude 브랜드 마크(선버스트) — 사이트 팔레트가 아닌 Claude 코럴을 의도적으로 사용
 function ClaudeMark({ size = 12 }: { size?: number }) {
@@ -68,11 +78,14 @@ export default function Projects() {
 
               {p.image && (
                 <div className='mt-5 overflow-hidden rounded-md border border-line'>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+
+                  <Image
                     src={p.image}
                     alt={`${p.title} 메인 화면`}
                     loading='lazy'
+                    width={imageSizes[p.image]?.[0] || 1200}
+                    height={imageSizes[p.image]?.[1] || 800}
+                    sizes='(min-width: 1024px) 480px, (min-width: 768px) 90vw, 100vw'
                     className={`block w-full bg-white ${
                       p.imageFit === 'contain'
                         ? 'h-80 object-contain pb-2 pt-10'

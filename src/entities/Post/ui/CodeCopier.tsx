@@ -1,20 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BiCopy, BiCheck } from 'react-icons/bi';
-import { highlight } from 'sugar-high';
 
-export function CodeCopier({ children, className, ...props }) {
+type CodeCopierProps = {
+  children: string;
+  className?: string;
+  highlightedHtml?: string;
+};
+
+export function CodeCopier({ children, className, highlightedHtml }: CodeCopierProps) {
   const [copied, setCopied] = useState(false)
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(children)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 1000)
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(children)
+      setCopied(true)
+      if (timer.current) clearTimeout(timer.current);
+      timer.current = setTimeout(() => setCopied(false), 1000)
+    } catch {
+      setCopied(false)
+    }
   }
 
-  const language = className ? className.replace('language-', '') : 'javascript';
-  const codeHTML = highlight(children);
+  const language = className ? className.replace('language-', '') : 'text';
 
   return (
     <div className='relative'>
@@ -41,7 +52,11 @@ export function CodeCopier({ children, className, ...props }) {
       </div>
       <div className='overflow-x-auto'>
         <pre className='p-4 pt-0'>
-          <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+          {highlightedHtml === undefined ? (
+            <code className={className}>{children}</code>
+          ) : (
+            <code className={className} dangerouslySetInnerHTML={{ __html: highlightedHtml }} />
+          )}
         </pre>
       </div>
     </div>

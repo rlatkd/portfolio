@@ -1,180 +1,53 @@
 'use client';
+import { useEffect, useState } from 'react';
+import type { PostHeading } from '@/shared/types/post';
 
-import { useEffect, useState, useRef } from 'react';
-import { usePathname } from 'next/navigation';
-
-export function TableOfContents({ contents }) {
+export function TableOfContents({ contents }: { contents: PostHeading[] }) {
   const [section, setSection] = useState('');
-  const [scrolling, setScrolling] = useState(false);
-  const [visible, setVisible] = useState(true);
   const [opacity, setOpacity] = useState(1);
-  const [tocTranslate, setTocTranslate] = useState(0);
-  const pathname = usePathname();
-  const headerHeight = 80;
-  
-  const lastUserActionRef = useRef<{
-    type: string | null;
-    time: number;
-    section: string;
-  }>({
-    type: null,
-    time: 0,
-    section: ''
-  });
-  
-  const lastScrollPositionRef = useRef(0);
-
   useEffect(() => {
-    let scrollTimeout;
-    
-    const updateSection = () => {
-      if (scrolling) return;
-      
-      const currentScrollPosition = window.scrollY;
-      const currentTime = Date.now();
-      
-      const isUserScrolling = Math.abs(currentScrollPosition - lastScrollPositionRef.current) > 5;
-      lastScrollPositionRef.current = currentScrollPosition;
-      
-      if (lastUserActionRef.current.type === 'click' && 
-          currentTime - lastUserActionRef.current.time < 300 &&
-          !isUserScrolling) {
-        return;
+    let frame = 0;
+    const update = () => {
+      let active = '';
+      for (const { id } of contents) {
+        const element = document.getElementById(id);
+        if (element && element.getBoundingClientRect().top <= 81) active = id;
       }
-
-      if (isUserScrolling) {
-        clearTimeout(scrollTimeout);
-        lastUserActionRef.current = {
-          type: 'scroll',
-          time: currentTime,
-          section: ''
-        };
-      }
-      
-      let currentSection = '';
-      const scrollPosition = currentScrollPosition + headerHeight;
-      
-      contents.forEach(({ id }) => {
-        const sectionElement = document.getElementById(id);
-        if (sectionElement) {
-          const sectionTop = sectionElement.offsetTop;
-          if (scrollPosition >= sectionTop) {
-            currentSection = id;
-          }
-        }
-      });
-      
-      // 첫 번째 구역보다 위에 있으면 강조 제거
-      const firstSection = contents[0];
-      if (firstSection) {
-        const firstSectionTop = document.getElementById(firstSection.id)?.offsetTop || 0;
-        if (scrollPosition < firstSectionTop) {
-          currentSection = '';
-        }
-      }
-      
-      // 구역이 변경되었고, 사용자 스크롤에 의한 것이면 구역 업데이트
-      if (currentSection !== section && 
-          (lastUserActionRef.current.type === 'scroll' || 
-           lastUserActionRef.current.section !== section)) {
-        setSection(currentSection);
-      }
+      setSection(active);
+      const navigationTop = document.getElementById('navigation')?.getBoundingClientRect().top ?? Infinity;
+      setOpacity(Math.min(1, Math.max(0, 1 - (250 - navigationTop) / 200)));
     };
-
-    const checkNavigationVisibility = () => {
-      const navigationElement = document.querySelector('div#navigation') || document.querySelector('.navigation');
-      
-      if (navigationElement) {
-        const navigationTop = navigationElement.getBoundingClientRect().top;
-        const threshold = 250;
-        
-        if (navigationTop <= threshold) {
-          const offset = threshold - navigationTop;
-          setTocTranslate(0);
-          setOpacity(Math.max(0, 1 - offset / 200));
-        } else {
-          setTocTranslate(0);
-          setOpacity(1);
-        }
-      }
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
     };
-
-    // 스크롤 이벤트핸들러
-    const handleScroll = () => {
-      updateSection(); // 구역 업데이트
-      checkNavigationVisibility(); // 네비게이션 보이냐마냐 확인
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    // 구역 변경 이벤트핸들러
-    const handleSectionChange = () => {
-      const hash = decodeURIComponent(window.location.hash.replace('#', ''));
-      setSection(hash);
-    };
-
-    window.addEventListener('hashchange', handleSectionChange);
-
-    handleScroll();
-
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('hashchange', handleSectionChange);
-      clearTimeout(scrollTimeout);
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
     };
-  }, [contents, pathname, scrolling, section]);
-
-  // 구역 클릭 이벤트핸들러
-  const handleSectionClick = (id) => {
-    lastUserActionRef.current = {
-      type: 'click',
-      time: Date.now(),
-      section: id
-    };
-    
-    setSection(id);
-    window.location.hash = `#${id}`;
-
-    const sectionElement = document.getElementById(id);
-    if (sectionElement) {
-      // 현재 스크롤 위치 저장
-      lastScrollPositionRef.current = window.scrollY;
-      
-      setScrolling(true);
-      window.scrollTo({
-        top: sectionElement.offsetTop - headerHeight,
-        behavior: 'smooth' // 부드러운 스크롤 사용
-      });
-      
-      setTimeout(() => {
-        setScrolling(false);
-      }, 500);
-    }
-  };
-  
-  // 목차없으면 Null
-  if (!visible || !contents || contents.length === 0) return null;
-
+  }, [contents]);
+  if (!contents.length) return null;
   return (
-    <nav 
-      className='text-sm w-full transition-all duration-300' 
-      style={{ opacity: opacity, transform: `translateY(${tocTranslate}px)` }}
-    >
+    <nav aria-label='글 목차' inert={opacity === 0} className='text-sm w-full transition-all duration-300' style={{ opacity }}>
       <ul className='ml-2 space-y-1'>
         {contents.map(({ level, text, id }) => (
-          <li key={id} className={`ml-${(level - 1) * 2}`}>
-            <a
-              href={`#${id}`}
-              onClick={(e) => {
-                e.preventDefault();
-                handleSectionClick(id);
+          <li key={id} style={{ marginLeft: `${(level - 1) * 0.5}rem` }}>
+            <a href={`#${id}`} aria-current={section === id ? 'location' : undefined}
+              onClick={event => {
+                const element = document.getElementById(id);
+                if (!element) return;
+                event.preventDefault();
+                history.pushState(null, '', `#${encodeURIComponent(id)}`);
+                setSection(id);
+                window.scrollTo({ top: window.scrollY + element.getBoundingClientRect().top - 80,
+                  behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
               }}
-              className={`hover:underline transition-all duration-300 ${
-                id === section ? 'font-bold text-accent text-base' : 'text-muted text-sm'
-              }`}
-            >
-              {text}
-            </a>
+              className={`hover:underline transition-all duration-300 ${id === section ? 'font-bold text-accent text-base' : 'text-muted text-sm'}`}
+            >{text}</a>
           </li>
         ))}
       </ul>

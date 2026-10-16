@@ -119,6 +119,15 @@ pre {
 .token.property { color: var(--sh-property); }
 .token.entity { color: var(--sh-entity); }
 
+.hljs-keyword, .hljs-selector-tag { color: var(--sh-keyword); }
+.hljs-string, .hljs-attr { color: var(--sh-string); }
+.hljs-comment, .hljs-quote { color: var(--sh-comment); }
+.hljs-number, .hljs-literal, .hljs-type { color: var(--sh-class); }
+.hljs-title, .hljs-built_in { color: var(--sh-identifier); }
+.hljs-tag, .hljs-name, .hljs-meta { color: var(--sh-sign); }
+
+.prose :is(h1, h2, h3, h4, h5, h6) { scroll-margin-top: 80px; }
+
 span.sh__line {
   display: block;
   line-height: 0;

@@ -84,14 +84,14 @@ export default function Sidebar() {
         <p className='mt-5 max-w-xs whitespace-pre-line leading-relaxed text-muted'>{profile.intro}</p>
 
         {/* 목차 (데스크톱) */}
-        <nav className='mt-12 hidden lg:block'>
+        <nav aria-label='포트폴리오 목차' className='mt-12 hidden lg:block'>
           <p className='font-mono text-xs uppercase tracking-[0.2em] text-muted'>Contents</p>
           <ul className='mt-4 space-y-1'>
             {navItems.map((item) => {
               const on = active === item.id;
               return (
                 <li key={item.id}>
-                  <a href={`/#${item.id}`} className='group flex items-center py-2'>
+                  <a href={`/#${item.id}`} aria-current={on ? 'location' : undefined} className='group flex items-center py-2'>
                     <span
                       className={`mr-4 h-px transition-all ${
                         on ? 'w-14 bg-accent' : 'w-8 bg-muted group-hover:w-14 group-hover:bg-fg'

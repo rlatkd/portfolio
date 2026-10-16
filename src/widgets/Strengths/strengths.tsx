@@ -1,109 +1,21 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { X, ArrowUpRight } from 'lucide-react';
 import { Section } from '@/shared/ui/Section';
-import { strengths, trackRecord, type Strength } from '@/shared/data/site-data';
-
-// 상세 모달 임시 비활성화. true 로 바꾸면 카드 클릭 시 다시 열린다.
-const SHOW_DETAIL = false;
-
-function DetailRow({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className='grid grid-cols-1 gap-1.5 border-b border-line py-4 last:border-b-0 sm:grid-cols-[104px_1fr] sm:gap-5'>
-      <div className='pt-0.5 text-xs font-semibold uppercase tracking-[0.2em] text-accent'>{label}</div>
-      <div className='text-sm leading-relaxed text-fg'>{children}</div>
-    </div>
-  );
-}
-
-function Modal({ item, onClose }: { item: Strength; onClose: () => void }) {
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
-    document.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
-    };
-  }, [onClose]);
-
-  return (
-    <div
-      className='fixed inset-0 z-[100] flex items-center justify-center bg-navy/60 p-4 backdrop-blur-sm'
-      onClick={onClose}
-    >
-      <div
-        className='max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-lg border border-line bg-surface shadow-xl'
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className='sticky top-0 flex items-start justify-between gap-4 border-b border-line bg-surface px-6 py-5'>
-          <div>
-            <h3 className='text-lg font-bold text-fg-strong'>{item.title}</h3>
-            {item.detail.period && (
-              <div className='mt-1.5 font-mono text-xs text-accent'>{item.detail.period}</div>
-            )}
-            {item.detail.summary && (
-              <div className='mt-1 text-xs leading-relaxed text-muted'>{item.detail.summary}</div>
-            )}
-          </div>
-          <button
-            onClick={onClose}
-            aria-label='닫기'
-            className='shrink-0 rounded-full border border-line p-1.5 text-muted transition-colors hover:border-accent hover:text-accent'
-          >
-            <X size={16} />
-          </button>
-        </div>
-
-        <div className='px-6 pb-2 pt-1'>
-          {item.detail.context && <DetailRow label='Context'>{item.detail.context}</DetailRow>}
-          <DetailRow label='Problem'>{item.detail.problem}</DetailRow>
-          {item.detail.constraint && (
-            <DetailRow label='Constraint'>{item.detail.constraint}</DetailRow>
-          )}
-          <DetailRow label='Solution'>{item.detail.solution}</DetailRow>
-          <DetailRow label='Impact'>{item.detail.impact}</DetailRow>
-          <div className='my-5 border-l-2 border-accent bg-surface-2 px-4 py-3 text-sm italic leading-relaxed text-muted'>
-            {item.detail.insight}
-          </div>
-          {item.detail.tech && (
-            <div className='border-t border-line py-4 text-xs text-muted'>
-              <span className='font-semibold uppercase tracking-[0.2em] text-accent'>Tech</span>
-              <span className='ml-3'>{item.detail.tech}</span>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
+import { strengths, trackRecord } from '@/shared/data/site-data';
 
 export default function Strengths() {
-  const [selected, setSelected] = useState<Strength | null>(null);
 
   return (
     <Section id='strengths' label='Strengths'>
       <div className='grid grid-cols-1 gap-4'>
         {strengths.map((s) => {
-          const Card = SHOW_DETAIL ? 'button' : 'div';
           return (
-          <Card
+          <div
             key={s.title}
-            {...(SHOW_DETAIL
-              ? { onClick: () => setSelected(s), className: 'group flex h-full flex-col rounded-lg border border-line bg-surface p-6 text-left transition-colors hover:border-accent' }
-              : { className: 'flex h-full flex-col rounded-lg border border-line bg-surface p-6 text-left' })}
+            className='flex h-full flex-col rounded-lg border border-line bg-surface p-6 text-left'
           >
             <div className='flex items-start justify-between gap-3'>
               <h3 className='font-bold leading-snug text-fg-strong'>
                 {s.title}
               </h3>
-              {SHOW_DETAIL && (
-                <ArrowUpRight
-                  size={16}
-                  className='mt-0.5 shrink-0 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent'
-                />
-              )}
             </div>
             <ul className='mt-2 flex-1 space-y-1.5'>
               {s.points
@@ -134,7 +46,7 @@ export default function Strengths() {
                 </span>
               ))}
             </div>
-          </Card>
+          </div>
           );
         })}
       </div>
@@ -158,7 +70,6 @@ export default function Strengths() {
         </ul>
       </div>
 
-      {SHOW_DETAIL && selected && <Modal item={selected} onClose={() => setSelected(null)} />}
     </Section>
   );
 }
