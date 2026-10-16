@@ -69,6 +69,7 @@ test('TOC targets and clipboard preserve original Java operators', async ({ page
   await expect(page).toHaveURL(/#search-api/);
   await page.goto('/posts/Gold-V-%EC%B9%98%ED%82%A8-%EB%B0%B0%EB%8B%AC-15686');
   const source = await page.locator('article pre code.language-java').textContent();
+  if (source === null) throw new Error('Java code block has no text content');
   expect(source).toContain('==');
   await page.locator('article').getByRole('button', { name: '코드 복사', exact: true }).last().click();
   // Windows clipboard converts LF to CRLF; operators and all other whitespace must match.
