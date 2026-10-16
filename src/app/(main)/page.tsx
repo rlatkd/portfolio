@@ -8,7 +8,6 @@ import { getPosts } from '@/shared/lib/markdown';
 import { serializeJsonLd } from '@/shared/lib/seo';
 import { profile } from '@/shared/data/site-data';
 import { baseUrl, authorId } from '@/shared/config/site';
-import { featuredPostSlugs } from '@/shared/config/writing';
 
 export const revalidate = 86400;
 
@@ -18,11 +17,9 @@ export const metadata = {
 
 export default async function Page() {
   const posts = await getPosts();
-  const recent = featuredPostSlugs.map(slug => {
-    const post = posts.find(post => post.slug === slug);
-    if (!post) throw new Error(`Featured post not found: ${slug}`);
-    return post;
-  })
+  const recent = [...posts]
+    .sort((a, b) => Date.parse(b.metadata.publishedAt) - Date.parse(a.metadata.publishedAt) || b.metadata.index - a.metadata.index)
+    .slice(0, 3)
     .map((p) => ({
       slug: p.slug,
       title: p.metadata.title ?? '',

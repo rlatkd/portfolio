@@ -70,7 +70,7 @@ tests/         # 단위 테스트와 브라우저 테스트
 - 경력·프로젝트 정보: `src/shared/data/site-data.tsx`
 - 블로그 본문: `src/shared/content/posts/*.mdx`
 - 글 출처·수정일: `src/shared/content/velog-sources.json`
-- 홈 대표 글: `src/shared/config/writing.ts` (정확한 파일명 slug 사용, 누락 시 검증 실패)
+- 홈 Writing: 발행일 기준 최신 글 3개 자동 노출 (같은 발행일은 `index` 내림차순)
 
 글 목록은 편집 순서인 `index` 내림차순이며, RSS는 발행일 내림차순입니다. 검색은 제목·요약·카테고리를 대상으로 합니다. 전화번호와 자격 식별번호는 공개 데이터에 넣지 않습니다.
 

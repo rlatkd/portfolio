@@ -12,16 +12,10 @@ import { getPostContents } from '../src/shared/markdown/postContents';
 import { highlightCode } from '../src/shared/markdown/highlight-code';
 import sources from '../src/shared/content/velog-sources.json';
 import descriptions from '../src/shared/content/seo-descriptions.json';
-import { featuredPostSlugs } from '../src/shared/config/writing';
 import { profile, certifications, experience, projects } from '../src/shared/data/site-data';
 
 const directory = path.join(process.cwd(), 'src/shared/content/posts');
-test('featured posts resolve exact filenames and public data excludes private identifiers', () => {
-  const slugs = fs.readdirSync(directory).filter(file => file.endsWith('.mdx')).map(file => file.slice(0, -4));
-  for (const slug of featuredPostSlugs) {
-    assert.ok(slugs.includes(slug), `Missing featured post: ${slug}`);
-    assert.ok(Object.hasOwn(sources, slug));
-  }
+test('public data excludes private identifiers and uses unique item IDs', () => {
   assert.ok(!Object.hasOwn(profile, 'mobile'));
   for (const certificate of certifications) assert.match(certificate.id, /^[a-z-]+$/);
   for (const items of [experience, projects, certifications]) {

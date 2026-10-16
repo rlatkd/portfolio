@@ -13,7 +13,10 @@ test('home navigation, theme persistence and landmarks work without runtime erro
   await expect(page.locator('main')).toHaveCount(1);
   await expect(page.locator('header a[aria-label="GitHub"] svg')).toBeVisible();
   await expect(page.locator('header a[aria-label="LinkedIn"] svg')).toBeVisible();
-  await expect(page.locator('#writing a[href="/posts/graphql"]')).toBeVisible();
+  const writingPosts = page.locator('#writing a[href^="/posts/"]');
+  await expect(writingPosts).toHaveCount(3);
+  const dates = await writingPosts.locator('span.font-mono').allTextContents();
+  expect(dates).toEqual([...dates].sort().reverse());
   await expect(page.locator('script[src*="googletagmanager.com/gtag/js"]')).toHaveCount(0);
   const toggle = page.getByRole('button', { name: '테마 전환' });
   await toggle.click();

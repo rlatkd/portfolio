@@ -138,10 +138,10 @@ export default function Sidebar() {
   ];
 
   return (
-    <header className='pb-10 pt-16 lg:sticky lg:top-0 lg:flex lg:h-screen lg:max-h-screen lg:w-[42%] lg:flex-col lg:justify-between lg:overflow-y-auto lg:py-10 lg:pr-3'>
+    <header className='pb-10 pt-16 lg:sticky lg:top-0 lg:flex lg:h-screen lg:max-h-screen lg:w-[42%] lg:flex-col lg:justify-between lg:overflow-y-auto lg:pt-24 lg:pb-10 lg:pr-3'>
       <div>
         <p className='text-xs font-semibold uppercase tracking-[0.25em] text-accent'>{profile.role}</p>
-        <h1 className='mt-3 text-5xl font-bold tracking-tight text-fg-strong lg:text-6xl'>
+        <h1 className='mt-3 whitespace-nowrap text-4xl font-semibold leading-tight tracking-tight text-fg-strong sm:text-5xl'>
           {profile.name}
         </h1>
         <p className='mt-2 text-xl italic text-muted'>{profile.nameEn}</p>
