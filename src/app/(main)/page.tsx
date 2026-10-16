@@ -17,8 +17,8 @@ export const metadata = {
 
 export default async function Page() {
   const posts = await getPosts();
-  const recent = posts
-    .slice(0, 3)
+  const featured = ['Elasticsearch-1', 'GitLab-Runner를-이용한-CICD로-SpringBoot-EC2에-자동배포', 'graphql'];
+  const recent = featured.map(slug => posts.find(post => post.slug === slug)).filter((post): post is (typeof posts)[number] => !!post)
     .map((p) => ({
       slug: p.slug,
       title: p.metadata.title ?? '',

@@ -9,7 +9,7 @@ export function Posts({ posts }: PostsProps) {
   if (posts.length === 0) {
     return (
       <p className='rounded-lg border border-line bg-surface py-16 text-center text-muted'>
-        아직 작성된 글이 없습니다.
+        표시할 글이 없습니다. 검색어나 카테고리를 바꿔 보세요.
       </p>
     );
   }

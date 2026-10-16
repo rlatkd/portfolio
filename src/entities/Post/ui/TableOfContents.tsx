@@ -1,8 +1,9 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { PostHeading } from '@/shared/types/post';
 
 export function TableOfContents({ contents }: { contents: PostHeading[] }) {
+  const nav = useRef<HTMLElement>(null);
   const [section, setSection] = useState('');
   const [opacity, setOpacity] = useState(1);
   useEffect(() => {
@@ -30,9 +31,19 @@ export function TableOfContents({ contents }: { contents: PostHeading[] }) {
       window.removeEventListener('resize', onScroll);
     };
   }, [contents]);
+  useEffect(() => {
+    const container = nav.current;
+    const active = container?.querySelector<HTMLElement>('[aria-current="location"]');
+    if (!container || !active) return;
+    const item = active.getBoundingClientRect();
+    const bounds = container.getBoundingClientRect();
+    if (item.top < bounds.top || item.bottom > bounds.bottom) {
+      container.scrollTop += item.top - bounds.top - container.clientHeight / 2;
+    }
+  }, [section]);
   if (!contents.length) return null;
   return (
-    <nav aria-label='글 목차' inert={opacity === 0} className='text-sm w-full transition-all duration-300' style={{ opacity }}>
+    <nav ref={nav} aria-label='글 목차' inert={opacity === 0} className='text-sm w-full max-h-[calc(100dvh-9rem)] overflow-y-auto overscroll-contain pr-3 transition-opacity duration-300' style={{ opacity }}>
       <ul className='ml-2 space-y-1'>
         {contents.map(({ level, text, id }) => (
           <li key={id} style={{ marginLeft: `${(level - 1) * 0.5}rem` }}>

@@ -11,7 +11,7 @@
 
 ## 디자인 시스템
 - 톤: 에디토리얼 — 네이비/골드/크림
-- 폰트: DM Serif Display(제목) · Noto Sans KR(본문) · JetBrains Mono(라벨/코드)
+- 폰트: Pretendard(본문·제목·라벨) · 시스템 모노스페이스(코드)
 - 색상은 `styles/global.css`의 시맨틱 토큰 사용: `--bg --surface --surface-2 --fg --fg-strong --muted --line --accent`
   - Tailwind 클래스로 노출: `bg-bg surface fg fg-strong muted line accent` + 브랜드 `navy gold cream`
   - 하드코딩 색(`text-white`, `blue-*`, 그라디언트) 금지 → 토큰 사용
@@ -21,7 +21,7 @@
 - `src/app` — 라우팅. `(main)` 단일 페이지(`/`) + `(blog)/posts` 블로그 + `api/og` + `rss`
 - `src/widgets` — 메인 페이지 섹션 **8개**: About, Strengths, Experience, Projects, Writing, Contact, Sidebar, Footer
   - `About` — 인용 · 소개 문단 · 3열 카드(경력/담당 서비스/실무 프로젝트) · 학력·수상·자격 · 기술 스택
-  - `Strengths` — 주요 과제 카드(모달 상세) + 하단 Track Record 목록
+  - `Strengths` — 주요 과제 요약 카드 + 하단 Track Record 목록 (상세 데이터 비공개)
   - `Sidebar`/`Footer` — `profile.intro`, `navItems`
 - `src/features` — PostRecommend, ThemeToggle
 - `src/entities/Post` — 블로그 목록/페이지네이션/카테고리/TOC/네비
@@ -33,6 +33,7 @@
 - **이력의 기준 문서는 `port/main/이력서_김상훈.html`** (사용자가 기존 `port/20260926`에서 이동). 경력 사실·수치·팀 규모·업무 명칭은 이 문서와 사용자의 최신 확인 내용을 따른다. 이전 제출본을 현재 내용에 덮어쓰지 않는다.
 - 콘텐츠 수정 시 기존 디자인, 컴포넌트 구조, 섹션 순서와 데이터 필드 형식을 유지한다. 별도 지시 없이 문단 렌더러나 강조용 컴포넌트를 추가하지 않는다.
 - 코딩테스트 문제 생성·채점 플랫폼은 사용자 요청으로 포트폴리오에서 제외했다. 다시 추가하지 않는다.
+- 2026-10-16 현재 기준 이력서 파일은 작업 폴더에 없으며, 사용자가 나중에 업데이트하기로 했다. 원본 대조는 `docs/TODO.md`에 보류한다. 공개 경력 사실을 추정해 추가하지 않는다.
 - 면접 기록은 `port/interview/`.
 - 원본 자료(이력서·자소서·포트폴리오·이미지)는 `/port` 폴더에 있으며 `.gitignore` 처리됨. 웹에서 쓰는 이미지는 `public/images/portfolio/`로 복사됨.
 
@@ -64,5 +65,5 @@
 
 ## 검증과 범위
 - `pnpm run check` 및 `pnpm run test:e2e`로 검증한다.
-- 현재 사용자 요청은 기능·운영·SEO 개선이며 색상, 폰트 크기, 섹션 순서 등 디자인 변경은 별도 논의한다.
+- 현재 사용자 요청은 재검수 항목 중 2·6·8을 제외한 개선이다. 가독성·대비 개선은 승인되었으며 실무 상세 공개, 모바일 섹션 구조 변경, CNN 평가 설명 변경은 제외한다.
 - 글 본문과 기존 요약은 보존한다. SEO 설명은 `seo-descriptions.json`, 출처와 실제 수정일은 `velog-sources.json`에서 관리한다.

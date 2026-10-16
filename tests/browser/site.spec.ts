@@ -1,12 +1,17 @@
 import { test, expect } from '@playwright/test';
+import { baseUrl } from '../../src/shared/config/site';
 import sources from '../../src/shared/content/velog-sources.json';
+
+test.beforeEach(async ({ context }) => {
+  await context.route(/https:\/\/(?:[^/]+\.)?(?:google-analytics\.com|googletagmanager\.com|vercel-insights\.com)\//, route => route.abort());
+});
 
 test('home navigation, theme persistence and landmarks work without runtime errors', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/');
   await expect(page.locator('main')).toHaveCount(1);
-  await expect(page.locator('script[src*="googletagmanager.com/gtag/js"]')).toHaveCount(1);
+  await expect(page.locator('script[src*="googletagmanager.com/gtag/js"]')).toHaveCount(0);
   const toggle = page.getByRole('button', { name: '테마 전환' });
   await toggle.click();
   await expect(page.locator('html')).toHaveClass(/dark/);
@@ -24,14 +29,14 @@ test('mobile archive stays within viewport and pagination/category links work', 
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.getByRole('link', { name: '다음 페이지로', exact: true }).click();
   await expect(page).toHaveURL('/posts?page=2');
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://www.sanghunkim.com/posts?page=2');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${baseUrl}/posts?page=2`);
   await page.getByRole('link', { name: 'java', exact: true }).click();
   await expect(page).toHaveURL('/posts?category=java');
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
-test('all 50 restored articles have valid DOM, metadata and no comments requests', async ({ page }) => {
+test('all restored articles have valid DOM, metadata and no comments requests', async ({ page }) => {
   test.setTimeout(180000);
   const errors: string[] = [];
   const comments: string[] = [];
@@ -46,7 +51,7 @@ test('all 50 restored articles have valid DOM, metadata and no comments requests
     const ids = await page.locator('article [id]').evaluateAll(nodes => nodes.map(node => node.id));
     expect(new Set(ids).size, slug).toBe(ids.length);
     await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://www.sanghunkim.com/posts/${encodeURIComponent(slug)}`);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${baseUrl}/posts/${encodeURIComponent(slug)}`);
   }
   expect(comments).toEqual([]);
   expect(errors).toEqual([]);
@@ -80,10 +85,10 @@ test('invalid URLs and retired comment endpoints return 404', async ({ request }
 test('sitemap, RSS, OG and optimized images are served successfully', async ({ request }) => {
   const sitemap = await request.get('/sitemap.xml');
   expect(sitemap.status()).toBe(200);
-  expect((await sitemap.text()).match(/<loc>/g)).toHaveLength(52);
+  expect((await sitemap.text()).match(/<loc>/g)).toHaveLength(Object.keys(sources).length + 5);
   const rss = await request.get('/rss');
   expect(rss.status()).toBe(200);
-  expect((await rss.text()).match(/<item>/g)).toHaveLength(50);
+  expect((await rss.text()).match(/<item>/g)).toHaveLength(Object.keys(sources).length);
   const og = await request.get('/api/og?title=SEO%20%EA%B2%80%EC%A6%9D');
   expect(og.status()).toBe(200);
   expect(og.headers()['content-type']).toContain('image/png');
@@ -113,4 +118,58 @@ test('theme remains usable when browser storage is unavailable', async ({ page }
   await page.getByRole('button', { name: '테마 전환' }).click();
   await expect(page.locator('html')).toHaveClass(/dark/);
   expect(errors).toEqual([]);
+});
+
+
+test('search, resume, privacy and short-screen readability work', async ({ page, context }) => {
+  await page.goto('/posts');
+  await page.getByRole('searchbox', { name: '글 검색' }).fill('Elasticsearch');
+  await page.getByRole('button', { name: '검색', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('검색 결과');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${baseUrl}/posts?q=Elasticsearch`);
+  await page.goto('/posts?q=not-a-real-search-result');
+  await expect(page.getByRole('status')).toContainText('0개');
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.goto('/');
+  await page.getByRole('button', { name: '이메일 복사', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('이메일을 복사했습니다.');
+  await page.evaluate(() => { navigator.clipboard.writeText = async () => { throw new Error('denied'); }; });
+  await page.getByRole('button', { name: '이메일 복사', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('이메일을 선택해 복사');
+  await page.goto('/resume');
+  await expect(page.getByRole('button', { name: '인쇄 · PDF로 저장' })).toBeVisible();
+  await page.emulateMedia({ media: 'print' });
+  await expect(page.getByRole('button', { name: '인쇄 · PDF로 저장' })).toBeHidden();
+  await page.emulateMedia({ media: 'screen' });
+  await page.goto('/privacy');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('방문 분석');
+  await page.setViewportSize({ width: 1600, height: 720 });
+  await page.goto('/posts/신입-개발자-기술면접-질문-정리-자바');
+  const toc = page.getByRole('navigation', { name: '글 목차' });
+  const bounds = await toc.boundingBox();
+  expect(bounds!.y + bounds!.height).toBeLessThanOrEqual(720);
+  await toc.getByRole('link').last().click();
+  await expect(page).toHaveURL(/#/);
+  await page.goto('/');
+  expect(await page.evaluate(() => parseFloat(getComputedStyle(document.body).fontSize))).toBeGreaterThanOrEqual(15);
+  await expect(page.locator('header').getByRole('link', { name: 'RSS', exact: true })).toBeVisible();
+});
+
+test('project verification links, reviewed image descriptions and benchmark artifact are served', async ({ page, request }) => {
+  await page.goto('/');
+  const projects = page.locator('#projects');
+  await expect(projects.getByRole('link', { name: /주문 등록 시연 GIF/ })).toHaveAttribute('href', /orderAdd\.gif$/);
+  await expect(projects.getByRole('link', { name: /시스템 구조도/ })).toHaveAttribute('href', /system-architecture\.png$/);
+  expect(await projects.locator('a a').count()).toBe(0);
+  await page.goto('/posts/Deployment');
+  await expect(page.locator('article img').first()).toHaveAttribute('alt', /In-place 배포 흐름/);
+  await page.goto('/evidence');
+  await expect(page.getByRole('heading', { name: '실제 상관 분석 함수의 별도 오프라인 실험' })).toBeVisible();
+  const response = await request.get('/reports/upquant-correlation.json');
+  expect(response.status()).toBe(200);
+  const report = await response.json();
+  expect(report.providerCalls.warmTotal).toBe(0);
+  expect(report.resultConsistency).toBe(true);
+  expect(report.warm.rawMs).toHaveLength(report.warm.samples);
 });

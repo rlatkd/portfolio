@@ -46,6 +46,7 @@ export default function Footer() {
         </div>
 
         <div className='mt-12 border-t border-line pt-6 text-xs text-muted'>
+          <a href="/privacy" className="mb-3 inline-block underline">개인정보 및 방문 분석 안내</a>
           <p>
             © {year} {profile.name} ({profile.nameEn}). All rights reserved.
           </p>

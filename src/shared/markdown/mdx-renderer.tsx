@@ -6,6 +6,8 @@ import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import { CodeCopier } from '@/entities/Post/ui/CodeCopier';
 import { Linker } from '@/shared/markdown/linker';
 import { remarkHeadingIds } from '@/shared/markdown/postContents';
+import images from '@/shared/content/image-metadata.json';
+import { imageMetadata } from '@/shared/markdown/image-metadata';
 import { highlightCode } from '@/shared/markdown/highlight-code';
 
 // Velog bodies are Markdown with embedded HTML, rather than executable MDX.
@@ -24,8 +26,14 @@ export function MdxRenderer({ source }: { source: string }) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkHeadingIds]}
-      rehypePlugins={[rehypeRaw, [rehypeSanitize, schema]]}
+      rehypePlugins={[rehypeRaw, [rehypeSanitize, schema], imageMetadata]}
       components={{
+        img: ({ node, ...props }) => {
+          if (!props.src) return null;
+          const entry = (images as Record<string, { unavailable?: boolean }>)[String(props.src)];
+          if (entry?.unavailable) return <span className='text-sm text-muted'>[{props.alt}: 원문 이미지 서버에서 이미지를 제공하지 않습니다. 아래 Velog 원문 링크에서 확인해 주세요.]</span>;
+          return <img {...props} />;
+        },
         a: ({ node, ...props }) => <Linker {...props} />,
         pre: ({ children }) => {
           const code = Children.toArray(children).find(isValidElement);

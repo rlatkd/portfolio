@@ -1,10 +1,8 @@
 import '@/styles/global.css';
 import type { Metadata } from 'next';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import { themeEffect } from '@/features/ThemeToggle/lib/themeEffect';
 import { baseUrl, defaultOgImage, siteTitle, siteDescription } from '@/shared/config/site';
-import { GoogleAnalytics } from '@next/third-parties/google';
+import { ProductionAnalytics } from '@/shared/ui/ProductionAnalytics';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -66,10 +64,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className='bg-bg text-fg antialiased min-h-screen'>
         <div className='flex-auto min-w-0 flex flex-col'>
           {children}
-          <Analytics />
-          <SpeedInsights />
+
         </div>
-        <GoogleAnalytics gaId="G-8ZK16NWL6K" />
+        <ProductionAnalytics enabled={process.env.NODE_ENV === 'production' && process.env.VERCEL_ENV === 'production'} hostname={new URL(baseUrl).hostname} />
       </body>
     </html>
   );

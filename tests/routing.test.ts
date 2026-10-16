@@ -29,3 +29,12 @@ test('dates remain deterministic across time zones and year boundaries', () => {
   assert.equal(dateFormatter('invalid'), '');
   assert.equal(dateFormatter('2024-12-31', true, new Date('2025-01-01T00:00:00+09:00')), 'December 31, 2024 (1d ago)');
 });
+
+
+test('search matches all terms in title, summary and category and preserves pagination', () => {
+  assert.equal(getPostListing(posts, { q: 'post java' })?.total, 20);
+  assert.equal(getPostListing(posts, { q: 'missing' })?.total, 0);
+  assert.equal(getPostListing(posts, { q: ['a', 'b'] }), null);
+  assert.equal(listingUrl(2, 'java', 'two words'), '/posts?category=java&q=two+words&page=2');
+  assert.equal(getPostListing(posts, { q: 'post', page: '2' })?.posts.length, 10);
+});

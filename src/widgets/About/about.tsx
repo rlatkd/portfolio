@@ -153,7 +153,7 @@ export default function About() {
               <div key={c.id}>
                 <div className='text-sm font-medium text-fg-strong'>{c.name}</div>
                 <div className='text-xs text-muted'>
-                  {c.date} · {c.org} · <span className='font-mono'>{c.id}</span>
+                  {c.date} · {c.org}
                 </div>
               </div>
             ))}

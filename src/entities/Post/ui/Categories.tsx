@@ -4,6 +4,7 @@ import { listingUrl } from '@/shared/lib/post-listing';
 interface CategoriesProps {
   categories: string[];
   selectedCategory: string;
+  search?: string;
 }
 
 const pill = (on: boolean) =>
@@ -13,14 +14,14 @@ const pill = (on: boolean) =>
       : 'border-line text-muted hover:border-accent hover:text-accent'
   }`;
 
-export default function Categories({ categories, selectedCategory }: CategoriesProps) {
+export default function Categories({ categories, selectedCategory, search }: CategoriesProps) {
   return (
     <div className='flex flex-wrap gap-2'>
-      <Link href='/posts' className={pill(!selectedCategory)}>
+      <Link href={listingUrl(1, undefined, search)} className={pill(!selectedCategory)}>
         All
       </Link>
       {categories.map((category) => (
-        <Link key={category} href={listingUrl(1, category)} className={pill(selectedCategory === category)}>
+        <Link key={category} href={listingUrl(1, category, search)} className={pill(selectedCategory === category)}>
           {category}
         </Link>
       ))}

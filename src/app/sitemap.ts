@@ -8,5 +8,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: post.metadata.updatedAt || post.metadata.publishedAt,
   }));
   // Do not claim a daily modification when the page has not changed.
-  return [{ url: baseUrl }, { url: `${baseUrl}/posts` }, ...blogs];
+  return [{ url: baseUrl }, { url: `${baseUrl}/posts` }, ...['resume', 'privacy', 'evidence'].map(route => ({ url: `${baseUrl}/${route}` })), ...blogs];
 }

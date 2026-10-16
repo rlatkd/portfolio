@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { CopyEmail } from '@/features/CopyEmail/CopyEmail';
 import { Send } from 'lucide-react';
 import { Section } from '@/shared/ui/Section';
 import { profile } from '@/shared/data/site-data';
@@ -16,11 +18,13 @@ export default function Contact() {
 
       <a
         href={`mailto:${profile.email}`}
-        className='mt-8 inline-flex items-center gap-2 rounded-md bg-accent px-5 py-3 text-sm font-semibold text-navy transition-opacity hover:opacity-90'
+        className='mt-8 inline-flex items-center gap-2 rounded-md bg-accent px-5 py-3 text-sm font-semibold text-on-accent transition-opacity hover:opacity-90'
       >
         <Send size={15} />
         이메일 보내기
       </a>
+      <Link href="/resume" className="ml-4 inline-block py-3 text-accent underline">이력서 보기 · PDF 저장</Link>
+      <CopyEmail email={profile.email} />
     </Section>
   );
 }

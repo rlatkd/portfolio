@@ -27,6 +27,7 @@ module.exports = {
         muted: 'var(--muted)',
         line: 'var(--line)',
         accent: 'var(--accent)',
+        'on-accent': 'var(--on-accent)',
       },
       fontFamily: {
         // restyart 동일: 전부 산세리프(Pretendard). serif/mono 클래스도 산세리프로 alias.

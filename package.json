@@ -8,7 +8,11 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
     "test:e2e": "playwright test",
-    "check": "npm run typecheck && npm test && npm run build"
+    "check": "npm run typecheck && npm test && npm run build",
+    "content:check": "node scripts/sync-velog.mjs",
+    "content:sync": "node scripts/sync-velog.mjs --apply",
+    "monitor": "node scripts/monitor.mjs",
+    "images:check": "node scripts/check-images.mjs"
   },
   "dependencies": {
     "@next/third-parties": "^16.4.2",

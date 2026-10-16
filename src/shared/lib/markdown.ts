@@ -17,7 +17,7 @@ function parseFrontmatter(fileContent: string, fileName: string) {
     if ((value.startsWith("'") && value.endsWith("'")) || (value.startsWith('"') && value.endsWith('"'))) value = value.slice(1, -1);
     metadata[key] = value;
   }
-  if (!metadata.title || !metadata.category || !metadata.publishedAt || !Number.isInteger(Number(metadata.index))) {
+  if (!metadata.title || !metadata.category || !Number.isFinite(Date.parse(metadata.publishedAt)) || !metadata.index || !Number.isInteger(Number(metadata.index))) {
     throw new Error(`Invalid post metadata: ${fileName}`);
   }
   return { metadata, content: fileContent.slice(match[0].length).trim() };

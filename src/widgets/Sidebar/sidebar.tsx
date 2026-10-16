@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Github, Linkedin, Mail, Phone, MapPin, Rss } from 'lucide-react';
+import { Github, Linkedin, Mail, MapPin, Rss } from 'lucide-react';
 import { profile, navItems } from '@/shared/data/site-data';
 import { ThemeToggle } from '@/features/ThemeToggle/ThemeToggle';
 
@@ -74,7 +74,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <header className='pb-10 pt-16 lg:sticky lg:top-0 lg:flex lg:h-screen lg:max-h-screen lg:w-[42%] lg:flex-col lg:justify-between lg:py-24'>
+    <header className='pb-10 pt-16 lg:sticky lg:top-0 lg:flex lg:h-screen lg:max-h-screen lg:w-[42%] lg:flex-col lg:justify-between lg:overflow-y-auto lg:py-10 lg:pr-3'>
       <div>
         <p className='text-xs font-semibold uppercase tracking-[0.25em] text-accent'>{profile.role}</p>
         <h1 className='mt-3 text-5xl font-bold tracking-tight text-fg-strong lg:text-6xl'>
@@ -113,7 +113,7 @@ export default function Sidebar() {
       </div>
 
       {/* 하단: 연락처 · 소셜 */}
-      <div className='mt-12 lg:mt-0'>
+      <div className='mt-12 lg:mt-8'>
         <div className='space-y-2'>
           <a
             href={`mailto:${profile.email}`}
@@ -121,13 +121,6 @@ export default function Sidebar() {
           >
             <Mail size={15} />
             {profile.email}
-          </a>
-          <a
-            href={`tel:${profile.mobile.replace(/\s/g, '')}`}
-            className='flex items-center gap-3 text-sm text-muted transition-colors hover:text-accent'
-          >
-            <Phone size={15} />
-            {profile.mobile}
           </a>
           <div className='flex items-center gap-3 text-sm text-muted'>
             <MapPin size={15} />

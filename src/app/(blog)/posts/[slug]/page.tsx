@@ -74,6 +74,10 @@ export default async function Page({ params }: Props) {
         </div>
         <article className='prose prose-lg w-full min-w-0 max-w-none'><MdxRenderer source={post.content} /></article>
         <div className='fixed top-28 right-8 hidden w-56 2xl:block'><TableOfContents contents={post.tableContents} /></div>
+        {post.metadata.sourceUrl && <p className='mt-8 text-sm text-muted'>
+          <a href={post.metadata.sourceUrl} className='text-accent underline' target='_blank' rel='noopener noreferrer'>Velog 원문 보기</a>
+          {' · '}원문 수정일 <time dateTime={post.metadata.updatedAt}>{dateFormatter(post.metadata.updatedAt || post.metadata.publishedAt)}</time>
+        </p>}
         <Navigation currentPost={currentPost} />
       </div>
       <div className='mx-auto max-w-content px-5 md:px-8'><PostRecommends posts={recommendations} /></div>

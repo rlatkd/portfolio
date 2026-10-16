@@ -1,0 +1,499 @@
+{
+  "https://velog.velcdn.com/images/kata/post/841ddeae-b1bb-416b-a4da-259f33af5d8a/image.png": {
+    "width": 1274,
+    "height": 444,
+    "checkedAt": "2026-10-16",
+    "alt": "기존 Blue 서버를 유지한 채 Green 서버를 준비하고 연결을 전환하는 배포 흐름",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/246b2cc2-77f4-43ec-bafc-49b00a3a761d/image.png": {
+    "width": 1262,
+    "height": 614,
+    "checkedAt": "2026-10-16",
+    "alt": "기존 서버 세 대를 새 버전으로 모두 교체하는 In-place 배포 흐름",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/b4080e3a-4c12-401c-b85f-9cb5637d6e5c/image.png": {
+    "width": 1270,
+    "height": 604,
+    "checkedAt": "2026-10-16",
+    "alt": "신규 버전으로 보내는 트래픽을 0%, 20%, 50%, 80%, 100%로 늘리는 Canary 배포 흐름",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/4039695f-ec35-43cf-882e-7a3a71671116/image.png": {
+    "width": 1268,
+    "height": 706,
+    "checkedAt": "2026-10-16",
+    "alt": "서버를 한 대씩 새 버전으로 교체하는 Rolling Update 네 단계",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/7b5a02b6-c7bf-4d8d-9813-dc19910780d0/image.png": {
+    "width": 1280,
+    "height": 714,
+    "checkedAt": "2026-10-16",
+    "alt": "송신·수신 장치의 네트워크 인터페이스, 유무선 장비와 인터넷 연결 구조",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/56031bdc-d2e0-4da9-b87f-13686ffb0409/image.png": {
+    "width": 1280,
+    "height": 506,
+    "checkedAt": "2026-10-16",
+    "alt": "Ubuntu 기반 레이어 위에 nginx와 웹 앱 레이어를 쌓고 컨테이너가 이미지 레이어를 공유하는 구조",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/42d80556-bdfb-4435-b886-c27b1c684c7c/image.png": {
+    "width": 1280,
+    "height": 688,
+    "checkedAt": "2026-10-16",
+    "alt": "유선 랜카드는 전기 신호, 무선 랜카드는 전파로 디지털 데이터를 전달하는 과정",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/6dc79401-0d42-42dc-a0f2-622631460f58/image.png": {
+    "width": 718,
+    "height": 448,
+    "checkedAt": "2026-10-16",
+    "alt": "호스트의 web·db 컨테이너를 veth와 docker0·사용자 브리지로 연결하는 구조",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/01590498-12e1-4ea3-8681-89d189ab1dc2/image.png": {
+    "width": 687,
+    "height": 565,
+    "checkedAt": "2026-10-16",
+    "alt": "OSI 7계층과 TCP/IP 계층, HTTP·TCP·IP·Ethernet의 대응 관계",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/97023c59-6d24-4b68-a7ab-251e123f0042/image.png": {
+    "width": 1280,
+    "height": 671,
+    "checkedAt": "2026-10-16",
+    "alt": "Docker Container Network Model에서 기본 드라이버와 외부 플러그인을 연결하는 구조",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/67e57b32-f7d5-4714-a900-d8a3cd7f4e1a/image.png": {
+    "width": 307,
+    "height": 164,
+    "checkedAt": "2026-10-16",
+    "alt": "하드웨어 위에서 직접 실행되는 Type 1과 호스트 OS 위에서 실행되는 Type 2 하이퍼바이저 비교",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/97bf0126-6033-436d-b177-d3180ea5f9f6/image.png": {
+    "width": 1280,
+    "height": 562,
+    "checkedAt": "2026-10-16",
+    "alt": "Docker 네트워크를 단일 호스트의 bridge·host·none과 다중 호스트의 overlay로 분류한 도식",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/91dcaf47-cf21-4ab3-af54-5cbcbc17a55f/image.png": {
+    "width": 311,
+    "height": 359,
+    "checkedAt": "2026-10-16",
+    "alt": "각 가상 머신에 Guest OS가 있고 하이퍼바이저와 호스트 운영체제를 거치는 가상화 구조",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/d8aca2d4-90eb-4f5f-a6b1-f453e9b55df1/image.png": {
+    "width": 314,
+    "height": 234,
+    "checkedAt": "2026-10-16",
+    "alt": "애플리케이션과 라이브러리가 컨테이너 엔진·운영체제·인프라를 공유하는 컨테이너 구조",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/fedda4cf-076e-44ee-8459-5e435f40f3ad/image.png": {
+    "width": 279,
+    "height": 131,
+    "checkedAt": "2026-10-16",
+    "alt": "컨테이너를 실은 고래 모양 Docker 로고",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/83c71697-fc34-4436-b395-1e1de9c1c483/image.png": {
+    "width": 826,
+    "height": 464,
+    "checkedAt": "2026-10-16",
+    "alt": "Dockerfile을 build 명령으로 이미지로 만드는 흐름",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/063ecbc8-6ce3-48b6-a508-d49be53f0f10/image.png": {
+    "width": 1026,
+    "height": 331,
+    "checkedAt": "2026-10-16",
+    "alt": "관계형 데이터베이스의 database·table·row·column과 Elasticsearch의 index·type·document·field를 대응한 원문 도식",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/5b384edd-a9a1-4516-9e30-45d5b77f0dcb/image.png": {
+    "width": 1269,
+    "height": 397,
+    "checkedAt": "2026-10-16",
+    "alt": "Dockerfile을 빌드해 이미지를 만들고 run 명령으로 컨테이너를 실행하는 흐름",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/ac364104-6b91-404e-b8ee-d52f7a02942f/image.png": {
+    "width": 653,
+    "height": 477,
+    "checkedAt": "2026-10-16",
+    "alt": "관계형 데이터베이스와 Elasticsearch의 스키마·파티션·조회 언어 등 개념을 비교한 원문 표",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/2ec606ac-cbdc-4ae5-b780-7081ea95d639/image.png": {
+    "width": 1156,
+    "height": 565,
+    "checkedAt": "2026-10-16",
+    "alt": "서버 로그를 Logstash에서 수집·변환하고 Elasticsearch에 저장해 Kibana로 시각화하는 ELK 구성",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/571672eb-778b-4d4a-95c9-0fd566649af3/image.png": {
+    "width": 1080,
+    "height": 992,
+    "checkedAt": "2026-10-16",
+    "alt": "Elasticsearch search API의 took·timed_out·shards·hits·score와 문서 내용을 포함한 JSON 응답 예",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/133f55f3-85d2-4bec-ba6f-030d664f5f6d/image.png": {
+    "width": 935,
+    "height": 574,
+    "checkedAt": "2026-10-16",
+    "alt": "두 노드에 Index A의 primary·replica shard를 나누어 둔 Elasticsearch 클러스터 구조",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://u.acmicpc.net/de29c64f-dee7-4fe0-afa9-afd6fc4aad3a/Screen%20Shot%202021-06-22%20at%202.41.22%20PM.png": {
+    "width": 430,
+    "height": 388,
+    "checkedAt": "2026-10-16",
+    "alt": "가로 M칸과 세로 N칸으로 이루어진 토마토 보관 상자 그림",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/8134b0cc-c7eb-499a-848b-01bb831aa0b4/image.png": {
+    "width": 1388,
+    "height": 932,
+    "checkedAt": "2026-10-16",
+    "alt": "Ingress가 호스트 이름과 경로에 따라 요청을 여러 Service와 Pod로 전달하는 구조",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/f61bf595-f5b8-4ae8-b6c3-1c1e6d5c2075/image.png": {
+    "width": 1420,
+    "height": 428,
+    "checkedAt": "2026-10-16",
+    "alt": "클라이언트 요청이 로드 밸런서·Ingress·Service를 거쳐 Pod로 전달되는 흐름",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/d2e951b4-a979-4baf-8941-ca36472c7dc2/image.png": {
+    "width": 1058,
+    "height": 466,
+    "checkedAt": "2026-10-16",
+    "alt": "쿼리의 연관도·전문 검색·점수 계산과 필터의 일치 여부·캐시 사용을 비교한 표",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/9ed7859f-fde2-4ae3-bb04-bb98bb5c823e/image.png": {
+    "width": 723,
+    "height": 663,
+    "checkedAt": "2026-10-16",
+    "alt": "Spring Framework가 Commons Logging·SLF4J와 Log4j·Logback 구현체를 연결하는 기본 로깅 구조",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/98398c5d-7329-41bc-82d3-dce062ed389c/image.png": {
+    "width": 2944,
+    "height": 1374,
+    "checkedAt": "2026-10-16",
+    "alt": "컨트롤 플레인과 두 워커 노드, API server·controller·scheduler·etcd·kubelet 등 Kubernetes 구성 요소",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/6024068d-a325-4818-8e2d-49fcc45006fb/image.png": {
+    "width": 444,
+    "height": 317,
+    "checkedAt": "2026-10-16",
+    "alt": "Logback 설정의 appender·logger·root 세 구성 요소",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/7bf67d1a-89ea-4535-9977-a49d1bbed328/image.png": {
+    "width": 371,
+    "height": 331,
+    "checkedAt": "2026-10-16",
+    "alt": "각 도메인 안에서는 높은 응집도를 유지하고 도메인 간에는 낮은 결합도를 유지하는 구조",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/ba984c4a-a891-45ed-887b-6a882b3d5a27/image.png": {
+    "width": 357,
+    "height": 279,
+    "checkedAt": "2026-10-16",
+    "alt": "두 사용자의 메시지가 서로 다른 수신자에게 전달되는 일반적인 종단 간 메시지 통신",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/a2f0c48f-2a5c-48c7-b5d5-77daaa0dc3b6/image.png": {
+    "width": 852,
+    "height": 666,
+    "checkedAt": "2026-10-16",
+    "alt": "Appender 인터페이스와 기반 클래스, ConsoleAppender·FileAppender·RollingFileAppender의 상속 관계",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/0829eeaf-27c7-4fa2-acf3-c686331e6005/image.png": {
+    "width": 483,
+    "height": 226,
+    "checkedAt": "2026-10-16",
+    "alt": "Java JMS 클라이언트와 JMS 서버의 요청·응답 큐, EJB 컨테이너의 MDB·웹 서비스 연결",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/d1387c54-abcb-4449-9611-629d7862d9ec/image.png": {
+    "width": 587,
+    "height": 384,
+    "checkedAt": "2026-10-16",
+    "alt": "한 소비자에게 분배하는 Queue와 구독자 각각에 전달하는 Topic의 메시지 전달 방식 비교",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/cb323070-2bd1-4b2b-8bc2-56ddd7c30382/image.png": {
+    "width": 1186,
+    "height": 438,
+    "checkedAt": "2026-10-16",
+    "alt": "Publisher의 메시지가 AMQP Exchange에서 라우팅되어 Queue를 거쳐 Consumer에 전달되는 RabbitMQ 구조",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/47ce972f-b97f-4377-912d-beb8417defe0/image.png": {
+    "width": 844,
+    "height": 504,
+    "checkedAt": "2026-10-16",
+    "alt": "blog/pages/posts/[id].tsx 파일을 사용하는 동적 라우트 폴더 구조 예",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/a7e08341-3a06-41e8-b597-2cadb209df28/image.png": {
+    "width": 1198,
+    "height": 298,
+    "checkedAt": "2026-10-16",
+    "alt": "app/blog/index.js 파일을 /blog 주소에 대응시킨 원문 이미지",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/3d6350c9-96ec-453b-986f-c0e1e0f07d38/image.png": {
+    "width": 1198,
+    "height": 280,
+    "checkedAt": "2026-10-16",
+    "alt": "pages/blog/index.js 파일을 /blog 주소에 대응시킨 원문 예",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/78fa62d7-d98c-4417-a7d4-1bdfc94ae396/image.png": {
+    "width": 699,
+    "height": 559,
+    "checkedAt": "2026-10-16",
+    "alt": "Producer·세 Kafka broker의 partition replica·Consumer·ZooKeeper를 연결한 Kafka 클러스터 구조",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/81fbe813-65f1-4688-969a-75aeead394b0/image.png": {
+    "width": 768,
+    "height": 249,
+    "checkedAt": "2026-10-16",
+    "alt": "pages/api 디렉터리를 /api 하위 경로에 대응시킨 예",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/4830e1b9-0a35-403b-a195-23ade30a5fef/image.png": {
+    "width": 944,
+    "height": 252,
+    "checkedAt": "2026-10-16",
+    "alt": "app/api/route.ts 파일을 /api 주소에 대응시킨 Route Handler 예",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/73c5c1e5-3ce0-42e5-8359-b760501b1eb8/image.png": {
+    "width": 809,
+    "height": 1260,
+    "checkedAt": "2026-10-16",
+    "alt": "app 폴더 아래 marketing·shop 라우트 그룹과 각 layout·page 파일 구조",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/db0a21fb-dbe0-4be6-baed-196570ee4086/image.png": {
+    "width": 1079,
+    "height": 252,
+    "checkedAt": "2026-10-16",
+    "alt": "app/items/route.ts 파일을 /items 주소에 대응시킨 Route Handler 예",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/da6cb1b9-6bd7-47dd-8e58-c390ebede5d3/image.png": {
+    "width": 1114,
+    "height": 601,
+    "checkedAt": "2026-10-16",
+    "alt": "Spring Boot 로그가 Kafka·Logstash·Elasticsearch를 거쳐 Kibana에 표시되는 로그 수집 구성",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/76e57fa8-3021-4279-a14a-c33d9cafd4b5/image.png": {
+    "width": 479,
+    "height": 428,
+    "checkedAt": "2026-10-16",
+    "alt": "Message-Oriented Middleware 안에 Message Queue가 있고 ActiveMQ·RabbitMQ·Kafka를 예로 든 포함 관계",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/dc48580e-c164-4c3c-bc0a-70f53771874d/image.png": {
+    "width": 2490,
+    "height": 2500,
+    "checkedAt": "2026-10-16",
+    "alt": "횃불 모양 Prometheus 로고",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/d46ca828-d05c-4430-87a5-ae8b521cdf05/image.png": {
+    "width": 212,
+    "height": 258,
+    "checkedAt": "2026-10-16",
+    "alt": "세로 막대 형태의 모니터링 도구 로고",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/62cbc414-2ff1-4948-8d9e-cce13e60ae73/image.png": {
+    "width": 556,
+    "height": 628,
+    "checkedAt": "2026-10-16",
+    "alt": "녹색 기둥 모양 AWS CloudWatch 로고",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/81f78e4c-5835-4f18-b3a3-fb77c4f1b290/image.png": {
+    "width": 1491,
+    "height": 651,
+    "checkedAt": "2026-10-16",
+    "alt": "CPU·부하 평균·JVM 힙·GC 사용량 그래프를 모은 Grafana 대시보드",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/24c27b4a-6e2d-467f-9975-59dfcf6f9b82/image.png": {
+    "width": 1566,
+    "height": 1668,
+    "checkedAt": "2026-10-16",
+    "alt": "수집 주기와 scrape_configs, localhost 수집 대상을 지정한 Prometheus YAML 설정 화면",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/255731bc-b263-41b7-b171-94a4242e557e/image.png": {
+    "width": 3000,
+    "height": 3335,
+    "checkedAt": "2026-10-16",
+    "alt": "주황색 나선 모양 Grafana 로고",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/c49118bd-12c9-4aa9-ba14-3efca1f29e93/image.png": {
+    "width": 1288,
+    "height": 884,
+    "checkedAt": "2026-10-16",
+    "alt": "Prometheus 실행 파일·설정 파일 경로와 재시작 정책을 지정한 systemd 서비스 설정",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://grepp-programmers.s3.ap-northeast-2.amazonaws.com/files/production/7eeef483-ac96-43ed-8453-2eae7a9589ee/bilex1.drawio%20%2815%29.png": {
+    "width": 420,
+    "height": 420,
+    "checkedAt": "2026-10-16",
+    "alt": "직사각형 당구대에서 공 A가 오른쪽 벽에 반사되어 목표 공에 닿는 경로",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/bf98c606-cce8-40b5-aecf-2dd60a73a11b/image.png": {
+    "width": 1488,
+    "height": 340,
+    "checkedAt": "2026-10-16",
+    "alt": "CPU 사용량과 JVM 버퍼·GC 지표가 HELP·TYPE 주석과 수치로 노출된 Prometheus 텍스트 형식",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://grepp-programmers.s3.ap-northeast-2.amazonaws.com/files/production/10b87f8d-9c76-4e38-acb9-457c5403150d/bilex1.drawio%20%2819%29.png": {
+    "width": 420,
+    "height": 420,
+    "checkedAt": "2026-10-16",
+    "alt": "공 A에서 왼쪽 위 목표 공을 향해 진행하는 직사각형 당구대 예시",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://grepp-programmers.s3.ap-northeast-2.amazonaws.com/files/production/abd94a34-92b4-4143-934c-4e2de3065558/ball1.png": {
+    "width": 401,
+    "height": 415,
+    "checkedAt": "2026-10-16",
+    "alt": "공 A (3,7)에서 윗벽에 반사되어 목표 공 (2,7)에 도달하는 경로",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://grepp-programmers.s3.ap-northeast-2.amazonaws.com/files/production/b6cbbb94-c530-4ce6-83bf-3340fe140b19/ball0.png": {
+    "width": 401,
+    "height": 415,
+    "checkedAt": "2026-10-16",
+    "alt": "공 A (3,7)에서 윗벽에 반사되어 목표 공 (7,7)에 도달하는 경로",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://grepp-programmers.s3.ap-northeast-2.amazonaws.com/files/production/752d0b95-856f-40fc-85a1-e39d207e0075/ball2.png": {
+    "width": 401,
+    "height": 415,
+    "checkedAt": "2026-10-16",
+    "alt": "공 A (3,7)에서 왼쪽 벽에 반사되어 목표 공 (7,3)에 도달하는 경로",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://user-images.githubusercontent.com/62426665/206862823-4633fbf1-c075-4d35-b577-26f504dcd332.png": {
+    "width": 406,
+    "height": 324,
+    "checkedAt": "2026-10-16",
+    "alt": "X와 숫자로 표시된 4행 5열 지도: X591X, X1X5X, X231X, 1XXX1",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://grepp-programmers.s3.ap-northeast-2.amazonaws.com/files/production/ce4fa289-79cf-423b-8f9c-57de0c3b642e/%EC%9E%85%EC%B6%9C%EB%A0%A5%20%EC%98%88%20%EC%84%A4%EB%AA%85.png": {
+    "width": 1270,
+    "height": 1237,
+    "checkedAt": "2026-10-16",
+    "alt": "원점 중심의 반지름 2와 3인 두 원과 그 사이 정수 좌표의 점을 표시한 그림",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://user-images.githubusercontent.com/62426665/209070615-ae568f20-cf06-4f88-8d4f-8e9861af2d36.png": {
+    "width": 408,
+    "height": 330,
+    "checkedAt": "2026-10-16",
+    "alt": "지도에서 연결된 섬의 식량 합을 27·1·1로 묶어 표시한 결과",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://user-images.githubusercontent.com/62426665/214443486-cb2b84a4-afc6-4b25-8da2-645a853859f1.png": {
+    "width": 928,
+    "height": 646,
+    "checkedAt": "2026-10-16",
+    "alt": "시작점은 왼쪽 위, 레버는 오른쪽 위, 출구는 오른쪽 아래에 있는 미로",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://user-images.githubusercontent.com/62426665/206863265-0a371c69-d4b5-411a-972f-bdc36b90c917.png": {
+    "width": 406,
+    "height": 406,
+    "checkedAt": "2026-10-16",
+    "alt": "모든 칸이 X인 3행 3열 무인도 지도",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://user-images.githubusercontent.com/62426665/214443892-1e7734e9-b4c8-49af-ba29-aa5597039617.png": {
+    "width": 926,
+    "height": 642,
+    "checkedAt": "2026-10-16",
+    "alt": "시작점은 오른쪽 위, 레버는 왼쪽 위, 출구는 왼쪽 아래에 있는 두 번째 미로",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://user-images.githubusercontent.com/62426665/207090680-93289071-da4f-4126-9c31-066c1d4d3802.png": {
+    "width": 406,
+    "height": 406,
+    "checkedAt": "2026-10-16",
+    "alt": "레버까지 경로의 거리를 0부터 16까지 칸마다 표시한 미로",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://user-images.githubusercontent.com/62426665/199907266-561e3b75-84eb-4da1-930c-a6ac8fa82a79.png": {
+    "width": 1404,
+    "height": 218,
+    "checkedAt": "2026-10-16",
+    "alt": "세 객실에 예약 시간을 배치한 타임라인: 1번 객실 1건, 2·3번 객실 각각 2건",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://grepp-programmers.s3.ap-northeast-2.amazonaws.com/files/production/9641b37b-9c9d-4eec-bd92-bec75acf2338/%EA%B7%B8%EB%A6%BC.png": {
+    "width": 3985,
+    "height": 1856,
+    "checkedAt": "2026-10-16",
+    "alt": "미사일 구간을 수평선으로, 요격 위치 세 곳을 수직 화살표로 표시한 수직선 그림",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/65308021-1af3-4263-a9a2-4173172a86a0/image.png": {
+    "width": 3758,
+    "height": 1118,
+    "checkedAt": "2026-10-16",
+    "alt": "가동 시간·메모리·파일 디스크립터와 CPU·메모리 그래프를 보여주는 Grafana 대시보드",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/0b536fd1-be0c-4feb-bc73-0ad2461f8d51/image.png": {
+    "width": 720,
+    "height": 422,
+    "checkedAt": "2026-10-16",
+    "alt": "Java 소스가 컴파일러를 거쳐 바이트코드가 되고 클래스 로더·인터프리터·JIT·JVM에서 실행되는 과정",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://velog.velcdn.com/images/kata/post/7c546db6-d584-493a-b609-f532c6070986/image.png": {
+    "width": 450,
+    "height": 249,
+    "checkedAt": "2026-10-16",
+    "alt": "리터럴 문자열은 String Pool을 공유하고 new String은 별도 객체를 만들어 참조 비교 결과가 달라지는 힙 구조",
+    "altReviewedAt": "2026-10-16"
+  },
+  "https://www.acmicpc.net/upload/images/ITVH9w1Gf6eCRdThfkegBUSOKd.png": {
+    "unavailable": true,
+    "reason": "Image URL returns text/html instead of image data",
+    "checkedAt": "2026-10-16",
+    "alt": "단지번호붙이기 문제의 원문 예시 이미지: 현재 원문 서버가 이미지 대신 HTML을 반환함",
+    "altReviewedAt": "2026-10-16"
+  }
+}

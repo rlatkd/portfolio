@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { Section } from '@/shared/ui/Section';
+import { projectResources } from '@/shared/data/project-resources';
 import { projects } from '@/shared/data/site-data';
 
 const imageSizes: Record<string, [number, number]> = {
@@ -36,19 +37,19 @@ function ClaudeMark({ size = 12 }: { size?: number }) {
 export default function Projects() {
   return (
     <Section id='projects' label='Side Projects'>
+      <p className='mb-5 text-sm text-muted'>프로젝트별 코드와 실행 문서, 결과 이미지를 확인할 수 있습니다. <a href='/evidence' className='text-accent underline'>성능 수치의 근거와 확인 범위</a></p>
       <div className='space-y-5'>
         {projects.map((p) => {
-          const Wrapper = p.href ? 'a' : 'div';
+          const resource = p.href ? projectResources[p.href] : undefined;
           return (
-            <Wrapper
+            <article
               key={p.title}
-              {...(p.href ? { href: p.href, target: '_blank', rel: 'noopener noreferrer' } : {})}
               className='group block rounded-lg border border-line bg-surface p-6 transition-colors hover:border-accent'
             >
               <div className='flex items-start justify-between gap-3'>
                 <div>
                   <h3 className='font-bold text-fg-strong group-hover:text-accent'>
-                    {p.title}
+                    {p.href ? <a href={p.href} target='_blank' rel='noopener noreferrer'>{p.title}</a> : p.title}
                     {p.href && (
                       <ArrowUpRight
                         size={16}
@@ -81,7 +82,7 @@ export default function Projects() {
 
                   <Image
                     src={p.image}
-                    alt={`${p.title} 메인 화면`}
+                    alt={`${p.title} 프로젝트 결과 미리보기`}
                     loading='lazy'
                     width={imageSizes[p.image]?.[0] || 1200}
                     height={imageSizes[p.image]?.[1] || 800}
@@ -95,6 +96,16 @@ export default function Projects() {
                 </div>
               )}
 
+              <div className='mt-4 flex flex-wrap gap-4 text-sm text-accent'>
+                {p.href && <>
+                <a href={p.href} target='_blank' rel='noopener noreferrer' className='underline'>소스 코드 <span className='sr-only'>{p.title}</span></a>
+                <a href={`${p.href}#readme`} target='_blank' rel='noopener noreferrer' className='underline'>설계 · 실행 문서 <span className='sr-only'>{p.title}</span></a>
+                </>}
+                {resource?.demo && <a href={resource.demo.href} target={resource.demo.href.startsWith('https:') ? '_blank' : undefined} rel='noopener noreferrer' className='underline'>{resource.demo.label} <span className='sr-only'>{p.title}</span></a>}
+                {resource?.architecture && <a href={resource.architecture} target='_blank' rel='noopener noreferrer' className='underline'>시스템 구조도 <span className='sr-only'>{p.title}</span></a>}
+                {p.image && <a href={p.image} target='_blank' rel='noopener noreferrer' className='underline'>결과 이미지 <span className='sr-only'>{p.title}</span></a>}
+              </div>
+              {resource?.note && <p className='mt-3 text-xs text-muted'>{resource.note}</p>}
               <div className='mt-4 flex flex-wrap gap-2'>
                 {p.tags.map((t) => (
                   <span
@@ -105,7 +116,7 @@ export default function Projects() {
                   </span>
                 ))}
               </div>
-            </Wrapper>
+            </article>
           );
         })}
       </div>

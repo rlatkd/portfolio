@@ -18,6 +18,7 @@ export default function Writing({ posts }: { posts: PostCardData[] }) {
         </Link>
       </div>
 
+      <p className='mb-4 text-sm text-muted'>추천 글 · 검색과 API, 배포 자동화에 관한 기록입니다.</p>
       <div className='space-y-4'>
         {posts.map((post) => (
           <PostCard key={post.slug} {...post} />
