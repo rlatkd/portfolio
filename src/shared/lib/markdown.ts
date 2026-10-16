@@ -30,6 +30,7 @@ async function readPosts(): Promise<Post[]> {
     const { metadata, content } = parseFrontmatter(await fs.readFile(path.join(directory, file), 'utf8'), file);
     const slug = path.basename(file, '.mdx').normalize('NFC');
     const source = (sources as Record<string, { url: string; updatedAt: string }>)[slug];
+    if (!source) throw new Error(`Missing source metadata (check filename case): ${file}`);
     return {
       metadata: {
         index: Number(metadata.index), title: metadata.title, category: metadata.category,

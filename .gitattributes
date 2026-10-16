@@ -1,3 +1,4 @@
 # 블로그 콘텐츠(MDX)는 언어 통계에서 제외
 *.mdx linguist-documentation=true
 *.mdx linguist-detectable=false
+*.mdx text eol=lf

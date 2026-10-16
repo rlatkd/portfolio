@@ -12,7 +12,7 @@ export function imageMetadata() {
       if (node.tagName === 'img') {
         const props = node.properties ||= {};
         const entry = (metadata as Record<string, { width?: number; height?: number; alt?: string }>)[String(props.src)];
-        props.alt ||= entry?.alt || `${context} 관련 원문 이미지 ${++index}`;
+        props.alt = entry?.alt || props.alt || `${context} 관련 원문 이미지 ${++index}`;
         props.loading = 'lazy';
         props.decoding = 'async';
         if (entry?.width && entry.height && !props.width && !props.height && !props.style) {

@@ -71,6 +71,13 @@ tests/         # 단위 테스트와 브라우저 테스트
 - 경력·프로젝트 정보: `src/shared/data/site-data.tsx`
 - 블로그 본문: `src/shared/content/posts/*.mdx`
 - 글 출처·수정일: `src/shared/content/velog-sources.json`
+- 홈 대표 글: `src/shared/config/writing.ts` (정확한 파일명 slug 사용, 누락 시 검증 실패)
+
+글 목록은 편집 순서인 `index` 내림차순이며, RSS는 발행일 내림차순입니다. 검색은 제목·요약·카테고리를 대상으로 합니다. 공개 이력서에 표시할 경력은 `showOnResume`으로 선택합니다. 전화번호와 자격 식별번호는 공개 데이터에 넣지 않습니다.
+
+`src/package.json`과 `tests/package.json`은 소스와 테스트를 ESM으로 명시합니다. ESM 전용 Markdown 의존성을 테스트에서 CommonJS로 변환하지 않도록 하며, 루트의 Next.js·Tailwind 설정은 기존 CommonJS를 유지합니다. Markdown 파일은 `.gitattributes`에서 LF 줄바꿈을 사용하도록 지정합니다.
+
+이전 소개 원본은 `docs/archive`에 보관합니다.
 
 블로그는 [직접 작성한 Velog 글](https://velog.io/@kata/posts)을 가져와 제공합니다. `.mdx` 확장자를 유지하되, 본문은 HTML과 GFM을 지원하는 Markdown으로 렌더링합니다.
 

@@ -12,15 +12,30 @@ import { getPostContents } from '../src/shared/markdown/postContents';
 import { highlightCode } from '../src/shared/markdown/highlight-code';
 import sources from '../src/shared/content/velog-sources.json';
 import descriptions from '../src/shared/content/seo-descriptions.json';
+import { featuredPostSlugs } from '../src/shared/config/writing';
+import { profile, certifications, experience, projects } from '../src/shared/data/site-data';
 
 const directory = path.join(process.cwd(), 'src/shared/content/posts');
+test('featured posts resolve exact filenames and public data excludes private identifiers', () => {
+  const slugs = fs.readdirSync(directory).filter(file => file.endsWith('.mdx')).map(file => file.slice(0, -4));
+  for (const slug of featuredPostSlugs) {
+    assert.ok(slugs.includes(slug), `Missing featured post: ${slug}`);
+    assert.ok(Object.hasOwn(sources, slug));
+  }
+  assert.ok(!Object.hasOwn(profile, 'mobile'));
+  for (const certificate of certifications) assert.match(certificate.id, /^[a-z-]+$/);
+  for (const items of [experience, projects, certifications]) {
+    assert.equal(new Set(items.map(item => item.id)).size, items.length);
+  }
+  assert.deepEqual(experience.filter(item => item.showOnResume).map(item => item.id), ['hyosung-fms', 'kosa-training', 'ssg-training']);
+});
 test('all Velog bodies remain unchanged and content files match the source manifest', () => {
   const files = fs.readdirSync(directory).filter(file => file.endsWith('.mdx')).map(file => path.basename(file, '.mdx').normalize('NFC')).sort();
   assert.deepEqual(files, Object.keys(sources).sort());
   assert.ok(files.length > 0);
   for (const [slug, source] of Object.entries(sources)) {
     const file = fs.readFileSync(path.join(directory, slug + '.mdx'), 'utf8');
-    const body = file.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '').trim();
+    const body = file.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '').replace(/\r\n/g, '\n').trim();
     assert.equal(createHash('sha256').update(body).digest('hex'), source.bodySha256, slug);
     assert.ok(Number.isFinite(Date.parse(source.updatedAt)), slug);
     assert.equal(new URL(source.url).hostname, 'velog.io');
@@ -73,7 +88,7 @@ test('TOC ignores code fences, uses heading text, and disambiguates duplicate he
 });
 
 test('image display metadata supplies context, dimensions and lazy loading without changing source', () => {
-  const source = '## Deployment\n\n![](https://velog.velcdn.com/images/kata/post/4039695f-ec35-43cf-882e-7a3a71671116/image.png)\n\n<img src="">';
+  const source = '## Deployment\n\n![image](https://velog.velcdn.com/images/kata/post/4039695f-ec35-43cf-882e-7a3a71671116/image.png)\n\n<img src="">';
   const html = renderToStaticMarkup(createElement(MdxRenderer, { source }));
   assert.ok(html.includes('alt="서버를 한 대씩 새 버전으로 교체하는 Rolling Update 네 단계"'));
   assert.ok(html.includes('loading="lazy"'));

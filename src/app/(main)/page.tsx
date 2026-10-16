@@ -8,6 +8,7 @@ import { getPosts } from '@/shared/lib/markdown';
 import { serializeJsonLd } from '@/shared/lib/seo';
 import { profile } from '@/shared/data/site-data';
 import { baseUrl, authorId } from '@/shared/config/site';
+import { featuredPostSlugs } from '@/shared/config/writing';
 
 export const revalidate = 86400;
 
@@ -17,8 +18,11 @@ export const metadata = {
 
 export default async function Page() {
   const posts = await getPosts();
-  const featured = ['Elasticsearch-1', 'GitLab-Runner를-이용한-CICD로-SpringBoot-EC2에-자동배포', 'graphql'];
-  const recent = featured.map(slug => posts.find(post => post.slug === slug)).filter((post): post is (typeof posts)[number] => !!post)
+  const recent = featuredPostSlugs.map(slug => {
+    const post = posts.find(post => post.slug === slug);
+    if (!post) throw new Error(`Featured post not found: ${slug}`);
+    return post;
+  })
     .map((p) => ({
       slug: p.slug,
       title: p.metadata.title ?? '',

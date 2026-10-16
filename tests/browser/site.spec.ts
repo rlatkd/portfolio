@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { baseUrl } from '../../src/shared/config/site';
-import sources from '../../src/shared/content/velog-sources.json';
+import sources from '../../src/shared/content/velog-sources.json' with { type: 'json' };
 
 test.beforeEach(async ({ context }) => {
   await context.route(/https:\/\/(?:[^/]+\.)?(?:google-analytics\.com|googletagmanager\.com|vercel-insights\.com)\//, route => route.abort());
@@ -11,6 +11,9 @@ test('home navigation, theme persistence and landmarks work without runtime erro
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/');
   await expect(page.locator('main')).toHaveCount(1);
+  await expect(page.locator('header a[aria-label="GitHub"] svg')).toBeVisible();
+  await expect(page.locator('header a[aria-label="LinkedIn"] svg')).toBeVisible();
+  await expect(page.locator('#writing a[href="/posts/graphql"]')).toBeVisible();
   await expect(page.locator('script[src*="googletagmanager.com/gtag/js"]')).toHaveCount(0);
   const toggle = page.getByRole('button', { name: '테마 전환' });
   await toggle.click();
@@ -68,7 +71,9 @@ test('TOC targets and clipboard preserve original Java operators', async ({ page
   const source = await page.locator('article pre code.language-java').textContent();
   expect(source).toContain('==');
   await page.locator('article').getByRole('button', { name: '코드 복사', exact: true }).last().click();
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(source);
+  // Windows clipboard converts LF to CRLF; operators and all other whitespace must match.
+  const copied = await page.evaluate(() => navigator.clipboard.readText());
+  expect(copied.replace(/\r\n/g, '\n')).toBe(source.replace(/\r\n/g, '\n'));
 });
 
 test('invalid URLs and retired comment endpoints return 404', async ({ request }) => {

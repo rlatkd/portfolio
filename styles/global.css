@@ -42,7 +42,6 @@
   --sh-property: #d19a66;
   --sh-entity: #61afef;
 
-  --carousel-width: 0px;
 }
 
 /* ───────────────────────── 시맨틱 토큰 (다크) ───────────────────────── */
@@ -227,35 +226,7 @@ table {
 .title { text-wrap: balance; }
 
 /* ───────────────────────── 유틸 / 애니메이션 ───────────────────────── */
-.font-serif-display { font-family: var(--font-serif); }
 .tracking-label { letter-spacing: 0.25em; }
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-in-up {
-  opacity: 0;
-  animation: fadeInUp 0.7s ease-out forwards;
-}
-
-@keyframes shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-.animate-shimmer { animation: shimmer 3s infinite linear; }
-
-@keyframes carouselScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-1 * var(--carousel-width))); }
-}
-
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-.delay-400 { animation-delay: 0.4s; }
-.delay-500 { animation-delay: 0.5s; }
 
 @media print {
   body { background: white; color: black; }

@@ -14,7 +14,7 @@ export default function Resume() {
     <p><a href={profile.github}>{profile.githubLabel}</a> · <a href={profile.velog}>{profile.velogLabel}</a></p>
     <p className='mt-6'>{aboutIntro[0]}</p>
     <h2 className='mb-4 mt-10 text-2xl font-bold'>경력 · 프로젝트 경험</h2>
-    {experience.slice(1, 4).map(item => <section key={item.role} className='mb-8'>
+    {experience.filter(item => item.showOnResume).map(item => <section key={item.id} className='mb-8'>
       <h3 className='text-lg font-bold'>{item.role}</h3><p className='text-sm text-muted'>{item.period} · {item.org}</p>
       <p className='mt-2'>{item.desc}</p><ul className='mt-2 list-disc pl-5'>{item.points.map(point => <li key={point}>{point}</li>)}</ul>
     </section>)}

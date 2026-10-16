@@ -43,7 +43,7 @@ export default function Projects() {
           const resource = p.href ? projectResources[p.href] : undefined;
           return (
             <article
-              key={p.title}
+              key={p.id}
               className='group block rounded-lg border border-line bg-surface p-6 transition-colors hover:border-accent'
             >
               <div className='flex items-start justify-between gap-3'>

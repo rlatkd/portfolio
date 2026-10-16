@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 
 const rootFlag = process.argv.indexOf('--content-root');
 const root = path.resolve(rootFlag === -1 ? 'src/shared/content' : process.argv[rootFlag + 1]);
-const hash = body => createHash('sha256').update(body.trim()).digest('hex');
+const hash = body => createHash('sha256').update(body.replace(/\r\n/g, '\n').trim()).digest('hex');
 const manifestPath = path.join(root, 'velog-sources.json');
 const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf8'));
 const apply = process.argv.includes('--apply');

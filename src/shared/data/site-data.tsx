@@ -1,13 +1,14 @@
-// 포트폴리오 콘텐츠: port/20260926/이력서_김상훈.html 및 사용자 확인 내용 기준.
+import type { PublicProfile, Experience, Project, Certification } from '@/shared/types/portfolio';
+
+// 포트폴리오 콘텐츠: port/main/이력서_김상훈.html 및 사용자 확인 내용 기준.
 // 업무 명칭·기간·수치는 이 파일에서 관리하고 기존 컴포넌트가 표시한다.
 
-export const profile = {
+export const profile: PublicProfile = {
   name: '김상훈',
   nameEn: 'Sanghun Kim',
   role: 'Financial Channel · Full-stack Engineer',
   intro: '데이터 정합성과 시스템 신뢰성을 먼저 두는\n금융 도메인 소프트웨어 엔지니어입니다.',
   email: 'rlatkdgns042@naver.com',
-  mobile: '+82 10-2627-0378',
   location: '대한민국 서울',
   github: 'https://github.com/rlatkd',
   githubLabel: 'github.com/rlatkd',
@@ -246,8 +247,10 @@ export const trackRecord = [
   },
 ];
 
-export const experience = [
+export const experience: Experience[] = [
   {
+    id: 'skku',
+    showOnResume: false,
     period: '2026.03 — 현재',
     role: '성균관대학교',
     org: '일반대학원 퀀트응용경제학과',
@@ -256,6 +259,8 @@ export const experience = [
     tags: ['계량경제', '머신러닝', '시계열 분석', 'Python'],
   },
   {
+    id: 'hyosung-fms',
+    showOnResume: true,
     period: '2024.09 — 현재',
     role: 'Full-stack Developer · 효성에프엠에스',
     org: '개발팀 (Application Platform) · 선임',
@@ -271,6 +276,8 @@ export const experience = [
     tags: ['Spring Boot', 'Spring Batch', 'Vue.js', 'Oracle'],
   },
   {
+    id: 'kosa-training',
+    showOnResume: true,
     period: '2024.02 — 2024.08',
     role: 'MSA Full Stack 개발 전문가 양성 과정',
     org: '한국소프트웨어산업협회 · 960h',
@@ -284,6 +291,8 @@ export const experience = [
     tags: ['Spring Boot', 'Kafka', 'ECS Fargate', 'ELK', 'GitHub Actions'],
   },
   {
+    id: 'ssg-training',
+    showOnResume: true,
     period: '2023.08 — 2024.02',
     role: '클라우드 엔지니어 양성 과정',
     org: '㈜신세계아이앤씨 · 920h',
@@ -296,6 +305,8 @@ export const experience = [
     tags: ['MSA', 'EKS', 'Argo CD', 'Terraform', 'React'],
   },
   {
+    id: 'khu',
+    showOnResume: false,
     period: '2018.03 — 2023.02',
     role: '경희대학교',
     org: '전자정보대학 생체의공학과',
@@ -304,6 +315,8 @@ export const experience = [
     tags: ['생체신호처리', 'CNN', 'MATLAB', '제어공학'],
   },
   {
+    id: 'hanseo',
+    showOnResume: false,
     period: '2015.03 — 2017.02',
     role: '한서항공직업전문학교',
     org: '항공정비과',
@@ -313,8 +326,9 @@ export const experience = [
   },
 ];
 
-export const projects = [
+export const projects: Project[] = [
   {
+    id: 'up-quant',
     title: '암호화폐 퀀트 분석 대시보드',
     context: '개인 프로젝트 · 2026',
     badge: 'Claude Code',
@@ -329,6 +343,7 @@ export const projects = [
     image: '/images/up-quant/preview.png',
   },
   {
+    id: 'portfolio',
     title: '포트폴리오',
     context: '개인 프로젝트 · 2025',
     points: [
@@ -341,6 +356,7 @@ export const projects = [
     image: '/images/portfolio/preview.png',
   },
   {
+    id: 'cms-plus',
     title: '자동 청구·결제 시스템',
     context: '팀 프로젝트 4인 · 아키텍트 · 2024',
     points: [
@@ -354,6 +370,7 @@ export const projects = [
     image: '/images/cms-plus/preview.jpg',
   },
   {
+    id: 'sale-sync',
     title: 'MSA 클라우드 POS',
     context: '팀 프로젝트 4인 · 2023.12–2024.02',
     points: [
@@ -366,6 +383,7 @@ export const projects = [
     image: '/images/sale-sync/preview.png',
   },
   {
+    id: 'liver-tumor-cnn',
     title: '간종양 CNN 분류 모델 비교',
     context: '학부 졸업논문 · 2022',
     points: [
@@ -377,6 +395,7 @@ export const projects = [
     image: '/images/liver-tumor-cnn/preview.png',
   },
   {
+    id: 'ct-image-reconstruction',
     title: 'CT 이미지 재구성',
     context: '학부 프로젝트 · 2022',
     points: [
@@ -500,18 +519,18 @@ export const awards = [
   },
 ];
 
-export const certifications = [
+export const certifications: Certification[] = [
   {
     name: '데이터분석 준전문가 (ADsP)',
     org: '한국데이터산업진흥원',
     date: '2025.06',
-    id: 'ADsP-045011461',
+    id: 'adsp',
   },
   {
     name: 'SQL 개발자 (SQLD)',
     org: '한국데이터산업진흥원',
     date: '2024.06',
-    id: 'SQLD-053001728',
+    id: 'sqld',
   },
 ];
 

@@ -18,13 +18,15 @@ test('Velog sync is read-only by default, preserves summaries and refuses local 
     const manifest = { first: { url: 'https://velog.io/@kata/first', publishedAt: '2024-01-01T00:00:00Z', updatedAt: '2024-01-01T00:00:00Z', bodySha256: digest('old body') } };
     fs.writeFileSync(path.join(root, 'velog-sources.json'), JSON.stringify(manifest));
     const input = path.join(root, 'remote.json');
-    fs.writeFileSync(input, JSON.stringify([{ id: '1', url_slug: 'first', title: 'Changed remote title', released_at: '2024-01-01T00:00:00Z', updated_at: '2024-02-01T00:00:00Z', body: 'new body', short_description: 'New summary' }]));
+    fs.writeFileSync(input, JSON.stringify([{ id: '1', url_slug: 'first', title: 'Changed remote title', released_at: '2024-01-01T00:00:00Z', updated_at: '2024-02-01T00:00:00Z', body: 'new body\nsecond line', short_description: 'New summary' }]));
     const run = (...args: string[]) => spawnSync(process.execPath, [script, '--content-root', root, '--input', input, ...args], { encoding: 'utf8' });
     assert.equal(run().status, 1);
     assert.equal(fs.readFileSync(file, 'utf8'), header + '\nold body\n');
     assert.equal(run('--apply').status, 0);
-    assert.equal(fs.readFileSync(file, 'utf8'), header + '\nnew body\n');
+    assert.equal(fs.readFileSync(file, 'utf8'), header + '\nnew body\nsecond line\n');
     assert.equal(run().status, 0);
+    fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace(/\n/g, '\r\n'));
+    assert.equal(run().status, 0, 'Windows line endings must not cause a content conflict');
     fs.writeFileSync(file, header + '\nlocal edit\n');
     assert.equal(run('--apply').status, 1);
     assert.equal(fs.readFileSync(file, 'utf8'), header + '\nlocal edit\n');

@@ -6,7 +6,7 @@ export default function Experience() {
     <Section id='experience' label='Experience'>
       <div className='space-y-10'>
         {experience.map((job) => (
-          <div key={job.role} className='flex flex-col gap-2 sm:flex-row sm:gap-6'>
+          <div key={job.id} className='flex flex-col gap-2 sm:flex-row sm:gap-6'>
             <div className='shrink-0 pt-1 text-xs text-muted sm:w-32'>{job.period}</div>
             <div className='flex-1'>
               <h3 className='font-bold text-fg-strong'>{job.role}</h3>
