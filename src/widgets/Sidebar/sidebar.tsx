@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { Mail, MapPin, Rss } from 'lucide-react';
 import { FiGithub, FiLinkedin } from 'react-icons/fi';
 import { profile, navItems } from '@/shared/data/site-data';
@@ -26,14 +26,51 @@ function VelogIcon({ size = 19 }: { size?: number }) {
   );
 }
 
+function sectionScrollTop(section: HTMLElement) {
+  const margin = parseFloat(getComputedStyle(section).scrollMarginTop) || 0;
+  const padding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+  const maximum = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+  return Math.min(maximum, Math.max(0, window.scrollY + section.getBoundingClientRect().top - margin - padding));
+}
+
 export default function Sidebar() {
   const [active, setActive] = useState('about');
+  const navigationTarget = useRef<{ id: string; top: number; arrived: boolean } | null>(null);
+
+  const navigateToSection = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const section = document.getElementById(id);
+    if (!section) return;
+
+    event.preventDefault();
+    const top = sectionScrollTop(section);
+    navigationTarget.current = { id, top, arrived: Math.abs(window.scrollY - top) <= 2 };
+    setActive(id);
+    if (window.location.hash !== `#${id}`) {
+      window.history.pushState(null, '', `#${id}`);
+    }
+    // Scroll the document explicitly, independently of the sticky sidebar's scroll container.
+    window.scrollTo({
+      top,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+    });
+  };
 
   useEffect(() => {
     const ids = navItems.map((n) => n.id);
     if (ids.length === 0) return;
 
     const updateActive = () => {
+      const target = navigationTarget.current;
+      if (target) {
+        const arrived = Math.abs(window.scrollY - target.top) <= 2;
+        if (!target.arrived || arrived) {
+          target.arrived = arrived;
+          setActive(target.id);
+          return;
+        }
+        navigationTarget.current = null;
+      }
       // 페이지 최하단 도달 시 마지막 섹션(Contact)을 강제로 활성화
       if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
         setActive(ids[ids.length - 1]);
@@ -61,10 +98,36 @@ export default function Sidebar() {
       });
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    updateActive(); // 초기 1회
+    const releaseNavigation = () => {
+      navigationTarget.current = null;
+      updateActive();
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) releaseNavigation();
+    };
+    const onHashChange = () => {
+      const id = window.location.hash.slice(1);
+      const section = ids.includes(id) ? document.getElementById(id) : null;
+      navigationTarget.current = section ? { id, top: sectionScrollTop(section), arrived: false } : null;
+      updateActive();
+    };
 
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('wheel', releaseNavigation, { passive: true });
+    window.addEventListener('touchstart', releaseNavigation, { passive: true });
+    window.addEventListener('pointerdown', releaseNavigation, { passive: true });
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('hashchange', onHashChange);
+    onHashChange();
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('wheel', releaseNavigation);
+      window.removeEventListener('touchstart', releaseNavigation);
+      window.removeEventListener('pointerdown', releaseNavigation);
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('hashchange', onHashChange);
+    };
   }, []);
 
   const socials = [
@@ -92,7 +155,7 @@ export default function Sidebar() {
               const on = active === item.id;
               return (
                 <li key={item.id}>
-                  <a href={`/#${item.id}`} aria-current={on ? 'location' : undefined} className='group flex items-center py-2'>
+                  <a href={`/#${item.id}`} onClick={event => navigateToSection(event, item.id)} aria-current={on ? 'location' : undefined} className='group flex items-center py-2'>
                     <span
                       className={`mr-4 h-px transition-all ${
                         on ? 'w-14 bg-accent' : 'w-8 bg-muted group-hover:w-14 group-hover:bg-fg'
