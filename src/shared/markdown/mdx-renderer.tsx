@@ -31,7 +31,7 @@ export function MdxRenderer({ source }: { source: string }) {
         img: ({ node, ...props }) => {
           if (!props.src) return null;
           const entry = (images as Record<string, { unavailable?: boolean }>)[String(props.src)];
-          if (entry?.unavailable) return <span className='text-sm text-muted'>[{props.alt}: 원문 이미지 서버에서 이미지를 제공하지 않습니다. 아래 Velog 원문 링크에서 확인해 주세요.]</span>;
+          if (entry?.unavailable) return <span className='text-sm text-muted'>[{props.alt}: 이미지 서버에서 이미지를 제공하지 않습니다.]</span>;
           return <img {...props} />;
         },
         a: ({ node, ...props }) => <Linker {...props} />,

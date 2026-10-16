@@ -186,10 +186,16 @@ export default function Sidebar() {
             <Mail size={15} />
             {profile.email}
           </a>
-          <div className='flex items-center gap-3 text-sm text-muted'>
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(profile.location)}`}
+            target='_blank'
+            rel='noopener noreferrer'
+            aria-label={`${profile.location} 지도 보기 (새 탭)`}
+            className='flex items-center gap-3 text-sm text-muted transition-colors hover:text-accent'
+          >
             <MapPin size={15} />
             {profile.location}
-          </div>
+          </a>
         </div>
 
         <div className='mt-6 flex items-center gap-5'>

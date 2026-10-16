@@ -6,10 +6,10 @@ import type { PublicProfile, Experience, Project, Certification } from '@/shared
 export const profile: PublicProfile = {
   name: '김상훈',
   nameEn: 'Sanghun Kim',
-  role: 'Financial Channel · Full-stack Engineer',
+  role: 'Software Engineer',
   intro: '데이터 정합성과 시스템 신뢰성을 먼저 두는\n금융 도메인 소프트웨어 엔지니어입니다.',
   email: 'rlatkdgns042@naver.com',
-  location: '대한민국 서울',
+  location: '대한민국 서울특별시 성동구',
   github: 'https://github.com/rlatkd',
   githubLabel: 'github.com/rlatkd',
   linkedin: 'https://linkedin.com/in/sanghunkim96',
@@ -250,7 +250,6 @@ export const trackRecord = [
 export const experience: Experience[] = [
   {
     id: 'skku',
-    showOnResume: false,
     period: '2026.03 — 현재',
     role: '성균관대학교',
     org: '일반대학원 퀀트응용경제학과',
@@ -260,7 +259,6 @@ export const experience: Experience[] = [
   },
   {
     id: 'hyosung-fms',
-    showOnResume: true,
     period: '2024.09 — 현재',
     role: 'Full-stack Developer · 효성에프엠에스',
     org: '개발팀 (Application Platform) · 선임',
@@ -277,7 +275,6 @@ export const experience: Experience[] = [
   },
   {
     id: 'kosa-training',
-    showOnResume: true,
     period: '2024.02 — 2024.08',
     role: 'MSA Full Stack 개발 전문가 양성 과정',
     org: '한국소프트웨어산업협회 · 960h',
@@ -292,7 +289,6 @@ export const experience: Experience[] = [
   },
   {
     id: 'ssg-training',
-    showOnResume: true,
     period: '2023.08 — 2024.02',
     role: '클라우드 엔지니어 양성 과정',
     org: '㈜신세계아이앤씨 · 920h',
@@ -306,7 +302,6 @@ export const experience: Experience[] = [
   },
   {
     id: 'khu',
-    showOnResume: false,
     period: '2018.03 — 2023.02',
     role: '경희대학교',
     org: '전자정보대학 생체의공학과',
@@ -316,7 +311,6 @@ export const experience: Experience[] = [
   },
   {
     id: 'hanseo',
-    showOnResume: false,
     period: '2015.03 — 2017.02',
     role: '한서항공직업전문학교',
     org: '항공정비과',

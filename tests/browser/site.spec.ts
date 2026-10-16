@@ -91,7 +91,7 @@ test('invalid URLs and retired comment endpoints return 404', async ({ request }
 test('sitemap, RSS, OG and optimized images are served successfully', async ({ request }) => {
   const sitemap = await request.get('/sitemap.xml');
   expect(sitemap.status()).toBe(200);
-  expect((await sitemap.text()).match(/<loc>/g)).toHaveLength(Object.keys(sources).length + 5);
+  expect((await sitemap.text()).match(/<loc>/g)).toHaveLength(Object.keys(sources).length + 3);
   const rss = await request.get('/rss');
   expect(rss.status()).toBe(200);
   expect((await rss.text()).match(/<item>/g)).toHaveLength(Object.keys(sources).length);
@@ -127,7 +127,7 @@ test('theme remains usable when browser storage is unavailable', async ({ page }
 });
 
 
-test('search, resume, privacy and short-screen readability work', async ({ page, context }) => {
+test('search, contact, privacy and short-screen readability work', async ({ page, context, request }) => {
   await page.goto('/posts');
   await page.getByRole('searchbox', { name: '글 검색' }).fill('Elasticsearch');
   await page.getByRole('button', { name: '검색', exact: true }).click();
@@ -143,11 +143,9 @@ test('search, resume, privacy and short-screen readability work', async ({ page,
   await page.evaluate(() => { navigator.clipboard.writeText = async () => { throw new Error('denied'); }; });
   await page.getByRole('button', { name: '이메일 복사', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('이메일을 선택해 복사');
-  await page.goto('/resume');
-  await expect(page.getByRole('button', { name: '인쇄 · PDF로 저장' })).toBeVisible();
-  await page.emulateMedia({ media: 'print' });
-  await expect(page.getByRole('button', { name: '인쇄 · PDF로 저장' })).toBeHidden();
-  await page.emulateMedia({ media: 'screen' });
+  await expect(page.locator('a[href="/resume"]')).toHaveCount(0);
+  expect((await request.get('/resume')).status()).toBe(404);
+  expect(await (await request.get('/sitemap.xml')).text()).not.toContain('/resume');
   await page.goto('/privacy');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('방문 분석');
   await page.setViewportSize({ width: 1600, height: 720 });
@@ -162,16 +160,26 @@ test('search, resume, privacy and short-screen readability work', async ({ page,
   await expect(page.locator('header').getByRole('link', { name: 'RSS', exact: true })).toBeVisible();
 });
 
-test('project verification links, reviewed image descriptions and benchmark artifact are served', async ({ page, request }) => {
+test('project cards link to GitHub, reviewed image descriptions and benchmark artifact are served', async ({ page, request }) => {
   await page.goto('/');
   const projects = page.locator('#projects');
-  await expect(projects.getByRole('link', { name: /주문 등록 시연 GIF/ })).toHaveAttribute('href', /orderAdd\.gif$/);
-  await expect(projects.getByRole('link', { name: /시스템 구조도/ })).toHaveAttribute('href', /system-architecture\.png$/);
+  const projectCards = projects.locator(':scope > div > a');
+  await expect(projectCards).toHaveCount(5);
+  for (const card of await projectCards.all()) {
+    await expect(card).toHaveAttribute('href', /^https:\/\/github\.com\/rlatkd\//);
+    await expect(card).toHaveAttribute('target', '_blank');
+    await expect(card.locator('img')).toHaveCount(1);
+  }
+  await expect(projects.getByRole('link', { name: /소스 코드|설계 · 실행 문서|결과 이미지|시연 GIF|시스템 구조도/ })).toHaveCount(0);
   expect(await projects.locator('a a').count()).toBe(0);
   await page.goto('/posts/Deployment');
+  await expect(page.getByRole('link', { name: 'Velog 원문 보기' })).toHaveCount(0);
+  await expect(page.getByText('원문 수정일')).toHaveCount(0);
   await expect(page.locator('article img').first()).toHaveAttribute('alt', /In-place 배포 흐름/);
-  await page.goto('/evidence');
-  await expect(page.getByRole('heading', { name: '실제 상관 분석 함수의 별도 오프라인 실험' })).toBeVisible();
+  const removedPage = await request.get('/evidence');
+  expect(removedPage.status()).toBe(404);
+  const sitemap = await request.get('/sitemap.xml');
+  expect(await sitemap.text()).not.toContain('/evidence');
   const response = await request.get('/reports/upquant-correlation.json');
   expect(response.status()).toBe(200);
   const report = await response.json();

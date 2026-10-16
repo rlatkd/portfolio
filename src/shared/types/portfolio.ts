@@ -15,7 +15,6 @@ export type PublicProfile = {
 
 export type Experience = {
   id: string;
-  showOnResume: boolean;
   period: string;
   role: string;
   org: string;

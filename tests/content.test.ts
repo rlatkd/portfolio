@@ -27,7 +27,6 @@ test('featured posts resolve exact filenames and public data excludes private id
   for (const items of [experience, projects, certifications]) {
     assert.equal(new Set(items.map(item => item.id)).size, items.length);
   }
-  assert.deepEqual(experience.filter(item => item.showOnResume).map(item => item.id), ['hyosung-fms', 'kosa-training', 'ssg-training']);
 });
 test('all Velog bodies remain unchanged and content files match the source manifest', () => {
   const files = fs.readdirSync(directory).filter(file => file.endsWith('.mdx')).map(file => path.basename(file, '.mdx').normalize('NFC')).sort();

@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { CopyEmail } from '@/features/CopyEmail/CopyEmail';
 import { Send } from 'lucide-react';
 import { Section } from '@/shared/ui/Section';
@@ -23,7 +22,6 @@ export default function Contact() {
         <Send size={15} />
         이메일 보내기
       </a>
-      <Link href="/resume" className="ml-4 inline-block py-3 text-accent underline">이력서 보기 · PDF 저장</Link>
       <CopyEmail email={profile.email} />
     </Section>
   );
