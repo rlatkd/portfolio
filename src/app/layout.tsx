@@ -1,9 +1,10 @@
-import '/styles/global.css';
+import '@/styles/global.css';
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { themeEffect } from '@/features/ThemeToggle/lib/themeEffect';
 import { baseUrl } from '@/app/sitemap';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <Analytics />
           <SpeedInsights />
         </main>
+        <GoogleAnalytics gaId="G-8ZK16NWL6K" />
       </body>
     </html>
   );

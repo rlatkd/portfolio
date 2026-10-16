@@ -1,4 +1,3 @@
-import '/styles/global.css';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { ThemeToggle } from '@/features/ThemeToggle/ThemeToggle';

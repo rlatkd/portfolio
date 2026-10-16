@@ -1,4 +1,3 @@
-import '/styles/global.css';
 import Sidebar from '@/widgets/Sidebar/sidebar';
 import Footer from '@/widgets/Footer/footer';
 import ScrollToTop from '@/shared/ui/scroll-to-top';
