@@ -1,0 +1,6 @@
+/* 데모 전용 — 라벨용 이탤릭 세리프 (본문은 Pretendard 유지) */
+.serif {
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}

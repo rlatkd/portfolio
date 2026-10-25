@@ -1,5 +1,4 @@
 import Sidebar from '@/widgets/Sidebar/sidebar';
-import Footer from '@/widgets/Footer/footer';
 import ScrollToTop from '@/shared/ui/scroll-to-top';
 
 type LayoutProps = {
@@ -9,12 +8,11 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   return (
     <>
-      {/* w-full: 루트 main(flex-col)에서 mx-auto가 stretch를 무효화해 모바일에서 min-content 폭으로 커지는 것 방지 */}
-      <div className='mx-auto w-full max-w-6xl px-6 md:px-12 lg:flex lg:justify-between lg:gap-16 lg:px-16'>
+      {/* 왼쪽 고정 소개(42%) · 오른쪽 본문(52%) */}
+      <div className='mx-auto w-full max-w-[1152px] px-6 md:px-12 lg:grid lg:grid-cols-[42%_52%] lg:justify-between [overflow-wrap:break-word] [word-break:keep-all]'>
         <Sidebar />
-        <main id='main-content' className='min-w-0 lg:w-[52%]'>{children}</main>
+        <main id='main-content' className='min-w-0 pt-14 lg:pb-16 lg:pt-24'>{children}</main>
       </div>
-      <Footer />
       <ScrollToTop />
     </>
   );

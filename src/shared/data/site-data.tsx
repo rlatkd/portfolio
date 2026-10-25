@@ -19,12 +19,18 @@ export const profile: PublicProfile = {
 };
 
 export const aboutIntro = [
-  '2024년 9월부터 효성에프엠에스에서 계약·결제·정산 서비스를 고객사에 제공하는 채널 계층을 개발하고 있습니다. Spring Boot와 Vue.js를 사용하는 풀스택 웹 개발자입니다.',
-  'CMS+를 포함한 6개 서비스를 유지보수하며 전자계약과 Branch Manager 신규 구축에 참여했습니다. 2025년 10월부터는 CMS+와 Ibill의 배치 모니터링·VoC 대응 등 운영 업무도 함께 맡고 있습니다.',
-  '2026년 8월부터는 교육비 수납 플랫폼 Ibill의 오너를 맡고 있습니다. 요구사항을 도메인과 시스템 관점에서 검토해 기존 기능 개선·신규 개발·보류 여부를 결정하고, 운영 이슈는 원인 분석부터 구현·배포까지 직접 처리합니다.',
-  '외부 연동과 배치를 운영하며 결제·정산 데이터의 불일치, 응답 지연, 실패 청구의 상태 보정 문제를 다뤘습니다. 기존 시스템의 제약과 처리 방식을 확인하고, 수정할 범위를 정해 개선해 왔습니다.',
-  '지금은 결제 요청 이력과 처리 결과를 분리하고, 처리 여부가 불확실한 요청도 추적할 수 있는 구조를 고민하고 있습니다. 멱등성을 보장해 안전하게 재시도하는 방식에 관심이 있습니다.',
+  '청구·결제·정산 기능을 고객사에 제공하는 채널 계층을 개발하고 운영합니다. 외부 시스템의 제약 안에서 처리 흐름을 분석하고 데이터가 어긋나는 이유를 찾아 개선해 왔습니다.',
+  '개발 업무와 성균관대학교 퀀트응용경제학 석사 과정을 병행하고 있습니다. 계량경제·시계열 분석·머신러닝을 공부하며 금융 데이터를 분석하는 역량을 쌓고 있습니다.',
 ];
+
+// 회사 제목 아래에 직함처럼 표시하는 역할 (최신순)
+export const jobRoles = [
+  { period: '2026.08 —', text: 'iBill 오너 · 요구사항 검토·개선 결정과 운영 이슈 분석·해결' },
+  { period: '2025.10 —', text: '운영 겸무 · CMS+·iBill 배치 모니터링과 VoC 대응' },
+];
+
+// About 문단에서 진하게 표시할 고유명사
+export const aboutKeyTerms = ['채널 계층을 개발하고 운영', '외부 시스템의 제약 안에서 처리 흐름을 분석', '데이터가 어긋나는 이유를 찾아 개선'];
 
 export const aboutQuote = {
   text: '직접 수정할 수 없는 외부 시스템과 연동하며 문제를 해결해 왔습니다.\n데이터 정합성과 안전한 실패 처리를 중요하게 생각합니다.',
@@ -40,7 +46,7 @@ export const careerServices = [
     kind: '통합 PG',
   },
   {
-    name: 'Ibill',
+    name: 'iBill',
     kind: '교육비 수납',
   },
   {
@@ -64,17 +70,26 @@ export const careerServices = [
 // 실무 프로젝트 (효성에프엠에스)
 export const careerProjects = [
   {
-    name: '전자계약',
-    kind: 'CMS+ 비대면 계약 체결 경로 신규 구축',
-  },
-  {
     name: 'Branch Manager',
     kind: '대형 유통기업 전용 B2B 플랫폼 신규 구축',
+    period: '2026.05 — 2026.10',
+    team: '개발 4 · 기획 1 · 영업 1',
+    role: '조직도·회원·사용자·결제·정산 다섯 도메인 중 결제·정산 채널의 백엔드·프론트엔드 담당. 원장을 API로만 조회하는 환경에서 계정계와 조회 스펙을 협의하고, 고객사별 조직 계층 깊이가 달라도 로직을 재사용하도록 계층별 처리를 분리했습니다.',
+    tags: ['Spring Boot', 'Vue.js'],
+  },
+  {
+    name: '전자계약',
+    kind: 'CMS+ 비대면 계약 체결 경로 신규 구축',
+    period: '2024.09 — 2025.06',
+    team: '개발 2 · 기획 1 · 영업 1 + 파트너사 개발 3',
+    role: '화면과 파트너 연동 구현을 분담하고 기획·스펙 협의에 참여했습니다. 서명 완료 콜백부터 원본 보관·자동이체 등록까지 이어지는 흐름을 구현했고, 이용 규모는 누적 20건에서 5,000건으로 늘었습니다.',
+    tags: ['Spring Boot', 'Vue.js', '외부 전자서명 API'],
   },
 ];
 
 export type Strength = {
   title: string;
+  outcome: string;
   points: string[];
   result: string[];
   tags: string[];
@@ -94,6 +109,7 @@ export type Strength = {
 export const strengths: Strength[] = [
   {
     title: '공유 조회 API 확장을 통한 결제·정산 데이터 정합성 확보',
+    outcome: '동일 유형 VoC 월 3건 해소',
     points: [
       '결제·정산 테이블을 대조해 결제수단별 조회 대상과 기준일의 차이를 확인',
       '선택적 파라미터와 제외 상태 코드를 스펙으로 정리해 공유 API 확장을 협의',
@@ -115,6 +131,7 @@ export const strengths: Strength[] = [
   },
   {
     title: '응답 크기 제어를 통한 정산대상 결제내역 대량 엑셀 추출',
+    outcome: '15만 건 · 8분 내 추출',
     points: [
       '대량 조회 시 DB는 정상이고 애플리케이션 서버가 종료되는 현상에 주목',
       '1,000건 단위 순차 조회와 SXSSF 스트리밍으로 한 번에 처리할 데이터양 제한',
@@ -136,6 +153,7 @@ export const strengths: Strength[] = [
   },
   {
     title: 'CMS 결제 요청 실패 청구의 상태 고착 해소 및 실패 보정 자동화',
+    outcome: '실패 청구 자동 보정',
     points: [
       '전송 전에 결제중으로 바꾸는 기존 순서를 유지하고 실패 보정 추가',
       '당일 전송 종료 후 고객 관리 시스템의 현재 서비스 상태를 일괄 조회',
@@ -145,7 +163,7 @@ export const strengths: Strength[] = [
     tags: ['Spring Batch', '청구 상태 보정', '외부 시스템 연동'],
     detail: {
       period: '2026.02 · 효성에프엠에스 CMS+',
-      summary: '고착 청구 약 2만 건 보정 · 이중 출금 방지 구조를 유지하며 실패 보정 자동화',
+      summary: '이중 출금 방지 구조를 유지하며 실패 청구 보정 자동화 · 과거 고착 청구 약 2만 건 일괄 보정',
       context: 'CMS 결제 요청 배치는 매일 17시 30분에 실행되며, 결제예정일이 익영업일인 청구를 수집해 계정계로 전송합니다. 대기 상태인 청구를 선정한 뒤, API 호출 결과를 받기 전에 청구상태를 결제중으로 바꿉니다. 송신 성공 여부는 별도의 결제송신요청 플래그에 기록하며, 계정계 응답을 받은 뒤에만 Y로 갱신합니다. 2영업일 뒤 결과 수신 배치는 결제일이 전영업일이고 청구상태가 결제중이며 결제송신요청이 Y인 건에 결과를 매칭합니다.',
       problem: '전송에 실패한 청구도 상태를 되돌리지 않아 결제중 상태에서 더 이상 처리되지 않는 문제가 있었습니다. 고객사의 서비스 상태가 이용중지·해지예정·해지이면 계정계는 예외를 반환합니다. 기존 배치는 예외만 기록하고 원인 확인이나 상태 보정을 하지 않았습니다. 이미 결제중으로 변경됐지만 송신에 실패해 결과 수신 대상에도 포함되지 않으므로, 후속 배치로도 상태가 바뀌지 않았습니다. 결제중인 청구는 삭제할 수 없어, 고객사가 서비스를 다시 이용하려 해도 과거 청구를 정리하지 못했습니다. 운영 담당자가 프로덕션 DB에서 상태를 직접 변경해야 했으며, 이렇게 쌓인 청구가 약 2만 건이었습니다.',
       constraint: '수년간 운영된 핵심 출금 배치로, 변경이 실제 납부자 계좌에 영향을 줄 수 있어 수정 범위를 제한해야 했습니다. 계정계는 서비스 상태로 인한 거부와 네트워크 오류를 동일한 예외로 반환하므로, 예외만으로 실패 원인을 구분할 수 없었습니다.',
@@ -157,6 +175,7 @@ export const strengths: Strength[] = [
   },
   {
     title: '외부 연동 실패 메시지의 노출 차단 및 실패 알림 자동화',
+    outcome: '동일 유형 VoC 월 10건 해소',
     points: ['AOP로 단건 외부 연동 호출의 실패 처리 공통화', '원본 예외는 로그에 남기고 고객사 화면에는 안내 문구 표시', '발생 시각·대상·호출 API·오류 내용을 운영 담당자에게 문자로 전달'],
     result: ['월 10건 규모의 동일 유형 VoC와 비고 수기 수정 해소', '고객사 문의 전에 시스템 알림으로 실패 인지'],
     tags: ['Spring AOP', '오류 메시지 처리', '운영 알림'],
@@ -193,7 +212,7 @@ export const trackRecord = [
   {
     period: '2026.04',
     title: 'SMS 발송·원생 신규 등록 시 불필요한 예약어 검증 제거',
-    service: 'Ibill',
+    service: 'iBill',
   },
   {
     period: '2026.02',
@@ -253,7 +272,7 @@ export const experience: Experience[] = [
     period: '2026.03 — 현재',
     role: '성균관대학교',
     org: '일반대학원 퀀트응용경제학과',
-    desc: '개발 업무와 퀀트응용경제학과 석사 과정을 병행하고 있습니다. 계량경제와 금융 데이터 분석을 공부하며 개인 프로젝트에 적용하고 있습니다.',
+    desc: '개발 업무와 퀀트응용경제학과 석사 과정을 병행하고 있습니다. 계량경제·시계열 분석·머신러닝을 공부하며 금융 데이터를 분석하는 역량을 쌓고 있습니다.',
     points: ['계량경제이론·시계열 분석·머신러닝을 통한 금융 데이터 분석 학습', '암호화폐 대시보드에서 시장 국면·자산 간 상관관계·포트폴리오 최적화와 전략 검증 구현'],
     tags: ['계량경제', '머신러닝', '시계열 분석', 'Python'],
   },
@@ -262,16 +281,16 @@ export const experience: Experience[] = [
     period: '2024.09 — 현재',
     role: 'Full-stack Developer · 효성에프엠에스',
     org: '개발팀 (Application Platform) · 선임',
-    desc: '계약·결제·정산 기능을 고객사에 제공하는 채널의 백엔드·프론트엔드 개발과 운영을 담당합니다. CMS+를 포함한 6개 서비스를 유지보수하며 외부 연동, 배치, 데이터 정합성 문제를 다룹니다.',
+    desc: '청구·결제·정산 기능을 고객사에 제공하는 채널의 백엔드·프론트엔드 개발과 운영을 담당합니다. CMS+를 포함한 6개 서비스를 유지보수하며 외부 연동, 배치, 데이터 정합성 문제를 다룹니다.',
     points: [
-      '2025.10부터 CMS+·Ibill의 배치 모니터링과 VoC 대응을 개발 업무와 병행',
-      '2026.08부터 Ibill 오너로 요구사항을 검토해 개선·신규 개발·보류 여부를 결정하고 운영 이슈를 분석부터 배포까지 처리',
+      '2025.10부터 CMS+·iBill의 배치 모니터링과 VoC 대응을 개발 업무와 병행',
+      '2026.08부터 iBill 오너로 요구사항을 검토해 개선·신규 개발·보류 여부를 결정하고 운영 이슈를 분석부터 배포까지 처리',
       '전자계약 (2024.09–2025.06): 개발 2명으로 화면·파트너 연동 구현을 분담하고 기획·스펙 협의에 참여 (기획 1·영업 1, 파트너사 개발 3)',
       '전자계약의 개별 발송·링크 서명과 콜백 후 수납 등록 흐름 구현, 이용 규모 누적 20건에서 5,000건으로 증가',
-      'Branch Manager (2026.05–현재): 개발 4·기획 1·영업 1의 팀에서 결제·정산 채널의 백엔드·프론트엔드 담당',
+      'Branch Manager (2026.05–2026.10): 개발 4·기획 1·영업 1의 팀에서 결제·정산 채널의 백엔드·프론트엔드 담당',
       '계정계 조회 스펙 협의와 고객사별 조직 계층을 고려한 도메인·계층별 처리 분리',
     ],
-    tags: ['Spring Boot', 'Spring Batch', 'Vue.js', 'Oracle'],
+    tags: ['Spring Boot', 'Vue.js', 'Oracle'],
   },
   {
     id: 'kosa-training',
@@ -292,7 +311,7 @@ export const experience: Experience[] = [
     period: '2023.08 — 2024.02',
     role: '클라우드 엔지니어 양성 과정',
     org: '㈜신세계아이앤씨 · 920h',
-    desc: '4인 팀으로 매장·상품·주문·매출을 관리하는 MSA 클라우드 POS를 개발했습니다. AWS 배포와 서비스별 데이터 분리, 배포 자동화·로그·메트릭 관리 환경을 구성했습니다.',
+    desc: '4인 팀으로 매장·상품·주문·매출을 관리하는 MSA 기반 웹 POS 서비스를 개발했습니다. AWS 배포와 서비스별 데이터 분리, 배포 자동화·로그·메트릭 관리 환경을 구성했습니다.',
     points: [
       '서비스별 DB 분리와 EKS 배포, Kafka 기반 비동기 통신 구성',
       'GitHub Actions·Argo CD 배포와 Terraform 인프라 구성',
@@ -323,6 +342,7 @@ export const experience: Experience[] = [
 export const projects: Project[] = [
   {
     id: 'up-quant',
+    summary: '시장 분석·포트폴리오 구성·전략 검증을 연결한 개인 프로젝트입니다. Python·FastAPI로 개발하고 AWS 배포와 CI/CD를 구성했습니다.',
     title: '암호화폐 퀀트 분석 대시보드',
     context: '개인 프로젝트 · 2026',
     badge: 'Claude Code',
@@ -338,6 +358,7 @@ export const projects: Project[] = [
   },
   {
     id: 'portfolio',
+    summary: 'Next.js App Router 기반 포트폴리오와 Markdown 기술 블로그입니다. DB 없이 파일 기반 콘텐츠를 제공하고 SEO와 콘텐츠 검증을 자동화했습니다.',
     title: '포트폴리오',
     context: '개인 프로젝트 · 2025',
     points: [
@@ -351,6 +372,7 @@ export const projects: Project[] = [
   },
   {
     id: 'cms-plus',
+    summary: '4인 교육 팀 프로젝트에서 아키텍처·인프라 설계와 결제·상품·배치 개발을 맡았습니다. Kafka 부하 테스트로 5만 건 처리 시간을 12초에서 7초로 줄였습니다.',
     title: '자동 청구·결제 시스템',
     context: '팀 프로젝트 4인 · 아키텍트 · 2024',
     points: [
@@ -361,12 +383,13 @@ export const projects: Project[] = [
     ],
     tags: ['React', 'Spring Boot', 'Spring Batch', 'Kafka', 'ECS Fargate', 'ELK'],
     href: 'https://github.com/rlatkd/cms-plus',
-    image: '/images/cms-plus/preview.jpg',
+    image: '/images/cms-plus/screen.png',
   },
   {
     id: 'sale-sync',
-    title: 'MSA 클라우드 POS',
-    context: '팀 프로젝트 4인 · 2023.12–2024.02',
+    summary: '매장·상품·주문·매출을 서비스별로 분리한 4인 교육 팀 프로젝트입니다. 서비스별 DB 분리와 Kafka 기반 비동기 통신을 구성했습니다.',
+    title: 'MSA 기반 웹 POS 서비스',
+    context: '팀 프로젝트 4인 · 프론트엔드 리드 · 2024',
     points: [
       '매장·상품·주문·매출·대시보드·컨설팅을 서비스별로 분리한 웹 POS입니다. 각 서비스의 DB를 분리하고 AWS EKS에 배포했습니다.',
       'GitHub Actions에서 이미지를 빌드해 ECR에 저장하고 Argo CD로 배포했습니다. Terraform으로 인프라를 관리하며 S3·DynamoDB를 상태 저장과 잠금에 사용했습니다.',
@@ -374,10 +397,11 @@ export const projects: Project[] = [
     ],
     tags: ['React', 'MSA', 'EKS', 'Argo CD', 'Terraform', 'Kafka', 'AWS'],
     href: 'https://github.com/rlatkd/sale-sync',
-    image: '/images/sale-sync/preview.png',
+    image: '/images/sale-sync/screen.png',
   },
   {
     id: 'liver-tumor-cnn',
+    summary: '간 CT 4,325장으로 LeNet5·AlexNet·VGG19·ResNet50의 종양 유무 분류 성능을 비교한 학부 졸업논문입니다. VGG19의 검증 정확도가 99.3%로 가장 높았습니다.',
     title: '간종양 CNN 분류 모델 비교',
     context: '학부 졸업논문 · 2022',
     points: [
@@ -390,6 +414,7 @@ export const projects: Project[] = [
   },
   {
     id: 'ct-image-reconstruction',
+    summary: 'MATLAB으로 투영 데이터와 사이노그램을 만들었습니다. 필터·보간법·투영 각도에 따른 CT 재구성 결과를 비교했습니다.',
     title: 'CT 이미지 재구성',
     context: '학부 프로젝트 · 2022',
     points: [
@@ -529,28 +554,9 @@ export const certifications: Certification[] = [
 ];
 
 export const navItems = [
-  {
-    id: 'about',
-    label: 'About',
-  },
-  {
-    id: 'strengths',
-    label: 'Strengths',
-  },
-  {
-    id: 'experience',
-    label: 'Experience',
-  },
-  {
-    id: 'projects',
-    label: 'Side Projects',
-  },
-  {
-    id: 'writing',
-    label: 'Writing',
-  },
-  {
-    id: 'contact',
-    label: 'Contact',
-  },
+  { id: 'about', label: 'About' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'projects', label: 'Side Projects' },
+  { id: 'writing', label: 'Writing' },
+  { id: 'contact', label: 'Contact' },
 ];

@@ -19,16 +19,18 @@
 }
 
 /* ───────────────────────── 시맨틱 토큰 (라이트) ───────────────────────── */
+/* 슬레이트 + 틸 팔레트. 다크가 기본 테마이고 라이트는 같은 계열의 밝은 짝 */
 :root {
-  --bg: #f7f4ef;
+  --bg: #f8fafc;
   --surface: #ffffff;
-  --surface-2: #ede9e1;
-  --fg: #1a1a2e;
-  --fg-strong: #0a1628;
-  --muted: #4a4a6a;
-  --line: #d4cfc6;
-  --accent: #85621e;
+  --surface-2: #eef2f6;
+  --fg: #475569;
+  --fg-strong: #0f172a;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --accent: #0f766e;
   --on-accent: #ffffff;
+  --glow: #e6f4f1;
 
   /* sugar-high 코드 하이라이팅 */
   --sh-background: #0a1628;
@@ -46,15 +48,16 @@
 
 /* ───────────────────────── 시맨틱 토큰 (다크) ───────────────────────── */
 .dark {
-  --bg: #0a1628;
-  --surface: #132040;
-  --surface-2: #182a52;
-  --fg: #ece8df;
-  --fg-strong: #ffffff;
-  --muted: #9aa0b5;
-  --line: rgba(232, 201, 122, 0.14);
-  --accent: #e8c97a;
-  --on-accent: #0a1628;
+  --bg: #0f172a;
+  --surface: #131d33;
+  --surface-2: #1e293b;
+  --fg: #94a3b8;
+  --fg-strong: #e2e8f0;
+  --muted: #7d8ba3;
+  --line: #243148;
+  --accent: #5eead4;
+  --on-accent: #0f172a;
+  --glow: #142341;
 }
 
 /* ───────────────────────── 기본 ───────────────────────── */
@@ -71,7 +74,7 @@ html {
 }
 
 body {
-  background-color: var(--bg);
+  background: radial-gradient(ellipse at 15% 10%, var(--glow) 0, transparent 48%) fixed, var(--bg);
   color: var(--fg);
   font-family: var(--font-sans);
   font-size: 0.9375rem; /* 기본 15px, 사용자 글꼴 크기 설정을 따름 */
@@ -81,8 +84,8 @@ body {
 }
 
 ::selection {
-  background-color: var(--gold);
-  color: var(--navy);
+  background-color: var(--accent);
+  color: var(--on-accent);
 }
 
 /* ───────────────────────── 코드 하이라이팅 ───────────────────────── */
@@ -227,3 +230,57 @@ table {
 
 /* ───────────────────────── 유틸 / 애니메이션 ───────────────────────── */
 .tracking-label { letter-spacing: 0.25em; }
+
+/* 낮은 데스크톱 화면에서도 소개·목차·연락 링크가 함께 보이도록 간격 조정 */
+@media (min-width: 1024px) and (max-height: 760px) {
+  header.portfolio-sidebar { padding-top: 2rem; padding-bottom: 2rem; }
+  .portfolio-sidebar nav { margin-top: 1.75rem; }
+  .portfolio-sidebar nav a { padding-top: 0.4rem; padding-bottom: 0.4rem; }
+}
+
+/* 이력서 인쇄 */
+/* 이력서 종이 — 테마와 무관하게 흑백 (화면·인쇄 공통) */
+.resume-paper {
+  --surface: #ffffff;
+  --surface-2: #f1f1f1;
+  --fg: #333333;
+  --fg-strong: #000000;
+  --muted: #666666;
+  --line: #cccccc;
+  --accent: #000000;
+  background: #ffffff;
+  color: var(--fg);
+}
+
+/* 이력서 인쇄 — 화면의 종이 부분만, 흑백 */
+@media print {
+  @page { size: A4; margin: 0; }
+  /* 화면의 A4 쪽을 그대로 한 장씩 */
+  .resume-page {
+    width: 210mm !important;
+    height: 297mm !important;
+    max-width: none !important;
+    border: 0 !important;
+    break-after: page;
+  }
+  .resume-page:last-of-type {
+    break-after: auto;
+  }
+  :root,
+  .dark {
+    --bg: #ffffff;
+    --glow: #ffffff;
+  }
+  body {
+    background: #fff;
+    transition: none;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* 프로젝트 캐러셀 자동 넘김 진행 바 */
+@keyframes carousel-progress {
+  from { width: 0; }
+  to { width: 100%; }
+}

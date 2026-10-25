@@ -14,17 +14,19 @@ test('home navigation, theme persistence and landmarks work without runtime erro
   await expect(page.locator('header a[aria-label="GitHub"] svg')).toBeVisible();
   await expect(page.locator('header a[aria-label="LinkedIn"] svg')).toBeVisible();
   const writingPosts = page.locator('#writing a[href^="/posts/"]');
-  await expect(writingPosts).toHaveCount(3);
+  await expect(writingPosts).toHaveCount(6);
   const dates = await writingPosts.locator('span.font-mono').allTextContents();
   expect(dates).toEqual([...dates].sort().reverse());
   await expect(page.locator('script[src*="googletagmanager.com/gtag/js"]')).toHaveCount(0);
+  // 다크가 기본 테마이고, 전환한 라이트 테마가 새로고침 후에도 유지된다
+  await expect(page.locator('html')).toHaveClass(/dark/);
   const toggle = page.getByRole('button', { name: '테마 전환' });
   await toggle.click();
-  await expect(page.locator('html')).toHaveClass(/dark/);
+  await expect(page.locator('html')).not.toHaveClass(/dark/);
   await page.reload();
-  await expect(page.locator('html')).toHaveClass(/dark/);
-  await page.getByRole('navigation', { name: '포트폴리오 목차' }).getByRole('link', { name: 'Strengths' }).click();
-  await expect(page).toHaveURL(/#strengths/);
+  await expect(page.locator('html')).not.toHaveClass(/dark/);
+  await page.getByRole('navigation', { name: '포트폴리오 목차' }).getByRole('link', { name: 'Experience' }).click();
+  await expect(page).toHaveURL(/#experience/);
   await expect(page.getByRole('button', { name: '맨 위로' })).toBeVisible();
   expect(errors).toEqual([]);
 });
@@ -124,13 +126,14 @@ test('theme remains usable when browser storage is unavailable', async ({ page }
     Storage.prototype.setItem = () => { throw new Error('Storage disabled'); };
   });
   await page.goto('/');
-  await page.getByRole('button', { name: '테마 전환' }).click();
   await expect(page.locator('html')).toHaveClass(/dark/);
+  await page.getByRole('button', { name: '테마 전환' }).click();
+  await expect(page.locator('html')).not.toHaveClass(/dark/);
   expect(errors).toEqual([]);
 });
 
 
-test('search, contact, privacy and short-screen readability work', async ({ page, context, request }) => {
+test('search, resume, privacy and short-screen readability work', async ({ page, request }) => {
   await page.goto('/posts');
   await page.getByRole('searchbox', { name: '글 검색' }).fill('Elasticsearch');
   await page.getByRole('button', { name: '검색', exact: true }).click();
@@ -139,15 +142,13 @@ test('search, contact, privacy and short-screen readability work', async ({ page
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${baseUrl}/posts?q=Elasticsearch`);
   await page.goto('/posts?q=not-a-real-search-result');
   await expect(page.getByRole('status')).toContainText('0개');
-  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  // 이력서는 사이드바의 별도 버튼으로 연결하고, 검색 노출과 사이트맵에서는 제외한다
   await page.goto('/');
-  await page.getByRole('button', { name: '이메일 복사', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('이메일을 복사했습니다.');
-  await page.evaluate(() => { navigator.clipboard.writeText = async () => { throw new Error('denied'); }; });
-  await page.getByRole('button', { name: '이메일 복사', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('이메일을 선택해 복사');
-  await expect(page.locator('a[href="/resume"]')).toHaveCount(0);
-  expect((await request.get('/resume')).status()).toBe(404);
+  await page.locator('header a[href="/resume"]').click();
+  await expect(page).toHaveURL(/\/resume$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('김상훈');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+  await expect(page.getByText('010')).toHaveCount(0);
   expect(await (await request.get('/sitemap.xml')).text()).not.toContain('/resume');
   await page.goto('/privacy');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('방문 분석');
@@ -166,13 +167,24 @@ test('search, contact, privacy and short-screen readability work', async ({ page
 test('project cards link to GitHub, reviewed image descriptions and benchmark artifact are served', async ({ page, request }) => {
   await page.goto('/');
   const projects = page.locator('#projects');
-  const projectCards = projects.locator(':scope > div > a');
-  await expect(projectCards).toHaveCount(5);
-  for (const card of await projectCards.all()) {
-    await expect(card).toHaveAttribute('href', /^https:\/\/github\.com\/rlatkd\//);
-    await expect(card).toHaveAttribute('target', '_blank');
-    await expect(card.locator('img')).toHaveCount(1);
+  // 캐러셀: 한 장씩 넘기며 각 프로젝트의 이미지와 GitHub 링크를 확인한다
+  const dots = projects.getByRole('button', { name: /번째 프로젝트/ });
+  await expect(dots).toHaveCount(6);
+  await expect(projects.locator('img')).toHaveCount(6);
+  let linked = 0;
+  for (let i = 0; i < 6; i++) {
+    const slide = projects.locator('li[aria-hidden="false"]');
+    await expect(slide.locator('img')).toHaveCount(1);
+    const card = slide.locator('a[aria-label$="GitHub"]');
+    if (await card.count()) {
+      linked++;
+      await expect(card).toHaveAttribute('href', /^https:\/\/github\.com\/rlatkd\//);
+      await expect(card).toHaveAttribute('target', '_blank');
+    }
+    await projects.getByRole('button', { name: '다음 프로젝트' }).click();
   }
+  expect(linked).toBe(5);
+  await expect(dots.first()).toHaveAttribute('aria-current', 'true');
   await expect(projects.getByRole('link', { name: /소스 코드|설계 · 실행 문서|결과 이미지|시연 GIF|시스템 구조도/ })).toHaveCount(0);
   expect(await projects.locator('a a').count()).toBe(0);
   await page.goto('/posts/Deployment');

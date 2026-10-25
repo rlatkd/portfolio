@@ -18,8 +18,8 @@ for (const [width, height] of [[1440, 720], [1440, 900], [1136, 1190], [1440, 21
       return Math.abs(scrollY - target);
     });
     await expect.poll(distanceToWriting).toBeLessThanOrEqual(2);
-    await navigation.getByRole('link', { name: 'Contact', exact: true }).click();
-    await expect(navigation.getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('aria-current', 'location');
+    await navigation.getByRole('link', { name: 'Side Projects', exact: true }).click();
+    await expect(navigation.getByRole('link', { name: 'Side Projects', exact: true })).toHaveAttribute('aria-current', 'location');
     await writing.click();
     await expect(writing).toHaveAttribute('aria-current', 'location');
     await expect.poll(distanceToWriting).toBeLessThanOrEqual(2);

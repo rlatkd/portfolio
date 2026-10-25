@@ -21,7 +21,6 @@ export const metadata: Metadata = {
     images: [{ url: defaultOgImage, width: 1200, height: 630, alt: siteTitle }],
   },
   twitter: { card: 'summary_large_image', title: siteTitle, description: siteDescription, images: [defaultOgImage] },
-  alternates: { types: { 'application/rss+xml': '/rss' } },
   robots: {
     index: true,
     follow: true,
@@ -48,6 +47,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang='ko' suppressHydrationWarning={true}>
       <head>
+        <link rel='alternate' type='application/rss+xml' title='김상훈 · Writing' href={`${baseUrl}/rss`} />
         <link
           rel='stylesheet'
           as='style'

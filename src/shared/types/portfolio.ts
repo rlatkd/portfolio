@@ -27,6 +27,7 @@ export type Project = {
   id: string;
   title: string;
   context: string;
+  summary: string;
   badge?: string;
   points: string[];
   tags: string[];

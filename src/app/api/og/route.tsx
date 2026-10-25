@@ -4,13 +4,13 @@ import { ImageResponse } from 'next/og';
 import { profile } from '@/shared/data/site-data';
 export const runtime = 'nodejs';
 
-// OG 이미지는 CSS 변수를 쓸 수 없어 라이트 테마 토큰의 hex 값을 직접 쓴다.
+// OG 이미지는 CSS 변수를 쓸 수 없어 기본 다크 테마 토큰의 hex 값을 직접 쓴다.
 const color = {
-  bg: '#f7f4ef',
-  fg: '#0a1628',
-  muted: '#4a4a6a',
-  accent: '#c49a3c',
-  line: '#d4cfc6',
+  bg: '#0f172a',
+  fg: '#e2e8f0',
+  muted: '#94a3b8',
+  accent: '#5eead4',
+  line: '#243148',
 };
 
 const fonts = Promise.all(['Bold', 'Medium'].map(async weight => {
@@ -68,19 +68,10 @@ export async function GET(request: Request) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ fontWeight: 500, fontSize: 24, color: color.muted }}>{site}</div>
           <svg width='56' height='56' viewBox='0 0 32 32'>
-            <defs>
-              <linearGradient id='gold' x1='0' y1='0' x2='0.35' y2='1'>
-                <stop offset='0' stopColor='#f0d68f' />
-                <stop offset='0.55' stopColor='#c9a24a' />
-                <stop offset='1' stopColor='#9c732a' />
-              </linearGradient>
-            </defs>
-            <polygon points='11,11 21,11 24.5,15.5 16,26 7.5,15.5' fill='url(#gold)' />
-            <g stroke={color.bg} strokeWidth='0.9' strokeLinejoin='round' fill='none' opacity='0.85'>
-              <line x1='7.5' y1='15.5' x2='24.5' y2='15.5' />
-              <line x1='11' y1='11' x2='16' y2='26' />
-              <line x1='21' y1='11' x2='16' y2='26' />
-            </g>
+            <rect width='32' height='32' rx='8' fill='#0f172a' />
+            <rect x='0.5' y='0.5' width='31' height='31' rx='7.5' fill='none' stroke='#243148' />
+            <path d='M16 6L26 12L16 18L6 12Z' fill='#5eead4' />
+            <path d='M6 18L16 24L26 18' fill='none' stroke='#5eead4' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round' />
           </svg>
         </div>
       </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
-import { Mail, MapPin, Rss } from 'lucide-react';
+import { FileText, Mail, Rss } from 'lucide-react';
 import { FiGithub, FiLinkedin } from 'react-icons/fi';
 import { profile, navItems } from '@/shared/data/site-data';
 import { ThemeToggle } from '@/features/ThemeToggle/ThemeToggle';
@@ -71,7 +71,12 @@ export default function Sidebar() {
         }
         navigationTarget.current = null;
       }
-      // 페이지 최하단 도달 시 마지막 섹션(Contact)을 강제로 활성화
+      // 페이지 최상단에서는 첫 섹션을 활성화 (화면이 높아 다음 섹션이 기준선 위에 있어도)
+      if (window.scrollY <= 2) {
+        setActive(ids[0]);
+        return;
+      }
+      // 페이지 최하단 도달 시 마지막 섹션을 강제로 활성화
       if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
         setActive(ids[ids.length - 1]);
         return;
@@ -134,38 +139,38 @@ export default function Sidebar() {
     { Icon: FiGithub, href: profile.github, label: 'GitHub' },
     { Icon: FiLinkedin, href: profile.linkedin, label: 'LinkedIn' },
     { Icon: VelogIcon, href: profile.velog, label: 'Velog' },
+    { Icon: Mail, href: `mailto:${profile.email}`, label: '이메일' },
     { Icon: Rss, href: '/rss', label: 'RSS' },
   ];
 
   return (
-    <header className='pb-10 pt-16 lg:sticky lg:top-0 lg:flex lg:h-screen lg:max-h-screen lg:w-[42%] lg:flex-col lg:justify-between lg:overflow-y-auto lg:pt-24 lg:pb-10 lg:pr-3'>
+    <header className='portfolio-sidebar pt-16 lg:sticky lg:top-0 lg:flex lg:h-dvh lg:max-h-[1100px] lg:flex-col lg:justify-between lg:overflow-y-auto lg:pb-16 lg:pt-24'>
       <div>
-        <p className='text-xs font-semibold uppercase tracking-[0.25em] text-accent'>{profile.role}</p>
-        <h1 className='mt-3 whitespace-nowrap text-4xl font-semibold leading-tight tracking-tight text-fg-strong sm:text-5xl'>
-          {profile.name}
+        <h1 className='text-[2.6rem] font-bold leading-tight tracking-tight text-fg-strong sm:text-5xl'>
+          <a href='/'>{profile.name}</a>
         </h1>
-        <p className='mt-2 text-xl italic text-muted'>{profile.nameEn}</p>
-        <p className='mt-5 max-w-xs whitespace-pre-line leading-relaxed text-muted'>{profile.intro}</p>
+        <p className='mt-3 text-lg font-medium tracking-tight text-fg-strong sm:text-xl'>{profile.role}</p>
+        <p className='mt-4 max-w-xs whitespace-pre-line text-[15px] leading-relaxed text-fg'>{profile.intro}</p>
+
+        {/* 이력서 — 별도 페이지 */}
+        <a
+          href='/resume'
+          className='mt-7 inline-flex items-center gap-2 rounded-full border border-accent px-4 py-2 text-sm font-semibold text-accent transition-colors hover:bg-[color-mix(in_srgb,var(--accent)_12%,transparent)]'
+        >
+          <FileText size={15} />
+          이력서
+        </a>
 
         {/* 목차 (데스크톱) */}
-        <nav aria-label='포트폴리오 목차' className='mt-12 hidden lg:block'>
-          <p className='font-mono text-xs uppercase tracking-[0.2em] text-muted'>Contents</p>
-          <ul className='mt-4 space-y-1'>
+        <nav aria-label='포트폴리오 목차' className='mt-14 hidden lg:block'>
+          <ul className='w-max space-y-1'>
             {navItems.map((item) => {
               const on = active === item.id;
               return (
                 <li key={item.id}>
-                  <a href={`/#${item.id}`} onClick={event => navigateToSection(event, item.id)} aria-current={on ? 'location' : undefined} className='group flex items-center py-2'>
-                    <span
-                      className={`mr-4 h-px transition-all ${
-                        on ? 'w-14 bg-accent' : 'w-8 bg-muted group-hover:w-14 group-hover:bg-fg'
-                      }`}
-                    />
-                    <span
-                      className={`text-xs font-semibold uppercase tracking-[0.2em] transition-colors ${
-                        on ? 'text-accent' : 'text-muted group-hover:text-fg'
-                      }`}
-                    >
+                  <a href={`/#${item.id}`} onClick={event => navigateToSection(event, item.id)} aria-current={on ? 'location' : undefined} className='group flex items-center py-2.5'>
+                    <span className={`mr-4 h-px transition-all ${on ? 'w-16 bg-fg-strong' : 'w-8 bg-muted group-hover:w-16 group-hover:bg-fg-strong'}`} />
+                    <span className={`text-[11px] font-bold uppercase tracking-[0.12em] transition-colors ${on ? 'text-fg-strong' : 'text-muted group-hover:text-fg-strong'}`}>
                       {item.label}
                     </span>
                   </a>
@@ -176,45 +181,21 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      {/* 하단: 연락처 · 소셜 */}
-      <div className='mt-12 lg:mt-8'>
-        <div className='space-y-2'>
+      {/* 하단: 링크 · 테마 */}
+      <div className='mt-8 flex items-center gap-5 lg:mt-0'>
+        {socials.map(({ Icon, href, label }) => (
           <a
-            href={`mailto:${profile.email}`}
-            className='flex items-center gap-3 text-sm text-muted transition-colors hover:text-accent'
-          >
-            <Mail size={15} />
-            {profile.email}
-          </a>
-          <a
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(profile.location)}`}
-            target='_blank'
+            key={label}
+            href={href}
+            target={href.startsWith('http') ? '_blank' : undefined}
             rel='noopener noreferrer'
-            aria-label={`${profile.location} 지도 보기 (새 탭)`}
-            className='flex items-center gap-3 text-sm text-muted transition-colors hover:text-accent'
+            aria-label={label}
+            className='text-muted transition-colors hover:text-fg-strong'
           >
-            <MapPin size={15} />
-            {profile.location}
+            <Icon size={20} />
           </a>
-        </div>
-
-        <div className='mt-6 flex items-center gap-5'>
-          {socials.map(({ Icon, href, label }) => (
-            <a
-              key={label}
-              href={href}
-              target={href.startsWith('http') ? '_blank' : undefined}
-              rel='noopener noreferrer'
-              aria-label={label}
-              className='text-muted transition-colors hover:text-accent'
-            >
-              <Icon size={19} />
-            </a>
-          ))}
-          <span className='ml-auto'>
-            <ThemeToggle />
-          </span>
-        </div>
+        ))}
+        <ThemeToggle />
       </div>
     </header>
   );
