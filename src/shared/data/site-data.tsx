@@ -294,7 +294,7 @@ export const experience: Experience[] = [
   },
   {
     id: 'kosa-training',
-    period: '2024.02 — 2024.08',
+    period: '2024.02.26 — 2024.08.09',
     role: 'MSA Full Stack 개발 전문가 양성 과정',
     org: '한국소프트웨어산업협회 · 960h',
     desc: '4인 팀으로 자동 청구·결제 시스템을 개발했습니다. 아키텍트로 시스템·인프라를 설계하고 결제·상품·배치 기능과 배포·모니터링 환경을 구현했습니다.',
@@ -308,7 +308,7 @@ export const experience: Experience[] = [
   },
   {
     id: 'ssg-training',
-    period: '2023.08 — 2024.02',
+    period: '2023.08.07 — 2024.02.02',
     role: '클라우드 엔지니어 양성 과정',
     org: '㈜신세계아이앤씨 · 920h',
     desc: '4인 팀으로 매장·상품·주문·매출을 관리하는 MSA 기반 웹 POS 서비스를 개발했습니다. AWS 배포와 서비스별 데이터 분리, 배포 자동화·로그·메트릭 관리 환경을 구성했습니다.',
@@ -502,13 +502,13 @@ export const education = [
 
 export const training = [
   {
-    period: '2024.02 — 2024.08',
+    period: '2024.02.26 — 2024.08.09',
     title: 'MSA 기반 Full Stack 개발 전문가 양성 과정',
     org: '한국소프트웨어산업협회',
     hours: '960h',
   },
   {
-    period: '2023.08 — 2024.02',
+    period: '2023.08.07 — 2024.02.02',
     title: '클라우드 엔지니어 양성 과정',
     org: '신세계아이앤씨',
     hours: '920h',

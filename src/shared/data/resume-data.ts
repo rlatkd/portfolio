@@ -107,7 +107,6 @@ export const education = [
     sub: '퀀트응용경제학과 · 대학원 재학 중',
     lines: [
       '개발 업무와 석사 과정을 병행하며 계량경제이론·시계열 분석·머신러닝을 학습하고 있습니다.',
-      'GPA 4.38 / 4.5',
     ],
   },
   {
@@ -167,7 +166,7 @@ export const others = [
     lines: [],
   },
   {
-    period: '2024.08',
+    period: '2024.02.26 — 2024.08.09',
     kind: '교육',
     title: 'MSA 기반 Full Stack 개발 전문가 양성 과정 (960h)',
     org: '한국소프트웨어산업협회',
@@ -178,7 +177,7 @@ export const others = [
     ],
   },
   {
-    period: '2024.02',
+    period: '2023.08.07 — 2024.02.02',
     kind: '교육',
     title: '클라우드 엔지니어 양성 과정 (920h)',
     org: '신세계아이앤씨',
