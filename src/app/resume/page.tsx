@@ -39,7 +39,7 @@ function Heading({ children }: { children: React.ReactNode }) {
 
 function Head({ title, period }: { title: string; period: string }) {
   return (
-    <div className='flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4'>
+    <div className='flex flex-row items-baseline justify-between gap-4'>
       <h3 className='text-[12.5px] font-semibold text-fg-strong'>{title}</h3>
       <span className='shrink-0 text-[11px] text-muted'>{period}</span>
     </div>
@@ -75,12 +75,12 @@ export default function ResumePage() {
         <ResumePager>
           {/* 1쪽 — 인적사항 · 요약 · 경력 앞부분 */}
           <div>
-            <header className='flex flex-col gap-4 border-b-2 border-fg-strong pb-5 sm:flex-row sm:items-center sm:justify-between'>
+            <header className='flex flex-row items-center justify-between gap-4 border-b-2 border-fg-strong pb-5'>
               <div>
                 <h1 className='text-3xl font-bold tracking-tight text-fg-strong'>{profile.name}</h1>
                 <p className='text-sm text-muted'>{profile.role}</p>
               </div>
-              <div className='flex flex-col text-xs sm:items-end'>
+              <div className='flex flex-col items-end text-xs'>
                 <a href={`mailto:${profile.email}`}>{profile.email}</a>
                 <a href={profile.github} className='inline-flex items-center gap-1'>
                   {profile.githubLabel}
@@ -144,10 +144,10 @@ export default function ResumePage() {
                 {trackRecord
                   .filter((t) => !t.title.startsWith('Sparrow SAST'))
                   .map((t) => (
-                    <li key={`${t.period}-${t.title}`} className='grid grid-cols-[4rem_1fr] gap-3 sm:grid-cols-[4rem_1fr_7rem]'>
+                    <li key={`${t.period}-${t.title}`} className='grid grid-cols-[4rem_1fr_7rem] gap-3'>
                       <span className='text-[11px] text-muted'>{t.period}</span>
                       <span>{t.title}</span>
-                      <span className='col-start-2 text-[11px] text-muted sm:col-start-auto sm:text-right'>{t.service}</span>
+                      <span className='text-right text-[11px] text-muted'>{t.service}</span>
                     </li>
                   ))}
               </ul>

@@ -19,7 +19,7 @@ export default async function Page() {
   const posts = await getPosts();
   const recent = [...posts]
     .sort((a, b) => Date.parse(b.metadata.publishedAt) - Date.parse(a.metadata.publishedAt) || b.metadata.index - a.metadata.index)
-    .slice(0, 6)
+    .slice(0, 3)
     .map((p) => ({
       slug: p.slug,
       title: p.metadata.title ?? '',

@@ -15,7 +15,7 @@ export const companyRoles = [
 
 export const work = [
   {
-    period: '2026.09',
+    period: '2026.09 — 2026.10',
     title: 'Sparrow SAST 정적 분석 기반 보안 취약점 대응',
     role: '백엔드·프론트엔드 개발',
     points: [

@@ -1,0 +1,20 @@
+.viewer{max-width:794px;margin:0 auto;min-width:0}
+.viewport{width:100%;overflow:auto;overscroll-behavior:contain;touch-action:pan-x pan-y pinch-zoom;scrollbar-width:thin;scrollbar-color:var(--muted) transparent}
+.viewport:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.canvas{position:relative;margin:0 auto}
+.scaled{position:absolute;top:0;left:0;width:794px;transform-origin:top left}
+.paper{display:none;flex-direction:column;box-sizing:border-box;width:794px;height:1123px;overflow:hidden;border:1px solid var(--line);padding:56px 56px 32px;font-size:12px;line-height:1.75}
+.paper[data-active='true']{display:flex}
+.pageContent{flex:1;min-height:0}
+.pageNumber{margin-top:32px;text-align:center;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;flex-shrink:0}
+.controls{position:sticky;bottom:12px;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:8px;margin:16px auto 0;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:var(--surface);box-shadow:0 4px 18px #00000020;color:var(--fg-strong)}
+.controlGroup{display:flex;align-items:center;gap:2px}
+.controls button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:40px;height:40px;border-radius:6px;transition:background-color .15s,color .15s}
+.controls button:hover:not(:disabled){background:var(--surface-2);color:var(--accent)}
+.controls button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.controls button:disabled{opacity:.3;cursor:default}
+.pageStatus,.zoomStatus{min-width:46px;text-align:center;font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.fitButton{padding:0 10px;font-size:12px;margin-left:3px}
+@media(max-width:841px){.viewport{max-height:calc(100dvh - 180px);min-height:240px}.controls{bottom:8px}.controls button{min-width:38px;height:42px}.fitButton span{display:none}.fitButton{padding:0 8px}.pageStatus,.zoomStatus{min-width:40px;font-size:11px}}
+@media print{.viewer{max-width:none;margin:0}.viewport{overflow:visible;max-height:none;min-height:0;width:auto;outline:none}.canvas{width:auto!important;height:auto!important;margin:0}.scaled{position:static;width:auto;transform:none!important}.paper{display:flex!important;overflow:visible;min-height:0}.controls{display:none}}
+@media(prefers-reduced-motion:reduce){.controls button{transition:none}}

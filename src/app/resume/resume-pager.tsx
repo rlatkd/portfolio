@@ -1,61 +1,94 @@
 'use client';
 
-import { Children, useEffect, useState, type ReactNode } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Children, useEffect, useRef, useState, type ReactNode } from 'react';
+import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut, ScanLine } from 'lucide-react';
+import styles from './resume-viewer.module.css';
 
-// 이력서를 A4 쪽 단위로 한 장씩 보여주고, 아래 가운데에 쪽번호와 좌우 버튼을 둔다. 인쇄 시에는 전 쪽을 출력
+const WIDTH = 794;
+const HEIGHT = 1123;
+
 export function ResumePager({ children }: { children: ReactNode }) {
   const pages = Children.toArray(children);
   const [page, setPage] = useState(0);
+  const [fit, setFit] = useState(1);
+  const [zoom, setZoom] = useState<number | null>(null);
+  const viewport = useRef<HTMLDivElement>(null);
+  const anchor = useRef<{ x: number; y: number } | null>(null);
+  const scale = zoom ?? fit;
   const last = pages.length - 1;
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') setPage((p) => Math.max(0, p - 1));
-      if (e.key === 'ArrowRight') setPage((p) => Math.min(last, p + 1));
+    const element = viewport.current;
+    if (!element) return;
+    const observer = new ResizeObserver(() => setFit(Math.min(1, element.clientWidth / WIDTH)));
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const element = viewport.current;
+    if (!element || !anchor.current) return;
+    element.scrollLeft = anchor.current.x * scale - element.clientWidth / 2;
+    element.scrollTop = anchor.current.y * scale - element.clientHeight / 2;
+    anchor.current = null;
+  }, [scale]);
+
+  const changePage = (next: number) => {
+    setPage(Math.max(0, Math.min(last, next)));
+    viewport.current?.scrollTo({ left: 0, top: 0, behavior: 'instant' });
+  };
+
+  const changeZoom = (next: number) => {
+    const element = viewport.current;
+    if (element) anchor.current = {
+      x: (element.scrollLeft + Math.min(element.clientWidth, WIDTH * scale) / 2) / scale,
+      y: (element.scrollTop + Math.min(element.clientHeight, HEIGHT * scale) / 2) / scale,
+    };
+    setZoom(Math.max(fit, Math.min(2, Math.round(next * 100) / 100)));
+  };
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      if (event.target instanceof HTMLElement && event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      // 확대 중에는 방향키를 문서 내부 스크롤에 사용한다.
+      if (zoom !== null && zoom > fit) return;
+      event.preventDefault();
+      setPage(current => Math.max(0, Math.min(last, current + (event.key === 'ArrowLeft' ? -1 : 1))));
+      viewport.current?.scrollTo({ left: 0, top: 0, behavior: 'instant' });
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [last]);
-
-  const arrow =
-    'absolute top-1/2 z-30 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-bg/80 text-fg-strong backdrop-blur transition-colors hover:border-accent hover:text-accent disabled:pointer-events-none disabled:opacity-30 print:hidden';
+  }, [last, zoom, fit]);
 
   return (
-    <div className='relative mx-auto max-w-[794px]'>
-      {pages.map((content, i) => (
-        <section
-          key={i}
-          aria-label={`${i + 1}쪽`}
-          className={`resume-paper resume-page mx-auto w-full max-w-[794px] flex-col border border-line px-7 pb-6 pt-10 text-[12px] leading-[1.75] sm:min-h-[1123px] min-[842px]:h-[1123px] min-[842px]:overflow-hidden sm:px-14 sm:pb-8 sm:pt-14 ${i === page ? 'flex' : 'hidden print:flex'}`}
-        >
-          <div className='flex-1'>{content}</div>
-          {/* 쪽번호 — 종이 하단 가운데 */}
-          <p className='mt-8 text-center text-[11px] tabular-nums text-muted'>
-            {i + 1} / {pages.length}
-          </p>
-        </section>
-      ))}
-
-      {/* 좌우 이동 — 종이 양옆, 종이 높이의 가운데 (좁은 화면에서는 종이 안쪽 가장자리) */}
-      <button
-        type='button'
-        aria-label='이전 쪽'
-        disabled={page === 0}
-        onClick={() => setPage((p) => p - 1)}
-        className={`${arrow} left-2 min-[960px]:-left-[4.5rem]`}
-      >
-        <ChevronLeft size={20} />
-      </button>
-      <button
-        type='button'
-        aria-label='다음 쪽'
-        disabled={page === last}
-        onClick={() => setPage((p) => p + 1)}
-        className={`${arrow} right-2 min-[960px]:-right-[4.5rem]`}
-      >
-        <ChevronRight size={20} />
-      </button>
+    <div className={styles.viewer}>
+      <div ref={viewport} className={styles.viewport} role='region' aria-label='이력서 문서' tabIndex={0}>
+        <div className={styles.canvas} style={{ width: WIDTH * scale, height: HEIGHT * scale }}>
+          <div className={styles.scaled} style={{ transform: `scale(${scale})` }}>
+            {pages.map((content, index) => (
+              <section key={index} aria-label={`${index + 1}쪽`} aria-hidden={index !== page} data-active={index === page} className={`resume-paper resume-page ${styles.paper}`}>
+                <div className={styles.pageContent}>{content}</div>
+                <p className={styles.pageNumber}>{index + 1} / {pages.length}</p>
+              </section>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className={styles.controls} aria-label='이력서 보기 도구'>
+        <div className={styles.controlGroup}>
+          <button type='button' aria-label='이전 쪽' disabled={page === 0} onClick={() => changePage(page - 1)}><ChevronLeft size={18} /></button>
+          <span className={styles.pageStatus} role='status' aria-live='polite'>{page + 1} / {pages.length}</span>
+          <button type='button' aria-label='다음 쪽' disabled={page === last} onClick={() => changePage(page + 1)}><ChevronRight size={18} /></button>
+        </div>
+        <div className={styles.controlGroup}>
+          <button type='button' aria-label='축소' disabled={scale <= fit + .005} onClick={() => changeZoom(scale - .25)}><ZoomOut size={17} /></button>
+          <span className={styles.zoomStatus} aria-label='현재 배율'>{Math.round(scale * 100)}%</span>
+          <button type='button' aria-label='확대' disabled={scale >= 2} onClick={() => changeZoom(scale + .25)}><ZoomIn size={17} /></button>
+          <button type='button' className={styles.fitButton} aria-label='너비 맞춤' onClick={() => { anchor.current = null; setZoom(null); viewport.current?.scrollTo({ left: 0, top: 0, behavior: 'instant' }); }}><ScanLine size={16} /><span>너비 맞춤</span></button>
+        </div>
+      </div>
     </div>
   );
 }
