@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { profile } from '@/shared/data/site-data';
 export const metadata = { title: '개인정보 및 방문 분석 안내', alternates: { canonical: '/privacy' } };
 export default function Privacy() {
-  return <main className='mx-auto w-full max-w-3xl px-6 py-12 leading-loose'>
+  return <main id='main-content' className='mx-auto w-full max-w-3xl px-6 py-12 leading-loose'>
     <Link href='/' className='text-accent underline'>← 포트폴리오</Link>
     <h1 className='mt-8 text-3xl font-bold'>개인정보 및 방문 분석 안내</h1>
     <p className='mt-6'>이 사이트는 김상훈의 포트폴리오와 기술 블로그입니다. 회원가입, 댓글, 결제 기능은 제공하지 않습니다.</p>

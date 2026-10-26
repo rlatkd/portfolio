@@ -12,7 +12,9 @@
     "content:check": "node scripts/sync-velog.mjs",
     "content:sync": "node scripts/sync-velog.mjs --apply",
     "monitor": "node scripts/monitor.mjs",
-    "images:check": "node scripts/check-images.mjs"
+    "images:check": "node scripts/check-images.mjs",
+    "links:check": "node scripts/check-links.mjs",
+    "measure": "node scripts/measure-pages.mjs"
   },
   "dependencies": {
     "@next/third-parties": "^16.4.2",

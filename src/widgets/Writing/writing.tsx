@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { Section, Row } from '@/shared/ui/Section';
 import type { PostCardData } from '@/entities/Post/ui/PostCard';
 
@@ -10,9 +10,8 @@ export default function Writing({ posts }: { posts: PostCardData[] }) {
         <h2 id='writing-heading' className='text-[11px] font-bold uppercase tracking-[0.16em] text-fg-strong'>
           Writing
         </h2>
-        <Link href='/posts' className='group inline-flex items-center gap-1 text-xs font-semibold text-muted hover:text-accent'>
+        <Link href='/posts' className='text-xs font-semibold text-muted hover:text-accent'>
           더보기
-          <ArrowRight size={13} className='transition-transform group-hover:translate-x-0.5' />
         </Link>
       </div>
       <ul>

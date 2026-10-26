@@ -16,5 +16,5 @@ export function Linker(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
     return <a {...props} />
   }
 
-  return <a target='_blank' rel='noopener noreferrer' {...props} />
+  return <a {...props} target='_blank' rel='noopener noreferrer' />
 }

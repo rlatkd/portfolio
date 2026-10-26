@@ -11,10 +11,21 @@ import { MdxRenderer } from '../src/shared/markdown/mdx-renderer';
 import { getPostContents } from '../src/shared/markdown/postContents';
 import { highlightCode } from '../src/shared/markdown/highlight-code';
 import sources from '../src/shared/content/velog-sources.json';
-import descriptions from '../src/shared/content/seo-descriptions.json';
+import { getPosts } from '../src/shared/lib/markdown';
 import { profile, certifications, experience, projects } from '../src/shared/data/site-data';
 
 const directory = path.join(process.cwd(), 'src/shared/content/posts');
+
+test('served posts contain only original bodies and original modification dates', async () => {
+  const posts = await getPosts();
+  assert.equal(posts.length, Object.keys(sources).length);
+  for (const post of posts) {
+    const file = fs.readFileSync(path.join(directory, post.slug + '.mdx'), 'utf8');
+    const original = file.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '').trim();
+    assert.equal(post.content, original, post.slug);
+    assert.equal(post.metadata.updatedAt, (sources as Record<string, { updatedAt: string }>)[post.slug].updatedAt);
+  }
+});
 test('public data excludes private identifiers and uses unique item IDs', () => {
   assert.ok(!Object.hasOwn(profile, 'mobile'));
   for (const certificate of certifications) assert.match(certificate.id, /^[a-z-]+$/);
@@ -32,8 +43,6 @@ test('all Velog bodies remain unchanged and content files match the source manif
     assert.equal(createHash('sha256').update(body).digest('hex'), source.bodySha256, slug);
     assert.ok(Number.isFinite(Date.parse(source.updatedAt)), slug);
     assert.equal(new URL(source.url).hostname, 'velog.io');
-    const description = (descriptions as Record<string, string>)[slug];
-    if (description) assert.ok(description.length > 20, slug);
   }
 });
 

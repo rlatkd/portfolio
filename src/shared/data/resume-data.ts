@@ -1,106 +1,17 @@
+import { education as profileEducation, training, awards, certifications } from './profile-data';
+
 // 전체 이력서 콘텐츠 — port/main/김상훈_이력서_원티드.pdf 기준 (전화번호는 공개하지 않음)
 
 export const summary = [
   'Spring Boot·Vue.js 기반 서비스를 개발하고 운영하는 소프트웨어 엔지니어 김상훈입니다. 효성에프엠에스에서 청구·결제·정산 채널 6개 서비스의 유지보수와 배치 모니터링·VoC 대응을 맡고 있습니다.',
-  '외부 시스템의 제약 안에서 복잡한 처리 흐름을 분석하고 개선해 왔습니다. 전자서명 완료부터 수납 등록까지 이어지는 연동을 구현했습니다. 실패 청구 약 2만 건의 상태 보정과 후속 보정 자동화 및 대량 데이터 추출 개선으로 반복적인 운영 업무를 줄였습니다.',
-  '현재 교육비 수납 플랫폼 iBill의 오너로 요구사항을 검토해 개선·신규 개발·보류 여부를 결정합니다. 운영 이슈는 원인 분석부터 구현·배포까지 처리합니다.',
+  '외부 시스템의 제약 안에서 복잡한 처리 흐름을 분석하고 개선해 왔습니다. 전자서명 완료부터 수납 등록까지 이어지는 연동을 구현했습니다. CMS 결제 요청 실패 청구의 보정 자동화와 대량 데이터 추출 개선으로 반복적인 운영 업무를 줄였습니다.',
+  '현재 교육비 수납 플랫폼 iBill의 서비스 담당자로 요구사항을 검토해 개선·신규 개발·보류 여부를 결정합니다. 운영 이슈는 원인 분석부터 구현·배포까지 처리합니다.',
 ];
 
 // 회사 항목 아래의 담당 범위 (최신순)
-export const companyRoles = [
-  { date: '2026.08', text: 'iBill 오너 · 요구사항 검토와 개선·신규 개발·보류 결정 · 운영 이슈 분석·구현·배포' },
-  { date: '2025.10', text: '운영 겸무 · CMS+·iBill 배치 모니터링과 VoC 대응' },
-  { date: '2024.09', text: 'CMS+·iBill·Connect 등 6개 서비스의 백엔드·프론트엔드 개발과 유지보수' },
-];
+export { companyRoles, work } from './career-data';
 
-export const work = [
-  {
-    period: '2026.09 — 2026.10',
-    title: 'Sparrow SAST 정적 분석 기반 보안 취약점 대응',
-    role: '백엔드·프론트엔드 개발',
-    points: [
-      'Sparrow SAST 정적 분석 결과를 검토하고 CMS+·Connect의 취약점 발생 위치와 관련 코드를 확인했습니다.',
-      '탐지된 항목의 데이터 흐름과 처리 로직을 분석해 보완이 필요한 코드를 식별했습니다.',
-      '기존 기능에 미치는 영향을 고려해 취약 코드를 수정하고 보안 요구사항을 반영했습니다.',
-      '수정 후 관련 기능의 정상 동작과 정적 분석 결과를 확인해 취약점 조치 여부를 점검했습니다.',
-    ],
-    tech: 'Spring Boot, Vue.js',
-  },
-  {
-    period: '2026.05 — 2026.10',
-    title: '고객사 조직 계층 변화에 대응하는 B2B 조회 흐름 개발',
-    role: '백엔드·프론트엔드 개발',
-    points: [
-      '대형 유통기업 전용 B2B 플랫폼인 Branch Manager 신규 구축에 참여해 결제·정산 영역의 채널 개발을 담당했습니다.',
-      '원장 데이터를 API로만 조회할 수 있는 환경에서 필요한 데이터와 조회 조건을 계정계 담당팀과 협의했습니다.',
-      '고객사마다 본사·지사·지점 등 조직 계층의 깊이가 다른 점을 고려해 도메인 로직과 계층별 처리를 분리했습니다.',
-      '고객사의 조직 단계가 달라져도 결제·정산 로직을 재사용할 수 있도록 조회 흐름을 구성했습니다.',
-    ],
-    tech: 'Spring Boot, Vue.js',
-  },
-  {
-    period: '2026.04',
-    title: '외부 API 응답 크기 제어로 대량 데이터 추출 제한 해소',
-    role: '백엔드·배치 개발',
-    points: [
-      '대량 조회 시 계정계 애플리케이션 서버가 종료되어 5만 건으로 제한되던 정산대상 결제내역 추출 기능을 개선했습니다.',
-      '계정계 API를 1,000건 단위로 순차 호출했습니다. 응답은 누적하지 않고 SXSSF로 파일에 기록해 한 번에 처리하는 데이터양을 제한했습니다.',
-      '여러 시스템이 공유하는 계정계의 부하를 고려해 순차 처리 방식을 적용했습니다.',
-      '계정계 수정 없이 15만 건을 8분 내 추출하도록 개선해 대형 고객사 3곳의 월별 수기 추출 업무를 해소했습니다.',
-    ],
-    tech: 'Spring Batch, Apache POI SXSSF',
-  },
-  {
-    period: '2026.04',
-    title: '공유 API 확장을 통한 결제·정산 조회 데이터 정합성 확보',
-    role: '백엔드·프론트엔드 개발',
-    points: [
-      '정산내역과 정산대상 결제내역의 건수·금액 불일치를 분석해 결제수단별 조회 대상과 기준일의 차이를 확인했습니다.',
-      '계정계 담당팀과 선택적 파라미터, 제외 상태 코드, 조회 조건을 협의하고 기존 API 소비자의 동작을 유지하는 확장 스펙을 정리했습니다.',
-      '휴대전화 결제는 두 테이블에서 의미가 같은 정산일을 조회 기준으로 적용했습니다.',
-      '결제수단·조회 기준일 조합별로 원장 데이터와 비교해 정합성을 확인했습니다. VIP 고객사에서 발생하던 월 3건 규모의 동일 유형 VoC를 해소했습니다.',
-    ],
-    tech: 'Spring Boot, Vue.js, Oracle',
-  },
-  {
-    period: '2026.02',
-    title: '결제 요청 실패 청구 보정 자동화 및 고착 청구 약 2만 건 일괄 보정',
-    role: '백엔드·배치 개발',
-    points: [
-      '결제 요청에 실패한 청구가 결제중 상태로 남는 문제를 분석했습니다. 전송 로직과 결과 수신 배치, 재선정 조건을 함께 확인해 기존 상태 변경 순서가 중복 출금을 방지하는 역할을 한다고 판단했습니다.',
-      '기존 전송 순서는 유지하고 실패 건을 실행 단위로 수집했습니다. 전송 종료 후 고객 관리 시스템의 현재 서비스 상태를 일괄 조회하는 보정 절차를 추가했습니다.',
-      '이용중지·해지예정·해지 상태인 고객사의 실패 청구로 보정 대상을 제한했습니다.',
-      '과거 고착 청구 약 2만 건을 일괄 보정했습니다. 이후 같은 조건의 실패 청구를 자동 보정해 운영자의 프로덕션 DB 수기 변경 업무와 동일 유형 VoC를 해소했습니다.',
-    ],
-    tech: 'Spring Boot, Spring Batch, Oracle',
-  },
-  {
-    period: '2025.10',
-    title: '외부 연동 실패 처리 공통화 및 운영 알림 자동화',
-    role: '백엔드 개발',
-    points: [
-      '외부 연동 예외가 고객사 화면에 그대로 노출되고 운영자가 문의 이후에 실패를 인지하던 문제를 개선했습니다.',
-      '사용자 요청에 따른 단건 외부 호출에 AOP 기반 공통 실패 처리를 적용했습니다. 원본 예외는 로그에 보관하고 고객사에는 이해할 수 있는 안내 문구를 제공했습니다.',
-      '발생 시각·대상 식별 정보·호출 API·오류 내용을 운영 담당자에게 문자로 전달해 후속 대응에 필요한 정보를 제공했습니다.',
-      '월 10건 규모의 동일 유형 VoC와 오류 문구 수기 수정 업무를 해소했습니다.',
-    ],
-    tech: 'Spring Boot, Spring AOP',
-  },
-  {
-    period: '2024.09 — 2025.06',
-    title: '전자서명 API 연동 및 계약 체결부터 수납 등록까지의 처리 흐름 구현',
-    role: '백엔드·프론트엔드 개발',
-    points: [
-      '종이 자동이체 계약을 비대면 전자계약으로 전환하는 신규 구축에 참여했습니다. 개발자 2명이 화면과 파트너 연동 구현을 분담했습니다. 기획과 파트너사 연동 스펙 협의에도 참여했습니다.',
-      '계약 생성 시 자체 식별자와 콜백 URL을 전달했습니다. 서명 완료 콜백의 식별자로 계약을 찾아 원본 보관과 자동이체 등록까지 이어지도록 구현했습니다.',
-      '개별 발송 이후 추가된 링크 서명 방식에서는 본인인증과 납부자 등록 시점의 차이를 반영해 콜백 이후 처리 흐름을 재구성했습니다.',
-      '서비스 이용 규모는 오픈 초기 누적 20건에서 누적 5,000건으로 증가했습니다.',
-    ],
-    tech: 'Spring Boot, Vue.js, 외부 전자서명 API',
-  },
-];
-
-export const education = [
+const resumeEducation = [
   {
     period: '2026.03 — 현재',
     title: '성균관대학교 일반대학원',
@@ -121,9 +32,11 @@ export const education = [
   },
 ];
 
+export const education = resumeEducation.map((item, index) => ({ ...item, period: profileEducation[index].period }));
+
 export const skills = ['Java', 'Python', 'Spring Boot', 'REST API', 'AWS', 'Spring Framework', 'SQL', 'Oracle', 'MySQL', 'Apache Kafka', 'Docker', 'Git', 'GitHub Actions', 'Redis', 'React', 'Vue.js', 'JavaScript', 'Next.js'];
 
-export const others = [
+const resumeOthers = [
   {
     period: '2024.08',
     kind: '수상',
@@ -188,6 +101,12 @@ export const others = [
     ],
   },
 ];
+
+const normalize = (value: string) => value.replace(/[\s()]/g, '');
+export const others = resumeOthers.map(item => {
+  const fact = [...awards, ...training, ...certifications.map(entry => ({ ...entry, title: entry.name }))].find(entry => normalize(item.title).startsWith(normalize(entry.title)));
+  return fact ? { ...item, period: 'date' in fact ? fact.date : fact.period, org: fact.org } : item;
+});
 
 // AI 활용 경험 — 대학원에서 배운 분석 기법을 적용한 개인 프로젝트
 export const aiExperience = [

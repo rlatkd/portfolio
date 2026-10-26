@@ -9,13 +9,13 @@ function fakeRequest(failure?: string) {
     if (failure === 'http' && path === '/privacy') return new Response('error', { status: 500 });
     if (path === '/sitemap.xml') return new Response(`<loc>${origin}</loc>`);
     if (path === '/rss') return new Response(`<item><link>${failure === 'rss' ? 'https://other.example' : origin}/posts/first</link></item>`);
-    return new Response(`<h1>Page</h1><link rel="canonical" href="${failure === 'canonical' ? 'https://wrong.example' : origin}${path === '/' ? '' : path}">${failure === 'noindex' ? '<meta name="robots" content="noindex, follow">' : ''}${path.startsWith('/posts/') && failure !== 'article' ? '<article>Body</article>BlogPosting' : ''}`);
+    return new Response(`<h1>Page</h1><link rel="canonical" href="${failure === 'canonical' ? 'https://wrong.example' : origin}${path === '/' ? '' : path}">${failure === 'noindex' || path === '/resume' ? '<meta name="robots" content="noindex, follow">' : ''}${path.startsWith('/posts/') && failure !== 'article' ? '<article>Body</article>BlogPosting' : ''}`);
   };
 }
 test('monitor checks public pages and follows one RSS article without executing analytics', async () => {
   const paths = await inspectSite({ origin, request: fakeRequest() });
-  assert.equal(paths.length, 6);
-  assert.ok(!paths.includes('/resume'));
+  assert.equal(paths.length, 7);
+  assert.ok(paths.includes('/resume'));
   assert.ok(!paths.includes('/evidence'));
   assert.ok(paths.includes('/posts/first'));
 });

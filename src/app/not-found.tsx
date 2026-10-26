@@ -16,12 +16,12 @@ export default function NotFound() {
           요청하신 페이지의 주소가 변경·삭제되어 찾을 수 없습니다.
         </p>
         <div className='mt-2 flex w-full flex-col justify-center gap-4 sm:flex-row'>
-          <button
-            onClick={() => window.history.back()}
+          <Link
+            href='/posts'
             className='w-full rounded-full border border-line px-6 py-3 font-mono text-sm uppercase tracking-label text-fg transition-colors hover:border-accent hover:text-accent sm:w-auto'
           >
-            이전 페이지로
-          </button>
+            글 목록으로
+          </Link>
           <Link
             href='/'
             className='w-full rounded-full bg-accent px-6 py-3 text-center font-mono text-sm uppercase tracking-label text-navy transition-opacity hover:opacity-90 sm:w-auto'

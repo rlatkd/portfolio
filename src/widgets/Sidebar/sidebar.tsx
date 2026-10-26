@@ -182,7 +182,7 @@ export default function Sidebar() {
       </div>
 
       {/* 하단: 링크 · 테마 */}
-      <div className='mt-8 flex items-center gap-5 lg:mt-0'>
+      <div className='mt-8 flex flex-wrap items-center gap-2 sm:gap-5 lg:mt-0'>
         {socials.map(({ Icon, href, label }) => (
           <a
             key={label}
@@ -190,7 +190,7 @@ export default function Sidebar() {
             target={href.startsWith('http') ? '_blank' : undefined}
             rel='noopener noreferrer'
             aria-label={label}
-            className='text-muted transition-colors hover:text-fg-strong'
+            className='inline-flex min-h-11 min-w-8 items-center justify-center text-muted transition-colors hover:text-fg-strong'
           >
             <Icon size={20} />
           </a>

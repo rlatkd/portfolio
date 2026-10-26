@@ -62,6 +62,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body className='bg-bg text-fg antialiased min-h-screen'>
+        <a href='#main-content' className='skip-link'>본문 바로가기</a>
         <div className='flex-auto min-w-0 flex flex-col'>
           {children}
 

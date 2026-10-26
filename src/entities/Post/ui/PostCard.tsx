@@ -7,13 +7,14 @@ export type PostCardData = {
   category: string;
   publishedAt: string;
   summary: string;
+  returnTo?: string;
 };
 
 /** 홈 Writing 섹션 · 블로그 아카이브 공용 포스트 카드 */
-export function PostCard({ slug, title, category, publishedAt, summary }: PostCardData) {
+export function PostCard({ slug, title, category, publishedAt, summary, returnTo }: PostCardData) {
   return (
     <Link
-      href={`/posts/${slug}`}
+      href={`/posts/${encodeURIComponent(slug)}${returnTo ? `?from=${encodeURIComponent(returnTo)}` : ''}`}
       className='group block rounded-lg border border-line bg-surface p-6 transition-colors hover:border-accent'
     >
       <div className='mb-2 flex flex-wrap items-center gap-x-3 gap-y-1'>

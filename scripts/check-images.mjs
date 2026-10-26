@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
@@ -36,6 +37,9 @@ const metadataPath = 'src/shared/content/image-metadata.json';
 const metadata = JSON.parse(await fs.readFile(metadataPath, 'utf8'));
 const failures = [];
 const queue = [...urls];
+const backup = process.argv.includes('--backup');
+const snapshots = {};
+if (backup) await fs.mkdir('test-results/image-backup', { recursive: true });
 await Promise.all(Array.from({ length: 4 }, async () => {
   for (;;) {
     const item = queue.shift(); if (!item) break;
@@ -45,12 +49,20 @@ await Promise.all(Array.from({ length: 4 }, async () => {
       const response = await fetch(url, { signal: AbortSignal.timeout(20000) });
       if (!response.ok || !response.headers.get('content-type')?.startsWith('image/')) throw new Error(`HTTP ${response.status}: ${response.headers.get('content-type')}`);
       const reader = response.body.getReader(); const chunks = []; let size = 0;
-      while (size < 262144) { const { done, value } = await reader.read(); if (done) break; chunks.push(value); size += value.length; }
+      const limit = backup ? 10485760 : 262144;
+      while (size < limit) { const { done, value } = await reader.read(); if (done) break; chunks.push(value); size += value.length; }
       await reader.cancel();
+      if (backup) {
+        if (size >= limit) throw new Error('Image exceeds 10 MiB backup limit');
+        const filename = createHash('sha256').update(url).digest('hex');
+        await fs.writeFile(`test-results/image-backup/${filename}`, Buffer.concat(chunks));
+        snapshots[url] = { file: filename, contentType: response.headers.get('content-type'), files };
+      }
       metadata[url] = { ...(metadata[url]?.alt ? { alt: metadata[url].alt, altReviewedAt: metadata[url].altReviewedAt } : {}), ...dimensions(Buffer.concat(chunks)), checkedAt: new Date().toISOString().slice(0,10) };
-    } catch (error) { failures.push({ url, files, error: error.message }); }
+    } catch (error) { failures.push({ url, files, error: error.message, expected: metadata[url]?.unavailable === true }); }
   }
 }));
 if (process.argv.includes('--write')) await fs.writeFile(metadataPath, JSON.stringify(metadata, null, 2) + '\n');
+if (backup) await fs.writeFile('test-results/image-backup/manifest.json', JSON.stringify({ savedAt: new Date().toISOString(), images: snapshots }, null, 2));
 console.log(JSON.stringify({ uniqueImages: urls.size, emptySourceImages: empty, failures, dimensions: Object.values(metadata).filter(item => item.width).length }, null, 2));
-if (failures.length) process.exitCode = 1;
+if (failures.some(item => !item.expected)) process.exitCode = 1;

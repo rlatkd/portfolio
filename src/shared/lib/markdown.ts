@@ -4,6 +4,7 @@ import { cache } from 'react';
 import { getPostContents } from '@/shared/markdown/postContents';
 import type { Post } from '@/shared/types/post';
 import sources from '@/shared/content/velog-sources.json';
+import { getBodyExcerpt } from '@/shared/markdown/excerpt';
 
 function parseFrontmatter(fileContent: string, fileName: string) {
   const match = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/.exec(fileContent);
@@ -26,7 +27,7 @@ function parseFrontmatter(fileContent: string, fileName: string) {
 async function readPosts(): Promise<Post[]> {
   const directory = path.join(process.cwd(), 'src/shared/content/posts');
   const files = (await fs.readdir(directory)).filter(file => file.endsWith('.mdx'));
-  const posts = await Promise.all(files.map(async file => {
+  const posts: Post[] = await Promise.all(files.map(async file => {
     const { metadata, content } = parseFrontmatter(await fs.readFile(path.join(directory, file), 'utf8'), file);
     const slug = path.basename(file, '.mdx').normalize('NFC');
     const source = (sources as Record<string, { url: string; updatedAt: string }>)[slug];
@@ -34,12 +35,13 @@ async function readPosts(): Promise<Post[]> {
     return {
       metadata: {
         index: Number(metadata.index), title: metadata.title, category: metadata.category,
-        publishedAt: metadata.publishedAt, summary: metadata.summary || '', image: metadata.image,
+        publishedAt: metadata.publishedAt, summary: getBodyExcerpt(content), image: metadata.image,
         updatedAt: source?.updatedAt || metadata.publishedAt, sourceUrl: source?.url,
       },
       slug, content, tableContents: getPostContents(content),
     };
   }));
+  if (new Set(posts.map(post => post.slug)).size !== posts.length) throw new Error('Duplicate post slugs');
   const indexes = new Set(posts.map(post => post.metadata.index));
   if (indexes.size !== posts.length) throw new Error('Duplicate post indexes');
   return posts.sort((a, b) => b.metadata.index - a.metadata.index);

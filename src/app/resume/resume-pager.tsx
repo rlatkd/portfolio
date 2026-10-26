@@ -14,8 +14,28 @@ export function ResumePager({ children }: { children: ReactNode }) {
   const [zoom, setZoom] = useState<number | null>(null);
   const viewport = useRef<HTMLDivElement>(null);
   const anchor = useRef<{ x: number; y: number } | null>(null);
-  const scale = zoom ?? fit;
+  const scale = zoom === null ? fit : Math.max(fit, zoom);
   const last = pages.length - 1;
+
+  useEffect(() => {
+    const restore = () => {
+      const hash = new URLSearchParams(location.hash.slice(1));
+      const requested = Number(hash.get('page') || 1);
+      const requestedZoom = Number(hash.get('zoom'));
+      setPage(Number.isInteger(requested) ? Math.max(0, Math.min(last, requested - 1)) : 0);
+      setZoom(requestedZoom > 0 && requestedZoom <= 2 ? requestedZoom : null);
+      viewport.current?.scrollTo({ left: 0, top: 0, behavior: 'instant' });
+    };
+    restore();
+    window.addEventListener('hashchange', restore);
+    return () => window.removeEventListener('hashchange', restore);
+  }, [last]);
+
+  const remember = (nextPage: number, nextZoom: number | null) => {
+    const hash = new URLSearchParams({ page: String(nextPage + 1) });
+    if (nextZoom !== null) hash.set('zoom', String(nextZoom));
+    history.replaceState(null, '', `#${hash}`);
+  };
 
   useEffect(() => {
     const element = viewport.current;
@@ -34,7 +54,9 @@ export function ResumePager({ children }: { children: ReactNode }) {
   }, [scale]);
 
   const changePage = (next: number) => {
-    setPage(Math.max(0, Math.min(last, next)));
+    const nextPage = Math.max(0, Math.min(last, next));
+    setPage(nextPage);
+    remember(nextPage, zoom);
     viewport.current?.scrollTo({ left: 0, top: 0, behavior: 'instant' });
   };
 
@@ -44,7 +66,9 @@ export function ResumePager({ children }: { children: ReactNode }) {
       x: (element.scrollLeft + Math.min(element.clientWidth, WIDTH * scale) / 2) / scale,
       y: (element.scrollTop + Math.min(element.clientHeight, HEIGHT * scale) / 2) / scale,
     };
-    setZoom(Math.max(fit, Math.min(2, Math.round(next * 100) / 100)));
+    const nextZoom = Math.max(fit, Math.min(2, Math.round(next * 100) / 100));
+    setZoom(nextZoom);
+    remember(page, nextZoom);
   };
 
   useEffect(() => {
@@ -55,12 +79,11 @@ export function ResumePager({ children }: { children: ReactNode }) {
       // 확대 중에는 방향키를 문서 내부 스크롤에 사용한다.
       if (zoom !== null && zoom > fit) return;
       event.preventDefault();
-      setPage(current => Math.max(0, Math.min(last, current + (event.key === 'ArrowLeft' ? -1 : 1))));
-      viewport.current?.scrollTo({ left: 0, top: 0, behavior: 'instant' });
+      changePage(page + (event.key === 'ArrowLeft' ? -1 : 1));
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [last, zoom, fit]);
+  }, [last, page, zoom, fit]);
 
   return (
     <div className={styles.viewer}>
@@ -86,7 +109,7 @@ export function ResumePager({ children }: { children: ReactNode }) {
           <button type='button' aria-label='축소' disabled={scale <= fit + .005} onClick={() => changeZoom(scale - .25)}><ZoomOut size={17} /></button>
           <span className={styles.zoomStatus} aria-label='현재 배율'>{Math.round(scale * 100)}%</span>
           <button type='button' aria-label='확대' disabled={scale >= 2} onClick={() => changeZoom(scale + .25)}><ZoomIn size={17} /></button>
-          <button type='button' className={styles.fitButton} aria-label='너비 맞춤' onClick={() => { anchor.current = null; setZoom(null); viewport.current?.scrollTo({ left: 0, top: 0, behavior: 'instant' }); }}><ScanLine size={16} /><span>너비 맞춤</span></button>
+          <button type='button' className={styles.fitButton} aria-label='너비 맞춤' onClick={() => { anchor.current = null; setZoom(null); remember(page, null); viewport.current?.scrollTo({ left: 0, top: 0, behavior: 'instant' }); }}><ScanLine size={16} /><span>너비 맞춤</span></button>
         </div>
       </div>
     </div>

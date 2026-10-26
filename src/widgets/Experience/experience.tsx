@@ -1,39 +1,9 @@
 import { Section, Tags, Row } from '@/shared/ui/Section';
-import { experience, strengths, jobRoles } from '@/shared/data/site-data';
+import { experience, jobRoles } from '@/shared/data/site-data';
 
-type WorkItem = { key: string; date: string; outcome: string; title: string; summary: string };
+import { work } from '@/shared/data/career-data';
 
-// 회사 1줄 + 결과·제목·요약 목록 (최신순). 세부 내용은 이력서(/resume)에서 제공
-const workItems: WorkItem[] = [
-  {
-    key: 'sparrow',
-    date: '2026.09',
-    outcome: '정적 분석 취약점 조치',
-    title: 'Sparrow SAST 정적 분석 기반 보안 취약점 대응',
-    summary: '탐지 항목별 데이터 흐름과 처리 로직 추적 · 기존 기능 영향 범위를 확인해 코드 수정 · 재분석과 동작 확인으로 조치 검증',
-  },
-  {
-    key: 'branch-manager',
-    date: '2026.05',
-    outcome: '결제·정산 도메인 담당',
-    title: '신규 프로젝트 브랜치매니저 플랫폼 구축',
-    summary: '대형 유통기업 전용 B2B 플랫폼 신규 구축 참여 · 다섯 도메인 중 결제·정산 채널 개발',
-  },
-  ...strengths.map((s) => ({
-    key: s.title,
-    date: s.detail.period?.slice(0, 7) ?? '',
-    outcome: s.outcome,
-    title: s.title,
-    summary: s.detail.summary ?? '',
-  })),
-  {
-    key: 'e-contract',
-    date: '2024.09',
-    outcome: '누적 20건 → 5,000건',
-    title: '신규 프로젝트 전자계약 서비스 개발',
-    summary: 'CMS+ 비대면 계약 체결 경로 신규 구축 참여 · 서명 완료부터 자동이체 등록까지 연동 흐름 구현',
-  },
-].sort((a, b) => b.date.localeCompare(a.date));
+const workItems = work.map(item => ({ key: item.id, date: item.period, ...item.main }));
 
 export default function Experience() {
   const job = experience.find((e) => e.id === 'hyosung-fms');

@@ -44,9 +44,11 @@ export default async function Page({ searchParams }: Props) {
         {listing.category && <input type='hidden' name='category' value={listing.category} />}
         <button className='rounded bg-accent px-4 py-2 text-on-accent'>검색</button>
       </form>
+      <p className='mb-4 text-xs text-muted'>제목·요약·카테고리에서 검색합니다. 본문 전체 검색은 제공하지 않습니다.</p>
+      {(listing.search || listing.category) && <a href='/posts' className='mb-4 inline-block rounded border border-line px-3 py-2 text-sm text-accent'>검색·필터 초기화</a>}
       {listing.search && <p role='status' className='mb-4 text-muted'>“{listing.search}” 검색 결과 {listing.total}개</p>}
       <div className='mb-8'><Categories categories={listing.categories} selectedCategory={listing.category || ''} search={listing.search} /></div>
-      <Posts posts={listing.posts} />
+      <Posts posts={listing.posts} returnTo={listingUrl(listing.page, listing.category, listing.search)} />
       <Pagination currentPage={listing.page} lastPage={listing.lastPage} category={listing.category} search={listing.search} />
     </section>
   );

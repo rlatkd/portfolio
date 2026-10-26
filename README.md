@@ -48,7 +48,7 @@ pnpm dev
 | `pnpm run check` | 타입 검사, 단위 테스트, 프로덕션 빌드 |
 | `pnpm run test:e2e` | 브라우저 테스트 |
 
-브라우저 테스트는 빌드 후 실행합니다. 로컬에서는 Chrome을, CI에서는 Playwright Chromium을 사용합니다.
+브라우저 테스트는 빌드 후 실행합니다. 로컬에서는 Chrome을, CI에서는 Playwright Chromium을 사용합니다. 주요 개선 시나리오는 모바일 WebKit에서도 검사합니다. 최초 실행 전 `pnpm exec playwright install chromium webkit`으로 브라우저를 설치합니다.
 
 ## 프로젝트 구조
 
@@ -67,12 +67,14 @@ tests/         # 단위 테스트와 브라우저 테스트
 
 ## 콘텐츠 관리
 
-- 경력·프로젝트 정보: `src/shared/data/site-data.tsx`
+- 수행 과제·역할: `src/shared/data/career-data.ts`
+- 학력·교육·수상·자격: `src/shared/data/profile-data.ts`
+- 프로젝트·소개와 상세 사례: `src/shared/data/site-data.tsx`
 - 블로그 본문: `src/shared/content/posts/*.mdx`
 - 글 출처·수정일: `src/shared/content/velog-sources.json`
 - 홈 Writing: 발행일 기준 최신 글 3개 자동 노출 (같은 발행일은 `index` 내림차순)
 
-글 목록은 편집 순서인 `index` 내림차순이며, RSS는 발행일 내림차순입니다. 검색은 제목·요약·카테고리를 대상으로 합니다. 전화번호와 자격 식별번호는 공개 데이터에 넣지 않습니다.
+글 목록은 편집 순서인 `index` 내림차순이며, RSS는 발행일 내림차순입니다. 카드·추천·RSS·검색 설명에는 원본 본문의 앞 160자를 사용하며 Markdown 표시와 이미지 주소는 제외합니다. 긴 글에는 말줄임표를 붙입니다. 별도로 작성한 요약문은 사용하지 않습니다. 검색은 제목·본문 발췌·카테고리를 대상으로 합니다. 전화번호와 자격 식별번호는 공개 데이터에 넣지 않습니다.
 
 `src/package.json`과 `tests/package.json`은 소스와 테스트를 ESM으로 명시합니다. ESM 전용 Markdown 의존성을 테스트에서 CommonJS로 변환하지 않도록 하며, 루트의 Next.js·Tailwind 설정은 기존 CommonJS를 유지합니다. Markdown 파일은 `.gitattributes`에서 LF 줄바꿈을 사용하도록 지정합니다.
 
@@ -81,3 +83,5 @@ tests/         # 단위 테스트와 브라우저 테스트
 블로그는 [직접 작성한 Velog 글](https://velog.io/@kata/posts)을 가져와 제공합니다. `.mdx` 확장자를 유지하되, 본문은 HTML과 GFM을 지원하는 Markdown으로 렌더링합니다.
 
 콘텐츠 동기화와 배포 후 점검 방법은 [운영 문서](docs/operations.md)를 참고하세요.
+
+2026-10-26 개선 범위와 외부 확인 사항은 [개선 반영 기록](docs/improvements-2026-10-26.md)에 정리했습니다. 주간 외부 링크·이미지 점검은 `External content health` 워크플로에서 수행합니다.

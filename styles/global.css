@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.skip-link{position:fixed;top:8px;left:8px;z-index:100;transform:translateY(-160%);padding:10px 16px;border-radius:6px;background:var(--accent);color:var(--on-accent)}
+.skip-link:focus{transform:translateY(0)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
 /* ───────────────────────── 폰트 (restyart 동일: 산세리프 Pretendard) ───────────────────────── */
 :root {
   --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;

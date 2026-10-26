@@ -1,4 +1,4 @@
-export const monitoredPaths = ['/', '/posts', '/sitemap.xml', '/rss', '/privacy'];
+export const monitoredPaths = ['/', '/posts', '/sitemap.xml', '/rss', '/privacy', '/resume'];
 const decodeXml = text => text.replaceAll('&amp;', '&').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"').replaceAll('&apos;', "'");
 
 export async function inspectSite({ origin, canonicalOrigin = origin, request = fetch }) {
@@ -33,5 +33,6 @@ export async function inspectSite({ origin, canonicalOrigin = origin, request = 
 function assertPage(body, endpoint, origin) {
   const canonical = origin + (endpoint === '/' ? '' : endpoint);
   if (!body.includes('<h1') || !body.includes(`rel="canonical" href="${canonical}"`)) throw new Error(`${endpoint}: missing content or incorrect canonical`);
-  if (/<meta name="robots" content="[^"]*noindex/.test(body)) throw new Error(`${endpoint}: unexpected noindex`);
+  const noindex = /<meta name="robots" content="[^"]*noindex/.test(body);
+  if (endpoint === '/resume' ? !noindex : noindex) throw new Error(`${endpoint}: incorrect indexing policy`);
 }
