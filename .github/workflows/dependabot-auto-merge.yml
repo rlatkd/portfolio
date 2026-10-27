@@ -27,7 +27,7 @@ jobs:
     outputs:
       numbers: ${{ steps.prs.outputs.result }}
     steps:
-      - uses: actions/github-script@60a0d830c74a4aee543508d2ffcb1c3799cdea35 # v7
+      - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         id: prs
         with:
           script: |
@@ -58,7 +58,7 @@ jobs:
         with:
           ref: refs/heads/main
           persist-credentials: false
-      - uses: actions/github-script@60a0d830c74a4aee543508d2ffcb1c3799cdea35 # v7
+      - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         id: prepare
         env:
           PR_NUMBER: ${{ matrix.number }}
@@ -84,7 +84,7 @@ jobs:
         if: steps.prepare.outputs.valid == 'true'
         with:
           github-token: ${{ github.token }}
-      - uses: actions/github-script@60a0d830c74a4aee543508d2ffcb1c3799cdea35 # v7
+      - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         if: steps.prepare.outputs.valid == 'true'
         env:
           PR_NUMBER: ${{ matrix.number }}
