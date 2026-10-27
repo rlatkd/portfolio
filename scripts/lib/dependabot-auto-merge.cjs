@@ -2,15 +2,31 @@ const { isDeepStrictEqual } = require('node:util');
 
 const REQUIRED_CHECK = 'check';
 
-function metadataEligible(dependencies) {
-  return Array.isArray(dependencies) && dependencies.length > 0 && dependencies.every(dep =>
-    dep.packageEcosystem === 'npm_and_yarn' && dep.directory === '/' &&
-    dep.targetBranch === 'main' && dep.updateType === 'version-update:semver-patch' &&
-    ['direct:production', 'direct:development'].includes(dep.dependencyType) &&
-    dep.maintainerChanges === false);
+// Accept only Dependabot's small, scalar metadata format, never arbitrary YAML.
+// This message is used only after GitHub verifies its bot author and signature.
+function signedPatchUpdates(message) {
+  const block = /^---\nupdated-dependencies:\n([\s\S]+?)^\.\.\.(?:\n|$)/m.exec((message || '').replace(/\r\n/g, '\n'));
+  if (!block) return null;
+  const entries = block[1].trimEnd().split(/\n(?=- dependency-name:)/);
+  const updates = [];
+  for (const entry of entries) {
+    const fields = new Map();
+    for (const line of entry.split('\n')) {
+      const match = /^(?:- |  )(dependency-name|dependency-version|dependency-type|update-type|dependency-group): (.+)$/.exec(line);
+      if (!match || fields.has(match[1])) return null;
+      fields.set(match[1], match[2]);
+    }
+    const name = /^(['"]?)([@a-zA-Z0-9_./-]+)\1$/.exec(fields.get('dependency-name') || '')?.[2];
+    const type = fields.get('dependency-type');
+    if (!name || !['direct:production', 'direct:development'].includes(type) ||
+        fields.get('update-type') !== 'version-update:semver-patch') return null;
+    updates.push({ name, section: type === 'direct:production' ? 'dependencies' : 'devDependencies' });
+  }
+  return updates.length > 0 && new Set(updates.map(update => update.name)).size === updates.length ? updates : null;
 }
 
-function manifestEligible(before, after, dependencies) {
+function manifestEligible(before, after, updates) {
+  if (!Array.isArray(updates) || updates.length === 0) return false;
   const sections = ['dependencies', 'devDependencies'];
   const omitDependencies = manifest => Object.fromEntries(Object.entries(manifest).filter(([key]) => !sections.includes(key)));
   if (!isDeepStrictEqual(omitDependencies(before), omitDependencies(after))) return false;
@@ -21,17 +37,19 @@ function manifestEligible(before, after, dependencies) {
     if (!isDeepStrictEqual(Object.keys(oldDeps).sort(), Object.keys(newDeps).sort())) return false;
     for (const name of Object.keys(oldDeps)) {
       if (oldDeps[name] === newDeps[name]) continue;
-      // Keep the range operator, major and minor. Reject prereleases, aliases,
-      // tags, URLs, downgrades and changes to package installation scripts.
+      // The signed metadata describes resolved versions. A patch can raise a
+      // stale manifest minimum across a minor (e.g. ^8.4.35 -> ^8.5.31).
+      // Still reject range changes, majors, prereleases, aliases and downgrades.
       const oldVersion = /^(\^|~?)(\d+)\.(\d+)\.(\d+)$/.exec(oldDeps[name]);
       const newVersion = /^(\^|~?)(\d+)\.(\d+)\.(\d+)$/.exec(newDeps[name]);
-      if (!oldVersion || !newVersion || oldVersion.slice(1, 4).join('.') !== newVersion.slice(1, 4).join('.') ||
-          Number(newVersion[4]) <= Number(oldVersion[4])) return false;
+      if (!oldVersion || !newVersion || oldVersion.slice(1, 3).join('.') !== newVersion.slice(1, 3).join('.') ||
+          Number(newVersion[3]) < Number(oldVersion[3]) ||
+          (newVersion[3] === oldVersion[3] && Number(newVersion[4]) <= Number(oldVersion[4])) ||
+          !updates.some(update => update.name === name && update.section === section)) return false;
       changed.add(name);
     }
   }
-  return changed.size > 0 && changed.size === dependencies.length &&
-    dependencies.every(dep => changed.has(dep.dependencyName));
+  return changed.size === updates.length && updates.every(update => changed.has(update.name));
 }
 
 function protectionReady(repository) {
@@ -52,9 +70,13 @@ async function run({ github, context, core, env }) {
       pr.head.repo?.full_name !== `${args.owner}/${args.repo}` || pr.head.sha !== env.EXPECTED_SHA) {
     return skip('PR identity or head changed; not enabling auto-merge.');
   }
-  const dependencies = JSON.parse(env.UPDATED_DEPENDENCIES || '[]');
   const files = await github.paginate(github.rest.pulls.listFiles, { ...args, per_page: 100 });
-  let eligible = metadataEligible(dependencies) && files.length === 2 &&
+  const commits = await github.paginate(github.rest.pulls.listCommits, { ...args, per_page: 100 });
+  const signedBotCommits = commits.length > 0 && commits.some(commit => commit.sha === env.EXPECTED_SHA) &&
+    commits.every(commit => commit.author?.login === 'dependabot[bot]' && commit.commit?.verification?.verified === true);
+  const updates = signedPatchUpdates(commits.find(commit => commit.sha === env.EXPECTED_SHA)?.commit?.message);
+  let eligible = signedBotCommits && pr.head.ref?.startsWith('dependabot/npm_and_yarn/') &&
+    !/Maintainer changes/i.test(pr.body || '') && files.length === 2 &&
     files.every(file => ['package.json', 'pnpm-lock.yaml'].includes(file.filename) && file.status === 'modified');
   if (eligible) {
     const readManifest = async ref => {
@@ -63,7 +85,7 @@ async function run({ github, context, core, env }) {
       return JSON.parse(Buffer.from(data.content, 'base64').toString('utf8'));
     };
     const [before, after] = await Promise.all([readManifest(pr.base.sha), readManifest(pr.head.sha)]);
-    eligible = manifestEligible(before, after, dependencies);
+    eligible = manifestEligible(before, after, updates);
   }
   const dryRun = env.DRY_RUN === 'true' || env.AUTO_MERGE_ENABLED !== 'true';
   if (!eligible) {
@@ -73,7 +95,6 @@ async function run({ github, context, core, env }) {
     }
     return skip('Manual review required: only root npm patch-only manifest/lockfile updates are eligible.');
   }
-  if (dryRun) return skip('Eligible npm patch PR; dry run or repository variable disabled, no changes made.');
   const { repository } = await github.graphql(`query($owner: String!, $repo: String!, $number: Int!) {
     repository(owner: $owner, name: $repo) {
       autoMergeAllowed squashMergeAllowed
@@ -89,8 +110,11 @@ async function run({ github, context, core, env }) {
     }
   }`, { ...context.repo, number: args.pull_number });
   if (!protectionReady(repository)) {
-    throw new Error('Auto-merge stopped: configure main protection and required check first. See docs/dependabot-auto-merge.md.');
+    const reason = 'Eligible patch PR, but auto-merge is not ready: enable auto-merge/squash and add GitHub Actions check as a required status check on main with up-to-date branches. See docs/dependabot-auto-merge.md.';
+    if (dryRun) return skip(reason);
+    throw new Error(reason);
   }
+  if (dryRun) return skip('Eligible npm patch PR; protection verified. Dry run or repository variable disabled, no changes made.');
   const { data: latest } = await github.rest.pulls.get(args);
   if (latest.head.sha !== env.EXPECTED_SHA || latest.state !== 'open' || latest.draft || latest.base.ref !== 'main') {
     return skip('PR changed during inspection; wait for the next run.');
@@ -111,4 +135,4 @@ async function run({ github, context, core, env }) {
   skip('Auto-merge enabled; GitHub enforces required CI, current main and any required reviews.');
 }
 
-module.exports = { metadataEligible, manifestEligible, protectionReady, run };
+module.exports = { signedPatchUpdates, manifestEligible, protectionReady, run };

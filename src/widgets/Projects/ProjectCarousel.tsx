@@ -8,7 +8,7 @@ import type { Project } from '@/shared/types/portfolio';
 
 const INTERVAL = 3500;
 
-// Auto-advance pauses for reading, keyboard navigation and reduced-motion preferences.
+// Pause on image hover, keyboard navigation and reduced-motion preferences.
 export default function ProjectCarousel({ projects }: { projects: Project[] }) {
   const [index, setIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
@@ -33,8 +33,6 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
       aria-roledescription='carousel'
       aria-label='프로젝트 목록'
       role='region'
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       onFocus={() => setFocused(true)}
       onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
     >
@@ -53,6 +51,8 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
                   rel={p.href ? 'noopener noreferrer' : undefined}
                   aria-label={p.href ? `${p.title} GitHub` : undefined}
                   tabIndex={active ? undefined : -1}
+                  onMouseEnter={() => setHovered(true)}
+                  onMouseLeave={() => setHovered(false)}
                   className='group block overflow-hidden rounded-lg border border-line'
                 >
                   <Image

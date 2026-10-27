@@ -64,7 +64,6 @@ jobs:
           PR_NUMBER: ${{ matrix.number }}
         with:
           script: |
-            const fs = require('node:fs');
             const { data: pr } = await github.rest.pulls.get({
               ...context.repo, pull_number: Number(process.env.PR_NUMBER),
             });
@@ -74,22 +73,11 @@ jobs:
             core.setOutput('valid', String(valid));
             if (!valid) return;
             core.setOutput('sha', pr.head.sha);
-            // fetch-metadata also verifies the head commit's bot identity and signature.
-            // Supply the same API-fetched PR payload for manual and push-triggered runs.
-            fs.writeFileSync(process.env.GITHUB_EVENT_PATH, JSON.stringify({
-              ...context.payload, pull_request: pr,
-            }));
-      - uses: dependabot/fetch-metadata@d7267f607e9d3fb96fc2fbe83e0af444713e90b7
-        id: metadata
-        if: steps.prepare.outputs.valid == 'true'
-        with:
-          github-token: ${{ github.token }}
       - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         if: steps.prepare.outputs.valid == 'true'
         env:
           PR_NUMBER: ${{ matrix.number }}
           EXPECTED_SHA: ${{ steps.prepare.outputs.sha }}
-          UPDATED_DEPENDENCIES: ${{ steps.metadata.outputs.updated-dependencies-json }}
           AUTO_MERGE_ENABLED: ${{ vars.DEPENDABOT_AUTO_MERGE_ENABLED }}
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
         with:

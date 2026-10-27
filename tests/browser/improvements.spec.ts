@@ -45,7 +45,7 @@ test('resume restores location and no page content is clipped', async ({ page, b
   await expect(page).toHaveURL(/\/resume#page=5$/);
 });
 
-test('security headers are present and projects auto-advance with reading controls', async ({ page, request }) => {
+test('security headers are present and projects auto-advance with reading controls', async ({ page, request, browserName }) => {
   const response = await request.get('/');
   expect(response.headers()['x-content-type-options']).toBe('nosniff');
   expect(response.headers()['content-security-policy-report-only']).toContain("object-src 'none'");
@@ -54,6 +54,17 @@ test('security headers are present and projects auto-advance with reading contro
   const first = page.locator('#projects li[aria-hidden="false"] h3');
   const title = await first.innerText();
   await expect(first).not.toHaveText(title, { timeout: 6000 });
+  if (browserName === 'chromium') {
+    const progress = page.locator('[data-project-progress]');
+    await page.locator('#projects li[aria-hidden="false"] img').hover();
+    await expect(progress).toHaveCSS('animation-play-state', 'paused');
+    const hoveredTitle = await first.innerText();
+    await page.waitForTimeout(3800);
+    await expect(first).toHaveText(hoveredTitle);
+    await first.hover();
+    await expect(progress).toHaveCSS('animation-play-state', 'running');
+    await expect(first).not.toHaveText(hoveredTitle, { timeout: 6000 });
+  }
   await expect(page.getByRole('button', { name: '프로젝트 자동 전환 정지' })).toHaveCount(0);
   await page.getByRole('button', { name: '다음 프로젝트' }).focus();
   const pausedTitle = await first.innerText();

@@ -4,7 +4,8 @@
 
 - 대상: 같은 저장소에서 Dependabot이 만든 `main` 대상 PR.
 - 루트 npm 패키지의 **patch 업데이트만** 허용한다. 묶음 PR도 모든 업데이트가 patch여야 한다.
-- 서명된 Dependabot 커밋의 메타데이터를 검사한다. PR 제목이나 라벨만으로 판단하지 않는다.
+- GitHub API로 PR 작성자와 모든 PR 커밋의 Dependabot 작성자·서명을 확인하고, 실제 package.json 변경을 비교한다. PR 제목이나 라벨만으로 판단하지 않는다. 신규·기존 PR 모두 이벤트의 pull_request 필드에 의존하지 않는다.
+- patch 여부는 서명된 head 커밋의 구조화된 업데이트 선언으로 판단한다. 예를 들어 실제 설치 버전이 `8.5.23 → 8.5.31`인 patch라면, 오래된 package.json 범위가 `^8.4.35 → ^8.5.31`로 갱신되어도 허용한다. 선언이 없거나 형식이 불명확하면 수동 검토한다.
 - 변경 파일은 `package.json`과 `pnpm-lock.yaml`만 허용한다. 패키지 추가/삭제, 버전 범위 연산자 변경, minor/major, prerelease, 스크립트 변경은 수동 검토한다.
 - GitHub Actions 업데이트와 lockfile만 변경하는 업데이트도 수동 검토한다.
 - 자동 승인이나 보호 규칙 우회, 브랜치 갱신, 강제 머지는 하지 않는다.
@@ -20,6 +21,7 @@
 2. **Settings → Branches → Add classic branch protection rule**에서 정확히 `main`을 지정한다.
    - `Require a pull request before merging`: 끈다.
    - `Require status checks to pass before merging`: 켠다. GitHub Actions의 `check`를 필수 검사로 지정한다. 화면에는 `Validate / check`로 표시될 수 있다.
+     검색란에 입력만 하지 말고 검색 결과의 `check`를 선택해 필수 검사 목록에 추가한 뒤 저장한다. 체크박스만 켜고 검사 목록을 비워 두면 자동 머지는 중단된다.
    - `Require branches to be up to date before merging`: 켠다.
    - `Require conversation resolution before merging`: 켠다.
    - `Do not allow bypassing the above settings`: 끈다. 관리자인 소유자가 main에 직접 푸시할 수 있게 한다.
@@ -46,6 +48,7 @@ gh variable set DEPENDABOT_AUTO_MERGE_ENABLED --body true --repo rlatkd/portfoli
 - main이 갱신될 때는 열린 Dependabot PR 전체를 다시 평가한다.
 - 기존 PR은 삭제하거나 다시 만들 필요 없다. 수동 실행으로도 전체를 평가할 수 있다.
 - `dry_run`은 PR과 설정을 변경하지 않는다. 저장소 변수가 없거나 `true`가 아니어도 변경하지 않는다.
+- 적격 patch PR의 dry-run은 보호 규칙도 읽어 설정 누락을 안내한다. 실제 변경 모드에서는 설정 누락 시 머지하지 않고 실패한다.
 - 기존 PR이 오래된 main 기반이면 보호 규칙에 의해 대기한다. PR에서 `@dependabot rebase`로 갱신을 요청하고 CI가 다시 통과하는지 확인한다.
 - 기존에 auto-merge를 켠 PR이 이후 정책을 벗어나면, 활성 상태의 자동화가 재평가할 때 auto-merge를 해제한다.
 - 실패한 CI를 건너뛰거나 테스트를 재시도해서 통과시키는 로직은 없다.
