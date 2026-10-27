@@ -362,7 +362,7 @@ export const projects: Project[] = [
     points: [
       'Next.js App Router 기반 포트폴리오와 Markdown 기술 블로그를 개발했습니다.',
       'DB 없이 파일 기반 콘텐츠를 제공하며, 라이트·다크 테마와 반응형 화면을 구성했습니다.',
-      'Velog 원문을 보존하고 서버 컴포넌트에서 렌더링하며, 출처·SEO 메타데이터와 자동 검증을 별도로 관리합니다.',
+      '글 검색·카테고리 필터·목차 탐색을 제공하고, 페이지별 메타데이터·사이트맵·RSS를 구성했습니다.',
     ],
     tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Markdown', 'Playwright'],
     href: 'https://github.com/rlatkd/portfolio',

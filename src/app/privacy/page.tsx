@@ -12,7 +12,7 @@ export default function Privacy() {
     <p>Vercel 분석 도구는 방문 통계와 로딩·응답 성능을 처리합니다. Google과 Vercel의 실제 보관 기간 및 처리는 각 서비스 설정과 정책에 따릅니다.</p>
     <ul className='list-disc pl-5'><li><a className='text-accent underline' href='https://policies.google.com/privacy'>Google 개인정보처리방침</a></li><li><a className='text-accent underline' href='https://vercel.com/docs/analytics/privacy-policy'>Vercel Web Analytics 개인정보 안내</a></li><li><a className='text-accent underline' href='https://tools.google.com/dlpage/gaoptout'>Google Analytics 수집 거부 도구</a></li></ul>
     <h2 className='mt-8 text-xl font-bold'>외부 콘텐츠와 브라우저 저장</h2>
-    <p>블로그 이미지는 Velog 등 원문 이미지 서버에서, 글꼴은 jsDelivr에서 불러옵니다. 해당 서버에 접속 정보가 전달될 수 있습니다. 테마 선택은 브라우저 로컬 저장소에 저장됩니다.</p>
+    <p>블로그에 포함된 외부 이미지는 해당 이미지 서버에서, 글꼴은 jsDelivr에서 불러옵니다. 해당 서버에 접속 정보가 전달될 수 있습니다. 테마 선택은 브라우저 로컬 저장소에 저장됩니다.</p>
     <h2 className='mt-8 text-xl font-bold'>문의</h2>
     <p>이메일로 보낸 내용은 문의에 답변하는 데 사용됩니다. 문의: <a className='text-accent underline' href={`mailto:${profile.email}`}>{profile.email}</a></p>
   </main>;

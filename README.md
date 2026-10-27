@@ -2,7 +2,7 @@
 
 **실무 경험, 직접 만든 프로젝트, 공부하며 남긴 기술 기록.**
 
-소프트웨어 엔지니어 김상훈의 개인 웹사이트입니다. 금융 도메인에서의 개발 경험과 프로젝트를 소개하고, Velog에 작성한 글을 검색하고 읽을 수 있는 블로그를 함께 운영합니다.
+소프트웨어 엔지니어 김상훈의 개인 웹사이트입니다. 금융 도메인에서의 개발 경험과 프로젝트를 소개하고, 개발하며 배운 내용을 기술 블로그에 기록합니다.
 
 [사이트 방문](https://www.sanghunkim.com) · [기술 블로그](https://www.sanghunkim.com/posts) · [이력서](https://www.sanghunkim.com/resume) · [Velog](https://velog.io/@kata/posts)
 
@@ -19,7 +19,7 @@
 
 ## 구현 방식
 
-- **콘텐츠는 저장소에서 관리합니다.** 경력·프로젝트는 데이터 파일로, 블로그 본문은 Markdown으로 관리합니다. Velog 원문을 동기화한 뒤 검토와 빌드를 거쳐 반영합니다.
+- **콘텐츠는 저장소에서 관리합니다.** 경력·프로젝트는 데이터 파일로, 블로그 본문은 Markdown으로 관리합니다.
 - **본문과 상호작용을 나눴습니다.** App Router와 서버 컴포넌트를 바탕으로 페이지를 구성하고, 검색 입력·테마 전환·캐러셀·이력서 뷰어에는 클라이언트 컴포넌트를 사용합니다.
 - **실제 사용 흐름을 검증합니다.** 콘텐츠·렌더링·URL 처리의 단위 테스트와 함께 글 탐색, 코드 복사, 테마 유지, 이력서 이동·인쇄를 브라우저에서 검사합니다.
 
@@ -62,8 +62,8 @@ E2E 테스트는 빌드 결과를 사용하며 테스트 서버를 자동으로 
 | 명령어 | 용도 |
 | --- | --- |
 | `pnpm build` / `pnpm start` | 프로덕션 빌드 / 서버 실행 |
-| `pnpm content:check` | Velog 원문과 로컬 콘텐츠의 차이 확인 |
-| `pnpm content:sync` | 원문 변경 반영 후 검토 |
+| `pnpm content:check` | 콘텐츠 변경 확인 |
+| `pnpm content:sync` | 콘텐츠 변경 반영 |
 | `pnpm monitor` | 운영 사이트의 응답·본문·메타데이터 점검 |
 | `pnpm images:check` / `pnpm links:check` | 외부 이미지 / 링크 점검 |
 
@@ -77,7 +77,7 @@ src/
 ├── entities/            글 카드 · 목록 · 페이지네이션 · 목차
 └── shared/
     ├── data/            경력 · 프로필 · 프로젝트
-    ├── content/         블로그 본문 · 원문 출처
+    ├── content/         블로그 본문 · 메타데이터
     ├── markdown/        본문 렌더링
     └── …                공통 UI · 설정 · 유틸리티
 public/                  이미지 · 글꼴 · 공개 실험 결과
@@ -89,7 +89,5 @@ tests/                   단위 테스트 · 브라우저 테스트
 
 ## 운영 문서
 
-- [콘텐츠 동기화와 배포 후 점검](docs/operations.md)
-- [Dependabot 자동 머지 정책과 GitHub 설정](docs/dependabot-auto-merge.md)
-- [개선·검증 기록](docs/validation.md)
+- [콘텐츠 관리와 배포 후 점검](docs/operations.md)
 - [남은 작업](docs/TODO.md)
