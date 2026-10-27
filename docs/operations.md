@@ -33,7 +33,7 @@ GitHub Actions의 Production availability 워크플로는 30분마다 운영 HTT
 
 ## 의존성
 
-Dependabot은 npm 패키지와 GitHub Actions 업데이트 PR을 주 단위로 제안합니다. 자동 병합하지 않으며 CI 결과와 주요 버전 변경 내용을 검토합니다. `pnpm audit --prod`는 CI에서 실행합니다. `pnpm audit`로 개발 의존성도 점검합니다.
+Dependabot은 npm 패키지와 GitHub Actions 업데이트 PR을 주 단위로 제안합니다. npm patch 업데이트에 한해 보호 규칙과 필수 CI를 적용하는 자동 머지 워크플로를 제공합니다. GitHub 설정과 저장소 변수로 활성화해야 하며, minor·major와 GitHub Actions 업데이트는 수동 검토합니다. 기존 PR 평가, 활성화와 중지 방법은 [자동 머지 안내](dependabot-auto-merge.md)를 참고합니다. `pnpm audit --prod`는 CI에서 실행합니다. `pnpm audit`로 개발 의존성도 점검합니다.
 
 pnpm-workspace.yaml의 override는 하위 의존성의 보안 수정 버전을 고정합니다. 상위 패키지가 해당 버전을 기본 포함하게 되면 override를 제거하고 lockfile 갱신·전체 검증을 수행합니다. `braces`는 실제 배포된 수정 버전이 확인되기 전까지 존재하지 않는 버전으로 덮어쓰지 않습니다.
 

@@ -6,8 +6,14 @@ updates:
       interval: weekly
     open-pull-requests-limit: 5
     groups:
-      development:
+      development-patches:
         dependency-type: development
+        update-types:
+          - patch
+      development-minors:
+        dependency-type: development
+        update-types:
+          - minor
   - package-ecosystem: github-actions
     directory: /
     schedule:

@@ -18,12 +18,16 @@ export function ResumePager({ children }: { children: ReactNode }) {
   const last = pages.length - 1;
 
   useEffect(() => {
-    const restore = () => {
-      const hash = new URLSearchParams(location.hash.slice(1));
+    const restore = (event?: HashChangeEvent) => {
+      // A router history update can run before this queued hashchange handler.
+      // Use the navigation's destination, then keep the router URL in sync too.
+      const url = new URL(event?.newURL || location.href);
+      const hash = new URLSearchParams(url.hash.slice(1));
       const requested = Number(hash.get('page') || 1);
       const requestedZoom = Number(hash.get('zoom'));
       setPage(Number.isInteger(requested) ? Math.max(0, Math.min(last, requested - 1)) : 0);
       setZoom(requestedZoom > 0 && requestedZoom <= 2 ? requestedZoom : null);
+      if (event) history.replaceState(null, '', url.href);
       viewport.current?.scrollTo({ left: 0, top: 0, behavior: 'instant' });
     };
     restore();

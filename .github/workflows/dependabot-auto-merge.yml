@@ -1,0 +1,98 @@
+name: Dependabot auto-merge
+
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, reopened, synchronize, ready_for_review, edited]
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Report eligible existing PRs without enabling auto-merge'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  discover:
+    if: >-
+      github.repository == 'rlatkd/portfolio' &&
+      (github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main') &&
+      (github.event_name != 'pull_request_target' || github.event.pull_request.user.login == 'dependabot[bot]')
+    runs-on: ubuntu-latest
+    outputs:
+      numbers: ${{ steps.prs.outputs.result }}
+    steps:
+      - uses: actions/github-script@60a0d830c74a4aee543508d2ffcb1c3799cdea35 # v7
+        id: prs
+        with:
+          script: |
+            if (context.payload.pull_request) return [context.payload.pull_request.number];
+            const prs = await github.paginate(github.rest.pulls.list, {
+              ...context.repo, state: 'open', base: 'main', per_page: 100,
+            });
+            return prs.filter(pr => pr.user.login === 'dependabot[bot]').map(pr => pr.number);
+
+  auto-merge:
+    needs: discover
+    if: needs.discover.outputs.numbers != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    strategy:
+      fail-fast: false
+      matrix:
+        number: ${{ fromJSON(needs.discover.outputs.numbers) }}
+    concurrency:
+      group: dependabot-auto-merge-${{ matrix.number }}
+      cancel-in-progress: false
+    steps:
+      # Never check out a PR branch or execute code/install dependencies from it.
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: refs/heads/main
+          persist-credentials: false
+      - uses: actions/github-script@60a0d830c74a4aee543508d2ffcb1c3799cdea35 # v7
+        id: prepare
+        env:
+          PR_NUMBER: ${{ matrix.number }}
+        with:
+          script: |
+            const fs = require('node:fs');
+            const { data: pr } = await github.rest.pulls.get({
+              ...context.repo, pull_number: Number(process.env.PR_NUMBER),
+            });
+            const valid = pr.state === 'open' && !pr.draft &&
+              pr.user.login === 'dependabot[bot]' && pr.base.ref === 'main' &&
+              pr.head.repo?.full_name === `${context.repo.owner}/${context.repo.repo}`;
+            core.setOutput('valid', String(valid));
+            if (!valid) return;
+            core.setOutput('sha', pr.head.sha);
+            // fetch-metadata also verifies the head commit's bot identity and signature.
+            // Supply the same API-fetched PR payload for manual and push-triggered runs.
+            fs.writeFileSync(process.env.GITHUB_EVENT_PATH, JSON.stringify({
+              ...context.payload, pull_request: pr,
+            }));
+      - uses: dependabot/fetch-metadata@d7267f607e9d3fb96fc2fbe83e0af444713e90b7
+        id: metadata
+        if: steps.prepare.outputs.valid == 'true'
+        with:
+          github-token: ${{ github.token }}
+      - uses: actions/github-script@60a0d830c74a4aee543508d2ffcb1c3799cdea35 # v7
+        if: steps.prepare.outputs.valid == 'true'
+        env:
+          PR_NUMBER: ${{ matrix.number }}
+          EXPECTED_SHA: ${{ steps.prepare.outputs.sha }}
+          UPDATED_DEPENDENCIES: ${{ steps.metadata.outputs.updated-dependencies-json }}
+          AUTO_MERGE_ENABLED: ${{ vars.DEPENDABOT_AUTO_MERGE_ENABLED }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
+        with:
+          script: |
+            const { run } = require(`${process.env.GITHUB_WORKSPACE}/scripts/lib/dependabot-auto-merge.cjs`);
+            await run({ github, context, core, env: process.env });

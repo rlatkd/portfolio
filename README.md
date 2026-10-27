@@ -1,31 +1,39 @@
-# 김상훈 포트폴리오
+# Sanghun Kim · Portfolio
 
-경력과 프로젝트, 기술 기록을 소개하는 개인 포트폴리오 웹사이트입니다.
+**실무 경험, 직접 만든 프로젝트, 공부하며 남긴 기술 기록.**
 
-**[웹사이트 바로가기](https://www.sanghunkim.com)** · [Velog](https://velog.io/@kata/posts)
+소프트웨어 엔지니어 김상훈의 개인 웹사이트입니다. 금융 도메인에서의 개발 경험과 프로젝트를 소개하고, Velog에 작성한 글을 검색하고 읽을 수 있는 블로그를 함께 운영합니다.
 
-## 주요 기능
+[사이트 방문](https://www.sanghunkim.com) · [기술 블로그](https://www.sanghunkim.com/posts) · [이력서](https://www.sanghunkim.com/resume) · [Velog](https://velog.io/@kata/posts)
 
-- **포트폴리오** — 소개, 실무 경험, 프로젝트, 기술 스택 및 연락처
-- **기술 블로그** — 글 검색, 카테고리 필터, 페이지네이션, 관련 글 추천
-- **글 읽기** — 목차 탐색, 코드 하이라이팅과 복사, 표·이미지 렌더링
-- **화면과 검색 노출** — 반응형 레이아웃, 라이트·다크 테마, 페이지별 메타데이터, sitemap·RSS·OG 이미지
+## 사이트 구성
 
-## 기술 스택
-
-| 구분 | 사용 기술 |
+| 페이지 | 내용 |
 | --- | --- |
-| 프레임워크 | Next.js 16 App Router, React 19 |
-| 언어·스타일 | TypeScript, Tailwind CSS |
-| 콘텐츠 | Markdown, react-markdown, remark-gfm, highlight.js |
-| 테스트 | Node.js Test Runner, Playwright |
-| 배포·분석 | Vercel, Google Analytics 4, Vercel Analytics, Speed Insights |
+| **포트폴리오** `/` | 소개, 실무 경험, 프로젝트 캐러셀, 최근 글, 연락처 |
+| **블로그** `/posts` | 검색, 카테고리 필터, 페이지네이션, 관련 글 |
+| **글 상세** `/posts/[slug]` | 본문 목차, 코드 하이라이팅·복사, 표와 이미지 |
+| **이력서** `/resume` | A4 문서 뷰어, 페이지 이동·확대, URL로 위치 복원, 인쇄 |
 
-포트폴리오 정보와 블로그 글은 저장소의 파일로 관리합니다. 페이지는 서버 컴포넌트로 구성하고, 테마 전환·검색어 입력·코드 복사 등 필요한 상호작용을 제공합니다.
+모바일과 데스크톱에 맞춘 레이아웃, 라이트·다크 테마, 페이지별 메타데이터와 공유용 OG 이미지, sitemap과 RSS를 제공합니다.
 
-## 로컬 실행
+## 구현 방식
 
-Node.js 22 이상과 pnpm 11.9.0을 사용합니다.
+- **콘텐츠는 저장소에서 관리합니다.** 경력·프로젝트는 데이터 파일로, 블로그 본문은 Markdown으로 관리합니다. Velog 원문을 동기화한 뒤 검토와 빌드를 거쳐 반영합니다.
+- **본문과 상호작용을 나눴습니다.** App Router와 서버 컴포넌트를 바탕으로 페이지를 구성하고, 검색 입력·테마 전환·캐러셀·이력서 뷰어에는 클라이언트 컴포넌트를 사용합니다.
+- **실제 사용 흐름을 검증합니다.** 콘텐츠·렌더링·URL 처리의 단위 테스트와 함께 글 탐색, 코드 복사, 테마 유지, 이력서 이동·인쇄를 브라우저에서 검사합니다.
+
+| 구분 | 기술 |
+| --- | --- |
+| 웹 | Next.js 16 · React 19 · TypeScript |
+| 스타일 | Tailwind CSS · Pretendard |
+| 콘텐츠 | react-markdown · remark-gfm · rehype-sanitize · highlight.js |
+| 검증 | Node.js Test Runner · Playwright · GitHub Actions |
+| 배포 | Vercel |
+
+## 로컬에서 실행하기
+
+**Node.js 22 이상**, **pnpm 11.9.0**이 필요합니다.
 
 ```bash
 corepack enable
@@ -34,54 +42,54 @@ cp .env.example .env.local
 pnpm dev
 ```
 
-개발 서버는 `http://localhost:3000`에서 실행됩니다.
+[localhost:3000](http://localhost:3000)에서 확인할 수 있습니다.
 
-`.env.local`의 `NEXT_PUBLIC_BASE_URL`은 canonical, sitemap, RSS 등에 사용하는 사이트의 대표 주소입니다. 기본값은 `https://www.sanghunkim.com`입니다.
+`NEXT_PUBLIC_BASE_URL`은 canonical URL·sitemap·RSS의 기준 주소입니다. 기본값은 `https://www.sanghunkim.com`이며, 로컬 실행을 위해 변경할 필요는 없습니다.
 
-## 명령어
+## 검증하기
 
-| 명령어 | 설명 |
+```bash
+# 타입 검사 → 단위 테스트 → 프로덕션 빌드
+pnpm run check
+
+# 브라우저 설치 후 E2E 테스트
+pnpm exec playwright install chromium webkit
+pnpm run test:e2e
+```
+
+E2E 테스트는 빌드 결과를 사용하며 테스트 서버를 자동으로 실행합니다. 로컬 Chromium 프로젝트는 설치된 **Google Chrome**을 사용하고, CI에서는 Playwright Chromium을 사용합니다. 모바일 시나리오는 WebKit에서도 검사합니다.
+
+| 명령어 | 용도 |
 | --- | --- |
-| `pnpm dev` | 개발 서버 실행 |
-| `pnpm build` | 프로덕션 빌드 |
-| `pnpm start` | 빌드한 사이트 실행 |
-| `pnpm run check` | 타입 검사, 단위 테스트, 프로덕션 빌드 |
-| `pnpm run test:e2e` | 브라우저 테스트 |
+| `pnpm build` / `pnpm start` | 프로덕션 빌드 / 서버 실행 |
+| `pnpm content:check` | Velog 원문과 로컬 콘텐츠의 차이 확인 |
+| `pnpm content:sync` | 원문 변경 반영 후 검토 |
+| `pnpm monitor` | 운영 사이트의 응답·본문·메타데이터 점검 |
+| `pnpm images:check` / `pnpm links:check` | 외부 이미지 / 링크 점검 |
 
-브라우저 테스트는 빌드 후 실행합니다. 로컬에서는 Chrome을, CI에서는 Playwright Chromium을 사용합니다. 주요 개선 시나리오는 모바일 WebKit에서도 검사합니다. 최초 실행 전 `pnpm exec playwright install chromium webkit`으로 브라우저를 설치합니다.
-
-## 프로젝트 구조
+## 코드와 콘텐츠 위치
 
 ```text
 src/
-├── app/        # 페이지, 레이아웃, 라우트
-├── widgets/    # 포트폴리오 섹션
-├── features/   # 테마 전환, 글 추천, 복사 등 사용자 기능
-├── entities/   # 글 카드, 목록, 페이지네이션, 목차
-└── shared/     # 공통 UI, 데이터, 콘텐츠, 렌더러, 유틸리티
-public/         # 이미지, 글꼴 등 정적 파일
-styles/         # 전역 스타일과 테마
-scripts/        # 콘텐츠·운영 관리 도구
-tests/         # 단위 테스트와 브라우저 테스트
+├── app/                 페이지 · 레이아웃 · RSS · OG 이미지
+├── widgets/             포트폴리오 섹션
+├── features/            테마 전환 · 관련 글 · 코드 복사
+├── entities/            글 카드 · 목록 · 페이지네이션 · 목차
+└── shared/
+    ├── data/            경력 · 프로필 · 프로젝트
+    ├── content/         블로그 본문 · 원문 출처
+    ├── markdown/        본문 렌더링
+    └── …                공통 UI · 설정 · 유틸리티
+public/                  이미지 · 글꼴 · 공개 실험 결과
+scripts/                 콘텐츠 동기화 · 운영 점검
+tests/                   단위 테스트 · 브라우저 테스트
 ```
 
-## 콘텐츠 관리
+경력은 [`career-data.ts`](src/shared/data/career-data.ts), 학력·자격은 [`profile-data.ts`](src/shared/data/profile-data.ts), 소개·프로젝트는 [`site-data.tsx`](src/shared/data/site-data.tsx)에서 수정합니다. 블로그 본문은 [`src/shared/content/posts`](src/shared/content/posts)에 있습니다.
 
-- 수행 과제·역할: `src/shared/data/career-data.ts`
-- 학력·교육·수상·자격: `src/shared/data/profile-data.ts`
-- 프로젝트·소개와 상세 사례: `src/shared/data/site-data.tsx`
-- 블로그 본문: `src/shared/content/posts/*.mdx`
-- 글 출처·수정일: `src/shared/content/velog-sources.json`
-- 홈 Writing: 발행일 기준 최신 글 3개 자동 노출 (같은 발행일은 `index` 내림차순)
+## 운영 문서
 
-글 목록은 편집 순서인 `index` 내림차순이며, RSS는 발행일 내림차순입니다. 카드·추천·RSS·검색 설명에는 원본 본문의 앞 160자를 사용하며 Markdown 표시와 이미지 주소는 제외합니다. 긴 글에는 말줄임표를 붙입니다. 별도로 작성한 요약문은 사용하지 않습니다. 검색은 제목·본문 발췌·카테고리를 대상으로 합니다. 전화번호와 자격 식별번호는 공개 데이터에 넣지 않습니다.
-
-`src/package.json`과 `tests/package.json`은 소스와 테스트를 ESM으로 명시합니다. ESM 전용 Markdown 의존성을 테스트에서 CommonJS로 변환하지 않도록 하며, 루트의 Next.js·Tailwind 설정은 기존 CommonJS를 유지합니다. Markdown 파일은 `.gitattributes`에서 LF 줄바꿈을 사용하도록 지정합니다.
-
-이전 소개 원본은 `docs/archive`에 보관합니다.
-
-블로그는 [직접 작성한 Velog 글](https://velog.io/@kata/posts)을 가져와 제공합니다. `.mdx` 확장자를 유지하되, 본문은 HTML과 GFM을 지원하는 Markdown으로 렌더링합니다.
-
-콘텐츠 동기화와 배포 후 점검 방법은 [운영 문서](docs/operations.md)를 참고하세요.
-
-2026-10-26 개선 범위와 외부 확인 사항은 [개선 반영 기록](docs/improvements-2026-10-26.md)에 정리했습니다. 주간 외부 링크·이미지 점검은 `External content health` 워크플로에서 수행합니다.
+- [콘텐츠 동기화와 배포 후 점검](docs/operations.md)
+- [Dependabot 자동 머지 정책과 GitHub 설정](docs/dependabot-auto-merge.md)
+- [개선·검증 기록](docs/validation.md)
+- [남은 작업](docs/TODO.md)

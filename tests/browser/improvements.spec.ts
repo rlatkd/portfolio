@@ -14,7 +14,12 @@ test('article navigation preserves listing context and mobile contents are usabl
   await expect(page).toHaveURL(/category=frontend&q=Next\.js/);
 });
 
-test('resume restores location and no page content is clipped', async ({ page }) => {
+test('resume restores location and no page content is clipped', async ({ page, browserName }) => {
+  // Exercise URL/state synchronization on slower CI machines as well.
+  if (browserName === 'chromium') {
+    const session = await page.context().newCDPSession(page);
+    await session.send('Emulation.setCPUThrottlingRate', { rate: 6 });
+  }
   await page.goto('/resume#page=2&zoom=1.25');
   await expect(page.locator('.resume-page[data-active="true"]')).toHaveAttribute('aria-label', '2쪽');
   await expect(page.getByLabel('현재 배율')).toHaveText('125%');
@@ -25,12 +30,19 @@ test('resume restores location and no page content is clipped', async ({ page })
     await page.goto(`/resume#page=${index + 1}`);
     const paper = page.locator('.resume-page[data-active="true"]');
     await expect(paper).toHaveAttribute('aria-label', `${index + 1}쪽`);
+    await expect(page).toHaveURL(new RegExp(`/resume#page=${index + 1}$`));
     const dimensions = await paper.evaluate(element => {
       const content = element.firstElementChild as HTMLElement;
       return { used: content.scrollHeight, available: content.clientHeight };
     });
     expect(dimensions.used, `page ${index + 1}`).toBeLessThanOrEqual(dimensions.available + 1);
   }
+  await page.goBack();
+  await expect(page.locator('.resume-page[data-active="true"]')).toHaveAttribute('aria-label', '4쪽');
+  await expect(page).toHaveURL(/\/resume#page=4$/);
+  await page.goForward();
+  await expect(page.locator('.resume-page[data-active="true"]')).toHaveAttribute('aria-label', '5쪽');
+  await expect(page).toHaveURL(/\/resume#page=5$/);
 });
 
 test('security headers are present and projects auto-advance with reading controls', async ({ page, request }) => {
