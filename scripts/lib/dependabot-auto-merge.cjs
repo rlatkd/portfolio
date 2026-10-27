@@ -53,13 +53,12 @@ function manifestEligible(before, after, updates) {
 }
 
 function protectionReady(repository) {
-  const rule = repository?.ref?.branchProtectionRule;
+  // RefUpdateRule is the rule enforced on this integration, readable without
+  // repository administration permission. Do not query BranchProtectionRule.
+  const rule = repository?.ref?.refUpdateRule;
   return repository?.autoMergeAllowed === true && repository?.squashMergeAllowed === true &&
-    rule?.requiresStatusChecks === true && rule?.requiresStrictStatusChecks === true &&
     rule?.requiredStatusCheckContexts?.includes(REQUIRED_CHECK) &&
-    rule?.requiredStatusChecks?.some(check => check.context === REQUIRED_CHECK && check.app?.slug === 'github-actions') &&
-    rule?.allowsForcePushes === false && rule?.allowsDeletions === false &&
-    rule?.bypassPullRequestAllowances?.totalCount === 0;
+    rule?.allowsForcePushes === false && rule?.allowsDeletions === false;
 }
 
 async function run({ github, context, core, env }) {
@@ -100,17 +99,19 @@ async function run({ github, context, core, env }) {
       autoMergeAllowed squashMergeAllowed
       pullRequest(number: $number) { headRefOid mergeStateStatus }
       ref(qualifiedName: "refs/heads/main") {
-        branchProtectionRule {
-          requiresStatusChecks requiresStrictStatusChecks requiredStatusCheckContexts
-          requiredStatusChecks { context app { slug } }
+        refUpdateRule {
+          requiredStatusCheckContexts
           allowsForcePushes allowsDeletions
-          bypassPullRequestAllowances(first: 1) { totalCount }
         }
       }
     }
   }`, { ...context.repo, number: args.pull_number });
   if (!protectionReady(repository)) {
-    const reason = 'Eligible patch PR, but auto-merge is not ready: enable auto-merge/squash and add GitHub Actions check as a required status check on main with up-to-date branches. See docs/dependabot-auto-merge.md.';
+    const reason = repository?.autoMergeAllowed !== true
+      ? 'Auto-merge is disabled in repository Settings > General > Pull Requests. Enable Allow auto-merge, then run this workflow again.'
+      : repository?.squashMergeAllowed !== true
+        ? 'Squash merge is disabled in repository Settings > General > Pull Requests. Enable Allow squash merging.'
+        : 'Eligible patch PR, but auto-merge is not ready: add GitHub Actions check as a required status check on main and disable force pushes/deletions. See docs/dependabot-auto-merge.md.';
     if (dryRun) return skip(reason);
     throw new Error(reason);
   }

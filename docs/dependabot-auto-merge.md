@@ -17,7 +17,7 @@
 
 로컬 파일만으로 GitHub 설정은 바뀌지 않는다. 먼저 변경 사항을 검토하고 main에 반영한 뒤 `Validate / check`가 실제 GitHub에서 통과하는지 확인한다.
 
-1. **Settings → General → Pull Requests**에서 `Allow squash merging`과 `Allow auto-merge`를 켠다.
+1. **Settings → General → Pull Requests**에서 `Allow squash merging`과 `Allow auto-merge`를 모두 켠다. 브랜치 보호 규칙이나 저장소 변수와는 별개의 설정이다. 로그에 `autoMergeAllowed: false`가 나오면 이 화면의 `Allow auto-merge`가 꺼진 상태다.
 2. **Settings → Branches → Add classic branch protection rule**에서 정확히 `main`을 지정한다.
    - `Require a pull request before merging`: 끈다.
    - `Require status checks to pass before merging`: 켠다. GitHub Actions의 `check`를 필수 검사로 지정한다. 화면에는 `Validate / check`로 표시될 수 있다.
@@ -30,7 +30,7 @@
 4. **Settings → Secrets and variables → Actions → Variables**에 `DEPENDABOT_AUTO_MERGE_ENABLED`를 값 `true`로 추가한다.
 5. 같은 워크플로를 `dry_run: false`로 실행하면 기존 PR 중 적격 PR의 auto-merge가 활성화된다.
 
-보호 규칙의 API 입력은 `.github/main-protection.json`에 준비돼 있다. 기존 규칙이 있다면 먼저 비교하고 더 강한 규칙을 약화시키지 않는다. 이 구현은 classic branch protection을 확인하므로 ruleset만 설정하면 자동 머지를 중단한다.
+보호 규칙의 API 입력은 `.github/main-protection.json`에 준비돼 있다. 기존 규칙이 있다면 먼저 비교하고 더 강한 규칙을 약화시키지 않는다. 워크플로는 일반 GITHUB_TOKEN이 조회할 수 있는 refUpdateRule로 해당 토큰에 적용되는 필수 검사 목록을 확인한다. 관리자용 branchProtectionRule이나 우회 허용 목록은 조회하지 않는다. classic branch protection을 기준으로 구성하며 ruleset만 설정한 경우에는 중단할 수 있다. 최신 main 반영 및 검사 출처 등의 상세 설정은 위 절차대로 저장하고 GitHub가 머지 시 강제한다.
 
 인증된 관리자가 CLI로 적용할 경우 (선택 사항):
 

@@ -13,11 +13,9 @@ function protectedRepository() {
   return {
     autoMergeAllowed: true, squashMergeAllowed: true,
     pullRequest: { headRefOid: 'head-sha', mergeStateStatus: 'BLOCKED' },
-    ref: { branchProtectionRule: {
-      requiresStatusChecks: true, requiresStrictStatusChecks: true, requiredStatusCheckContexts: ['check'],
-      requiredStatusChecks: [{ context: 'check', app: { slug: 'github-actions' } }],
-      isAdminEnforced: false, requiresApprovingReviews: false, allowsForcePushes: false, allowsDeletions: false,
-      bypassPullRequestAllowances: { totalCount: 0 },
+    ref: { refUpdateRule: {
+      requiredStatusCheckContexts: ['check'],
+      allowsForcePushes: false, allowsDeletions: false,
     } },
   };
 }
@@ -37,13 +35,11 @@ test('owner direct pushes are allowed while automation still requires strict CI 
   assert.equal(protectionReady(protectedRepository()), true);
   assert.equal(protectionReady({}), false);
   for (const override of [
-    { requiresStatusChecks: false }, { requiresStrictStatusChecks: false },
     { requiredStatusCheckContexts: ['other'] },
-    { allowsForcePushes: true }, { allowsDeletions: true }, { bypassPullRequestAllowances: { totalCount: 1 } },
-    { requiredStatusChecks: [{ context: 'check', app: { slug: 'other' } }] },
+    { allowsForcePushes: true }, { allowsDeletions: true },
   ]) {
     const repository = protectedRepository();
-    Object.assign(repository.ref.branchProtectionRule, override);
+    Object.assign(repository.ref.refUpdateRule, override);
     assert.equal(protectionReady(repository), false);
   }
 });
@@ -75,6 +71,7 @@ function fixture(overrides: Record<string, string> = {}) {
     },
     paginate: async (method: unknown) => method === listCommits ? commits : files,
     graphql: async (query: string, variables: Record<string, unknown>) => {
+      assert.doesNotMatch(query, /branchProtectionRule|bypassPullRequestAllowances|requiresStrictStatusChecks/);
       if (query.startsWith('mutation')) mutations.push({ query, variables });
       return { repository };
     },
@@ -118,7 +115,7 @@ test('an already-green existing PR merges normally with the inspected head SHA',
 
 test('unprotected main, changed head, extra files and foreign authors never enable auto-merge', async () => {
   const unprotected = fixture();
-  unprotected.repository.ref.branchProtectionRule.requiresStrictStatusChecks = false;
+  unprotected.repository.ref.refUpdateRule.requiredStatusCheckContexts = [];
   await assert.rejects(() => run(unprotected.input), /required status check/);
   assert.equal(unprotected.mutations.length, 0);
   for (const kind of ['head', 'file', 'author', 'fork', 'draft']) {
@@ -183,11 +180,23 @@ test('signed metadata parser rejects unknown, missing, duplicate and non-patch d
 
 test('dry-run reports missing protection without modifying an existing PR', async () => {
   const f = fixture({ DRY_RUN: 'true' });
-  f.repository.ref.branchProtectionRule.requiredStatusCheckContexts = [];
+  f.repository.ref.refUpdateRule.requiredStatusCheckContexts = [];
   await run(f.input);
   assert.equal(f.mutations.length, 0);
   assert.equal(f.merges.length, 0);
   assert.match(f.notices[0], /add GitHub Actions check/);
+});
+
+test('disabled repository auto-merge is reported clearly without attempting any mutation', async () => {
+  const live = fixture();
+  live.repository.autoMergeAllowed = false;
+  await assert.rejects(() => run(live.input), /Enable Allow auto-merge/);
+  assert.equal(live.mutations.length + live.merges.length, 0);
+  const preview = fixture({ DRY_RUN: 'true' });
+  preview.repository.autoMergeAllowed = false;
+  await run(preview.input);
+  assert.match(preview.notices[0], /Settings > General > Pull Requests/);
+  assert.equal(preview.mutations.length + preview.merges.length, 0);
 });
 
 test('actual workflow scripts handle push, dispatch and PR events without rewriting event files', async () => {
