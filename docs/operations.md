@@ -27,13 +27,7 @@
 
 Vercel의 배포·런타임 로그를 확인합니다. 새 배포가 원인이면 이전 정상 배포로 롤백한 뒤 `pnpm monitor`로 다시 확인합니다.
 
-| 워크플로 | 역할 |
-| --- | --- |
-| Validate | push·PR의 보안 검사, 타입 검사, 테스트, 빌드 |
-| Production availability | 30분 간격 및 운영 배포 이벤트의 상태 점검 |
-| External content health | 주간 외부 링크·이미지 점검 |
-
-점검 실패 알림은 GitHub Actions와 Vercel의 계정 알림 설정을 따릅니다. 자동 롤백은 수행하지 않습니다.
+GitHub Actions의 `Validate`는 push·PR의 보안 검사, 타입 검사, 테스트, 빌드를 실행합니다. 운영 사이트와 외부 리소스 점검은 필요할 때 위 명령으로 직접 실행합니다.
 
 ## 분석·의존성
 
