@@ -13,6 +13,7 @@ const color = {
   line: '#243148',
 };
 
+// fs reads physical files; TypeScript import aliases do not resolve filesystem paths.
 const fonts = Promise.all(['Bold', 'Medium'].map(async weight => {
   const buffer = await fs.readFile(path.join(process.cwd(), `public/fonts/Pretendard-${weight}.woff`));
   return { name: 'Pretendard', data: buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength) as ArrayBuffer, weight: (weight === 'Bold' ? 700 : 500) as 700 | 500, style: 'normal' as const };

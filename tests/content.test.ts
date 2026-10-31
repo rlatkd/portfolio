@@ -13,6 +13,7 @@ import { highlightCode } from '../src/shared/markdown/highlight-code';
 import sources from '../src/shared/content/velog-sources.json';
 import { getPosts } from '../src/shared/lib/markdown';
 import { profile, certifications, experience, projects } from '../src/shared/data/site-data';
+import benchmarkReport from '@public/reports/upquant-correlation.json';
 
 const directory = path.join(process.cwd(), 'src/shared/content/posts');
 
@@ -120,7 +121,7 @@ test('all source image URLs have reviewed descriptions outside the original body
 });
 
 test('benchmark evidence contains its raw samples, source hashes and measured scope', () => {
-  const report = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'public/reports/upquant-correlation.json'), 'utf8'));
+  const report = benchmarkReport;
   assert.match(report.sourceCommit, /^[a-f0-9]{40}$/);
   assert.equal(report.sourceCheck.expectedCommit, report.sourceCommit);
   assert.equal(report.sourceCheck.cleanBackend, true);

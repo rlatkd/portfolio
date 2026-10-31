@@ -69,6 +69,10 @@ E2E 테스트는 빌드 결과를 사용하며 테스트 서버를 자동으로 
 
 ## 코드와 콘텐츠 위치
 
+모듈 import에는 `@/*` → `src/*`, `@/styles/*` → `styles/*`, `@public/*` → `public/*` 별칭을 사용합니다. 예를 들어 이미지는 `import photo from '@public/images/resume/kim-sanghun-profile.webp'`로 가져올 수 있습니다. 브라우저에서 요청하는 `/images/...`, `/fonts/...` URL과 서버의 파일시스템 경로는 모듈 별칭과 구분합니다.
+
+프로젝트 슬라이드와 증명사진은 `@public/images/...`, 검증용 JSON은 `@public/reports/...`에서 import합니다. 현재 Webpack 구성의 CSS 폰트 참조는 `url('~@public/fonts/...')`를 사용합니다. OG 이미지 생성의 `fs.readFile`은 실제 파일 경로가 필요하므로 `public/fonts/...`를 유지하며, 공개 URL과 문서 링크에는 별칭을 넣지 않습니다.
+
 ```text
 src/
 ├── app/                 페이지 · 레이아웃 · RSS · OG 이미지

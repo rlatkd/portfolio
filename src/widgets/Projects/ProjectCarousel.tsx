@@ -5,6 +5,21 @@ import Image from 'next/image';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Tags } from '@/shared/ui/Section';
 import type { Project } from '@/shared/types/portfolio';
+import upQuantSlide from '@public/images/up-quant/slide.png';
+import portfolioSlide from '@public/images/portfolio/slide.png';
+import cmsPlusSlide from '@public/images/cms-plus/slide.png';
+import saleSyncSlide from '@public/images/sale-sync/slide.png';
+import liverTumorSlide from '@public/images/liver-tumor-cnn/slide.png';
+import ctReconstructionSlide from '@public/images/ct-image-reconstruction/slide.png';
+
+const projectSlides: Record<string, typeof upQuantSlide> = {
+  'up-quant': upQuantSlide,
+  portfolio: portfolioSlide,
+  'cms-plus': cmsPlusSlide,
+  'sale-sync': saleSyncSlide,
+  'liver-tumor-cnn': liverTumorSlide,
+  'ct-image-reconstruction': ctReconstructionSlide,
+};
 
 const INTERVAL = 3500;
 
@@ -56,7 +71,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
                   className='group block overflow-hidden rounded-lg border border-line'
                 >
                   <Image
-                    src={`/images/${p.id}/slide.png`}
+                    src={projectSlides[p.id]}
                     alt={`${p.title} 화면 목업`}
                     width={1600}
                     height={1000}

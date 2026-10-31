@@ -95,7 +95,7 @@ export function ResumePager({ children }: { children: ReactNode }) {
         <div className={styles.canvas} style={{ width: WIDTH * scale, height: HEIGHT * scale }}>
           <div className={styles.scaled} style={{ transform: `scale(${scale})` }}>
             {pages.map((content, index) => (
-              <section key={index} aria-label={`${index + 1}쪽`} aria-hidden={index !== page} data-active={index === page} className={`resume-paper resume-page ${styles.paper}`}>
+              <section key={index} aria-label={`${index + 1}쪽`} aria-hidden={index !== page} data-active={index === page} className={`resume-paper resume-page ${styles.paper} ${styles.casePaper}`}>
                 <div className={styles.pageContent}>{content}</div>
                 <p className={styles.pageNumber}>{index + 1} / {pages.length}</p>
               </section>

@@ -103,7 +103,7 @@ export const work = [
       '개별 발송 이후 추가된 링크 서명 방식에서는 본인인증과 납부자 등록 시점의 차이를 반영해 콜백 이후 처리 흐름을 재구성했습니다.',
       '서비스 이용 규모는 오픈 초기 누적 20건에서 누적 5,000건으로 증가했습니다.',
     ],
-    tech: 'Spring Boot, Vue.js, 외부 전자서명 API',
+    tech: 'Spring Boot, Vue.js, External API, JWT',
   },
 ];
 

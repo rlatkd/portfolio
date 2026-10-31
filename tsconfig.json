@@ -26,6 +26,9 @@
     ],
     "strictNullChecks": true,
     "paths": {
+      "@public/*": [
+        "public/*"
+      ],
       "@/*": [
         "src/*"
       ],

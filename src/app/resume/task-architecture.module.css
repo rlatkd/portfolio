@@ -1,0 +1,12 @@
+.figure{margin:5mm 0 0;break-inside:avoid}
+.diagram{display:block;width:100%;height:auto;overflow:visible;font-family:inherit;font-size:12px;color:#000}
+.diagram text{fill:#000}
+.diagram .bold{font-weight:700}
+.diagram .small{font-size:10.5px;fill:#666}
+.diagram .code{font-family:Consolas,monospace;font-size:10.5px;fill:#666}
+.diagram .panelTitle{font-size:13px;font-weight:700}
+/* Task 01·02의 하단 설명은 종이 기준 같은 높이에 배치한다. */
+.notes{position:absolute;top:255mm;left:21mm;right:21mm;margin:0;color:#666;font-size:10.5px;line-height:1.9}
+.figure figcaption.notes>ul{margin:0;padding-left:4mm;list-style:disc;font-size:inherit;line-height:inherit}
+.figure .notes>ul>li{margin:0;padding:0;color:inherit}
+.figure .notes>ul>li::marker{color:inherit}

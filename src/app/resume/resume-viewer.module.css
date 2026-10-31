@@ -7,6 +7,57 @@
 .paper[data-active='true']{display:flex}
 .pageContent{flex:1;min-height:0}
 .pageNumber{margin-top:32px;text-align:center;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;flex-shrink:0}
+@font-face{font-family:ResumePretendard;src:url('~@public/fonts/Pretendard-Medium.woff') format('woff');font-weight:400 500;font-display:swap}
+@font-face{font-family:ResumePretendard;src:url('~@public/fonts/Pretendard-Bold.woff') format('woff');font-weight:600 900;font-display:swap}
+.paper.casePaper{position:relative;padding:16mm 21mm 19mm;background:#fff;color:#344054;font-family:ResumePretendard,'Malgun Gothic',sans-serif;font-size:9.5pt;line-height:1.65;border:0;word-break:keep-all;overflow-wrap:anywhere}
+.casePaper .pageNumber{position:absolute;bottom:8mm;left:21mm;right:21mm;margin:0;color:#667085;font-size:9pt;letter-spacing:1px}
+.caseStudy .running{display:flex;justify-content:space-between;color:#667085;font-size:7.4pt;letter-spacing:1px;border-bottom:1px solid #dedbd4;padding-bottom:3mm}
+.caseStudy h1{font-size:20pt;font-weight:700;line-height:1.35;letter-spacing:-.8px;color:#17243a;margin:5mm 0 3mm}
+.caseStudy p{margin:0 0 2.4mm}
+.caseStudy h1+p{font-size:8pt;color:#667085;line-height:1.7;border-left:2px solid #977333;padding-left:3mm;margin-bottom:4mm}
+.caseStudy h1+p strong{font-weight:400;color:inherit}
+.caseStudy h2{font-size:9.3pt;letter-spacing:.5px;color:#977333;margin:3.5mm 0 1.5mm;font-weight:700;break-after:avoid}
+.caseStudy strong{font-weight:700;color:#17243a}
+.caseStudy ul{list-style:disc;padding-left:4mm;margin:0}
+.caseStudy li{padding-left:.5mm;margin-bottom:1mm}
+.caseStudy li::marker{color:#977333}
+.caseStudy code{font-family:Consolas,monospace;font-size:.89em;background:#f1f3f5;padding:.1em .25em;border-radius:2px;color:#344054}
+.overview .entryHeading{display:flex;flex-direction:row;justify-content:space-between;align-items:baseline;gap:4mm;margin-bottom:1.3mm}
+.entryHeading h3{font-size:10.5pt;line-height:1.5;color:#17243a;font-weight:700;letter-spacing:-.2px}
+.entryHeading>span{flex-shrink:0;color:#667085;font-size:8pt;font-variant-numeric:tabular-nums}
+.overview .entryMeta{border-left:2px solid #977333;padding-left:3mm;color:#667085;font-size:8pt;line-height:1.7;margin:2mm 0 3mm}
+.platformName{color:#000;font-weight:400}
+.metaDivider{display:inline-block;height:.9em;border-left:1px solid #aaa;margin:0 2.5mm;vertical-align:-.05em}
+.overview .experience{margin-top:7mm}
+.overview .infoSection{margin-top:5mm}
+.overview .infoSection h2{margin-bottom:3mm}
+.overview .infoEntry{margin-top:3mm}
+.overview .infoEntry p{margin-bottom:1mm}
+.overview .subtle{color:#667085;font-size:8pt}
+.overview .profileHeader{display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:5mm;padding:6mm 0 5mm;border-bottom:1px solid #dedbd4}
+.overview .profileHeader h1{font-size:30pt;margin:0 0 1mm}
+.overview .profileHeader p{margin:0;font-size:10pt;color:#667085}
+.contacts{display:flex;flex-direction:column;align-items:flex-start;margin-top:3mm;font-size:8.5pt;line-height:1.9;color:#667085}
+.profilePhoto{display:block;flex-shrink:0;width:30mm;height:40mm;object-fit:contain}
+.contacts a{color:inherit;text-decoration:none}
+.overview .introduction{margin:7mm 0 8mm}
+.overview .introduction p{margin-bottom:3mm}
+.roleHistory{margin-top:4mm}
+.roleHistory>div{display:grid;grid-template-columns:17mm 1fr;gap:3mm;margin-bottom:3mm}
+.roleHistory span{font-size:8pt;color:#977333;font-variant-numeric:tabular-nums;padding-top:.5mm}
+.roleHistory p{margin:0}
+.overview .documentGuide{margin-top:9mm;border-top:1px solid #dedbd4;padding-top:3mm}
+.documentGuide>div{display:grid;grid-template-columns:10mm 1fr;gap:3mm;margin-top:4mm}
+.documentGuide>div>span{color:#977333;font-size:13pt}
+.overview .compact{font-size:8.6pt;line-height:1.6}
+.overview .compact .experience{margin-top:4mm}
+.overview .compact .entryHeading h3{font-size:9.5pt}
+.overview .compact .entryMeta{margin:1mm 0 2mm}
+.overview .compact li{margin-bottom:1mm}
+.trackRecord>div{display:grid;grid-template-columns:17mm 1fr 30mm;gap:2mm;padding:1.5mm 0;border-bottom:1px solid #eeece7;font-size:8pt}
+.trackRecord p{margin:0}
+.trackRecord span{color:#667085}
+.trackRecord span:last-child{text-align:right}
 .controls{position:sticky;bottom:12px;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:8px;margin:16px auto 0;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:var(--surface);box-shadow:0 4px 18px #00000020;color:var(--fg-strong)}
 .controlGroup{display:flex;align-items:center;gap:2px}
 .controls button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:40px;height:40px;border-radius:6px;transition:background-color .15s,color .15s}

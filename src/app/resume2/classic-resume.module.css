@@ -1,0 +1,244 @@
+/* The comparison shares all content with /resume; only presentation changes. */
+.classic :global(.resume-page) {
+  padding: 16mm 21mm 19mm;
+  border: 1px solid #ccc;
+  color: #333;
+  font-family: ResumePretendard, 'Malgun Gothic', sans-serif;
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+/* Share /resume's page layout while retaining the classic typography. */
+.classic :global(.resume-page) [data-resume-running] {
+  position: static;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 3mm;
+  border-bottom: 1px solid #dedbd4;
+  color: #666;
+  font-size: 7.4pt;
+  letter-spacing: 1px;
+}
+
+.classic :global(.resume-page) [data-resume-running] span {
+  color: inherit;
+}
+
+.classic :global(.resume-page) h1 {
+  margin: 5mm 0 3mm;
+  color: #000;
+  font-size: 22px;
+  line-height: 1.4;
+  letter-spacing: -.3px;
+}
+
+.classic :global(.resume-page) h2 {
+  margin: 14px 0 7px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.classic :global(.resume-page) h3 {
+  color: #000;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.classic :global(.resume-page) p {
+  border-left: 0;
+  padding-left: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.classic :global(.resume-page) strong {
+  color: #000;
+}
+
+.classic :global(.resume-page) span,
+.classic :global(.resume-page) a {
+  color: #666;
+}
+
+.classic :global(.resume-page) h1 + p {
+  margin-bottom: 20px;
+  color: #666;
+  font-size: 11px;
+}
+
+.classic :global(.resume-page) ul {
+  padding-left: 16px;
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.classic :global(.resume-page) li {
+  padding-left: 0;
+  margin-bottom: 2px;
+}
+
+.classic :global(.resume-page) li::marker {
+  color: #333;
+}
+
+.classic :global(.resume-page) article[class] {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.classic :global(.resume-page) [data-resume-experience] + [data-resume-experience] {
+  margin-top: 12mm;
+}
+
+.classic :global(.resume-page) h1 + [data-resume-experience],
+.classic :global(.resume-page) h1 + div > [data-resume-experience]:first-child {
+  margin-top: 5mm;
+}
+
+.classic :global(.resume-page) [data-resume-other-tasks] > div > div {
+  padding: 3mm 0;
+}
+
+.classic :global(.resume-page) article > p,
+.classic :global(.resume-page) article > div > span {
+  color: #666;
+  font-size: 11px;
+}
+
+.classic :global(.resume-page) header {
+  align-items: flex-start;
+  padding: 5mm 0 5mm;
+  border-bottom: 0;
+}
+
+.classic :global(.resume-page) section:has(> div > span + p) {
+  border-top: 0;
+}
+
+.classic :global(.resume-page) header h1 {
+  margin: 0;
+  font-size: 30px;
+}
+
+.classic :global(.resume-page) header p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.classic :global(.resume-page) [data-resume-role] strong {
+  display: block;
+  margin-bottom: 1mm;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.classic :global(.resume-page) [data-resume-role] p {
+  margin: 0;
+  color: #666;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.classic :global(.resume-page) [data-resume-introduction] p {
+  white-space: normal;
+}
+
+.classic :global(.resume-page) [data-intro-body] p {
+  margin: 0 0 4mm;
+  line-height: 1.85;
+}
+
+.classic :global(.resume-page) [data-intro-body] p:last-child {
+  margin-bottom: 0;
+}
+
+.classic :global(.resume-page) > p:last-child {
+  color: #666;
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+/* Separate information categories and the entries within each category. */
+.classic :global(.resume-page) [data-resume-info-section] {
+  margin-top: 8mm;
+}
+
+.classic :global(.resume-page) h1 + [data-resume-info-section] {
+  margin-top: 5mm;
+}
+
+.classic :global(.resume-page) [data-resume-info-entry] + [data-resume-info-entry] {
+  margin-top: 6mm;
+}
+
+@media print {
+  .classic :global(.resume-page) {
+    border: 0;
+  }
+}
+
+/* 1쪽 증명사진: 왼쪽 연락처 마지막 줄과 아래 끝을 맞춘다. */
+.classic :global(.resume-page) header img {
+  width: 31.5mm;
+  height: 42mm;
+}
+
+.classic :global(.resume-page) [data-resume-introduction] {
+  margin-top: 4mm;
+}
+
+/* 1쪽 Task 목록: 다른 구역과 같은 간격 */
+.classic :global(.resume-page) [data-resume-guide] {
+  margin-top: 8mm;
+  padding-top: 0;
+}
+
+.classic :global(.resume-page) [data-resume-guide] > div {
+  align-items: center;
+}
+
+.classic :global(.resume-page) [data-resume-guide] > div > span,
+.classic :global(.resume-page) [data-resume-guide] > div > p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+
+/* 경력 담당 범위: 기간을 "YYYY.MM – 현재"로 표기하므로 날짜 칸을 넓힌다. */
+.classic :global(.resume-page) div:has(> [data-resume-role]) {
+  grid-template-columns: 24mm 1fr;
+}
+
+/* 본문은 글자 단위로 줄을 바꿔 줄 끝을 맞춘다. 제목은 단어를 유지한다. */
+.classic :global(.resume-page) :is(p, li) {
+  word-break: break-all;
+}
+
+/* Task 본문 각주: 쪽 하단에 고정 */
+.classic :global(.resume-page) [data-resume-footnote] {
+  position: absolute;
+  left: 21mm;
+  right: 21mm;
+  bottom: 19mm;
+  margin: 0;
+  color: #666;
+  font-size: 11px;
+}
+
+/* 글자색은 #000(제목·강조) · #333(본문) · #666(보조) 세 가지로 통일한다. */
+.classic :global(.resume-page) div:has(> h3) + p {
+  color: #666;
+}
+
+.classic :global(.resume-page) code {
+  color: #333;
+  background: #f1f1f1;
+}

@@ -199,69 +199,64 @@ export const trackRecord = [
   },
   {
     period: '2026.08',
-    title: '자동재결제 배치 · 실행 중 결제수단 변경 시 처리 개선',
+    title: '자동재결제 배치 실행 중 결제수단 변경 시 결제수단 동기화 처리',
     service: 'CMS+',
   },
   {
     period: '2026.07',
-    title: '가상계좌 보정배치 · 콜백 유실·당일 입금취소 분기 신설',
+    title: '가상계좌 보정배치 시 콜백 유실 및 당일 입금취소 분기 신설',
     service: 'CMS+',
   },
   {
     period: '2026.04',
-    title: 'SMS 발송·원생 신규 등록 시 불필요한 예약어 검증 제거',
+    title: 'SMS 발송 및 원생 신규 등록 시 불필요한 예약어 검증 제거',
     service: 'iBill',
   },
   {
     period: '2026.02',
-    title: '지급대행 어드민 · 테이블, 엔티티 설계 및 비즈니스 로직 구현',
-    service: '신규 웹뷰',
+    title: '지급대행 플랫폼 구축 · 테이블, 엔티티 설계 및 비즈니스 로직 구현',
+    service: 'Admin',
   },
   {
     period: '2026.01',
-    title: '비회원 결제 정보 표기 · 공통 응답 DTO 스펙 통일',
+    title: '비회원 결제 정보 표기 방식 개선 및 API 스펙 통일',
     service: 'CMS+',
   },
   {
     period: '2025.12',
-    title: '청구 관리 페이지네이션 · Offset → Cursor 전환',
+    title: '청구 내역 조회 시 Offset에서 Cursor 방식으로 전환',
     service: 'CMS+',
   },
   {
     period: '2025.11',
-    title: '환불 상태 추가 · 관련 결제 로직 전반 수정',
+    title: '신규 결제상태 환불 추가 및 관련 결제 로직 전반 수정',
     service: 'CMS+',
   },
   {
     period: '2025.11',
-    title: '인쇄 페이지 대량 렌더링 개선 · Redis 캐싱 전환',
+    title: '대량 인쇄 페이지 캐싱 적용을 통한 렌더링 개선',
     service: 'Connect',
   },
   {
     period: '2025.10',
-    title: '버튼 클릭 이벤트 중복 방지 · 공용 컴포넌트화',
+    title: '사용자 이벤트 중복 방지를 위한 공용 컴포넌트 생성',
     service: 'CMS+',
   },
   {
     period: '2025.10',
-    title: 'SQL Injection 대응 · PreparedStatement 전환',
+    title: 'PreparedStatement로 전환을 통한 SQL Injection 대응',
     service: 'Square',
   },
   {
     period: '2025.09',
-    title: '수납률 리포트 · 고객별 수납률 스케줄러 및 알림톡 발송',
+    title: '통계 서비스 구축 및 수납률 리포트 신설',
     service: 'CMS+',
   },
   {
     period: '2025.08',
-    title: '가상계좌 예금주명 동기화',
+    title: '청구/결제 분기별 가상계좌 예금주명 불일치 개선',
     service: 'CMS+',
-  },
-  {
-    period: '2025.07',
-    title: '신용카드 카드사명 데이터 보정',
-    service: 'CMS+',
-  },
+  }
 ];
 
 export const experience: Experience[] = [

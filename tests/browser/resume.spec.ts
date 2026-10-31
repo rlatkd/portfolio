@@ -33,7 +33,7 @@ test('resume printing restores all pages without screen zoom or controls', async
   await page.goto('/resume');
   await page.getByRole('button', { name: '확대', exact: true }).click();
   await page.emulateMedia({ media: 'print' });
-  await expect(page.locator('.resume-page:visible')).toHaveCount(5);
+  await expect(page.locator('.resume-page:visible')).toHaveCount(8);
   await expect(page.getByLabel('이력서 보기 도구')).toBeHidden();
   const transforms = await page.locator('.resume-page').evaluateAll(pages => pages.map(element => getComputedStyle(element.parentElement!).transform));
   expect(transforms.every(transform => transform === 'none')).toBe(true);
