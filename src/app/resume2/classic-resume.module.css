@@ -14,7 +14,7 @@
   display: flex;
   justify-content: space-between;
   padding-bottom: 3mm;
-  border-bottom: 1px solid #dedbd4;
+  border-bottom: 0;
   color: #666;
   font-size: 7.4pt;
   letter-spacing: 1px;
@@ -30,6 +30,15 @@
   font-size: 22px;
   line-height: 1.4;
   letter-spacing: -.3px;
+  transform: translateY(var(--resume-title-ink-offset, 0px));
+}
+
+/* 6쪽을 기준으로 서로 다른 글자의 실제 잉크 상단을 광학 정렬한다. */
+.classic :global(.resume-page):is(:nth-child(2), :nth-child(3), :nth-child(4), :nth-child(5)) {
+  --resume-title-ink-offset: 1.5px;
+}
+.classic :global(.resume-page):is(:nth-child(1), :nth-child(9), :nth-child(11)) {
+  --resume-title-ink-offset: 1px;
 }
 
 .classic :global(.resume-page) h2 {
@@ -105,6 +114,11 @@
   padding: 3mm 0;
 }
 
+/* 주요 과제·기타 쪽과 본문 시작 높이를 맞춘다. */
+.classic :global(.resume-page) [data-resume-other-tasks] > div > div:first-child {
+  padding-top: 0;
+}
+
 .classic :global(.resume-page) article > p,
 .classic :global(.resume-page) article > div > span {
   color: #666;
@@ -123,11 +137,11 @@
 
 .classic :global(.resume-page) header h1 {
   margin: 0;
-  font-size: 30px;
+  font-size: 22px;
 }
 
 .classic :global(.resume-page) header p {
-  margin: 0;
+  margin: 15.5px 0 0;
   color: #666;
   font-size: 14px;
 }
@@ -172,7 +186,7 @@
 }
 
 .classic :global(.resume-page) h1 + [data-resume-info-section] {
-  margin-top: 5mm;
+  margin-top: calc(5mm - 3px);
 }
 
 .classic :global(.resume-page) [data-resume-info-entry] + [data-resume-info-entry] {
@@ -185,10 +199,23 @@
   }
 }
 
-/* 1쪽 증명사진: 왼쪽 연락처 마지막 줄과 아래 끝을 맞춘다. */
+/* 1쪽 증명사진: 위는 이름 글자 시작, 아래는 마지막 연락처 글자 끝에 맞춘다. */
 .classic :global(.resume-page) header img {
-  width: 31.5mm;
-  height: 42mm;
+  width: 31.2mm;
+  height: 41.6mm;
+  margin-top: 1.68mm;
+}
+
+.classic :global(.resume-page) .compact article h3 {
+  font-size: 12.5px;
+}
+
+.classic :global(.resume-page) [data-resume-architecture] {
+  margin-top: calc(5mm - 8.5px);
+}
+
+.classic :global(.resume-page) h1 + [data-resume-other-tasks] {
+  margin-top: calc(5mm - .5px);
 }
 
 .classic :global(.resume-page) [data-resume-introduction] {
@@ -223,6 +250,10 @@
 }
 
 /* Task 본문 각주: 쪽 하단에 고정 */
+.classic :global(.resume-page) [data-resume-task-meta]{display:flex;justify-content:space-between;align-items:baseline;gap:4mm;margin-top:calc(5mm - 1px)}
+.classic :global(.resume-page) [data-resume-task-meta]>p{margin:0;font-size:11px;color:#666}
+.classic :global(.resume-page) [data-resume-task-meta]>span{flex-shrink:0;font-size:11px;color:#666}
+.classic :global(.resume-page) [data-resume-task-meta]+p{color:#666;font-size:11px}
 .classic :global(.resume-page) [data-resume-footnote] {
   position: absolute;
   left: 21mm;
@@ -241,4 +272,67 @@
 .classic :global(.resume-page) code {
   color: #333;
   background: #f1f1f1;
+}
+
+/* 쪽 번호: 종이 하단에서 12mm */
+.classic :global(.resume-page) > p:last-child {
+  bottom: 12mm;
+}
+
+/* 기술: 분류 | 항목 2열 표. 실무 사용 기술은 굵게 표시한다. */
+.classic :global(.resume-page) [data-resume-skills] > div {
+  display: grid;
+  grid-template-columns: 38mm 1fr;
+  gap: 3mm;
+  padding: 1.6mm 0;
+  border-bottom: 1px solid #eeece7;
+}
+
+.classic :global(.resume-page) [data-resume-skills] > div > span {
+  color: #000;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.classic :global(.resume-page) [data-resume-skills] p {
+  margin: 0;
+  color: #666;
+  word-break: keep-all;
+}
+
+.classic :global(.resume-page) [data-resume-skills] strong {
+  color: #000;
+  font-weight: 700;
+}
+
+.classic :global(.resume-page) [data-resume-skills-legend] {
+  margin-top: 2mm;
+  color: #666;
+  font-size: 11px;
+}
+
+/* 기술 제목 줄 오른쪽 끝에 범례 */
+.classic :global(.resume-page) [data-resume-skills-heading] {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.classic :global(.resume-page) [data-resume-skills-heading] > span {
+  color: #666;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.classic :global(.resume-page) [data-resume-heading-link] {
+  margin-left: 14px;
+  font-size: 11px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.classic :global(.resume-page) [data-period-status] {
+  display: inline-block;
+  min-width: 3.6em;
+  text-align: left;
 }

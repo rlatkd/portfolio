@@ -35,7 +35,7 @@ function RecoveryArchitecture() {
   const marker = 'task01-architecture-arrow';
   return <svg className={styles.diagram} viewBox='0 0 640 784' role='img' aria-labelledby='task01-architecture-title task01-architecture-description'>
     <title id='task01-architecture-title'>Task 01 청구 보정 배치의 변경 전후 구조</title>
-    <desc id='task01-architecture-description'>변경 전에는 CMS 결제 요청 배치 안에서 예외 청구를 인메모리에 모아 보정 Step이 처리했습니다. 변경 후에는 예외 청구를 CMS+ DB의 이벤트 테이블에 저장하고 별도 청구 보정 배치의 Tasklet이 읽어 청구 데이터를 보정합니다.</desc>
+    <desc id='task01-architecture-description'>변경 전에는 CMS 결제 요청 배치 안에서 예외 청구를 인메모리에 모아 보정 Step이 처리했습니다. 변경 후에는 예외 청구를 CMS+ DB에 저장하고 별도 청구 보정 배치의 Tasklet이 읽어 청구 데이터를 보정합니다.</desc>
     <defs><marker id={marker} markerWidth={7} markerHeight={7} refX={6} refY={3.5} orient='auto'><path d='M0 0 L7 3.5 L0 7' fill='none' stroke='#555' /></marker></defs>
 
     <PanelTitle y={22}>AS-IS · 결제 요청과 청구 보정이 하나의 배치에 포함</PanelTitle>
@@ -74,7 +74,7 @@ function RecoveryArchitecture() {
     <text x={405} y={498} textAnchor='middle' className={styles.small}>예외</text>
     <Arrow d='M170 498 V538' marker={marker} />
     <text x={178} y={531} className={styles.small}>예외 청구</text>
-    <Box x={20} y={540} width={300} height={44} title='CMS+ DB · 이벤트 테이블' emphasized />
+    <Box x={20} y={540} width={300} height={44} title='CMS+ DB' emphasized />
     <text x={352} y={567}>서버가 중단돼도 보정 대상 유지</text>
     <Job x={0} y={614} width={340} height={94} title='CMS+ Batch · 청구 보정 배치' emphasized>
       <Box x={20} y={648} width={300} height={44} title='Tasklet' />
@@ -127,14 +127,14 @@ function EaiArchitecture() {
     <Box x={0} y={540} width={225} height={44} title='CMS+ Batch' />
     <Box x={290} y={540} width={100} height={44} title='EAI' emphasized />
     <Box x={460} y={530} width={180} height={64} title='계정계' lines={['계좌이동·민원해지 대상 선정']} emphasized />
-    <text x={340} y={456} textAnchor='middle'>반영 대상을 선정해 EAI로 송신인터페이스로 전달</text>
+    <text x={340} y={456} textAnchor='middle'>반영 대상을 선정해 EAI 송신 인터페이스로 전달</text>
     <text x={340} y={480} textAnchor='middle' className={styles.small}>EAI 송·수신</text>
     <text x={340} y={496} textAnchor='middle' className={styles.small}>당일 계좌이동 신청 건</text>
     <text x={340} y={512} textAnchor='middle' className={styles.small}>당일 계좌이동 완료 건</text>
     <text x={340} y={528} textAnchor='middle' className={styles.small}>당일 민원해지 완료 건</text>
     <Arrow d='M458 562 H392' marker={marker} />
     <Arrow d='M288 562 H227' marker={marker} />
-    <text x={252} y={608}>전체 고객 조회 없이 반영 대상만 조회</text>
+    <text x={252} y={618}>전체 고객 조회 없이 반영 대상만 수신 인터페이스를 통해 조회</text>
     <Arrow d='M112 584 V652' marker={marker} />
     <text x={122} y={623} className={styles.small}>계좌이동 및 민원해지 반영</text>
     <Box x={0} y={654} width={225} height={60} title={['CMS+ DB · 결제수단 테이블', 'CMS+ DB · 납부자 테이블']} />
@@ -143,7 +143,7 @@ function EaiArchitecture() {
 
 const figureNotes: Record<1 | 2, string[]> = {
   1: ['대상 보존: 저장된 보정 대상을 서버 중단 후에도 조회 가능', '독립 실행: 결제 요청 배치를 다시 실행하지 않고 보정만 수행'],
-  2: ['연계 전환: 전체 고객 API 조회에서 필요한 변경 데이터의 EAI 수신으로 전환', '처리 부담 감소: 전체 고객을 반복 조회하던 API 호출·DB 처리 부담 축소'],
+  2: ['연계 전환: 전체 고객 API 조회에서 계정계가 선정한 반영 대상의 EAI 수신으로', '처리 부담 감소: 매번 약 2만 건을 조회하던 API 호출 없이 반영 대상만 처리'],
 };
 
 export function TaskArchitecture({ task }: { task: 1 | 2 }) {

@@ -204,7 +204,7 @@ export const trackRecord = [
   },
   {
     period: '2026.07',
-    title: '가상계좌 보정배치 시 콜백 유실 및 당일 입금취소 분기 신설',
+    title: '가상계좌 결과반영 배치 시 콜백 유실 및 당일 입금취소 분기 신설',
     service: 'CMS+',
   },
   {
@@ -244,7 +244,7 @@ export const trackRecord = [
   },
   {
     period: '2025.10',
-    title: 'PreparedStatement로 전환을 통한 SQL Injection 대응',
+    title: 'PreparedStatement 전환을 통한 SQL Injection 대응',
     service: 'Square',
   },
   {
