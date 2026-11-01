@@ -7,6 +7,8 @@ import ScrollToTop from './scroll-to-top';
 export function FloatingControls() {
   const pathname = usePathname();
   const showScroll = pathname === '/' || pathname === '/posts' || pathname.startsWith('/posts/');
+  // 2026-11-01: 이력서는 흰 종이 문서라 테마 전환이 필요 없고, 모바일에서 보기 도구 막대의 버튼을 가리므로 숨긴다.
+  if (pathname.startsWith('/resume')) return null;
 
   return <div className='fixed bottom-6 right-6 z-40 flex flex-col items-center gap-3 print:hidden'>
     {showScroll && <ScrollToTop embedded />}
