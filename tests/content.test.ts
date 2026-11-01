@@ -8,7 +8,7 @@ import remarkParse from 'remark-parse';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { MdxRenderer } from '../src/shared/markdown/mdx-renderer';
-import { getPostContents } from '../src/shared/markdown/postContents';
+import { getPostContents } from '../src/shared/markdown/post-contents';
 import { highlightCode } from '../src/shared/markdown/highlight-code';
 import sources from '../src/shared/content/velog-sources.json';
 import { getPosts } from '../src/shared/lib/markdown';

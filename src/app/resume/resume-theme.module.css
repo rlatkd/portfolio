@@ -1,4 +1,4 @@
-/* The comparison shares all content with /resume; only presentation changes. */
+/* 이력서 흑백 테마: resume-viewer.module.css의 공용 배치 위에 글꼴·색·간격을 덮어쓴다. */
 .classic :global(.resume-page) {
   padding: 16mm 21mm 19mm;
   border: 1px solid #ccc;

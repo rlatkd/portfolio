@@ -1,10 +1,16 @@
 import Link from 'next/link';
+import { ChevronLeft } from 'lucide-react';
 import { profile } from '@/shared/data/site-data';
+import styles from './privacy.module.css';
 export const metadata = { title: '개인정보 및 방문 분석 안내', alternates: { canonical: '/privacy' } };
 export default function Privacy() {
-  return <main id='main-content' className='mx-auto w-full max-w-3xl px-6 py-12 leading-loose'>
-    <Link href='/' className='text-accent underline'>← 포트폴리오</Link>
-    <h1 className='mt-8 text-3xl font-bold'>개인정보 및 방문 분석 안내</h1>
+  return <div className={styles.page}>
+    <header className='mx-auto mb-5 flex h-[34px] w-full max-w-[794px] items-center justify-between'>
+    <Link href='/' className='inline-flex items-center gap-2 text-sm text-muted hover:text-accent'><ChevronLeft size={15} /> 포트폴리오</Link>
+    </header>
+    <main id='main-content' className={styles.document}>
+    <div className={styles.running}><span>PRIVACY</span><span>SANGHUN KIM</span></div>
+    <h1>개인정보 및 방문 분석 안내</h1>
     <p className='mt-6'>이 사이트는 김상훈의 포트폴리오와 기술 블로그입니다. 회원가입, 댓글, 결제 기능은 제공하지 않습니다.</p>
     <h2 className='mt-8 text-xl font-bold'>방문 분석</h2>
     <p>공식 운영 도메인에서 Google Analytics 4, Vercel Web Analytics와 Speed Insights를 사용해 페이지 방문, 유입 경로와 성능을 확인합니다. 개발·미리보기 환경에는 분석 도구를 활성화하지 않습니다.</p>
@@ -15,5 +21,6 @@ export default function Privacy() {
     <p>블로그에 포함된 외부 이미지는 해당 이미지 서버에서, 글꼴은 jsDelivr에서 불러옵니다. 해당 서버에 접속 정보가 전달될 수 있습니다. 테마 선택은 브라우저 로컬 저장소에 저장됩니다.</p>
     <h2 className='mt-8 text-xl font-bold'>문의</h2>
     <p>이메일로 보낸 내용은 문의에 답변하는 데 사용됩니다. 문의: <a className='text-accent underline' href={`mailto:${profile.email}`}>{profile.email}</a></p>
-  </main>;
+    </main>
+  </div>;
 }

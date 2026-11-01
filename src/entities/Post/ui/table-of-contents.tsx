@@ -1,9 +1,8 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { PostHeading } from '@/shared/types/post';
 
 export function TableOfContents({ contents }: { contents: PostHeading[] }) {
-  const nav = useRef<HTMLElement>(null);
   const [section, setSection] = useState('');
   const [opacity, setOpacity] = useState(1);
   useEffect(() => {
@@ -31,23 +30,13 @@ export function TableOfContents({ contents }: { contents: PostHeading[] }) {
       window.removeEventListener('resize', onScroll);
     };
   }, [contents]);
-  useEffect(() => {
-    const container = nav.current;
-    const active = container?.querySelector<HTMLElement>('[aria-current="location"]');
-    if (!container || !active) return;
-    const item = active.getBoundingClientRect();
-    const bounds = container.getBoundingClientRect();
-    if (item.top < bounds.top || item.bottom > bounds.bottom) {
-      container.scrollTop += item.top - bounds.top - container.clientHeight / 2;
-    }
-  }, [section]);
   if (!contents.length) return null;
   return (
-    <nav ref={nav} aria-label='글 목차' inert={opacity === 0} className='text-sm w-full max-h-[calc(100dvh-9rem)] overflow-y-auto overscroll-contain pr-3 transition-opacity duration-300' style={{ opacity }}>
+    <nav aria-label='글 목차' inert={opacity === 0} className='w-full overflow-hidden text-sm transition-opacity duration-300' style={{ opacity }}>
       <ul className='ml-2 space-y-1'>
         {contents.map(({ level, text, id }) => (
-          <li key={id} style={{ marginLeft: `${(level - 1) * 0.5}rem` }}>
-            <a href={`#${id}`} aria-current={section === id ? 'location' : undefined}
+          <li key={id} className='min-w-0' style={{ marginLeft: `${Math.max(0, level - 2) * 0.5}rem` }}>
+            <a href={`#${id}`} title={text} aria-current={section === id ? 'location' : undefined}
               onClick={event => {
                 const element = document.getElementById(id);
                 if (!element) return;
@@ -57,7 +46,7 @@ export function TableOfContents({ contents }: { contents: PostHeading[] }) {
                 window.scrollTo({ top: window.scrollY + element.getBoundingClientRect().top - 80,
                   behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
               }}
-              className={`hover:underline transition-all duration-300 ${id === section ? 'font-bold text-accent text-base' : 'text-muted text-sm'}`}
+              className={`block truncate text-sm leading-7 transition-colors duration-300 hover:underline ${id === section ? 'font-bold text-accent' : 'font-normal text-muted'}`}
             >{text}</a>
           </li>
         ))}

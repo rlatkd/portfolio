@@ -28,17 +28,24 @@ export function CodeCopier({ children, className, highlightedHtml }: CodeCopierP
     }
   }
 
-  const language = className ? className.replace('language-', '') : 'text';
+  const language = className?.match(/\blanguage-([^\s]+)/)?.[1] ?? 'text';
+  const languageNames: Record<string, string> = {
+    java: 'Java', javascript: 'JavaScript', js: 'JavaScript',
+    typescript: 'TypeScript', ts: 'TypeScript', python: 'Python',
+    html: 'HTML', css: 'CSS', sql: 'SQL', json: 'JSON', xml: 'XML',
+    yaml: 'YAML', yml: 'YAML', bash: 'Bash', shell: 'Shell',
+    text: 'Text', plaintext: 'Text', jsx: 'JSX', tsx: 'TSX',
+  };
 
   return (
     <div className='relative'>
-      <div className='flex justify-between items-center mb-2 px-4 pt-3'>
-        <span className='font-mono text-xs tracking-label uppercase text-muted'>
-          {language}
+      <div className='flex items-center justify-between rounded-t border border-line bg-surface-2 px-4 py-3'>
+        <span className='text-xs font-medium tracking-normal text-muted'>
+          {languageNames[language.toLowerCase()] ?? language}
         </span>
         <button
           onClick={handleCopy}
-          className='px-2 py-1 border border-line bg-surface-2 hover:border-accent hover:text-accent text-fg rounded-md font-mono text-xs flex items-center space-x-1.5 transition-colors'
+          className='px-2 py-1 border border-line bg-surface hover:border-accent hover:text-accent text-fg rounded-md font-mono text-xs flex items-center space-x-1.5 transition-colors'
         >
           {copied ? (
             <>
@@ -56,7 +63,7 @@ export function CodeCopier({ children, className, highlightedHtml }: CodeCopierP
       <p role='status' className='sr-only'>{copied ? '코드를 복사했습니다.' : ''}</p>
       {error && <p role='alert' className='px-4 pb-2 text-sm text-fg'>{error}</p>}
       <div className='overflow-x-auto'>
-        <pre className='p-4 pt-0'>
+        <pre className='px-4 !py-6'>
           {highlightedHtml === undefined ? (
             <code className={className}>{children}</code>
           ) : (

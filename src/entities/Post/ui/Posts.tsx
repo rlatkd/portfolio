@@ -1,5 +1,5 @@
 import type { PostPreview } from '@/shared/types/post';
-import { PostCard } from './PostCard';
+import { PostCard } from './post-card';
 import Link from 'next/link';
 import { getPostDescription } from '@/shared/lib/seo';
 
@@ -19,7 +19,7 @@ export function Posts({ posts, returnTo }: PostsProps) {
   }
 
   return (
-    <div className='space-y-4'>
+    <div className='divide-y divide-line border-b border-line'>
       {posts.map((post) => (
         <PostCard
           key={post.slug}

@@ -1,8 +1,9 @@
 import '@/styles/global.css';
 import type { Metadata } from 'next';
-import { themeEffect } from '@/features/ThemeToggle/lib/themeEffect';
+import { themeEffect } from '@/features/theme-toggle/lib/theme-effect';
 import { baseUrl, defaultOgImage, siteTitle, siteDescription } from '@/shared/config/site';
-import { ProductionAnalytics } from '@/shared/ui/ProductionAnalytics';
+import { ProductionAnalytics } from '@/shared/ui/production-analytics';
+import { FloatingControls } from '@/shared/ui/floating-controls';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -61,10 +62,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
           }}
         />
       </head>
-      <body className='bg-bg text-fg antialiased min-h-screen'>
+      <body className='text-fg antialiased min-h-screen'>
         <a href='#main-content' className='skip-link'>본문 바로가기</a>
         <div className='flex-auto min-w-0 flex flex-col'>
           {children}
+          <FloatingControls />
 
         </div>
         <ProductionAnalytics enabled={process.env.NODE_ENV === 'production' && process.env.VERCEL_ENV === 'production'} hostname={new URL(baseUrl).hostname} />

@@ -1,6 +1,6 @@
-import { Section } from '@/shared/ui/Section';
+import { Section } from '@/shared/ui/section';
 import { projects } from '@/shared/data/site-data';
-import ProjectCarousel from './ProjectCarousel';
+import ProjectCarousel from './project-carousel';
 
 export default function Projects() {
   return (

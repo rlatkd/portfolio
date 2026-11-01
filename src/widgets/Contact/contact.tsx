@@ -1,6 +1,6 @@
 import { Send } from 'lucide-react';
-import { CopyEmail } from '@/features/CopyEmail/CopyEmail';
-import { Section } from '@/shared/ui/Section';
+import { CopyEmail } from '@/features/copy-email/copy-email';
+import { Section } from '@/shared/ui/section';
 import { profile } from '@/shared/data/site-data';
 
 export default function Contact() {

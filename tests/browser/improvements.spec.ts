@@ -26,7 +26,9 @@ test('resume restores location and no page content is clipped', async ({ page, b
   await page.reload();
   await expect(page.locator('.resume-page[data-active="true"]')).toHaveAttribute('aria-label', '2쪽');
   await page.getByRole('button', { name: '너비 맞춤', exact: true }).click();
-  for (let index = 0; index < 5; index++) {
+  const pageCount = await page.locator('.resume-page').count();
+  expect(pageCount).toBe(11);
+  for (let index = 0; index < pageCount; index++) {
     await page.goto(`/resume#page=${index + 1}`);
     const paper = page.locator('.resume-page[data-active="true"]');
     await expect(paper).toHaveAttribute('aria-label', `${index + 1}쪽`);
@@ -38,11 +40,11 @@ test('resume restores location and no page content is clipped', async ({ page, b
     expect(dimensions.used, `page ${index + 1}`).toBeLessThanOrEqual(dimensions.available + 1);
   }
   await page.goBack();
-  await expect(page.locator('.resume-page[data-active="true"]')).toHaveAttribute('aria-label', '4쪽');
-  await expect(page).toHaveURL(/\/resume#page=4$/);
+  await expect(page.locator('.resume-page[data-active="true"]')).toHaveAttribute('aria-label', `${pageCount - 1}쪽`);
+  await expect(page).toHaveURL(new RegExp(`/resume#page=${pageCount - 1}$`));
   await page.goForward();
-  await expect(page.locator('.resume-page[data-active="true"]')).toHaveAttribute('aria-label', '5쪽');
-  await expect(page).toHaveURL(/\/resume#page=5$/);
+  await expect(page.locator('.resume-page[data-active="true"]')).toHaveAttribute('aria-label', `${pageCount}쪽`);
+  await expect(page).toHaveURL(new RegExp(`/resume#page=${pageCount}$`));
 });
 
 test('security headers are present and projects auto-advance with reading controls', async ({ page, request, browserName }) => {

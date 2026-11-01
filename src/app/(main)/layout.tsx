@@ -1,5 +1,4 @@
-import Sidebar from '@/widgets/Sidebar/sidebar';
-import ScrollToTop from '@/shared/ui/scroll-to-top';
+import Sidebar from '@/widgets/sidebar/sidebar';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -13,7 +12,6 @@ export default function Layout({ children }: LayoutProps) {
         <Sidebar />
         <main id='main-content' className='min-w-0 pt-14 lg:pb-16 lg:pt-24'>{children}</main>
       </div>
-      <ScrollToTop />
     </>
   );
 }

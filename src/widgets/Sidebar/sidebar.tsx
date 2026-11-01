@@ -4,7 +4,6 @@ import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { FileText, Mail, Rss } from 'lucide-react';
 import { FiGithub, FiLinkedin } from 'react-icons/fi';
 import { profile, navItems } from '@/shared/data/site-data';
-import { ThemeToggle } from '@/features/ThemeToggle/ThemeToggle';
 
 /** Velog 마크 — github/linkedin과 동일한 아웃라인(stroke) 스타일 */
 function VelogIcon({ size = 19 }: { size?: number }) {
@@ -195,7 +194,6 @@ export default function Sidebar() {
             <Icon size={20} />
           </a>
         ))}
-        <ThemeToggle />
       </div>
     </header>
   );

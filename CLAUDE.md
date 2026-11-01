@@ -67,3 +67,35 @@
 - `pnpm run check` 및 `pnpm run test:e2e`로 검증한다.
 - 현재 사용자 요청은 재검수 항목 중 2·6·8을 제외한 개선이다. 가독성·대비 개선은 승인되었으며 실무 상세 공개, 모바일 섹션 구조 변경, CNN 평가 설명 변경은 제외한다.
 - 글 본문과 기존 요약은 보존한다. SEO 설명은 `seo-descriptions.json`, 출처와 실제 수정일은 `velog-sources.json`에서 관리한다.
+
+## 2026-11-01 갱신 (이전 내용은 기록으로 남겨 두고 이 절을 우선한다)
+
+### 문서 갱신 원칙
+- CLAUDE.md·AGENTS.md·README.md 같은 문서는 이전 내역을 덮어쓰거나 지우지 않는다. 날짜를 붙인 새 절을 추가하는 방식으로만 갱신한다.
+- 커밋은 사용자가 직접 한다. AI(Claude Code·Codex)는 커밋·푸시하지 않는다.
+
+### 현재 구조
+- 메인 페이지 위젯은 **7개**: About, Experience, Projects, Writing, Contact, Sidebar, Footer. 위의 "8개(Strengths 포함)" 설명은 과거 구조이며 Strengths 위젯과 관련 데이터(`strengths`, `careerServices` 등)는 삭제됐다.
+- 이력서는 **`/resume` 하나**다. 비교용이던 `/resume2`를 정식 `/resume`로 통합했고 `/resume2`는 `/resume`로 영구 리다이렉트(308)된다. 기존 8쪽 디자인과 `variant` 분기는 삭제했다. 현재 11쪽.
+  - 화면: `src/app/resume/resume-document.tsx` · 공용 배치 `resume-viewer.module.css` · 흑백 테마 `resume-theme.module.css` · 아키텍처 그림 `task-architecture.tsx`
+  - 메타 title은 `김상훈_이력서`, 검색 노출은 noindex 유지(노출 여부는 사용자 결정 보류 중)
+- 경력 사실의 단일 원본은 `src/shared/data/career-data.ts`의 `work`다. 홈 Experience 목록(`main`)과 이력서 본문(`title`·`points`·`platform`·`team`·`role`·`tech`)이 같은 항목을 쓴다. 화면별 용어 치환(`resume2Terms`)은 없앴으므로 원본 문구 자체를 확정 표현으로 관리한다.
+- 이력서 전용 데이터는 `resume-data.ts`(소개·역할·학력·기술 스택·교육·수상·자격증·AI 활용 경험)와 `resume-case-studies.ts`(Task 01·02 본문)에 있다.
+- 고객/고객사는 통일하지 않는다. 고객사 = 사업·도메인 용어, 고객 = 데이터·시스템 맥락.
+
+### SEO
+- robots: 전체 허용, `/api/`는 막고 공유 이미지 `/api/og`만 허용.
+- 홈 canonical은 sitemap과 같은 슬래시 없는 주소(`https://www.sanghunkim.com`).
+- 홈 Person JSON-LD에 worksFor·alumniOf·knowsAbout(이력서 기술 스택의 실무 항목)을 넣는다.
+
+### 테마 (2026-11-01)
+- 기본 테마는 라이트다. 사용자가 토글로 다크를 고르면 localStorage에 저장돼 새로고침 후에도 유지된다.
+
+### 파일 이름 규칙 (2026-11-01)
+- ts·tsx 파일과 폴더 이름은 모두 kebab-case다(Vercel·shadcn 방식). 예: `widgets/projects/project-carousel.tsx`, `shared/utils/date-formatter.ts`, `entities/post/ui/post-card.tsx`.
+- 코드 안의 이름은 그대로: 컴포넌트·타입은 PascalCase, 함수·변수·훅은 camelCase, 상수는 UPPER_SNAKE_CASE. 기본 import 이름은 export 이름과 같게 쓴다.
+- 위의 `@/shared/ui/Section`, `src/entities/Post` 표기는 과거 경로이며 지금은 `@/shared/ui/section`, `src/entities/post`다.
+
+### 대화 해석 규칙 (2026-11-01)
+- AI 답변이 끝나기 전에 사용자가 보낸 메시지는 그 이전 AI 답변에 대한 응답이다. 최신 답변의 새 목록·제안을 승인한 것으로 보지 않는다. 애매하면 적용 전에 묻는다.
+- 수정 지시는 지시가 가리키는 안에만 적용하고, 보고로 낸 목록은 따로 승인받기 전까지 손대지 않는다.

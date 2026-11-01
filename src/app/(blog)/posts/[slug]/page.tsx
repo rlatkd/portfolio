@@ -1,18 +1,15 @@
 import type { Metadata } from 'next';
-import { FaList } from 'react-icons/fa';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { MdxRenderer } from '@/shared/markdown/mdx-renderer';
-import PostRecommends from '@/features/PostRecommend/PostRecommend';
-import Navigation from '@/entities/Post/ui/Navigation';
+import PostRecommend from '@/features/post-recommend/post-recommend';
+import Navigation from '@/entities/post/ui/navigation';
 import { getPosts } from '@/shared/lib/markdown';
-import { dateFormatter } from '@/shared/utils/dateFormatter';
+import { dateFormatter } from '@/shared/utils/date-formatter';
 import { baseUrl, authorId } from '@/shared/config/site';
 import { getPostDescription, getPostTitle, getPostImage, serializeJsonLd } from '@/shared/lib/seo';
-import { TableOfContents } from '@/entities/Post/ui/TableOfContents';
-import { Suspense } from 'react';
-import { ListingReturn } from '@/features/PostRecommend/ListingReturn';
+import { TableOfContents } from '@/entities/post/ui/table-of-contents';
 import { relatedPosts } from '@/shared/content/related-posts';
+import styles from '../../blog-document.module.css';
 
 type Props = { params: Promise<{ slug: string }> };
 function resolveSlug(raw: string) {
@@ -60,7 +57,7 @@ export default async function Page({ params }: Props) {
     .slice(0, 3).map(({ slug, metadata }) => ({ slug, metadata }));
 
   return (
-    <section className='min-w-0 py-12 md:py-16'>
+    <section className={`min-w-0 ${styles.detail}`}>
       <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: serializeJsonLd({
         '@context': 'https://schema.org', '@type': 'BlogPosting',
         '@id': `${baseUrl}/posts/${encodeURIComponent(post.slug)}#article`,
@@ -71,25 +68,20 @@ export default async function Page({ params }: Props) {
         author: { '@type': 'Person', '@id': authorId, name: '김상훈', alternateName: 'Sanghun Kim', url: baseUrl },
         inLanguage: 'ko-KR',
       }) }} />
-      <div className='mx-auto max-w-content px-5 md:px-8'>
-        <div className='flex items-center justify-between gap-3'>
-          <h1 className='title font-serif text-3xl text-fg-strong md:text-4xl'>{post.metadata.title}</h1>
-          <Suspense fallback={<Link href='/posts' className='shrink-0 p-3' aria-label='목록'><FaList /></Link>}><ListingReturn /></Suspense>
-        </div>
-        <div className='mb-10 mt-3 flex items-center justify-between border-b border-line pb-4 font-mono text-xs text-muted'>
+      <div className='min-w-0'>
+        <header className={styles.pageHeader}>
+          <h1 className='title min-w-0 flex-1 basis-64 text-fg-strong'>{post.metadata.title}</h1>
+        <p className={styles.pageSubtitle}>
           <time dateTime={post.metadata.publishedAt}>{dateFormatter(post.metadata.publishedAt)}</time>
+        </p>
+        </header>
+        <div className={styles.bodyLayout}>
+        {post.tableContents.length > 0 && <aside className={styles.contents}><TableOfContents contents={post.tableContents} /></aside>}
+        <article className={`prose prose-lg w-full min-w-0 max-w-none ${styles.article}`}><MdxRenderer source={post.content} /></article>
         </div>
-        {post.tableContents.length > 0 && <details className='mb-8 rounded-lg border border-line bg-surface p-4 2xl:hidden'>
-          <summary className='cursor-pointer font-semibold text-fg-strong'>이 글의 목차</summary>
-          <nav aria-label='본문 목차' className='mt-3 max-h-72 overflow-y-auto'><ul className='space-y-2'>
-            {post.tableContents.map(heading => <li key={heading.id} style={{ paddingLeft: `${Math.max(0, heading.level - 2) * 12}px` }}><a href={`#${heading.id}`} className='block py-1 text-sm text-muted hover:text-accent'>{heading.text}</a></li>)}
-          </ul></nav>
-        </details>}
-        <article className='prose prose-lg w-full min-w-0 max-w-none'><MdxRenderer source={post.content} /></article>
-        <div className='fixed top-28 right-8 hidden w-56 2xl:block'><TableOfContents contents={post.tableContents} /></div>
         <Navigation currentPost={currentPost} />
       </div>
-      <div className='mx-auto max-w-content px-5 md:px-8'><PostRecommends posts={recommendations} /></div>
+      <div className='min-w-0'><PostRecommend posts={recommendations} /></div>
     </section>
   );
 }

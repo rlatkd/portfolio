@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
-import { Section, Row } from '@/shared/ui/Section';
-import type { PostCardData } from '@/entities/Post/ui/PostCard';
+import { Section, Row } from '@/shared/ui/section';
+import type { PostCardData } from '@/entities/post/ui/post-card';
 
 export default function Writing({ posts }: { posts: PostCardData[] }) {
   return (
@@ -21,7 +20,6 @@ export default function Writing({ posts }: { posts: PostCardData[] }) {
               <Row aside={<span className='font-mono'>{post.publishedAt.slice(0, 10)}</span>}>
                 <h3 className='font-medium leading-snug text-fg-strong group-hover:text-accent'>
                   {post.title}
-                  <ArrowUpRight size={14} className='ml-1 inline-block transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5' />
                 </h3>
               </Row>
             </Link>

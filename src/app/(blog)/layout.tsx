@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
-import { ThemeToggle } from '@/features/ThemeToggle/ThemeToggle';
-import Footer from '@/widgets/Footer/footer';
-import ScrollToTop from '@/shared/ui/scroll-to-top';
+import { ChevronLeft } from 'lucide-react';
+import { BlogHeaderAction } from './blog-header-action';
+import Footer from '@/widgets/footer/footer';
+import styles from './blog-document.module.css';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -10,27 +10,27 @@ type LayoutProps = {
 
 export default function BlogLayout({ children }: LayoutProps) {
   return (
-    <>
-      {/* 상단 고정 헤더 — 홈 복귀 + 테마 토글 */}
-      <header className='sticky top-0 z-40 border-b border-line bg-bg'>
-        <div className='mx-auto flex max-w-content items-center justify-between px-5 py-4 md:px-8'>
+    <div className={styles.blog}>
+      <header className='mx-auto mb-5 w-full max-w-[794px]'>
+        <div className='flex h-[34px] items-center justify-between'>
           <Link
             href='/'
             aria-label='포트폴리오로'
-            className='group inline-flex items-center text-fg-strong transition-colors hover:text-accent'
+            className='inline-flex items-center gap-2 text-sm text-muted hover:text-accent'
           >
-            <ArrowLeft size={18} className='transition-transform group-hover:-translate-x-0.5' />
+            <ChevronLeft size={15} /> 포트폴리오
           </Link>
-          <ThemeToggle />
+          <BlogHeaderAction />
         </div>
       </header>
 
-      <main id='main-content' className='min-w-0'>{children}</main>
+      <main id='main-content' className={styles.document}>
+        {children}
+      </main>
 
-      <div className='mx-auto w-full max-w-content px-5 text-center md:px-8'>
+      <div className='mx-auto w-full max-w-[794px] text-center'>
         <Footer />
       </div>
-      <ScrollToTop />
-    </>
+    </div>
   );
 }

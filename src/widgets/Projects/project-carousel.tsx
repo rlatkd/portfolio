@@ -2,8 +2,8 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { Tags } from '@/shared/ui/Section';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Tags } from '@/shared/ui/section';
 import type { Project } from '@/shared/types/portfolio';
 import upQuantSlide from '@public/images/up-quant/slide.png';
 import portfolioSlide from '@public/images/portfolio/slide.png';
@@ -82,7 +82,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
                 <div className='mt-4 min-h-[6.5rem]'>
                   <h3 className='font-semibold text-fg-strong'>{p.title}</h3>
                   <p className='my-1 text-xs text-muted'>{p.context}</p>
-                  <p className='text-[13px] leading-[1.9]'>{p.summary}</p>
+                  <p className='text-[13px] leading-[1.9]'>{p.summary.split(/(?<=다\.) /).map((sentence, index) => <span key={index} className='block'>{sentence}</span>)}</p>
                   <Tags items={[...p.tags].sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }))} />
                 </div>
               </li>
@@ -121,10 +121,10 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
             {index + 1} / {projects.length}
           </span>
           <button type='button' aria-label='이전 프로젝트' onClick={() => move(-1)} className='flex h-11 w-11 items-center justify-center rounded-full border border-line text-fg-strong transition-colors hover:border-accent hover:text-accent'>
-            <ArrowLeft size={16} />
+            <ChevronLeft size={18} />
           </button>
           <button type='button' aria-label='다음 프로젝트' onClick={() => move(1)} className='flex h-11 w-11 items-center justify-center rounded-full border border-line text-fg-strong transition-colors hover:border-accent hover:text-accent'>
-            <ArrowRight size={16} />
+            <ChevronRight size={18} />
           </button>
         </div>
       </div>

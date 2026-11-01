@@ -1,0 +1,85 @@
+@font-face {
+  font-family: BlogPretendard;
+  src: url('~@public/fonts/Pretendard-Medium.woff') format('woff');
+  font-weight: 400 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: BlogPretendard;
+  src: url('~@public/fonts/Pretendard-Bold.woff') format('woff');
+  font-weight: 600 900;
+  font-display: swap;
+}
+
+.blog {
+  min-height: 100vh;
+  padding: 32px 24px;
+}
+.document {
+  width: 100%;
+  max-width: 794px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 0 0 24px;
+  font-family: BlogPretendard, 'Malgun Gothic', sans-serif;
+}
+.document h1 {
+  color: var(--fg-strong);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -.6px;
+  overflow-wrap: anywhere;
+}
+.document :global(.prose) {
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.detail {
+  font-family: BlogPretendard, 'Malgun Gothic', sans-serif;
+}
+
+.pageHeader { margin-bottom: 32px; }
+.pageSubtitle {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.625;
+}
+
+.article,
+.listing {
+  padding: 28px 32px;
+  background: #fff;
+}
+
+:global(.dark) .article,
+:global(.dark) .listing {
+  background: var(--surface);
+}
+
+.article :is(pre, code) {
+  font-family: var(--font-code);
+}
+
+.bodyLayout { position: relative; }
+.contents { margin-bottom: 32px; }
+
+@media (min-width: 1200px) {
+  .contents {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: calc(100% + 24px);
+    width: min(224px, calc((100vw - 794px) / 2 - 48px));
+    margin-bottom: 0;
+  }
+  .contents nav { position: sticky; top: 80px; }
+}
+
+@media (max-width: 639px) {
+  .blog { padding: 24px 12px; }
+  .document h1 { font-size: 26px; }
+  .article, .listing { padding: 20px 16px; }
+}

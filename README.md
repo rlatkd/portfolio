@@ -95,3 +95,11 @@ tests/                   단위 테스트 · 브라우저 테스트
 
 - [콘텐츠 관리와 배포 후 점검](docs/operations.md)
 - [남은 작업](docs/TODO.md)
+
+## 2026-11-01 구조 갱신
+
+- 이력서는 `/resume` 하나로 통합했습니다. 예전 비교용 주소 `/resume2`는 `/resume`로 영구 리다이렉트됩니다.
+- 경력 항목은 [`career-data.ts`](src/shared/data/career-data.ts)의 `work`가 홈 Experience와 이력서의 단일 원본입니다. 이력서 전용 내용(소개·학력·기술 스택·교육·수상·자격증·AI 활용 경험)은 [`resume-data.ts`](src/shared/data/resume-data.ts), Task 본문은 [`resume-case-studies.ts`](src/shared/data/resume-case-studies.ts)에서 수정합니다.
+- 이력서 화면 스타일은 공용 배치 `src/app/resume/resume-viewer.module.css`와 흑백 테마 `src/app/resume/resume-theme.module.css`로 나뉩니다.
+- 쓰지 않던 이미지(`header.jpg` 등)와 빈 폴더를 정리했습니다.
+

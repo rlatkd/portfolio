@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { getPosts } from '@/shared/lib/markdown';
 
 type NavigationProps = {
@@ -21,7 +21,7 @@ export default async function Navigation({ currentPost }: NavigationProps) {
             className='flex items-center w-[45%] max-w-[240px] px-5 py-4 border border-line bg-surface rounded-xl text-fg group hover:border-accent transition-colors'
           >
             <div className='w-10 h-10 flex items-center justify-center rounded-full bg-surface-2 transition-colors mr-4'>
-              <ArrowLeft className='w-5 h-5 text-accent group-hover:-translate-x-0.5 transition-transform' />
+              <ChevronLeft className='w-5 h-5 text-accent group-hover:-translate-x-0.5 transition-transform' />
             </div>
             <div className='flex flex-col items-start overflow-hidden flex-1'>
               <span className='font-mono text-xs text-muted mb-1'>이전 포스트</span>
@@ -41,7 +41,7 @@ export default async function Navigation({ currentPost }: NavigationProps) {
               <span className='text-sm font-semibold text-fg-strong text-ellipsis overflow-hidden whitespace-nowrap w-full text-right'>{nextPost.metadata.title}</span>
             </div>
             <div className='w-10 h-10 flex items-center justify-center rounded-full bg-surface-2 transition-colors ml-4'>
-              <ArrowRight className='w-5 h-5 text-accent group-hover:translate-x-0.5 transition-transform' />
+              <ChevronRight className='w-5 h-5 text-accent group-hover:translate-x-0.5 transition-transform' />
             </div>
           </Link>
         ) : (

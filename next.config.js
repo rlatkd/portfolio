@@ -2,6 +2,10 @@
 module.exports = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // 2026-11-01: 비교용 /resume2를 정식 /resume로 통합했다.
+  async redirects() {
+    return [{ source: '/resume2', destination: '/resume', permanent: true }];
+  },
   async headers() {
     return [{ source: '/:path*', headers: [
       { key: 'X-Content-Type-Options', value: 'nosniff' },

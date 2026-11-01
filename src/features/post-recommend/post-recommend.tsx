@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { dateFormatter } from '@/shared/utils/dateFormatter';
+import { dateFormatter } from '@/shared/utils/date-formatter';
 import type { PostPreview } from '@/shared/types/post';
 import { BookOpen } from 'lucide-react';
 import { getPostDescription } from '@/shared/lib/seo';

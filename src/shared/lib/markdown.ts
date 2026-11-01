@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { cache } from 'react';
-import { getPostContents } from '@/shared/markdown/postContents';
+import { getPostContents } from '@/shared/markdown/post-contents';
 import type { Post } from '@/shared/types/post';
 import sources from '@/shared/content/velog-sources.json';
 import { getBodyExcerpt } from '@/shared/markdown/excerpt';

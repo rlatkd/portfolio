@@ -18,13 +18,13 @@ test('home navigation, theme persistence and landmarks work without runtime erro
   const dates = await writingPosts.locator('span.font-mono').allTextContents();
   expect(dates).toEqual([...dates].sort().reverse());
   await expect(page.locator('script[src*="googletagmanager.com/gtag/js"]')).toHaveCount(0);
-  // 다크가 기본 테마이고, 전환한 라이트 테마가 새로고침 후에도 유지된다
-  await expect(page.locator('html')).toHaveClass(/dark/);
+  // 라이트가 기본 테마이고, 전환한 다크 테마가 새로고침 후에도 유지된다
+  await expect(page.locator('html')).not.toHaveClass(/dark/);
   const toggle = page.getByRole('button', { name: '테마 전환' });
   await toggle.click();
-  await expect(page.locator('html')).not.toHaveClass(/dark/);
+  await expect(page.locator('html')).toHaveClass(/dark/);
   await page.reload();
-  await expect(page.locator('html')).not.toHaveClass(/dark/);
+  await expect(page.locator('html')).toHaveClass(/dark/);
   await page.getByRole('navigation', { name: '포트폴리오 목차' }).getByRole('link', { name: 'Experience' }).click();
   await expect(page).toHaveURL(/#experience/);
   await expect(page.getByRole('button', { name: '맨 위로' })).toBeVisible();
@@ -126,9 +126,9 @@ test('theme remains usable when browser storage is unavailable', async ({ page }
     Storage.prototype.setItem = () => { throw new Error('Storage disabled'); };
   });
   await page.goto('/');
-  await expect(page.locator('html')).toHaveClass(/dark/);
-  await page.getByRole('button', { name: '테마 전환' }).click();
   await expect(page.locator('html')).not.toHaveClass(/dark/);
+  await page.getByRole('button', { name: '테마 전환' }).click();
+  await expect(page.locator('html')).toHaveClass(/dark/);
   expect(errors).toEqual([]);
 });
 
@@ -148,7 +148,9 @@ test('search, resume, privacy and short-screen readability work', async ({ page,
   await expect(page).toHaveURL(/\/resume$/);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('김상훈');
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
-  await expect(page.getByText('010')).toHaveCount(0);
+  await expect(page).toHaveTitle('김상훈_이력서');
+  // 2026-11-01: /resume2를 /resume로 통합했다
+  expect((await request.get('/resume2', { maxRedirects: 0 })).status()).toBe(308);
   expect(await (await request.get('/sitemap.xml')).text()).not.toContain('/resume');
   await page.goto('/privacy');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('방문 분석');

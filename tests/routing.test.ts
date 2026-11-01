@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parsePostQuery, getPostListing, listingUrl } from '../src/shared/lib/post-listing';
 import { escapeXml, serializeJsonLd } from '../src/shared/lib/seo';
-import { dateFormatter } from '../src/shared/utils/dateFormatter';
+import { dateFormatter } from '../src/shared/utils/date-formatter';
 
 const posts = Array.from({ length: 25 }, (_, index) => ({ slug: `post-${index}`, metadata: { index, title: `Post ${index}`, category: index < 20 ? 'Java' : 'API', publishedAt: '2024-01-01', summary: 'Original summary' } }));
 test('invalid, repeated and out-of-range page parameters cannot produce indexable empty pages', () => {
