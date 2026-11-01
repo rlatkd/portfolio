@@ -34,7 +34,9 @@
 .article,
 .listing {
   padding: 28px 32px;
-  background: #fff;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
 }
 
 :global(.dark) .article,

@@ -4,13 +4,13 @@ import { ImageResponse } from 'next/og';
 import { profile } from '@/shared/data/site-data';
 export const runtime = 'nodejs';
 
-// OG 이미지는 CSS 변수를 쓸 수 없어 기본 다크 테마 토큰의 hex 값을 직접 쓴다.
+// OG 이미지는 CSS 변수를 쓸 수 없어 다크 테마(VS Code Dark+) 토큰의 hex 값을 직접 쓴다.
 const color = {
-  bg: '#0f172a',
-  fg: '#e2e8f0',
-  muted: '#94a3b8',
-  accent: '#5eead4',
-  line: '#243148',
+  bg: '#1e1e1e',
+  fg: '#e6e6e6',
+  muted: '#c5c5c5',
+  accent: '#4fc1ff',
+  line: '#3c3c3c',
 };
 
 // fs reads physical files; TypeScript import aliases do not resolve filesystem paths.
@@ -69,10 +69,10 @@ export async function GET(request: Request) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ fontWeight: 500, fontSize: 24, color: color.muted }}>{site}</div>
           <svg width='56' height='56' viewBox='0 0 32 32'>
-            <rect width='32' height='32' rx='8' fill='#0f172a' />
-            <rect x='0.5' y='0.5' width='31' height='31' rx='7.5' fill='none' stroke='#243148' />
-            <path d='M16 6L26 12L16 18L6 12Z' fill='#5eead4' />
-            <path d='M6 18L16 24L26 18' fill='none' stroke='#5eead4' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round' />
+            <rect width='32' height='32' rx='8' fill='#252526' />
+            <rect x='0.5' y='0.5' width='31' height='31' rx='7.5' fill='none' stroke='#3c3c3c' />
+            <path d='M16 6L26 12L16 18L6 12Z' fill='#4fc1ff' />
+            <path d='M6 18L16 24L26 18' fill='none' stroke='#4fc1ff' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round' />
           </svg>
         </div>
       </div>

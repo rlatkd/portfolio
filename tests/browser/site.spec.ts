@@ -13,19 +13,19 @@ test('home navigation, theme persistence and landmarks work without runtime erro
   await expect(page.locator('main')).toHaveCount(1);
   await expect(page.locator('header a[aria-label="GitHub"] svg')).toBeVisible();
   await expect(page.locator('header a[aria-label="LinkedIn"] svg')).toBeVisible();
-  const writingPosts = page.locator('#writing a[href^="/posts/"]');
-  await expect(writingPosts).toHaveCount(3);
-  const dates = await writingPosts.locator('span.font-mono').allTextContents();
+  const writingPosts = page.locator('#posts a[href^="/posts/"]');
+  await expect(writingPosts).toHaveCount(5);
+  const dates = await writingPosts.locator('span.font-code').allTextContents();
   expect(dates).toEqual([...dates].sort().reverse());
   await expect(page.locator('script[src*="googletagmanager.com/gtag/js"]')).toHaveCount(0);
-  // 라이트가 기본 테마이고, 전환한 다크 테마가 새로고침 후에도 유지된다
-  await expect(page.locator('html')).not.toHaveClass(/dark/);
+  // 다크가 기본 테마이고, 전환한 라이트 테마가 새로고침 후에도 유지된다
+  await expect(page.locator('html')).toHaveClass(/dark/);
   const toggle = page.getByRole('button', { name: '테마 전환' });
   await toggle.click();
-  await expect(page.locator('html')).toHaveClass(/dark/);
+  await expect(page.locator('html')).not.toHaveClass(/dark/);
   await page.reload();
-  await expect(page.locator('html')).toHaveClass(/dark/);
-  await page.getByRole('navigation', { name: '포트폴리오 목차' }).getByRole('link', { name: 'Experience' }).click();
+  await expect(page.locator('html')).not.toHaveClass(/dark/);
+  await page.getByRole('navigation', { name: '포트폴리오 목차' }).getByRole('link', { name: 'experience.md' }).click();
   await expect(page).toHaveURL(/#experience/);
   await expect(page.getByRole('button', { name: '맨 위로' })).toBeVisible();
   expect(errors).toEqual([]);
@@ -96,7 +96,7 @@ test('invalid URLs and retired comment endpoints return 404', async ({ request }
 test('sitemap, RSS, OG and optimized images are served successfully', async ({ request }) => {
   const sitemap = await request.get('/sitemap.xml');
   expect(sitemap.status()).toBe(200);
-  expect((await sitemap.text()).match(/<loc>/g)).toHaveLength(Object.keys(sources).length + 3);
+  expect((await sitemap.text()).match(/<loc>/g)).toHaveLength(Object.keys(sources).length + 2); // 홈 · 글 목록 (2026-11-01 /privacy는 모달로 바뀌어 제외)
   const rss = await request.get('/rss');
   expect(rss.status()).toBe(200);
   expect((await rss.text()).match(/<item>/g)).toHaveLength(Object.keys(sources).length);
@@ -126,9 +126,9 @@ test('theme remains usable when browser storage is unavailable', async ({ page }
     Storage.prototype.setItem = () => { throw new Error('Storage disabled'); };
   });
   await page.goto('/');
-  await expect(page.locator('html')).not.toHaveClass(/dark/);
-  await page.getByRole('button', { name: '테마 전환' }).click();
   await expect(page.locator('html')).toHaveClass(/dark/);
+  await page.getByRole('button', { name: '테마 전환' }).click();
+  await expect(page.locator('html')).not.toHaveClass(/dark/);
   expect(errors).toEqual([]);
 });
 
@@ -148,12 +148,15 @@ test('search, resume, privacy and short-screen readability work', async ({ page,
   await expect(page).toHaveURL(/\/resume$/);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('김상훈');
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
-  await expect(page).toHaveTitle('김상훈_이력서');
+  await expect(page).toHaveTitle('resume');
   // 2026-11-01: /resume2를 /resume로 통합했다
   expect((await request.get('/resume2', { maxRedirects: 0 })).status()).toBe(308);
   expect(await (await request.get('/sitemap.xml')).text()).not.toContain('/resume');
-  await page.goto('/privacy');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('방문 분석');
+  // 2026-11-01: 개인정보 안내는 하단 링크에서 여는 모달이다
+  await page.goto('/');
+  await page.getByRole('button', { name: '개인정보 처리방침' }).click();
+  await expect(page.getByRole('dialog')).toContainText('방문 분석');
+  expect((await request.get('/privacy', { maxRedirects: 0 })).status()).toBe(308);
   await page.setViewportSize({ width: 1600, height: 720 });
   await page.goto('/posts/신입-개발자-기술면접-질문-정리-자바');
   const toc = page.getByRole('navigation', { name: '글 목차' });

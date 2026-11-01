@@ -45,7 +45,7 @@ export function CodeCopier({ children, className, highlightedHtml }: CodeCopierP
         </span>
         <button
           onClick={handleCopy}
-          className='px-2 py-1 border border-line bg-surface hover:border-accent hover:text-accent text-fg rounded-md font-mono text-xs flex items-center space-x-1.5 transition-colors'
+          className='px-2 py-1 border border-line bg-surface hover:border-accent hover:text-accent text-fg rounded-md font-code text-xs flex items-center space-x-1.5 transition-colors'
         >
           {copied ? (
             <>

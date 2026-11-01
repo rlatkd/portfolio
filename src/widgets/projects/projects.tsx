@@ -1,11 +1,11 @@
-import { Section } from '@/shared/ui/section';
+import { Pane } from '@/shared/ui/pane';
 import { projects } from '@/shared/data/site-data';
 import ProjectCarousel from './project-carousel';
 
 export default function Projects() {
   return (
-    <Section id='projects' label='Side Projects'>
+    <Pane id='projects' file='side-projects/'>
       <ProjectCarousel projects={projects} />
-    </Section>
+    </Pane>
   );
 }

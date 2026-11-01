@@ -1,5 +1,6 @@
 import '@/styles/global.css';
 import type { Metadata } from 'next';
+import { JetBrains_Mono, Nanum_Gothic_Coding } from 'next/font/google';
 import { themeEffect } from '@/features/theme-toggle/lib/theme-effect';
 import { baseUrl, defaultOgImage, siteTitle, siteDescription } from '@/shared/config/site';
 import { ProductionAnalytics } from '@/shared/ui/production-analytics';
@@ -8,7 +9,7 @@ import { FloatingControls } from '@/shared/ui/floating-controls';
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: '김상훈 · Software Engineer',
+    default: 'sanghunkim',
     template: '%s · 김상훈',
   },
   description: '데이터 정합성과 시스템 신뢰성을 우선하는 소프트웨어 엔지니어 김상훈의 포트폴리오.',
@@ -40,6 +41,10 @@ export const metadata: Metadata = {
   },
 };
 
+// 2026-11-01: VS Code 디자인의 라벨·파일명·날짜용 고정폭 글꼴. 빌드 때 받아 이 사이트 서버에서 제공한다.
+const jetbrains = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500', '700'], variable: '--font-jetbrains', display: 'swap' });
+const nanumCoding = Nanum_Gothic_Coding({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-nanum-coding', display: 'swap', preload: false });
+
 type RootLayoutProps = {
   children: React.ReactNode;
 };
@@ -56,7 +61,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           }}
         />
       </head>
-      <body className='text-fg antialiased min-h-screen'>
+      {/* 글꼴 변수는 body에 둔다. html의 class는 테마 스크립트가 붙이는 dark를 React가 지우지 않도록 비워 둔다. */}
+      <body className={`${jetbrains.variable} ${nanumCoding.variable} text-fg antialiased min-h-screen`}>
         <a href='#main-content' className='skip-link'>본문 바로가기</a>
         <div className='flex-auto min-w-0 flex flex-col'>
           {children}

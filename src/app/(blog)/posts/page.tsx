@@ -20,12 +20,13 @@ async function loadListing(searchParams: Props['searchParams']) {
 }
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const listing = await loadListing(searchParams);
-  const title = listing.category ? `Writing · ${listing.category}` : 'Writing';
+  const title = listing.category ? `Posts · ${listing.category}` : 'Posts';
   const description = '개발, 설계, 경험에 대한 김상훈의 기술 기록입니다.';
   const canonical = listingUrl(listing.page, listing.category, listing.search);
   const image = `${baseUrl}/api/og?title=${encodeURIComponent(title)}`;
   return {
-    title, description, alternates: { canonical },
+    // 2026-11-01: 탭 제목은 'posts'로 고정한다. 공유 카드(OG) 제목은 카테고리를 포함한다.
+    title: { absolute: 'posts' }, description, alternates: { canonical },
     robots: { index: !listing.category && !listing.search, follow: true },
     openGraph: { title, description, url: `${baseUrl}${canonical}`, type: 'website', images: [{ url: image }], siteName: '김상훈', locale: 'ko_KR' },
     twitter: { card: 'summary_large_image', title, description, images: [image] },
@@ -33,10 +34,11 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 }
 export default async function Page({ searchParams }: Props) {
   const listing = await loadListing(searchParams);
+  // 하단 문구까지 간격을 글 상세(88px)와 맞춘다: 문서 아래 여백 24px + mb-16(64px)
   return (
-    <section className='w-full min-w-0'>
+    <section className='mb-16 w-full min-w-0'>
       <header className={styles.pageHeader}>
-        <h1 className='text-fg-strong'>Writing</h1>
+        <h1 className='text-fg-strong'>Posts</h1>
         <p className={styles.pageSubtitle}>개발, 설계, 그리고 경험에 대한 기록을 남깁니다.</p>
       </header>
       <div className={styles.listing}>
@@ -44,7 +46,7 @@ export default async function Page({ searchParams }: Props) {
         <label htmlFor='post-search' className='sr-only'>글 검색</label>
         <input id='post-search' name='q' type='search' maxLength={120} defaultValue={listing.search} placeholder='제목 · 요약 · 주제' className='min-w-0 flex-1 rounded border border-line bg-surface px-3 py-2' />
         {listing.category && <input type='hidden' name='category' value={listing.category} />}
-        <button className='rounded bg-accent px-4 py-2 text-on-accent'>검색</button>
+        <button className='rounded-md border border-button-2-border bg-button-2 px-4 py-2 text-on-button-2 transition-colors hover:border-accent hover:text-accent'>검색</button>
       </form>
       <p className='mb-4 text-xs text-muted'>제목·요약·카테고리에서 검색합니다. 본문 전체 검색은 제공하지 않습니다.</p>
       {(listing.search || listing.category) && <a href='/posts' className='mb-4 inline-block rounded border border-line px-3 py-2 text-sm text-accent'>검색·필터 초기화</a>}

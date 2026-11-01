@@ -5,26 +5,6 @@ import { FileText, Mail, Rss } from 'lucide-react';
 import { FiGithub, FiLinkedin } from 'react-icons/fi';
 import { profile, navItems } from '@/shared/data/site-data';
 
-/** Velog 마크 — github/linkedin과 동일한 아웃라인(stroke) 스타일 */
-function VelogIcon({ size = 19 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth={2}
-      strokeLinecap='round'
-      strokeLinejoin='round'
-      aria-hidden='true'
-    >
-      <rect x='3' y='3' width='18' height='18' rx='5' />
-      <path d='M8 8.5l3 7 3-7' />
-    </svg>
-  );
-}
-
 function sectionScrollTop(section: HTMLElement) {
   const margin = parseFloat(getComputedStyle(section).scrollMarginTop) || 0;
   const padding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
@@ -134,44 +114,48 @@ export default function Sidebar() {
     };
   }, []);
 
+  // 2026-11-01: Velog는 하단 링크에서 뺐다(글은 Writing에서 연결).
   const socials = [
     { Icon: FiGithub, href: profile.github, label: 'GitHub' },
     { Icon: FiLinkedin, href: profile.linkedin, label: 'LinkedIn' },
-    { Icon: VelogIcon, href: profile.velog, label: 'Velog' },
     { Icon: Mail, href: `mailto:${profile.email}`, label: '이메일' },
     { Icon: Rss, href: '/rss', label: 'RSS' },
   ];
 
   return (
-    <header className='portfolio-sidebar pt-16 lg:sticky lg:top-0 lg:flex lg:h-dvh lg:max-h-[1100px] lg:flex-col lg:justify-between lg:overflow-y-auto lg:pb-16 lg:pt-24'>
+    <header className='portfolio-sidebar pt-14 lg:sticky lg:top-0 lg:flex lg:h-dvh lg:flex-col lg:justify-between lg:overflow-y-auto lg:pb-[83px] lg:pt-20'>
       <div>
-        <h1 className='text-[2.6rem] font-bold leading-tight tracking-tight text-fg-strong sm:text-5xl'>
+        <p className='font-code text-[13px] text-accent'>◉ portfolio</p>
+        <h1 className='mt-3 text-[40px] font-bold leading-tight tracking-tight text-fg-strong'>
           <a href='/'>{profile.name}</a>
         </h1>
-        <p className='mt-3 text-lg font-medium tracking-tight text-fg-strong sm:text-xl'>{profile.role}</p>
-        <p className='mt-4 max-w-xs whitespace-pre-line text-[15px] leading-relaxed text-fg'>{profile.intro}</p>
+        <p className='mt-1 font-code text-lg text-fg'>{profile.role}</p>
+        <p className='mt-5 max-w-sm whitespace-pre-line leading-7 text-fg'>{profile.intro}</p>
 
         {/* 이력서 — 별도 페이지 */}
         <a
           href='/resume'
-          className='mt-7 inline-flex items-center gap-2 rounded-full border border-accent px-4 py-2 text-sm font-semibold text-accent transition-colors hover:bg-[color-mix(in_srgb,var(--accent)_12%,transparent)]'
+          className='mt-6 inline-flex items-center gap-2 rounded-md border border-line bg-surface px-3 py-1.5 font-code text-[13px] text-fg-strong transition-colors hover:border-accent hover:text-accent'
         >
-          <FileText size={15} />
+          <FileText size={14} aria-hidden='true' />
           이력서
         </a>
 
-        {/* 목차 (데스크톱) */}
-        <nav aria-label='포트폴리오 목차' className='mt-14 hidden lg:block'>
-          <ul className='w-max space-y-1'>
+        {/* 목차 (데스크톱) — 탐색기의 파일 목록 */}
+        <nav aria-label='포트폴리오 목차' className='mt-10 hidden font-code text-[14px] lg:block'>
+          <p className='mb-2 text-[12px] text-muted'>▾ portfolio</p>
+          <ul className='w-max min-w-56'>
             {navItems.map((item) => {
               const on = active === item.id;
               return (
                 <li key={item.id}>
-                  <a href={`/#${item.id}`} onClick={event => navigateToSection(event, item.id)} aria-current={on ? 'location' : undefined} className='group flex items-center py-2.5'>
-                    <span className={`mr-4 h-px transition-all ${on ? 'w-16 bg-fg-strong' : 'w-8 bg-muted group-hover:w-16 group-hover:bg-fg-strong'}`} />
-                    <span className={`text-[11px] font-bold uppercase tracking-[0.12em] transition-colors ${on ? 'text-fg-strong' : 'text-muted group-hover:text-fg-strong'}`}>
-                      {item.label}
-                    </span>
+                  <a
+                    href={`/#${item.id}`}
+                    onClick={event => navigateToSection(event, item.id)}
+                    aria-current={on ? 'location' : undefined}
+                    className={`block rounded px-3 py-1.5 transition-colors ${on ? 'bg-nav-active text-fg-strong' : 'text-fg hover:text-accent'}`}
+                  >
+                    <span aria-hidden='true' className='whitespace-pre text-muted'>{item.file.endsWith('/') ? '▸ ' : '  '}</span>{item.file}
                   </a>
                 </li>
               );
@@ -180,7 +164,8 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      {/* 하단: 링크 · 테마 */}
+      {/* 하단: 링크. 아래 여백 83px + 아이콘 칸 여백 약 13px = 화면 아래 96px로, 맨 아래로 스크롤했을 때 본문 하단 문구 아래 끝과 맞는다.
+          (메인 page.tsx 하단 문구 여백과 짝. 화면이 높아도 어긋나지 않도록 사이드바 최대 높이 제한은 없앴다) */}
       <div className='mt-8 flex flex-wrap items-center gap-2 sm:gap-5 lg:mt-0'>
         {socials.map(({ Icon, href, label }) => (
           <a
@@ -189,9 +174,9 @@ export default function Sidebar() {
             target={href.startsWith('http') ? '_blank' : undefined}
             rel='noopener noreferrer'
             aria-label={label}
-            className='inline-flex min-h-11 min-w-8 items-center justify-center text-muted transition-colors hover:text-fg-strong'
+            className='inline-flex min-h-11 min-w-8 items-center justify-center text-muted transition-colors hover:text-accent'
           >
-            <Icon size={20} />
+            <Icon size={19} />
           </a>
         ))}
       </div>

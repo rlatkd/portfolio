@@ -24,7 +24,6 @@
 /* ───────────────────────── 폰트 (restyart 동일: 산세리프 Pretendard) ───────────────────────── */
 :root {
   --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-  --font-code: ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, monospace;
 }
 
 /* ───────────────────────── 브랜드 팔레트 ───────────────────────── */
@@ -38,45 +37,89 @@
 }
 
 /* ───────────────────────── 시맨틱 토큰 (라이트) ───────────────────────── */
-/* 슬레이트 + 틸 팔레트. 다크가 기본 테마이고 라이트는 같은 계열의 밝은 짝 */
+/* 2026-11-01: VS Code 테마 기반. 라이트는 Light Modern(화면 색)과 Light+(코드 색)의 공식 값을 쓴다. */
 :root {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --surface-2: #eef2f6;
-  --fg: #475569;
-  --fg-strong: #0f172a;
-  --muted: #64748b;
-  --line: #e2e8f0;
-  --accent: #0f766e;
+  --bg: #f8f8f8;          /* sideBar.background */
+  --surface: #ffffff;     /* editor.background — 영역(pane) 바탕 */
+  --surface-2: #f8f8f8;   /* editorGroupHeader.tabsBackground — 영역 머리 */
+  --fg: #3b3b3b;          /* foreground — 본문 */
+  --fg-strong: #1f1f1f;   /* 제목·강조 */
+  --muted: #6e7681;       /* editorLineNumber.foreground — 날짜·보조 */
+  --line: #e5e5e5;        /* panel.border */
+  --accent: #0070c1;      /* 상수 이름 — 링크·마우스 올림 */
   --on-accent: #ffffff;
-  --glow: #e6f4f1;
+  --tab: #005fb8;         /* tab.activeBorderTop · focusBorder */
+  --button: #005fb8;      /* button.background — 주 버튼 */
+  --on-button: #ffffff;
+  --button-2: #e5e5e5;    /* button.secondaryBackground — 보조 버튼 (Light Modern) */
+  --on-button-2: #3b3b3b; /* button.secondaryForeground */
+  --button-2-border: #0000001a; /* button.border */
+  --ok: #008000;          /* 주석 초록 — 성과(KPI) */
+  --ok-bg: rgba(0, 128, 0, 0.08);
+  --chip: #001080;        /* 변수 이름 — 기술 스택 칩 */
+  --nav-active: #e5ebf1;  /* Light+ editor.inactiveSelectionBackground — 목차 현재 위치 */
+  --glow: #f8f8f8;
 
-  /* sugar-high 코드 하이라이팅 */
-  --sh-background: #0a1628;
-  --sh-class: #c678dd;
-  --sh-identifier: #e5c07b;
-  --sh-sign: #56b6c2;
-  --sh-string: #98c379;
-  --sh-keyword: #e06c75;
-  --sh-comment: #5c6370;
-  --sh-jsxliterals: #61afef;
-  --sh-property: #d19a66;
-  --sh-entity: #61afef;
+  /* 코드 하이라이팅 (Light+) */
+  --sh-background: #f8f8f8;
+  --sh-text: #3b3b3b;
+  --sh-class: #267f99;
+  --sh-identifier: #001080;
+  --sh-sign: #800000;
+  --sh-string: #a31515;
+  --sh-keyword: #0000ff;
+  --sh-comment: #008000;
+  --sh-number: #098658;
+  --sh-function: #795e26;
+  --sh-jsxliterals: #0000ff;
+  --sh-property: #e50000;
+  --sh-entity: #795e26;
+}
 
+/* macOS 창 신호등 색 (테마와 무관하게 고정) — 사이드 프로젝트 슬라이드의 브라우저 틀 */
+:root {
+  --mac-close: #ff5f57;
+  --mac-minimize: #febc2e;
+  --mac-zoom: #28c840;
 }
 
 /* ───────────────────────── 시맨틱 토큰 (다크) ───────────────────────── */
+/* Dark+ 화면 색과 코드 색 */
 .dark {
-  --bg: #0f172a;
-  --surface: #131d33;
-  --surface-2: #1e293b;
-  --fg: #94a3b8;
-  --fg-strong: #e2e8f0;
-  --muted: #7d8ba3;
-  --line: #243148;
-  --accent: #5eead4;
-  --on-accent: #0f172a;
-  --glow: #142341;
+  --bg: #1e1e1e;
+  --surface: #252526;
+  --surface-2: #2d2d2d;
+  --fg: #c5c5c5;
+  --fg-strong: #e6e6e6;
+  --muted: #8b8b8b;
+  --line: #3c3c3c;
+  --accent: #4fc1ff;
+  --on-accent: #1e1e1e;
+  --tab: #0078d4;
+  --button: #0078d4;
+  --on-button: #ffffff;
+  --button-2: transparent; /* Dark Modern button.secondaryBackground #00000000 */
+  --on-button-2: #cccccc;
+  --button-2-border: #ffffff1a;
+  --ok: #89d185;
+  --ok-bg: rgba(137, 209, 133, 0.12);
+  --chip: #9cdcfe;
+  --nav-active: #2d2d2d;
+  --glow: #1e1e1e;
+
+  --sh-background: #1e1e1e;
+  --sh-text: #d4d4d4;
+  --sh-class: #4ec9b0;
+  --sh-identifier: #9cdcfe;
+  --sh-sign: #569cd6;
+  --sh-string: #ce9178;
+  --sh-keyword: #569cd6;
+  --sh-comment: #6a9955;
+  --sh-number: #b5cea8;
+  --sh-function: #dcdcaa;
+  --sh-jsxliterals: #569cd6;
+  --sh-property: #9cdcfe;
+  --sh-entity: #dcdcaa;
 }
 
 /* ───────────────────────── 기본 ───────────────────────── */
@@ -84,7 +127,7 @@ html {
   scroll-padding-top: 1.5rem;
   overflow-x: clip;
   /* 가짜 스크롤바 여백 없이 화면 전체에 배경을 그린다. */
-  background: radial-gradient(ellipse at 15% 10%, var(--glow) 0, transparent 48%) fixed, var(--bg);
+  background: var(--bg);
 }
 
 @media print {
@@ -100,6 +143,8 @@ html {
 }
 
 body {
+  /* 고정폭 글꼴 변수(next/font)가 body에 붙으므로 여기서 정의한다. */
+  --font-code: var(--font-jetbrains), var(--font-nanum-coding), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   /* 스크롤바가 생겨도 화면 전체 폭을 기준으로 문서를 중앙에 배치한다. */
   width: 100vw;
   background: transparent;
@@ -119,7 +164,7 @@ body {
 /* ───────────────────────── 코드 하이라이팅 ───────────────────────── */
 pre {
   background-color: var(--sh-background);
-  color: var(--sh-identifier);
+  color: var(--sh-text);
   font-family: var(--font-code);
   padding: 1em;
   overflow: auto;
@@ -138,8 +183,10 @@ pre {
 .hljs-keyword, .hljs-selector-tag { color: var(--sh-keyword); }
 .hljs-string, .hljs-attr { color: var(--sh-string); }
 .hljs-comment, .hljs-quote { color: var(--sh-comment); }
-.hljs-number, .hljs-literal, .hljs-type { color: var(--sh-class); }
-.hljs-title, .hljs-built_in { color: var(--sh-identifier); }
+.hljs-number, .hljs-literal { color: var(--sh-number); }
+.hljs-type, .hljs-title.class_ { color: var(--sh-class); }
+.hljs-title, .hljs-built_in { color: var(--sh-function); }
+.hljs-variable, .hljs-params { color: var(--sh-identifier); }
 .hljs-tag, .hljs-name, .hljs-meta { color: var(--sh-sign); }
 
 .prose :is(h1, h2, h3, h4, h5, h6) { scroll-margin-top: 80px; }
@@ -183,6 +230,7 @@ pre::-webkit-scrollbar-thumb { background-color: #b1b1b1; border-radius: 4px; }
 .prose pre {
   @apply mx-auto rounded overflow-x-auto py-2 px-3 text-sm;
   background-color: var(--sh-background);
+  border: 1px solid var(--line);
 }
 
 .prose code {
@@ -235,7 +283,8 @@ pre::-webkit-scrollbar-thumb { background-color: #b1b1b1; border-radius: 4px; }
 }
 
 .prose > :first-child {
-  margin-top: 1.25em !important;
+  /* 2026-11-01: 본문 위 여백을 아래 여백(영역 안쪽 여백)과 같게 맞춘다. */
+  margin-top: 0 !important;
   margin-bottom: 1.25em !important;
 }
 

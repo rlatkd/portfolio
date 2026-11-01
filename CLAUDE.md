@@ -99,3 +99,38 @@
 ### 대화 해석 규칙 (2026-11-01)
 - AI 답변이 끝나기 전에 사용자가 보낸 메시지는 그 이전 AI 답변에 대한 응답이다. 최신 답변의 새 목록·제안을 승인한 것으로 보지 않는다. 애매하면 적용 전에 묻는다.
 - 수정 지시는 지시가 가리키는 안에만 적용하고, 보고로 낸 목록은 따로 승인받기 전까지 손대지 않는다.
+
+## 2026-11-01 디자인 갱신 (VS Code 테마, 위 디자인 시스템·구조 설명보다 이 절을 우선한다)
+
+### 디자인 시스템
+- 톤: VS Code 편집기. 라이트는 Light Modern(화면 색)·Light+(코드 색), 다크는 Dark+의 공식 색 값을 쓴다. 이전 네이비·골드·크림, 슬레이트·틸 팔레트는 쓰지 않는다.
+- 폰트: 본문 Pretendard, 라벨·파일명·날짜·칩은 `font-code`(JetBrains Mono · Nanum Gothic Coding, `next/font`로 이 사이트 서버에서 제공).
+- 시맨틱 토큰(`styles/global.css`): 기존 `--bg --surface --surface-2 --fg --fg-strong --muted --line --accent`에 역할별 토큰 `--tab`(활성 탭) `--button`/`--on-button`(주 버튼) `--ok`/`--ok-bg`(KPI) `--chip`(기술 스택 칩)을 추가했다. Tailwind 클래스는 `tab button on-button ok ok-bg chip`.
+  - `--accent`는 링크와 마우스를 올렸을 때의 색이다. 마우스 올림 색은 모두 `--accent` 하나로 통일한다.
+- 공통 섹션 래퍼는 `@/shared/ui/pane`(머리에 파일 탭을 단 영역)이다. `@/shared/ui/section`·`collapsible`은 삭제했다.
+- 파비콘(`src/app/icon.svg`)과 OG 이미지 아이콘은 기존 겹친 마름모 모양을 유지하고 색만 `#4fc1ff` / 바탕 `#252526`으로 바꿨다.
+
+### 메인 구조
+- 위젯 8개: About, Experience, Tasks, Projects, Writing, Contact, Sidebar, Footer.
+  - 목차와 영역 머리는 파일 이름(`navItems[].file`)으로 표시한다: `about.md · experience.md · tasks/ · side-projects/ · writing/ · contact.md`.
+  - Experience는 회사·직함·역할 3줄만 보여 준다. 프로젝트(신규 구축 2건)와 주요 과제는 `widgets/tasks`에서 `프로젝트 / 효성에프엠에스` 두 탭으로 나누고 설명까지 모두 보여 준다.
+  - 사이드바 하단 링크는 GitHub · LinkedIn · 이메일 · RSS 아이콘이다. Velog는 뺐다.
+- 블로그·개인정보·404·이력서 보기 도구는 같은 토큰으로 맞췄다. 이력서 본문(흑백 종이)은 바꾸지 않았다.
+- 디자인 시안(`/test*`, `(design-test)` 라우트, 홈 시안 토글, `public/images/design-test`)은 모두 삭제했다.
+
+### 2026-11-01 추가 갱신 (위 "테마 (2026-11-01)"의 라이트 기본값보다 이 절을 우선한다)
+- 기본 테마는 **다크**다. 사용자가 토글로 라이트를 고르면 localStorage에 저장돼 유지된다.
+- 탭 제목: 홈 기본 `sanghunkim`, 이력서 `resume`.
+- 개인정보 및 방문 분석 안내는 별도 페이지(`/privacy`)를 없애고 하단 링크에서 여는 모달(`features/privacy-notice`)로 바꿨다. sitemap·모니터 경로에서도 뺐다.
+- 홈 글 영역의 파일 이름은 `posts/`(id는 `writing` 유지)이고, `더보기 ›`는 영역 탭 줄 오른쪽 끝(`Pane`의 `action`)에 있다.
+- 목차 현재 위치 배경은 `--nav-active` 토큰이다(라이트 `#e5ebf1`, 다크 `#2d2d2d`).
+- 사이드 프로젝트 슬라이드 6장은 배경 남색을 `#252526` 계열 회색, 민트 부제를 `#4fc1ff`로 다시 칠했다(원본은 git 기록).
+- 주 버튼(`--button`)은 VS Code 버튼 파랑이다(라이트 `#005fb8` button.background, 다크 `#0078d4`). 초록 `#16825d`는 쓰지 않는다.
+- 슬라이드 민트 부제는 가장자리의 흐린 픽셀까지 `#4fc1ff`로 다시 칠했다.
+- 이메일 버튼은 VS Code 보조 버튼 토큰(`--button-2` · `--on-button-2` · `--button-2-border`, Light/Dark Modern의 button.secondary 값)을 쓴다. 마우스를 올리면 `--accent` 테두리·글자.
+- 사이드 프로젝트 원본 화면 캡처는 저장소에 있다: CMS+·Salesync `screen.png`, 나머지 `preview.png`.
+- 사이드 프로젝트 슬라이드는 이미지(`slide.png`, 삭제됨)가 아니라 `project-carousel.tsx`의 `ProjectSlide` 구성 요소다. 왼쪽은 `context`·`title`, 오른쪽은 CSS 브라우저 틀 안의 `image`(원본 캡처). 새 프로젝트는 캡처 한 장과 데이터만 추가한다.
+- 하단 링크·모달 제목은 "개인정보 처리방침"이다. 블로그 목록 탭 제목은 `posts`, 블로그 상세 탭 제목은 글 제목(검색 결과 제목과 같은 값이라 고정하지 않는다).
+- 사이드 프로젝트 슬라이드 부제는 두 줄(종류에서 인원 수 제외 / 기간)이고, 슬라이드 아래 설명란에는 부제를 다시 쓰지 않는다. 포트폴리오 캡처(`portfolio/preview.png`)는 2026-11-01 현재 홈(다크)이다.
+- `/privacy`는 홈으로 영구 이동(308)한다(next.config.js).
+- 홈 글 영역의 섹션 id도 `posts`다(주소 `/#posts`). 위의 "id는 `writing` 유지"는 과거 내용이다.

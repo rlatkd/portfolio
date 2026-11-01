@@ -24,8 +24,8 @@ export const aboutIntro = [
   '문제를 풀 때는 기존 구조와 제약을 먼저 이해하고 다른 시스템에 주는 영향을 줄이는 쪽을 택합니다.',
 ];
 
-// About 문단에서 진하게 표시할 고유명사
-export const aboutKeyTerms = ['채널 계층을 담당', '데이터가 만들어지는 기준과 시스템 사이의 전달 과정'];
+// About 문단에서 진하게 표시할 문구 (2026-11-01: 현재 소개 문단 기준으로 갱신)
+export const aboutKeyTerms = ['데이터 정합성과 시스템 안정성', '다른 시스템에 주는 영향을 줄이는 쪽'];
 
 // 그 외 담당 과제 (이력서 03 Track Record) — 최신순
 export const trackRecord = [
@@ -191,7 +191,7 @@ export const projects: Project[] = [
     id: 'portfolio',
     summary: 'Next.js App Router 기반 포트폴리오와 Markdown 기술 블로그입니다. DB 없이 파일 기반 콘텐츠를 제공하고 SEO와 콘텐츠 검증을 자동화했습니다.',
     title: '포트폴리오',
-    context: '개인 프로젝트 · 2025',
+    context: '개인 프로젝트 · 2024.11 – 현재',
     points: [
       'Next.js App Router 기반 포트폴리오와 Markdown 기술 블로그를 개발했습니다.',
       'DB 없이 파일 기반 콘텐츠를 제공하며, 라이트·다크 테마와 반응형 화면을 구성했습니다.',
@@ -268,10 +268,12 @@ export { awards } from './profile-data';
 
 export { certifications } from './profile-data';
 
+// 2026-11-01: VS Code 디자인. 목차와 각 영역 머리에 파일 이름(file)으로 표시한다.
 export const navItems = [
-  { id: 'about', label: 'About' },
-  { id: 'experience', label: 'Experience' },
-  { id: 'projects', label: 'Side Projects' },
-  { id: 'writing', label: 'Writing' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'about', label: 'About', file: 'about.md' },
+  { id: 'experience', label: 'Experience', file: 'experience.md' },
+  { id: 'tasks', label: 'Tasks', file: 'tasks/' },
+  { id: 'projects', label: 'Side Projects', file: 'side-projects/' },
+  { id: 'posts', label: 'Posts', file: 'posts/' },
+  { id: 'contact', label: 'Contact', file: 'contact.md' },
 ];

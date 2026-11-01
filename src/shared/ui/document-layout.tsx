@@ -9,7 +9,7 @@ export function DocumentShell({ children, className = '' }: { children: ReactNod
 
 export function DocumentHeader({ children }: { children?: ReactNode }) {
   return <header className={styles.header}>
-    <Link href='/' className='inline-flex items-center gap-2 text-sm text-muted hover:text-accent'>
+    <Link href='/' className='inline-flex items-center gap-2 font-code text-[13px] text-muted hover:text-accent'>
       <ChevronLeft size={15} aria-hidden='true' /> 포트폴리오
     </Link>
     {children}

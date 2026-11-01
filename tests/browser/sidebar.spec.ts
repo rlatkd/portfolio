@@ -7,19 +7,19 @@ for (const [width, height] of [[1440, 720], [1440, 900], [1136, 1190], [1440, 21
     await page.setViewportSize({ width, height });
     await page.goto('/');
     const navigation = page.getByRole('navigation', { name: '포트폴리오 목차' });
-    const writing = navigation.getByRole('link', { name: 'Writing', exact: true });
+    const writing = navigation.getByRole('link', { name: 'posts/', exact: true });
     await writing.click();
-    await expect(page).toHaveURL(/#writing$/);
+    await expect(page).toHaveURL(/#posts$/);
     await expect(writing).toHaveAttribute('aria-current', 'location');
     const distanceToWriting = () => page.evaluate(() => {
-      const section = document.getElementById('writing')!;
+      const section = document.getElementById('posts')!;
       const offset = parseFloat(getComputedStyle(section).scrollMarginTop) + parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop);
       const target = Math.min(document.documentElement.scrollHeight - innerHeight, scrollY + section.getBoundingClientRect().top - offset);
       return Math.abs(scrollY - target);
     });
     await expect.poll(distanceToWriting).toBeLessThanOrEqual(2);
-    await navigation.getByRole('link', { name: 'Side Projects', exact: true }).click();
-    await expect(navigation.getByRole('link', { name: 'Side Projects', exact: true })).toHaveAttribute('aria-current', 'location');
+    await navigation.getByRole('link', { name: 'side-projects/', exact: true }).click();
+    await expect(navigation.getByRole('link', { name: 'side-projects/', exact: true })).toHaveAttribute('aria-current', 'location');
     await writing.click();
     await expect(writing).toHaveAttribute('aria-current', 'location');
     await expect.poll(distanceToWriting).toBeLessThanOrEqual(2);
@@ -34,6 +34,6 @@ for (const [width, height] of [[1440, 720], [1440, 900], [1136, 1190], [1440, 21
     await page.mouse.move(width - 40, height / 2);
     await page.mouse.wheel(0, -30000);
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
-    await expect(navigation.getByRole('link', { name: 'About', exact: true })).toHaveAttribute('aria-current', 'location');
+    await expect(navigation.getByRole('link', { name: 'about.md', exact: true })).toHaveAttribute('aria-current', 'location');
   });
 }

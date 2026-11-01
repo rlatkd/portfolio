@@ -18,11 +18,12 @@ export function PostCard({ slug, title, category, publishedAt, summary, returnTo
     >
       <div className='mb-2 flex flex-wrap items-center gap-x-3 gap-y-1'>
         {category && (
-          <span className='text-xs font-medium text-accent'>
+          // 메인 사이드 프로젝트 기술 스택 칩과 같은 모양
+          <span className='rounded-md border border-line px-2 py-0.5 font-code text-[12px] text-chip'>
             {category}
           </span>
         )}
-        {publishedAt && <span className='font-mono text-xs text-muted'>{publishedAt}</span>}
+        {publishedAt && <span className='font-code text-xs text-muted'>{publishedAt}</span>}
       </div>
       <h3 className='text-lg font-semibold leading-snug text-fg-strong transition-colors group-hover:text-accent'>
         <span>{title}</span>

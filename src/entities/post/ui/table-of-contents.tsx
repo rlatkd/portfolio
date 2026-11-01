@@ -37,10 +37,12 @@ export function TableOfContents({ contents }: { contents: PostHeading[] }) {
   }, [contents]);
   if (!contents.length) return null;
   return (
-    <nav ref={navRef} aria-label='글 목차' inert={opacity === 0} className={`w-full text-sm transition-opacity duration-300 ${maxHeight ? 'overflow-y-auto overscroll-contain' : 'overflow-hidden'}`} style={{ opacity, maxHeight }}>
-      <ul className='ml-2 space-y-1'>
+    <nav ref={navRef} aria-label='글 목차' inert={opacity === 0} className={`w-full font-code text-[13px] transition-opacity duration-300 ${maxHeight ? 'overflow-y-auto overscroll-contain' : 'overflow-hidden'}`} style={{ opacity, maxHeight }}>
+      {/* 2026-11-01: 메인 왼쪽 목차(탐색기)와 같은 형식: 현재 위치는 배경으로, 마우스를 올리면 강조색 글자 */}
+      <p className='mb-2 text-[12px] text-muted'>▾ 목차</p>
+      <ul>
         {contents.map(({ level, text, id }) => (
-          <li key={id} className='min-w-0' style={{ marginLeft: `${Math.max(0, level - 2) * 0.5}rem` }}>
+          <li key={id} className='min-w-0' style={{ paddingLeft: `${Math.max(0, level - 2) * 0.75}rem` }}>
             <a href={`#${id}`} title={text} aria-current={section === id ? 'location' : undefined}
               onClick={event => {
                 const element = document.getElementById(id);
@@ -51,7 +53,7 @@ export function TableOfContents({ contents }: { contents: PostHeading[] }) {
                 window.scrollTo({ top: window.scrollY + element.getBoundingClientRect().top - 80,
                   behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
               }}
-              className={`block truncate text-sm leading-7 transition-colors duration-300 hover:underline ${id === section ? 'font-bold text-accent' : 'font-normal text-muted'}`}
+              className={`block truncate rounded px-3 py-1.5 leading-6 transition-colors ${id === section ? 'bg-nav-active text-fg-strong' : 'text-fg hover:text-accent'}`}
             >{text}</a>
           </li>
         ))}

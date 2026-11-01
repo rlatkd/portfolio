@@ -1,10 +1,10 @@
 export const themeEffect = () => {
-  // 2026-11-01: 라이트가 기본 테마. 사용자가 다크를 선택해 저장한 경우에만 다크로 표시
-  let dark = false;
+  // 2026-11-01: 다크가 기본 테마(VS Code Dark+). 사용자가 라이트를 선택해 저장한 경우에만 라이트로 표시
+  let dark = true;
   try {
-    dark = localStorage.getItem('theme') === 'dark';
+    dark = localStorage.getItem('theme') !== 'light';
   } catch {
-    // Storage may be disabled; retain the default light theme.
+    // Storage may be disabled; retain the default dark theme.
   }
   document.documentElement.classList.toggle('dark', dark);
 };

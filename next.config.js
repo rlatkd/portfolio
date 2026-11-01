@@ -4,7 +4,11 @@ module.exports = {
   poweredByHeader: false,
   // 2026-11-01: 비교용 /resume2를 정식 /resume로 통합했다.
   async redirects() {
-    return [{ source: '/resume2', destination: '/resume', permanent: true }];
+    return [
+      { source: '/resume2', destination: '/resume', permanent: true },
+      // 2026-11-01: 개인정보 처리방침은 별도 페이지 대신 하단 링크의 모달로 바꿨다.
+      { source: '/privacy', destination: '/', permanent: true },
+    ];
   },
   async headers() {
     return [{ source: '/:path*', headers: [

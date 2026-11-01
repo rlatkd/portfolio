@@ -21,7 +21,7 @@ export default function PostRecommend({ posts }: { posts: PostPreview[] }) {
                   <p className='text-muted text-sm line-clamp-3'>{getPostDescription(post)}</p>
                 </div>
                 <div className='mt-auto'>
-                  <div className='flex items-center space-x-3 text-muted font-mono text-xs'>
+                  <div className='flex items-center space-x-3 text-muted font-code text-xs'>
                     <time dateTime={post.metadata.publishedAt}>{dateFormatter(post.metadata.publishedAt)}</time>
                   </div>
                 </div>

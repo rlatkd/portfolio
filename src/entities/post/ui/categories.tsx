@@ -8,9 +8,9 @@ interface CategoriesProps {
 }
 
 const pill = (on: boolean) =>
-  `rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+  `rounded-md border px-3 py-1 font-code text-xs transition-colors ${
     on
-      ? 'border-accent bg-accent/10 text-accent'
+      ? 'border-tab bg-surface-2 text-fg-strong'
       : 'border-line text-muted hover:border-accent hover:text-accent'
   }`;
 

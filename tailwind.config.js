@@ -28,6 +28,16 @@ module.exports = {
         line: 'var(--line)',
         accent: 'var(--accent)',
         'on-accent': 'var(--on-accent)',
+        tab: 'var(--tab)',
+        button: 'var(--button)',
+        'on-button': 'var(--on-button)',
+        'button-2': 'var(--button-2)',
+        'on-button-2': 'var(--on-button-2)',
+        'button-2-border': 'var(--button-2-border)',
+        ok: 'var(--ok)',
+        'ok-bg': 'var(--ok-bg)',
+        chip: 'var(--chip)',
+        'nav-active': 'var(--nav-active)',
       },
       fontFamily: {
         // restyart 동일: 전부 산세리프(Pretendard). serif/mono 클래스도 산세리프로 alias.

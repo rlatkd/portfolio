@@ -7,10 +7,10 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   return (
     <>
-      {/* 왼쪽 고정 소개(42%) · 오른쪽 본문(52%) */}
-      <div className='mx-auto w-full max-w-[1152px] px-6 md:px-12 lg:grid lg:grid-cols-[42%_52%] lg:justify-between [overflow-wrap:break-word] [word-break:keep-all]'>
+      {/* 왼쪽 고정 소개(38%) · 오른쪽 파일 영역(58%) */}
+      <div className='mx-auto w-full max-w-[1152px] px-6 md:px-12 lg:grid lg:grid-cols-[38%_58%] lg:justify-between [overflow-wrap:break-word] [word-break:keep-all]'>
         <Sidebar />
-        <main id='main-content' className='min-w-0 pt-14 lg:pb-16 lg:pt-24'>{children}</main>
+        <main id='main-content' className='min-w-0 space-y-10 pb-16 pt-10 lg:py-20'>{children}</main>
       </div>
     </>
   );
