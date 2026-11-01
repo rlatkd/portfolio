@@ -9,13 +9,13 @@ import { FloatingControls } from '@/shared/ui/floating-controls';
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'sanghunkim',
+    default: '김상훈 | 개발자 포트폴리오',
     template: '%s · 김상훈',
   },
-  description: '데이터 정합성과 시스템 신뢰성을 우선하는 소프트웨어 엔지니어 김상훈의 포트폴리오.',
+  description: '데이터 정합성과 시스템 신뢰성을 우선하는 풀스택 개발자 김상훈의 포트폴리오.',
   openGraph: {
     title: '김상훈 · Software Engineer',
-    description: '데이터 정합성과 시스템 신뢰성을 우선하는 소프트웨어 엔지니어 김상훈의 포트폴리오.',
+    description: '데이터 정합성과 시스템 신뢰성을 우선하는 풀스택 개발자 김상훈의 포트폴리오.',
     siteName: '김상훈',
     locale: 'ko_KR',
     type: 'website',

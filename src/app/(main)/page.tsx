@@ -53,7 +53,8 @@ export default async function Page() {
             '@id': authorId,
             name: profile.name,
             alternateName: profile.nameEn,
-            jobTitle: profile.role,
+            // 2026-11-01: 한글 검색("김상훈 개발자")을 위해 한글 직함을 함께 둔다. schema.org 속성은 여러 값을 배열로 가질 수 있다.
+            jobTitle: [profile.role, '풀스택 개발자'],
             url: baseUrl,
             email: `mailto:${profile.email}`,
             worksFor: { '@type': 'Organization', name: '효성에프엠에스' },
