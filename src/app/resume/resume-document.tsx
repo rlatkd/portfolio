@@ -1,8 +1,7 @@
 import { Fragment, type ReactNode } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import profilePhoto from '@public/images/resume/kim-sanghun-profile.webp';
-import { ChevronLeft } from 'lucide-react';
+import { DocumentShell, DocumentHeader } from '@/shared/ui/document-layout';
 import ReactMarkdown from 'react-markdown';
 import { profile, trackRecord } from '@/shared/data/site-data';
 import { work, company, companyRoles } from '@/shared/data/career-data';
@@ -76,11 +75,8 @@ function OtherTasks() {
 }
 
 export default function ResumeDocument() {
-  return <div className='min-h-screen px-3 py-6 sm:px-6 sm:py-8 print:p-0 [word-break:keep-all]'>
-    <div className='mx-auto mb-5 flex max-w-[794px] items-center justify-between print:hidden'>
-      <Link href='/' className='inline-flex items-center gap-2 text-sm text-muted hover:text-accent'><ChevronLeft size={15} /> 포트폴리오</Link>
-      <PrintButton />
-    </div>
+  return <DocumentShell className='[word-break:keep-all]'>
+    <DocumentHeader><PrintButton /></DocumentHeader>
     <main id='main-content'><ResumePager>
       <Sheet>
         <header className={styles.profileHeader}>
@@ -160,5 +156,5 @@ export default function ResumeDocument() {
         <OtherEntries kind='교육' /><OtherEntries kind='수상' /><OtherEntries kind='자격증' />
       </Sheet>
     </ResumePager></main>
-  </div>;
+  </DocumentShell>;
 }

@@ -27,13 +27,13 @@ export default function Pagination({ currentPage, lastPage, category, search }: 
 
 
   return (
-    <div className='flex w-full min-w-0 items-center justify-start overflow-x-auto space-x-2 my-12 relative sm:justify-center' role='navigation' aria-label='글 목록 페이지'>
+    <div className='relative my-12 flex w-full min-w-0 items-center justify-center space-x-2' role='navigation' aria-label='글 목록 페이지'>
       <div className='flex shrink-0 items-center relative z-10'>
         {currentPage > 1 ? (
           <>
             <Link
               href={listingUrl(1, category, search)}
-              className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted hover:text-accent transition-colors'
+              className='hidden h-10 w-10 items-center justify-center rounded-full p-2 text-muted transition-colors hover:text-accent sm:flex'
               aria-label='처음 페이지로'
             >
               <ChevronsLeft className='w-5 h-5' />
@@ -48,7 +48,7 @@ export default function Pagination({ currentPage, lastPage, category, search }: 
           </>
         ) : (
           <>
-            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted/40'>
+            <span className='hidden h-10 w-10 items-center justify-center rounded-full p-2 text-muted/40 sm:flex'>
               <ChevronsLeft className='w-5 h-5' />
             </span>
             <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted/40'>
@@ -62,7 +62,7 @@ export default function Pagination({ currentPage, lastPage, category, search }: 
           <Link
             key={page}
             href={listingUrl(page, category, search)}
-            className={`flex items-center justify-center w-10 h-10 rounded-full text-center font-mono text-sm transition-colors ${
+            className={`${Math.abs(page - currentPage) <= 1 ? 'flex' : 'hidden sm:flex'} items-center justify-center w-10 h-10 rounded-full text-center font-mono text-sm transition-colors ${
               page === currentPage
                 ? 'bg-accent text-on-accent font-medium'
                 : 'text-muted hover:text-accent'
@@ -86,7 +86,7 @@ export default function Pagination({ currentPage, lastPage, category, search }: 
             </Link>
             <Link
               href={listingUrl(lastPage, category, search)}
-              className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted hover:text-accent transition-colors'
+              className='hidden h-10 w-10 items-center justify-center rounded-full p-2 text-muted transition-colors hover:text-accent sm:flex'
               aria-label='마지막 페이지로'
             >
               <ChevronsRight className='w-5 h-5' />
@@ -97,7 +97,7 @@ export default function Pagination({ currentPage, lastPage, category, search }: 
             <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted/40'>
               <ChevronRight className='w-5 h-5' />
             </span>
-            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-full text-muted/40'>
+            <span className='hidden h-10 w-10 items-center justify-center rounded-full p-2 text-muted/40 sm:flex'>
               <ChevronsRight className='w-5 h-5' />
             </span>
           </>

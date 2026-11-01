@@ -4,7 +4,7 @@ import { cache } from 'react';
 import { getPostContents } from '@/shared/markdown/post-contents';
 import type { Post } from '@/shared/types/post';
 import sources from '@/shared/content/velog-sources.json';
-import { getBodyExcerpt } from '@/shared/markdown/excerpt';
+import { getPostSummary } from '@/shared/markdown/excerpt';
 
 function parseFrontmatter(fileContent: string, fileName: string) {
   const match = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/.exec(fileContent);
@@ -35,7 +35,7 @@ async function readPosts(): Promise<Post[]> {
     return {
       metadata: {
         index: Number(metadata.index), title: metadata.title, category: metadata.category,
-        publishedAt: metadata.publishedAt, summary: getBodyExcerpt(content), image: metadata.image,
+        publishedAt: metadata.publishedAt, summary: getPostSummary(metadata.summary, content), image: metadata.image,
         updatedAt: source?.updatedAt || metadata.publishedAt, sourceUrl: source?.url,
       },
       slug, content, tableContents: getPostContents(content),

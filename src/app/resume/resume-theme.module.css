@@ -3,7 +3,7 @@
   padding: 16mm 21mm 19mm;
   border: 1px solid #ccc;
   color: #333;
-  font-family: ResumePretendard, 'Malgun Gothic', sans-serif;
+  font-family: var(--font-sans);
   font-size: 12px;
   line-height: 1.75;
 }
@@ -206,7 +206,7 @@
   margin-top: 1.68mm;
 }
 
-.classic :global(.resume-page) .compact article h3 {
+.classic :global(.resume-page) article[data-resume-experience] h3 {
   font-size: 12.5px;
 }
 

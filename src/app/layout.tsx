@@ -49,12 +49,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang='ko' suppressHydrationWarning={true}>
       <head>
         <link rel='alternate' type='application/rss+xml' title='김상훈 · Writing' href={`${baseUrl}/rss`} />
-        <link
-          rel='stylesheet'
-          as='style'
-          crossOrigin='anonymous'
-          href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css'
-        />
         {/* FOUC 방지: 페인트 전에 테마 적용 */}
         <script
           dangerouslySetInnerHTML={{

@@ -1,27 +1,10 @@
-@font-face {
-  font-family: BlogPretendard;
-  src: url('~@public/fonts/Pretendard-Medium.woff') format('woff');
-  font-weight: 400 500;
-  font-display: swap;
-}
-@font-face {
-  font-family: BlogPretendard;
-  src: url('~@public/fonts/Pretendard-Bold.woff') format('woff');
-  font-weight: 600 900;
-  font-display: swap;
-}
-
-.blog {
-  min-height: 100vh;
-  padding: 32px 24px;
-}
 .document {
   width: 100%;
   max-width: 794px;
   min-width: 0;
   margin: 0 auto;
   padding: 0 0 24px;
-  font-family: BlogPretendard, 'Malgun Gothic', sans-serif;
+  font-family: var(--font-sans);
 }
 .document h1 {
   color: var(--fg-strong);
@@ -37,7 +20,7 @@
 }
 
 .detail {
-  font-family: BlogPretendard, 'Malgun Gothic', sans-serif;
+  font-family: var(--font-sans);
 }
 
 .pageHeader { margin-bottom: 32px; }
@@ -79,7 +62,6 @@
 }
 
 @media (max-width: 639px) {
-  .blog { padding: 24px 12px; }
   .document h1 { font-size: 26px; }
   .article, .listing { padding: 20px 16px; }
 }

@@ -6,11 +6,9 @@ test('article navigation preserves listing context and mobile contents are usabl
   await expect(card).toContainText('Next.js');
   await card.click();
   await expect(page.getByRole('complementary', { name: '내용 정정 안내' })).toHaveCount(0);
-  if ((page.viewportSize()?.width || 0) < 1536) {
-    await page.locator('summary').click();
-    await expect(page.getByRole('navigation', { name: '본문 목차' })).toBeVisible();
-  }
-  await page.getByRole('link', { name: '글 목록으로', exact: true }).click();
+  await expect(page.locator('details')).toHaveCount(0);
+  await expect(page.getByRole('navigation', { name: '글 목차' })).toBeVisible();
+  await page.getByRole('link', { name: '목록으로', exact: true }).click();
   await expect(page).toHaveURL(/category=frontend&q=Next\.js/);
 });
 

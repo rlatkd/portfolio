@@ -7,9 +7,7 @@
 .paper[data-active='true']{display:flex}
 .pageContent{flex:1;min-height:0}
 .pageNumber{margin-top:32px;text-align:center;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;flex-shrink:0}
-@font-face{font-family:ResumePretendard;src:url('~@public/fonts/Pretendard-Medium.woff') format('woff');font-weight:400 500;font-display:swap}
-@font-face{font-family:ResumePretendard;src:url('~@public/fonts/Pretendard-Bold.woff') format('woff');font-weight:600 900;font-display:swap}
-.paper.casePaper{position:relative;padding:16mm 21mm 19mm;background:#fff;color:#344054;font-family:ResumePretendard,'Malgun Gothic',sans-serif;font-size:9.5pt;line-height:1.65;border:0;word-break:keep-all;overflow-wrap:anywhere}
+.paper.casePaper{position:relative;padding:16mm 21mm 19mm;background:#fff;color:#344054;font-family:var(--font-sans);font-size:9.5pt;line-height:1.65;border:0;word-break:keep-all;overflow-wrap:anywhere}
 .casePaper .pageNumber{position:absolute;bottom:8mm;left:21mm;right:21mm;margin:0;color:#667085;font-size:9pt;letter-spacing:1px}
 .caseStudy .running{display:flex;justify-content:space-between;color:#667085;font-size:7.4pt;letter-spacing:1px;border-bottom:1px solid #dedbd4;padding-bottom:3mm}
 .caseStudy h1{font-size:20pt;font-weight:700;line-height:1.35;letter-spacing:-.8px;color:#17243a;margin:5mm 0 3mm}
