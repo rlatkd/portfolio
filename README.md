@@ -113,3 +113,4 @@ tests/                   단위 테스트 · 브라우저 테스트
 - **공유 카드:** 어느 페이지 링크를 공유해도 같은 카드(제목·이미지)가 나옵니다.
 - **개인정보 처리방침:** 별도 페이지 대신 하단 링크를 누르면 열리는 창으로 보여 줍니다. 예전 주소 `/privacy`는 홈으로 이동합니다.
 - **새 위치:** `src/widgets/tasks`(과제 탭), `src/features/privacy-notice`(개인정보 처리방침), `src/shared/ui/pane.tsx` · `pane-tabs.tsx`(파일 탭 모양 영역)
+- **검색·AI 안내:** 홈 구조화 데이터를 사이트(WebSite) · 프로필 페이지(ProfilePage) · 인물(Person)로 연결했고, AI 서비스용 사이트 요약 `/llms.txt`를 제공합니다.

@@ -175,3 +175,6 @@
 - 안 쓰는 옛 색 설정을 지웠다: 브랜드 토큰(`--navy` · `--gold` · `--cream` 등, Tailwind `navy` · `gold` · `cream`)과 `--glow`. 위 11-01 이전 절의 브랜드 색 설명은 과거 내용이다.
 - 안 쓰는 코드 정리: `site-data.tsx`의 옛 `experience` 데이터와 `Experience` 타입, 학력·교육·수상·자격증 다시 내보내기(원본은 `profile-data.ts`), 쓰지 않던 sugar-high 코드 색 규칙(`.token.*`, `.sh__line`, `--sh-jsxliterals` · `--sh-property` · `--sh-entity`)과 `.tracking-label`을 지웠다.
 - `profile-data.ts`의 옛 `education`(쓰는 곳 없음)도 지웠다. 학력의 단일 원본은 `resume-data.ts`의 `education`(이력서·홈 학력 탭 공용)이다.
+- 공유 카드 설명(og:description · twitter:description)을 다시 넣었다. 모든 링크 공통으로 사이드바 소개 문장 `데이터 정합성과 시스템 신뢰성을 먼저 두는 금융 도메인 소프트웨어 엔지니어입니다.`(profile.intro)를 쓴다. 위의 "공유 카드에는 설명을 넣지 않는다"는 과거 내용이다. 검색 결과용 페이지 설명은 지금처럼 `metadata.other.description`.
+- 홈 구조화 데이터는 `@graph`로 WebSite(`#website`, 이름 김상훈, 운영자 = 인물) · ProfilePage(`#profile`, 주인공 = 인물) · Person(`#person`)을 @id로 연결한다. 근무처 효성에프엠에스는 인물의 worksFor일 뿐 사이트 운영자로 쓰지 않는다(검사 도구가 제안한 publisher = Organization 코드는 쓰지 않는다).
+- `/llms.txt`(`src/app/llms.txt/route.ts`)는 사이트 데이터로 만든다: 소개, 주요 페이지(포트폴리오·블로그·RSS), 블로그 글 전체 목록, 연락처(이메일·GitHub·LinkedIn·Velog). 전화번호와 검색 노출을 막아 둔 이력서는 넣지 않는다.
