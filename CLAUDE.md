@@ -136,3 +136,42 @@
 - 홈 글 영역의 섹션 id도 `posts`다(주소 `/#posts`). 위의 "id는 `writing` 유지"는 과거 내용이다.
 - 홈 탭 제목은 `김상훈 | 개발자 포트폴리오`, 사이트 설명은 `…풀스택 개발자 김상훈의 포트폴리오.`다(검색 노출용, 위의 `sanghunkim`은 과거 내용).
 - 홈 인물 구조화 데이터의 jobTitle은 `['Software Engineer', '풀스택 개발자']`다.
+
+## 2026-11-02 갱신
+- 제목 구분자는 `|`다(탭 제목 형식 `%s | 김상훈`, 공유 카드·RSS 이름 포함). 화면 본문과 이력서의 `·`는 그대로 둔다.
+- 홈 공유 카드(OG·X) 제목과 이미지 대체 문구는 탭 제목과 같은 `siteTitle` = `김상훈 | 개발자 포트폴리오`. RSS 이름은 `김상훈 | Posts`.
+- 이력서 메타 설명은 이력서 1쪽 소개 표현을 따른다: `김상훈 이력서 - 계약·결제·정산이 고객에 닿는 채널 계층을 담당하는 …`. 메타 문구에 긴 줄표(—)를 쓰지 않는다.
+- 홈 인물 구조화 데이터의 jobTitle은 화면에 보이는 직함만 쓴다: `['Software Engineer', 'Full-stack Developer']`(위의 '풀스택 개발자'는 과거 내용).
+- 공유 카드(OG·X)는 모든 링크가 같다: 제목 `김상훈 | 개발자 포트폴리오`, 설명은 사이트 설명, 이미지 `/api/og`. 페이지마다 다른 건 주소(og:url)뿐이다. 공통 값은 `shared/lib/seo.ts`의 `shareCard(url)`.
+- 공유 카드 이미지(`/api/og`, 제목 없이 요청)는 카드의 제목·설명·주소와 겹치지 않도록 이름과 도메인을 빼고 `SOFTWARE ENGINEER` 라벨, 사이트 파일 탭 모양, 아이콘만 그린다. 제목을 붙인 요청(블로그 글 구조화 데이터 이미지)은 기존 모양을 쓴다.
+- 공유 카드에는 설명(og:description·twitter:description)을 넣지 않는다. 이미지는 왼쪽 위 마름모 아이콘 + `portfolio`와 파일 탭 모양만 있다(`SOFTWARE ENGINEER` 라벨 삭제). 검색 결과용 페이지 설명(meta description)은 그대로다.
+- Next.js는 `metadata.description`을 공유 카드 설명(og·twitter)에 자동으로 복사한다. 그래서 검색 결과용 페이지 설명은 각 페이지에서 `metadata.other.description`으로 넣는다(`<meta name="description">`은 그대로 한 번 나간다). `description` 키를 다시 쓰면 카드에 설명이 되살아난다.
+- 홈 검색 결과 설명(siteDescription)은 사이드바 소개 + About 첫 문단을 합친 `데이터 정합성과 시스템 신뢰성을 먼저 두는 금융 도메인 소프트웨어 엔지니어 김상훈입니다. Spring Boot와 Vue.js로 서비스를 개발하고 운영합니다.`다(위의 `…풀스택 개발자 김상훈의 포트폴리오.`는 과거 내용). 탭 제목 `김상훈 | 개발자 포트폴리오`는 유지.
+- 이메일 복사 버튼은 결과를 아이콘으로만 보여 준다(성공 ✓ `--accent`, 실패 ✕ `--error` = VS Code errorForeground `#f85149`). 상태 문구는 화면에서 숨기고 화면 낭독기에만 읽힌다.
+- 블로그 본문 이미지는 `image-metadata.json`에 크기가 기록된 경우 `next/image`로 그려 WebP·본문 너비(약 730px)에 맞춰 보낸다. 글 마크다운과 원본 이미지 주소는 바꾸지 않는다(velog 동기화 해시 유지). 허용 호스트는 `next.config.js`의 `images.remotePatterns`. 크기 기록이 없는 새 이미지는 원본 `<img>` 그대로다.
+- 홈 experience 영역은 tasks처럼 머리를 `경력 / 학력` 탭으로 나눈다(`shared/ui/pane-tabs.tsx`, 숨은 탭 내용도 HTML에 있음). 학력은 이력서와 같은 `resume-data.ts`의 `education`.
+- 홈 데스크톱에서는 화면 아래 사이드바 아이콘 아래 끝 높이(96px, 낮은 화면 45px) 밑으로 오른쪽 본문을 가린다(`.portfolio-bottom-mask`).
+- 탭으로 나뉜 영역은 사이드바 목차에서 폴더로 표시한다: `experience/`(경력·학력), `tasks/`.
+- tasks 영역도 experience와 같은 `PaneTabs`를 쓴다(탭 이름 옆 개수 표시). 선택하지 않은 탭의 과제도 HTML에 들어 있다. `widgets/tasks/task-tabs.tsx`는 삭제했다.
+- 홈 데스크톱의 위로 가기 · 테마 버튼도 가림 띠 위로 올려, 버튼 아래 끝을 사이드바 아이콘 아래 끝 높이에 맞춘다(`.portfolio-floating`).
+- 위로 가기 · 테마 버튼은 창 맨 오른쪽이 아니라 본문 영역 오른쪽 끝에서 24px 옆에 둔다(홈 `.portfolio-floating`, 블로그 `.document-floating`). 창이 좁으면 창 오른쪽 24px.
+- 블로그 페이지의 떠 있는 버튼도 홈과 같은 높이(데스크톱 화면 아래 96px, 낮은 화면 45px)를 쓴다.
+- 떠 있는 버튼과 본문 영역 사이 간격은 40px다(위의 24px는 과거 값).
+- 떠 있는 버튼과 본문 영역 사이 간격은 48px다(위의 24px · 40px는 과거 값).
+- 블로그 글 상세도 홈처럼 데스크톱 화면 아래를 가린다(`.portfolio-bottom-mask`). 왼쪽 고정 목차는 가림 띠 위에서 끝나도록 최대 높이를 줄였다.
+- 화면 아래 가림 띠는 블로그 목록에도 적용한다. 블로그는 공용 레이아웃(`(blog)/layout.tsx`)에 있다.
+- 이메일 · 블로그 검색 보조 버튼은 두 테마 모두 테두리만 쓴다(라이트 `--button-2`도 transparent).
+- 블로그 목록 · 상세 · 이력서의 상단 줄(`< 포트폴리오`와 오른쪽 버튼)은 스크롤해도 위에 고정된다(`document-layout.module.css` `.header` sticky).
+- 블로그 목록 검색창 아래 안내 문구("제목·요약·카테고리에서 검색합니다…")는 뺐다.
+- 블로그 글 왼쪽 목차(1200px 이상)는 스크롤에 밀려 올라가지 않고 처음 보이던 높이에 고정된다(목차 칸이 문서에서 시작하는 높이를 sticky top으로 씀).
+- 블로그 · 이력서 상단 줄은 처음부터 화면 맨 위(top 0)에 붙어 있어 스크롤해도 전혀 움직이지 않는다(페이지 위 여백만큼 음수 여백 + 안쪽 위 여백).
+- 블로그 글 탭 제목(검색 결과 제목)은 글의 원래 제목을 쓴다. 따로 두던 검색용 제목 파일 `seo-titles.json`은 삭제했다(위의 "블로그 상세 탭 제목은 글 제목"·검색용 제목 설명은 이 기준으로 읽는다).
+- 블로그 소개 문구: 화면 부제와 RSS 설명은 `개발, 설계, 그리고 경험에 대한 기록을 남깁니다.`, 블로그 목록 검색 설명은 이름을 붙인 `김상훈의 개발, 설계, 그리고 경험에 대한 기록입니다.`
+- 홈 experience 탭은 `경력 / 학력 / 기술`이다. 기술 탭은 `site-data.tsx`의 `majorSkills`(AI · Language · Framework · Etc, 이력서 기술 스택 중 큰 항목만, 실무 아닌 것 포함)이고, 홈 인물 구조화 데이터의 knowsAbout도 이 목록과 같다.
+- 기술 탭에 `Collaboration`(Jira · Confluence · Slack · Notion, 이력서 협업 도구 중 큰 항목) 줄을 Etc 앞에 추가했다.
+- 기술 탭 순서: AI · Collaboration · Language · Framework · Etc.
+- 기술 탭 Etc에서 Redis · Docker를 뺐다: Oracle · Kafka · Elasticsearch · Kubernetes · AWS.
+- 사이드바 하단 아이콘에 Velog를 다시 넣었다: GitHub · LinkedIn · Velog · 이메일 · RSS. 구조화 데이터 sameAs(velog 포함)가 모두 화면에 보인다.
+- 안 쓰는 옛 색 설정을 지웠다: 브랜드 토큰(`--navy` · `--gold` · `--cream` 등, Tailwind `navy` · `gold` · `cream`)과 `--glow`. 위 11-01 이전 절의 브랜드 색 설명은 과거 내용이다.
+- 안 쓰는 코드 정리: `site-data.tsx`의 옛 `experience` 데이터와 `Experience` 타입, 학력·교육·수상·자격증 다시 내보내기(원본은 `profile-data.ts`), 쓰지 않던 sugar-high 코드 색 규칙(`.token.*`, `.sh__line`, `--sh-jsxliterals` · `--sh-property` · `--sh-entity`)과 `.tracking-label`을 지웠다.
+- `profile-data.ts`의 옛 `education`(쓰는 곳 없음)도 지웠다. 학력의 단일 원본은 `resume-data.ts`의 `education`(이력서·홈 학력 탭 공용)이다.

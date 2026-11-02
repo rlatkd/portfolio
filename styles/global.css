@@ -26,16 +26,6 @@
   --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
 }
 
-/* ───────────────────────── 브랜드 팔레트 ───────────────────────── */
-:root {
-  --navy: #0a1628;
-  --navy-mid: #132040;
-  --gold: #c49a3c;
-  --gold-light: #e8c97a;
-  --cream: #f7f4ef;
-  --cream-dark: #ede9e1;
-}
-
 /* ───────────────────────── 시맨틱 토큰 (라이트) ───────────────────────── */
 /* 2026-11-01: VS Code 테마 기반. 라이트는 Light Modern(화면 색)과 Light+(코드 색)의 공식 값을 쓴다. */
 :root {
@@ -51,14 +41,14 @@
   --tab: #005fb8;         /* tab.activeBorderTop · focusBorder */
   --button: #005fb8;      /* button.background — 주 버튼 */
   --on-button: #ffffff;
-  --button-2: #e5e5e5;    /* button.secondaryBackground — 보조 버튼 (Light Modern) */
+  --button-2: transparent; /* 2026-11-02: 보조 버튼은 두 테마 모두 테두리만(라이트도 바탕 없음) */
   --on-button-2: #3b3b3b; /* button.secondaryForeground */
   --button-2-border: #0000001a; /* button.border */
   --ok: #008000;          /* 주석 초록 — 성과(KPI) */
   --ok-bg: rgba(0, 128, 0, 0.08);
   --chip: #001080;        /* 변수 이름 — 기술 스택 칩 */
   --nav-active: #e5ebf1;  /* Light+ editor.inactiveSelectionBackground — 목차 현재 위치 */
-  --glow: #f8f8f8;
+  --error: #f85149;       /* errorForeground (Light/Dark Modern 공통) — 실패 표시 */
 
   /* 코드 하이라이팅 (Light+) */
   --sh-background: #f8f8f8;
@@ -71,9 +61,6 @@
   --sh-comment: #008000;
   --sh-number: #098658;
   --sh-function: #795e26;
-  --sh-jsxliterals: #0000ff;
-  --sh-property: #e50000;
-  --sh-entity: #795e26;
 }
 
 /* macOS 창 신호등 색 (테마와 무관하게 고정) — 사이드 프로젝트 슬라이드의 브라우저 틀 */
@@ -105,7 +92,7 @@
   --ok-bg: rgba(137, 209, 133, 0.12);
   --chip: #9cdcfe;
   --nav-active: #2d2d2d;
-  --glow: #1e1e1e;
+  --error: #f85149;
 
   --sh-background: #1e1e1e;
   --sh-text: #d4d4d4;
@@ -117,9 +104,6 @@
   --sh-comment: #6a9955;
   --sh-number: #b5cea8;
   --sh-function: #dcdcaa;
-  --sh-jsxliterals: #569cd6;
-  --sh-property: #9cdcfe;
-  --sh-entity: #dcdcaa;
 }
 
 /* ───────────────────────── 기본 ───────────────────────── */
@@ -170,16 +154,6 @@ pre {
   overflow: auto;
 }
 
-.token.class { color: var(--sh-class); }
-.token.identifier { color: var(--sh-identifier); }
-.token.sign { color: var(--sh-sign); }
-.token.string { color: var(--sh-string); }
-.token.keyword { color: var(--sh-keyword); }
-.token.comment { color: var(--sh-comment); }
-.token.jsx-literals { color: var(--sh-jsxliterals); }
-.token.property { color: var(--sh-property); }
-.token.entity { color: var(--sh-entity); }
-
 .hljs-keyword, .hljs-selector-tag { color: var(--sh-keyword); }
 .hljs-string, .hljs-attr { color: var(--sh-string); }
 .hljs-comment, .hljs-quote { color: var(--sh-comment); }
@@ -190,11 +164,6 @@ pre {
 .hljs-tag, .hljs-name, .hljs-meta { color: var(--sh-sign); }
 
 .prose :is(h1, h2, h3, h4, h5, h6) { scroll-margin-top: 80px; }
-
-span.sh__line {
-  display: block;
-  line-height: 0;
-}
 
 pre::-webkit-scrollbar { width: 7px; height: 7px; }
 pre::-webkit-scrollbar-thumb { background-color: #b1b1b1; border-radius: 4px; }
@@ -306,7 +275,6 @@ table {
 .title { text-wrap: balance; }
 
 /* ───────────────────────── 유틸 / 애니메이션 ───────────────────────── */
-.tracking-label { letter-spacing: 0.25em; }
 
 /* 낮은 데스크톱 화면에서도 소개·목차·연락 링크가 함께 보이도록 간격 조정 */
 @media (min-width: 1024px) and (max-height: 760px) {
@@ -314,6 +282,22 @@ table {
   .portfolio-sidebar nav { margin-top: 1.75rem; }
   .portfolio-sidebar nav a { padding-top: 0.4rem; padding-bottom: 0.4rem; }
 }
+
+/* 홈 하단 가림 띠: 사이드바 아래 여백(83px) + 아이콘 칸 여백(약 13px) = 아이콘 아래 끝 높이.
+   낮은 화면에서는 위 규칙이 사이드바 아래 여백을 2rem으로 줄이므로 띠도 같이 낮춘다. */
+.portfolio-bottom-mask { height: 96px; }
+/* 위로 가기 · 테마 버튼도 가림 띠 위, 아이콘 아래 끝 높이에 맞춘다. 블로그도 같은 높이를 쓴다. */
+@media (min-width: 1024px) { .portfolio-floating, .document-floating { bottom: 96px; } }
+/* 떠 있는 버튼은 본문 영역 오른쪽 끝에서 48px 옆에 둔다(창이 좁으면 창 오른쪽 24px).
+   홈: 본문 틀 1152px 안쪽 여백 48px → 오른쪽 열 끝 = (100vw + 1152px) / 2 - 48px, 버튼 폭 44px
+   블로그: 문서 폭 794px → 문서 끝 = (100vw + 794px) / 2 */
+.portfolio-floating { right: max(1.5rem, calc((100vw - 1152px) / 2 + 48px - 48px - 44px)); }
+.document-floating { right: max(1.5rem, calc((100vw - 794px) / 2 - 48px - 44px)); }
+@media (min-width: 1024px) and (max-height: 760px) {
+  .portfolio-bottom-mask { height: 45px; }
+  .portfolio-floating, .document-floating { bottom: 45px; }
+}
+@media print { .portfolio-bottom-mask { display: none; } }
 
 /* 이력서 인쇄 */
 /* 이력서 종이 — 테마와 무관하게 흑백 (화면·인쇄 공통) */
@@ -346,7 +330,6 @@ table {
   :root,
   .dark {
     --bg: #ffffff;
-    --glow: #ffffff;
   }
   body {
     background: #fff;

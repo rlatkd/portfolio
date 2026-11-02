@@ -2,27 +2,20 @@ import '@/styles/global.css';
 import type { Metadata } from 'next';
 import { JetBrains_Mono, Nanum_Gothic_Coding } from 'next/font/google';
 import { themeEffect } from '@/features/theme-toggle/lib/theme-effect';
-import { baseUrl, defaultOgImage, siteTitle, siteDescription } from '@/shared/config/site';
+import { baseUrl, siteTitle, siteDescription } from '@/shared/config/site';
+import { shareCard } from '@/shared/lib/seo';
 import { ProductionAnalytics } from '@/shared/ui/production-analytics';
 import { FloatingControls } from '@/shared/ui/floating-controls';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: '김상훈 | 개발자 포트폴리오',
-    template: '%s · 김상훈',
+    default: siteTitle,
+    template: '%s | 김상훈',
   },
-  description: '데이터 정합성과 시스템 신뢰성을 우선하는 풀스택 개발자 김상훈의 포트폴리오.',
-  openGraph: {
-    title: '김상훈 · Software Engineer',
-    description: '데이터 정합성과 시스템 신뢰성을 우선하는 풀스택 개발자 김상훈의 포트폴리오.',
-    siteName: '김상훈',
-    locale: 'ko_KR',
-    type: 'website',
-    url: baseUrl,
-    images: [{ url: defaultOgImage, width: 1200, height: 630, alt: siteTitle }],
-  },
-  twitter: { card: 'summary_large_image', title: siteTitle, description: siteDescription, images: [defaultOgImage] },
+  // 검색 결과용 페이지 설명. 공유 카드에 복사되지 않도록 other로 넣는다(shared/lib/seo.ts 참고).
+  other: { description: siteDescription },
+  ...shareCard(baseUrl),
   robots: {
     index: true,
     follow: true,
@@ -53,7 +46,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang='ko' suppressHydrationWarning={true}>
       <head>
-        <link rel='alternate' type='application/rss+xml' title='김상훈 · Writing' href={`${baseUrl}/rss`} />
+        <link rel='alternate' type='application/rss+xml' title='김상훈 | Posts' href={`${baseUrl}/rss`} />
         {/* FOUC 방지: 페인트 전에 테마 적용 */}
         <script
           dangerouslySetInnerHTML={{

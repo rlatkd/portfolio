@@ -1,4 +1,4 @@
-import type { PublicProfile, Experience, Project } from '@/shared/types/portfolio';
+import type { PublicProfile, Project } from '@/shared/types/portfolio';
 
 // 포트폴리오 콘텐츠: port/main/이력서_김상훈.html 및 사용자 확인 내용 기준.
 // 업무 명칭·기간·수치는 이 파일에서 관리하고 기존 컴포넌트가 표시한다.
@@ -26,6 +26,16 @@ export const aboutIntro = [
 
 // About 문단에서 진하게 표시할 문구 (2026-11-01: 현재 소개 문단 기준으로 갱신)
 export const aboutKeyTerms = ['데이터 정합성과 시스템 안정성', '다른 시스템에 주는 영향을 줄이는 쪽'];
+
+// 2026-11-02: 홈 experience '기술' 탭. 이력서 기술 스택 중 큰 항목만 고른 것(실무가 아닌 것 포함).
+// 검색엔진용 인물 정보의 knowsAbout도 이 목록을 그대로 쓴다(화면에 보이는 것만).
+export const majorSkills = [
+  { label: 'AI', items: ['Claude Code', 'Codex', 'OpenCode'] },
+  { label: 'Collaboration', items: ['Jira', 'Confluence', 'Slack', 'Notion'] },
+  { label: 'Language', items: ['Java', 'JavaScript', 'TypeScript', 'Python'] },
+  { label: 'Framework', items: ['Spring Boot', 'FastAPI', 'Vue.js', 'React', 'Next.js'] },
+  { label: 'Etc', items: ['Oracle', 'Kafka', 'Elasticsearch', 'Kubernetes', 'AWS'] },
+];
 
 // 그 외 담당 과제 (이력서 03 Track Record) — 최신순
 export const trackRecord = [
@@ -94,79 +104,6 @@ export const trackRecord = [
     title: '청구/결제 분기별 가상계좌 예금주명 불일치 개선',
     service: 'CMS+',
   }
-];
-
-export const experience: Experience[] = [
-  {
-    id: 'skku',
-    period: '2026.03 — 현재',
-    role: '성균관대학교',
-    org: '일반대학원 퀀트응용경제학과',
-    desc: '금융 데이터를 분석하고 해석하는 역량을 넓히고자 개발 업무와 퀀트응용경제학 석사 과정을 병행합니다. 계량경제·시계열 분석·머신러닝을 중심으로 공부하고 있습니다.',
-    points: ['계량경제이론·시계열 분석·머신러닝을 통한 금융 데이터 분석 학습', '암호화폐 대시보드에서 시장 국면·자산 간 상관관계·포트폴리오 최적화와 전략 검증 구현'],
-    tags: ['계량경제', '머신러닝', '시계열 분석', 'Python'],
-  },
-  {
-    id: 'hyosung-fms',
-    period: '2024.09 — 현재',
-    role: '효성에프엠에스',
-    org: 'Full-stack Developer · Application Platform · 선임 · 정규직',
-    desc: '계약·결제·정산이 고객에 닿는 채널 계층의 백엔드·프론트엔드 개발과 운영을 담당합니다. CMS+·Connect·Square·iBill 4개 플랫폼을 유지보수하며 외부 연동, 배치, 데이터 정합성 문제를 다룹니다.',
-    points: [
-      '2025.10부터 CMS+·iBill의 배치 모니터링과 VoC 대응을 개발 업무와 병행',
-      '2026.08부터 iBill 오너로 요구사항을 검토해 개선·신규 개발·보류 여부를 결정하고 운영 이슈를 분석부터 배포까지 처리',
-      '전자계약 (2024.09–2025.06): 개발 2명으로 화면·파트너 연동 구현을 분담하고 기획·스펙 협의에 참여 (기획 1·영업 1, 파트너사 개발 3)',
-      '전자계약의 개별 발송·링크 서명과 콜백 후 수납 등록 흐름 구현, 이용 규모 오픈 초기 대비 약 250배 증가',
-      'Branch Manager (2026.05–2026.10): 개발 4·기획 1·영업 1의 팀에서 결제·정산 채널의 백엔드·프론트엔드 담당',
-      '계정계 조회 스펙 협의와 고객사별 조직 계층을 고려한 도메인·계층별 처리 분리',
-    ],
-    tags: ['Spring Boot', 'Vue.js', 'Oracle'],
-  },
-  {
-    id: 'kosa-training',
-    period: '2024.02.26 — 2024.08.09',
-    role: 'MSA Full Stack 개발 전문가 양성 과정',
-    org: '한국소프트웨어산업협회 · 960h',
-    desc: '4인 팀으로 자동 청구·결제 시스템을 개발했습니다. 아키텍트로 시스템·인프라를 설계하고 결제·상품·배치 기능과 배포·모니터링 환경을 구현했습니다.',
-    points: [
-      'Main·Payment·Messaging·Batch는 ECS Fargate에, Analysis는 별도 서버에 배포',
-      'Kafka 브로커 3대와 토픽별 파티션·Consumer Group 구성, 부하 테스트로 5만 건 처리 시간을 12초에서 7초로 단축',
-      'GitHub Actions CI/CD, ELK 로그 조회, Prometheus·Grafana 모니터링 구성',
-      'Git 브랜치·커밋 규칙과 Jira·Slack 연동 등 팀 개발 환경 구성',
-    ],
-    tags: ['Spring Boot', 'Kafka', 'ECS Fargate', 'ELK', 'GitHub Actions'],
-  },
-  {
-    id: 'ssg-training',
-    period: '2023.08.07 — 2024.02.02',
-    role: '클라우드 엔지니어 양성 과정',
-    org: '㈜신세계아이앤씨 · 920h',
-    desc: '4인 팀으로 매장·상품·주문·매출을 관리하는 MSA 기반 웹 POS 서비스를 개발했습니다. AWS 배포와 서비스별 데이터 분리, 배포 자동화·로그·메트릭 관리 환경을 구성했습니다.',
-    points: [
-      '서비스별 DB 분리와 EKS 배포, Kafka 기반 비동기 통신 구성',
-      'GitHub Actions·Argo CD 배포와 Terraform 인프라 구성',
-      'EFK 로그 조회와 Prometheus·Grafana 모니터링 구성',
-    ],
-    tags: ['MSA', 'EKS', 'Argo CD', 'Terraform', 'React'],
-  },
-  {
-    id: 'khu',
-    period: '2018.03 — 2023.02',
-    role: '경희대학교',
-    org: '전자정보대학 생체의공학과',
-    desc: '생체의공학을 전공하며 의료영상·생체신호 처리와 전자회로·제어 관련 과목을 이수했습니다.',
-    points: ['졸업논문에서 간종양 유무를 분류하는 CNN 4종의 정확도·손실·학습 시간 비교', 'MATLAB으로 CT 투영·영상 재구성을 구현하고 필터·보간법·투영 각도에 따른 결과 비교'],
-    tags: ['생체신호처리', 'CNN', 'MATLAB', '제어공학'],
-  },
-  {
-    id: 'hanseo',
-    period: '2015.03 — 2017.02',
-    role: '한서항공직업전문학교',
-    org: '항공정비과',
-    desc: '',
-    points: [],
-    tags: [],
-  },
 ];
 
 export const projects: Project[] = [
@@ -260,18 +197,10 @@ export const projects: Project[] = [
   },
 ];
 
-export { education } from './profile-data';
-
-export { training } from './profile-data';
-
-export { awards } from './profile-data';
-
-export { certifications } from './profile-data';
-
 // 2026-11-01: VS Code 디자인. 목차와 각 영역 머리에 파일 이름(file)으로 표시한다.
 export const navItems = [
   { id: 'about', label: 'About', file: 'about.md' },
-  { id: 'experience', label: 'Experience', file: 'experience.md' },
+  { id: 'experience', label: 'Experience', file: 'experience/' },
   { id: 'tasks', label: 'Tasks', file: 'tasks/' },
   { id: 'projects', label: 'Side Projects', file: 'side-projects/' },
   { id: 'posts', label: 'Posts', file: 'posts/' },

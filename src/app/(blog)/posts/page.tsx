@@ -3,6 +3,7 @@ import { notFound, permanentRedirect } from 'next/navigation';
 import { getPosts } from '@/shared/lib/markdown';
 import { getPostListing, listingUrl, type PostSearchParams } from '@/shared/lib/post-listing';
 import { baseUrl } from '@/shared/config/site';
+import { shareCard } from '@/shared/lib/seo';
 import { Posts } from '@/entities/post/ui/posts';
 import Pagination from '@/entities/post/ui/pagination';
 import Categories from '@/entities/post/ui/categories';
@@ -20,16 +21,14 @@ async function loadListing(searchParams: Props['searchParams']) {
 }
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const listing = await loadListing(searchParams);
-  const title = listing.category ? `Posts · ${listing.category}` : 'Posts';
-  const description = '개발, 설계, 경험에 대한 김상훈의 기술 기록입니다.';
+  // 2026-11-02: 화면 부제와 같은 문장에, 탭 제목(posts)에 없는 이름만 앞에 붙인다.
+  const description = '김상훈의 개발, 설계, 그리고 경험에 대한 기록입니다.';
   const canonical = listingUrl(listing.page, listing.category, listing.search);
-  const image = `${baseUrl}/api/og?title=${encodeURIComponent(title)}`;
   return {
-    // 2026-11-01: 탭 제목은 'posts'로 고정한다. 공유 카드(OG) 제목은 카테고리를 포함한다.
-    title: { absolute: 'posts' }, description, alternates: { canonical },
+    // 탭 제목은 'posts'로 고정한다. 공유 카드는 모든 링크 공통(shareCard).
+    title: { absolute: 'posts' }, other: { description }, alternates: { canonical },
     robots: { index: !listing.category && !listing.search, follow: true },
-    openGraph: { title, description, url: `${baseUrl}${canonical}`, type: 'website', images: [{ url: image }], siteName: '김상훈', locale: 'ko_KR' },
-    twitter: { card: 'summary_large_image', title, description, images: [image] },
+    ...shareCard(`${baseUrl}${canonical}`),
   };
 }
 export default async function Page({ searchParams }: Props) {
@@ -48,10 +47,9 @@ export default async function Page({ searchParams }: Props) {
         {listing.category && <input type='hidden' name='category' value={listing.category} />}
         <button className='rounded-md border border-button-2-border bg-button-2 px-4 py-2 text-on-button-2 transition-colors hover:border-accent hover:text-accent'>검색</button>
       </form>
-      <p className='mb-4 text-xs text-muted'>제목·요약·카테고리에서 검색합니다. 본문 전체 검색은 제공하지 않습니다.</p>
       {(listing.search || listing.category) && <a href='/posts' className='mb-4 inline-block rounded border border-line px-3 py-2 text-sm text-accent'>검색·필터 초기화</a>}
       {listing.search && <p role='status' className='mb-4 text-muted'>“{listing.search}” 검색 결과 {listing.total}개</p>}
-      <div className='mb-8'><Categories categories={listing.categories} selectedCategory={listing.category || ''} search={listing.search} /></div>
+      <div className='mb-4'><Categories categories={listing.categories} selectedCategory={listing.category || ''} search={listing.search} /></div>
       <Posts posts={listing.posts} returnTo={listingUrl(listing.page, listing.category, listing.search)} />
       <Pagination currentPage={listing.page} lastPage={listing.lastPage} category={listing.category} search={listing.search} />
       </div>

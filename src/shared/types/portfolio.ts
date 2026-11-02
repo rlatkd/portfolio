@@ -13,16 +13,6 @@ export type PublicProfile = {
   velogLabel: string;
 };
 
-export type Experience = {
-  id: string;
-  period: string;
-  role: string;
-  org: string;
-  desc: string;
-  points: string[];
-  tags: string[];
-};
-
 export type Project = {
   id: string;
   title: string;

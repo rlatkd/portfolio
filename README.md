@@ -103,3 +103,13 @@ tests/                   단위 테스트 · 브라우저 테스트
 - 이력서 화면 스타일은 공용 배치 `src/app/resume/resume-viewer.module.css`와 흑백 테마 `src/app/resume/resume-theme.module.css`로 나뉩니다.
 - 쓰지 않던 이미지(`header.jpg` 등)와 빈 폴더를 정리했습니다.
 
+
+## 2026-11-02 갱신
+
+- **디자인:** 사이트 전체를 코드 편집기(VS Code) 모양으로 바꿨습니다. 라이트는 Light Modern·Light+, 다크는 Dark+의 색을 쓰며 처음 방문하면 다크로 보입니다. 라벨·파일명·날짜에는 JetBrains Mono와 Nanum Gothic Coding을 씁니다.
+- **홈 구성:** 왼쪽에 이름·소개·파일 목차를 두고, 오른쪽은 `about.md` · `experience/`(경력·학력·기술 탭) · `tasks/`(프로젝트·주요 과제 탭) · `side-projects/` · `posts/` · `contact.md` 영역으로 나눴습니다.
+- **사이드 프로젝트 슬라이드:** 이미지 파일이 아니라 화면 구성 요소입니다. 프로젝트 데이터(`site-data.tsx`의 `projects`)에 화면 캡처 한 장만 있으면 같은 모양으로 만들어집니다. 위 "코드와 콘텐츠 위치"의 슬라이드 이미지 설명은 이전 구조입니다.
+- **블로그 이미지:** 본문의 외부 이미지를 Next.js 이미지 변환으로 WebP로 바꾸고 본문 폭에 맞게 줄여 보냅니다. 글 원문(Markdown)과 이미지 주소는 그대로입니다.
+- **공유 카드:** 어느 페이지 링크를 공유해도 같은 카드(제목·이미지)가 나옵니다.
+- **개인정보 처리방침:** 별도 페이지 대신 하단 링크를 누르면 열리는 창으로 보여 줍니다. 예전 주소 `/privacy`는 홈으로 이동합니다.
+- **새 위치:** `src/widgets/tasks`(과제 탭), `src/features/privacy-notice`(개인정보 처리방침), `src/shared/ui/pane.tsx` · `pane-tabs.tsx`(파일 탭 모양 영역)

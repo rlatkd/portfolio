@@ -9,6 +9,6 @@ export async function GET() {
     const url = escapeXml(`${baseUrl}/posts/${encodeURIComponent(post.slug)}`);
     return `<item><title>${escapeXml(post.metadata.title)}</title><link>${url}</link><guid isPermaLink="true">${url}</guid><description>${escapeXml(getPostDescription(post))}</description><pubDate>${new Date(`${post.metadata.publishedAt}T00:00:00+09:00`).toUTCString()}</pubDate></item>`;
   }).join('\n');
-  const xml = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>김상훈 · Writing</title><link>${escapeXml(baseUrl)}</link><description>개발, 설계, 경험에 대한 기록.</description><language>ko-KR</language>${items}</channel></rss>`;
+  const xml = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>김상훈 | Posts</title><link>${escapeXml(baseUrl)}</link><description>개발, 설계, 그리고 경험에 대한 기록을 남깁니다.</description><language>ko-KR</language>${items}</channel></rss>`;
   return new Response(xml, { headers: { 'Content-Type': 'application/rss+xml; charset=utf-8', 'Cache-Control': 'public, max-age=3600' } });
 }

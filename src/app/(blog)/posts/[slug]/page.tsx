@@ -6,7 +6,7 @@ import Navigation from '@/entities/post/ui/navigation';
 import { getPosts } from '@/shared/lib/markdown';
 import { dateFormatter } from '@/shared/utils/date-formatter';
 import { baseUrl, authorId } from '@/shared/config/site';
-import { getPostDescription, getPostTitle, getPostImage, serializeJsonLd } from '@/shared/lib/seo';
+import { getPostDescription, getPostTitle, getPostImage, serializeJsonLd, shareCard } from '@/shared/lib/seo';
 import { TableOfContents } from '@/entities/post/ui/table-of-contents';
 import { relatedPosts } from '@/shared/content/related-posts';
 import styles from '../../blog-document.module.css';
@@ -27,18 +27,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) notFound();
   const title = getPostTitle(post);
   const description = getPostDescription(post);
-  const image = getPostImage(post);
   return {
-    title, description,
+    title, other: { description },
     authors: [{ name: '김상훈', url: baseUrl }],
     alternates: { canonical: `/posts/${encodeURIComponent(post.slug)}` },
-    openGraph: {
-      title, description, type: 'article',
-      publishedTime: post.metadata.publishedAt, modifiedTime: post.metadata.updatedAt,
-      url: `${baseUrl}/posts/${encodeURIComponent(post.slug)}`,
-      siteName: '김상훈', locale: 'ko_KR', images: [{ url: image, alt: post.metadata.title }],
-    },
-    twitter: { card: 'summary_large_image', title, description, images: [image] },
+    // 공유 카드는 모든 링크 공통(shareCard). 글 제목·요약은 탭 제목과 페이지 설명에만 쓴다.
+    ...shareCard(`${baseUrl}/posts/${encodeURIComponent(post.slug)}`),
   };
 }
 

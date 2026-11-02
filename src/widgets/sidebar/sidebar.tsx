@@ -5,6 +5,26 @@ import { FileText, Mail, Rss } from 'lucide-react';
 import { FiGithub, FiLinkedin } from 'react-icons/fi';
 import { profile, navItems } from '@/shared/data/site-data';
 
+/** Velog 마크 — github/linkedin과 동일한 아웃라인(stroke) 스타일 */
+function VelogIcon({ size = 19 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke='currentColor'
+      strokeWidth={2}
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      aria-hidden='true'
+    >
+      <rect x='3' y='3' width='18' height='18' rx='5' />
+      <path d='M8 8.5l3 7 3-7' />
+    </svg>
+  );
+}
+
 function sectionScrollTop(section: HTMLElement) {
   const margin = parseFloat(getComputedStyle(section).scrollMarginTop) || 0;
   const padding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
@@ -114,10 +134,11 @@ export default function Sidebar() {
     };
   }, []);
 
-  // 2026-11-01: Velog는 하단 링크에서 뺐다(글은 Writing에서 연결).
+  // 2026-11-02: Velog를 다시 넣었다(블로그 글의 원래 출처, 구조화 데이터 sameAs와 맞춤).
   const socials = [
     { Icon: FiGithub, href: profile.github, label: 'GitHub' },
     { Icon: FiLinkedin, href: profile.linkedin, label: 'LinkedIn' },
+    { Icon: VelogIcon, href: profile.velog, label: 'Velog' },
     { Icon: Mail, href: `mailto:${profile.email}`, label: '이메일' },
     { Icon: Rss, href: '/rss', label: 'RSS' },
   ];
@@ -135,7 +156,7 @@ export default function Sidebar() {
         {/* 이력서 — 별도 페이지 */}
         <a
           href='/resume'
-          className='mt-6 inline-flex items-center gap-2 rounded-md border border-line bg-surface px-3 py-1.5 font-code text-[13px] text-fg-strong transition-colors hover:border-accent hover:text-accent'
+          className='mt-[23px] inline-flex items-center gap-2 rounded-md border border-line bg-surface px-3 py-1.5 font-code text-[13px] text-fg-strong transition-colors hover:border-accent hover:text-accent'
         >
           <FileText size={14} aria-hidden='true' />
           이력서

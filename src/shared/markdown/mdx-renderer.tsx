@@ -1,4 +1,5 @@
 import { Children, isValidElement } from 'react';
+import { getImageProps } from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -30,8 +31,15 @@ export function MdxRenderer({ source }: { source: string }) {
       components={{
         img: ({ node, ...props }) => {
           if (!props.src) return null;
-          const entry = (images as Record<string, { unavailable?: boolean }>)[String(props.src)];
+          const entry = (images as Record<string, { unavailable?: boolean; width?: number; height?: number }>)[String(props.src)];
           if (entry?.unavailable) return <span className='text-sm text-muted'>[{props.alt}: 이미지 서버에서 이미지를 제공하지 않습니다.]</span>;
+          // 2026-11-02: 크기가 기록된 이미지는 Next.js 이미지 변환기를 거쳐 WebP로, 본문 너비에 맞게 줄여 보낸다.
+          // 원문에 적힌 크기(style)는 그대로 지키고, 크기 기록이 없는 새 이미지는 원본을 그대로 쓴다.
+          // getImageProps는 next/image와 같은 변환 주소(srcSet)를 만들어 주는 함수다(컴포넌트 대신 써서 서버·테스트 어디서나 같은 <img>가 나온다).
+          if (entry?.width && entry.height) {
+            const { props: optimized } = getImageProps({ src: String(props.src), alt: props.alt ?? '', width: entry.width, height: entry.height, sizes: '(min-width: 800px) 730px, 100vw' });
+            return <img {...optimized} title={props.title} style={{ ...optimized.style, ...props.style }} className={props.className} />;
+          }
           return <img {...props} />;
         },
         a: ({ node, ...props }) => <Linker {...props} />,

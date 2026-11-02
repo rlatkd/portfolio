@@ -1,24 +1,5 @@
 import type { Certification } from '@/shared/types/portfolio';
 
-export const education = [
-  {
-    period: '2026.03 — 현재',
-    org: '성균관대학교 일반대학원',
-    detail: '퀀트응용경제학과 · 석사 재학',
-  },
-  {
-    period: '2018.03 — 2023.02',
-    org: '경희대학교 전자정보대학',
-    detail: '생체의공학과 · 학사 졸업',
-    note: 'Thesis: Comparative Study of CNN Models for Liver Tumor Image Classification (2022)',
-  },
-  {
-    period: '2015.03 — 2017.02',
-    org: '한서항공직업전문학교',
-    detail: '항공정비과 · 전문학사',
-  },
-];
-
 export const training = [
   {
     period: '2024.02.26 — 2024.08.09',

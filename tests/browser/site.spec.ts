@@ -25,7 +25,7 @@ test('home navigation, theme persistence and landmarks work without runtime erro
   await expect(page.locator('html')).not.toHaveClass(/dark/);
   await page.reload();
   await expect(page.locator('html')).not.toHaveClass(/dark/);
-  await page.getByRole('navigation', { name: '포트폴리오 목차' }).getByRole('link', { name: 'experience.md' }).click();
+  await page.getByRole('navigation', { name: '포트폴리오 목차' }).getByRole('link', { name: 'experience/' }).click();
   await expect(page).toHaveURL(/#experience/);
   await expect(page.getByRole('button', { name: '맨 위로' })).toBeVisible();
   expect(errors).toEqual([]);

@@ -12,7 +12,12 @@ import { getPostContents } from '../src/shared/markdown/post-contents';
 import { highlightCode } from '../src/shared/markdown/highlight-code';
 import sources from '../src/shared/content/velog-sources.json';
 import { getPosts } from '../src/shared/lib/markdown';
-import { profile, certifications, experience, projects } from '../src/shared/data/site-data';
+
+// 2026-11-02: 블로그 이미지는 next/image 변환 주소로 그린다. next.config.js 밖(이 테스트)에서는 Next.js가 정한 테스트 환경 값으로
+// 개발용 외부 주소 검사를 건너뛴다(실제 허용 목록은 next.config.js images.remotePatterns와 e2e가 확인한다).
+Object.assign(process.env, { NODE_ENV: 'test' });
+import { profile, projects } from '../src/shared/data/site-data';
+import { certifications } from '../src/shared/data/profile-data';
 import benchmarkReport from '@public/reports/upquant-correlation.json';
 
 const directory = path.join(process.cwd(), 'src/shared/content/posts');
@@ -30,7 +35,7 @@ test('served posts contain only original bodies and original modification dates'
 test('public data excludes private identifiers and uses unique item IDs', () => {
   assert.ok(!Object.hasOwn(profile, 'mobile'));
   for (const certificate of certifications) assert.match(certificate.id, /^[a-z-]+$/);
-  for (const items of [experience, projects, certifications]) {
+  for (const items of [projects, certifications]) {
     assert.equal(new Set(items.map(item => item.id)).size, items.length);
   }
 });
