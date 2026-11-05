@@ -33,11 +33,13 @@
   transform: translateY(var(--resume-title-ink-offset, 0px));
 }
 
-/* 6쪽을 기준으로 서로 다른 글자의 실제 잉크 상단을 광학 정렬한다. */
-.classic :global(.resume-page):is(:nth-child(2), :nth-child(3), :nth-child(4), :nth-child(5)) {
+/* 6쪽을 기준으로 서로 다른 글자의 실제 잉크 상단을 광학 정렬한다.
+   2026-11-04: 쪽 순서(nth-child) 대신 각 쪽 내용에 붙인 data-title-offset 값을 쓴다(resume-document.tsx).
+   지금 배치는 1·9·11쪽 1px, 2~5쪽(Task) 1.5px로 이전과 같다. */
+.classic :global(.resume-page) [data-title-offset='1.5'] {
   --resume-title-ink-offset: 1.5px;
 }
-.classic :global(.resume-page):is(:nth-child(1), :nth-child(9), :nth-child(11)) {
+.classic :global(.resume-page) [data-title-offset='1'] {
   --resume-title-ink-offset: 1px;
 }
 

@@ -10,7 +10,6 @@ minimumReleaseAgeExclude:
   - '@next/swc-linux-x64-musl@16.4.2'
   - '@next/swc-win32-arm64-msvc@16.4.2'
   - '@next/swc-win32-x64-msvc@16.4.2'
-  - '@next/third-parties@16.4.2'
   - next@16.4.2
 # Compatible upstream patches for GHSA-2v37-7h3g-55p8,
 # GHSA-68fv-2mgg-jv7q and GHSA-w5vr-8v7q-w6rv.

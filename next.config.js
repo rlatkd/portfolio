@@ -11,6 +11,8 @@ module.exports = {
       { protocol: 'https', hostname: 'grepp-programmers.s3.ap-northeast-2.amazonaws.com' },
       { protocol: 'https', hostname: 'user-images.githubusercontent.com' },
       { protocol: 'https', hostname: 'u.acmicpc.net' },
+      // 2026-11-04: 원문 주소가 깨진 백준 문제 그림의 대체 주소(image-metadata.json replacement)
+      { protocol: 'https', hostname: 'onlinejudgeimages.s3-ap-northeast-1.amazonaws.com' },
     ],
   },
   // 2026-11-01: 비교용 /resume2를 정식 /resume로 통합했다.

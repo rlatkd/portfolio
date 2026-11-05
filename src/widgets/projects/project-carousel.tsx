@@ -110,7 +110,8 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
         </ul>
       </div>
 
-      <div className='mt-4 flex flex-wrap items-center justify-between gap-2'>
+      {/* 2026-11-04: 모바일(1024px 미만)은 점 · 진행 바 · 쪽 번호 · 이동 버튼을 모두 오른쪽에 모은다(줄이 바뀌어도 오른쪽 정렬). 데스크톱은 양 끝 배치 그대로. */}
+      <div className='mt-4 flex flex-wrap items-center justify-end gap-2 lg:justify-between'>
         <div className='flex'>
           {projects.map((item, i) => (
             <button

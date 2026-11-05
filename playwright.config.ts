@@ -8,5 +8,6 @@ export default defineConfig({
     { name: 'chromium', use: { browserName: 'chromium', channel: process.env.CI ? undefined : 'chrome' } },
     { name: 'mobile-webkit', testMatch: /improvements\.spec\.ts/, use: { ...devices['iPhone 13'], browserName: 'webkit', reducedMotion: 'no-preference' } },
   ],
-  webServer: { command: 'npm run start -- --hostname 127.0.0.1 --port 3100', url: 'http://127.0.0.1:3100', reuseExistingServer: false, timeout: 30000 },
+  // 2026-11-04: 프로젝트 기준(pnpm)에 맞춰 npm 대신 pnpm으로 실행한다(npm 실행 시 pnpm 설정 경고가 난다).
+  webServer: { command: 'pnpm exec next start --hostname 127.0.0.1 --port 3100', url: 'http://127.0.0.1:3100', reuseExistingServer: false, timeout: 30000 },
 });

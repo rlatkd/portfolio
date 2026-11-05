@@ -43,7 +43,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "opener.js",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [

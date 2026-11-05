@@ -39,7 +39,7 @@ export default async function Page() {
       <Writing posts={recent} />
       <Contact />
       {/* 마지막 영역에서 하단 문구까지 간격을 블로그 글 상세(88px)와 맞춘다 */}
-      {/* 맨 아래로 스크롤했을 때 하단 문구 아래 끝을 블로그와 같은 화면 아래 96px(main 80px + 16px)에 둔다 */}
+      {/* 맨 아래로 스크롤했을 때 하단 문구 아래 끝을 가림 높이(--bottom-mask, 보통 96px = main 80px + 16px)에 둔다 */}
       <div className='!mt-[89px] text-center [&>footer]:pb-4'><Footer /></div>
       {/* 검색용 구조화 데이터. 맨 앞에 두면 영역 사이 간격(space-y)이 첫 영역에 붙어 사이드바와 시작 높이가 어긋난다. */}
       <script

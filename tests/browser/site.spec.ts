@@ -59,6 +59,9 @@ test('all restored articles have valid DOM, metadata and no comments requests', 
     const ids = await page.locator('article [id]').evaluateAll(nodes => nodes.map(node => node.id));
     expect(new Set(ids).size, slug).toBe(ids.length);
     await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
+    // 2026-11-04: 글은 공유 카드 종류가 article이고 수정일은 원문(velog) 수정일이다.
+    await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'article');
+    await expect(page.locator('meta[property="article:modified_time"]')).toHaveAttribute('content', (sources as Record<string, { updatedAt: string }>)[slug].updatedAt);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${baseUrl}/posts/${encodeURIComponent(slug)}`);
   }
   expect(comments).toEqual([]);
@@ -100,10 +103,11 @@ test('sitemap, RSS, OG and optimized images are served successfully', async ({ r
   const rss = await request.get('/rss');
   expect(rss.status()).toBe(200);
   expect((await rss.text()).match(/<item>/g)).toHaveLength(Object.keys(sources).length);
-  const og = await request.get('/api/og?title=SEO%20%EA%B2%80%EC%A6%9D');
+  // 2026-11-05: 공유 카드 이미지는 한 가지(제목 붙은 모양은 삭제)
+  const og = await request.get('/api/og');
   expect(og.status()).toBe(200);
   expect(og.headers()['content-type']).toContain('image/png');
-  const image = await request.get('/_next/image?url=%2Fimages%2Fup-quant%2Fpreview.png&w=640&q=75');
+  const image = await request.get('/_next/image?url=%2Fimages%2Fup-quant%2Fpreview.webp&w=640&q=75');
   expect(image.status()).toBe(200);
   expect(image.headers()['content-type']).toContain('image/');
 });
@@ -194,7 +198,8 @@ test('project cards link to GitHub, reviewed image descriptions and benchmark ar
   expect(await projects.locator('a a').count()).toBe(0);
   await page.goto('/posts/Deployment');
   await expect(page.getByRole('link', { name: 'Velog 원문 보기' })).toHaveCount(0);
-  await expect(page.getByText('원문 수정일')).toHaveCount(0);
+  // 2026-11-04: 수정일을 작성일 옆에 다시 보인다(값은 원문 velog 수정일). Velog 원문 링크는 계속 두지 않는다.
+  await expect(page.locator(`header time[datetime="${(sources as Record<string, { updatedAt: string }>).Deployment.updatedAt}"]`)).toBeVisible();
   await expect(page.locator('article img').first()).toHaveAttribute('alt', /In-place 배포 흐름/);
   const removedPage = await request.get('/evidence');
   expect(removedPage.status()).toBe(404);
@@ -206,4 +211,82 @@ test('project cards link to GitHub, reviewed image descriptions and benchmark ar
   expect(report.providerCalls.warmTotal).toBe(0);
   expect(report.resultConsistency).toBe(true);
   expect(report.warm.rawMs).toHaveLength(report.warm.samples);
+});
+
+// 2026-11-04: 화면 아래 가림 띠가 키보드 포커스를 덮지 않는다(가림 띠보다 위층인 사이드바 · 떠 있는 버튼은 제외).
+test('keyboard focus and its focus ring stay above the bottom mask', async ({ page }) => {
+  for (const [width, height] of [[1280, 720], [1440, 900]]) {
+    await page.setViewportSize({ width, height });
+    await page.goto('/');
+    const covered: string[] = [];
+    for (let index = 0; index < 80; index++) {
+      await page.keyboard.press('Tab');
+      // 동작 줄이기 설정(reduce)에서는 모든 속성에 0.01ms 전환이 걸려, 포커스 직후 한 프레임은 이전 테두리 값이 읽힌다.
+      const result = await page.evaluate(async () => {
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        const element = document.activeElement as HTMLElement | null;
+        const mask = document.querySelector('.portfolio-bottom-mask');
+        if (!element || element === document.body || !mask || element.closest('header.portfolio-sidebar, .portfolio-floating')) return null;
+        const box = element.getBoundingClientRect();
+        if (!box.width || !box.height) return null;
+        const style = getComputedStyle(element);
+        const ringBottom = box.bottom + parseFloat(style.outlineOffset) + parseFloat(style.outlineWidth);
+        const maskTop = mask.getBoundingClientRect().top;
+        return ringBottom > maskTop + 1 ? `${element.tagName} ${(element.getAttribute('aria-label') || element.textContent || '').trim().slice(0, 24)} (테두리 아래 ${ringBottom.toFixed(1)} · 가림 띠 위 ${maskTop} · ${style.outlineWidth} ${style.outlineOffset})` : null;
+      });
+      if (result) covered.push(result);
+    }
+    expect(covered, `${width}x${height}`).toEqual([]);
+  }
+});
+
+// 2026-11-04: 탭(경력 · 학력 · 기술)은 WAI-ARIA 탭 패턴대로 선택된 탭만 Tab 정지점이고 방향키 · Home · End로 옮긴다.
+test('pane tabs move with arrow, Home and End keys', async ({ page }) => {
+  await page.goto('/');
+  const tabs = page.getByRole('tablist', { name: '경력 · 학력 · 기술' }).getByRole('tab');
+  await expect(tabs).toHaveCount(3);
+  await expect(tabs.nth(0)).toHaveAttribute('tabindex', '0');
+  await expect(tabs.nth(1)).toHaveAttribute('tabindex', '-1');
+  await tabs.nth(0).focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(tabs.nth(1)).toBeFocused();
+  await expect(tabs.nth(1)).toHaveAttribute('aria-selected', 'true');
+  await expect(page.getByRole('tabpanel', { name: '학력' })).toBeVisible();
+  await page.keyboard.press('End');
+  await expect(tabs.nth(2)).toBeFocused();
+  await page.keyboard.press('ArrowRight');
+  await expect(tabs.nth(0)).toBeFocused();
+  await page.keyboard.press('ArrowLeft');
+  await expect(tabs.nth(2)).toBeFocused();
+  await page.keyboard.press('Home');
+  await expect(tabs.nth(0)).toHaveAttribute('aria-selected', 'true');
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('tabpanel', { name: '경력' })).toBeFocused();
+});
+
+// 2026-11-05: 위에 고정된 줄(모바일 홈 영역 탭 줄, 블로그 머리 줄)이 Shift+Tab으로 위로 옮긴 포커스를 가리지 않는다.
+test('focus moving upward stays below the sticky bars', async ({ page }) => {
+  for (const [path, width, height, bar] of [['/', 390, 844, '.mobile-section-nav'], ['/posts', 1440, 900, 'header'], ['/posts', 390, 844, 'header']] as const) {
+    await page.setViewportSize({ width, height });
+    await page.goto(path);
+    for (let index = 0; index < 100; index++) await page.keyboard.press('Tab');
+    const covered: string[] = [];
+    for (let index = 0; index < 100; index++) {
+      await page.keyboard.press('Shift+Tab');
+      const result = await page.evaluate(async selector => {
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        const element = document.activeElement as HTMLElement | null;
+        const sticky = document.querySelector(selector);
+        if (!element || element === document.body || !sticky || sticky.contains(element) || element.classList.contains('skip-link')) return null;
+        const bar = sticky.getBoundingClientRect();
+        const box = element.getBoundingClientRect();
+        if (!box.width || bar.top > 1) return null;
+        const style = getComputedStyle(element);
+        const ringTop = box.top - parseFloat(style.outlineOffset) - parseFloat(style.outlineWidth);
+        return ringTop < bar.bottom - 1 ? `${(element.getAttribute('aria-label') || element.textContent || '').trim().slice(0, 20)} (테두리 위 ${ringTop.toFixed(1)} < 고정 줄 아래 ${bar.bottom.toFixed(1)})` : null;
+      }, bar);
+      if (result) covered.push(result);
+    }
+    expect(covered, `${path} ${width}x${height}`).toEqual([]);
+  }
 });

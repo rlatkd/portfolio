@@ -156,3 +156,18 @@ Vercel 프로젝트의 Node.js Version은 저장소와 CI에 맞춰 **22.x**로 
 | `pnpm measure` | 로컬 페이지의 로딩 지표·가로 넘침 측정 및 캡처 |
 
 측정 스크립트는 로컬 주소를 대상으로 사용하며, 배포 성능을 판단할 때는 개발 서버 대신 프로덕션 빌드로 실행합니다. 실행 환경과 측정 범위는 결과 파일에 함께 기록됩니다.
+
+## 2026-11-04 갱신
+
+- 본문 글꼴은 `Portfolio Sans`입니다. [Pretendard](https://github.com/orioncactus/pretendard) 1.3.9(SIL Open Font License 1.1)에서 사이트에 쓰인 글자만 남긴 파일이며, OFL에 따라 줄인 글꼴은 원래 이름을 쓰지 않습니다. 글이나 문구에 새 글자가 생기면 `pnpm fonts:build`로 다시 만듭니다. 단위 테스트가 빠진 글자를 알려 줍니다.
+- 서버 함수 지역은 [`vercel.json`](vercel.json)에서 서울(`icn1`)로 지정합니다.
+
+| 명령 | 용도 |
+| --- | --- |
+| `pnpm dev:open` | 개발 서버가 준비되면 기본 브라우저로 열기 |
+| `pnpm fonts:build` | 사이트에 쓰인 글자로 본문 글꼴 다시 만들기 |
+
+## 2026-11-05 갱신
+
+- 글꼴은 본문 글꼴 `Portfolio Sans`(라벨 속 한글 포함)와 라벨 · 파일명 · 날짜의 영문 · 숫자용 JetBrains Mono 두 가지입니다. 위 표의 Nanum Gothic Coding은 더 이상 쓰지 않습니다.
+- GA로 보내는 측정에서는 블로그 검색어를 지웁니다([`analytics-privacy.ts`](src/shared/lib/analytics-privacy.ts)).

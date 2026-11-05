@@ -25,3 +25,19 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - 화면 문구와 메타 문구에 긴 줄표(—)를 쓰지 않는다. 기간은 `–`, 나열은 `·`, 제목 구분자는 `|`다.
 - 블로그 글 Markdown 본문은 고치지 않는다. velog 동기화가 본문 해시(`velog-sources.json`)로 변경을 막는다. 표시 방식은 렌더러(`src/shared/markdown`)에서 바꾼다.
 - 문서는 날짜를 붙인 절을 추가해 갱신하고, 커밋은 사용자가 직접 한다.
+
+## 2026-11-04 갱신
+
+- 변경 내역은 `CLAUDE.md`의 `2026-11-04 갱신` 절에 있다.
+- 본문 글꼴은 Pretendard에서 사이트 글자만 남긴 `Portfolio Sans`다. OFL상 이 글꼴을 `Pretendard`라고 부르지 않는다. 새 글자가 생겨 `tests/fonts.test.ts`가 실패하면 `pnpm fonts:build`를 실행한다.
+- 화면 아래 정렬 숫자는 `styles/global.css`의 CSS 변수(`--bottom-mask` 등)로만 바꾼다.
+- GA 측정 요청에서 검색어를 지우는 코드는 `src/shared/ui/production-analytics.tsx`에 있다. GA를 다른 방식으로 바꿀 때 같이 확인한다.
+- 이력서를 일부러 바꿨다면 `pnpm exec playwright test resume-visual --update-snapshots=all`로 화면 비교 기준 그림을 다시 만든다.
+
+## 2026-11-05 갱신
+
+- 변경 내역은 `CLAUDE.md`의 `2026-11-05 갱신` 절에 있다.
+- 라벨 한글은 본문 글꼴(Portfolio Sans)로 그린다. 나눔고딕코딩은 쓰지 않는다.
+- GA 시작 스크립트는 `src/shared/lib/analytics-privacy.ts`에서 고치고 `tests/analytics-privacy.test.ts`로 확인한다. 스크립트 문자열 안에 역슬래시를 직접 쓰지 않는다.
+- 이력서 화면 비교 테스트는 지웠다(위 11-04 절의 기준 그림 다시 만들기 안내는 과거 내용).
+- 세션 인계 메모(11-04~05 작업 · 보류 항목 · about.md 문구 고민 · 다음 작업 논의 거리)는 `port/portfolio/20261105/세션인계_메모.md`에 있다(저장소에 올라가지 않음). 이어서 작업할 때 먼저 읽는다.

@@ -2,18 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 2026-11-04: 본문 글꼴 Portfolio Sans = Pretendard 1.3.9에서 사이트에 쓰인 글자(약 860자)만 남긴 굵기별 한 파일(각 약 69KB).
+   pnpm fonts:build로 만든다(scripts/build-fonts.mjs). 글자를 덜어 낸 글꼴은 OFL상 수정 버전이라 예약 이름 Pretendard를 쓸 수 없어 이름을 바꿨다.
+   이전: 한글 전체를 담은 Pretendard-Medium.woff2(778KB) · Pretendard-Bold.woff2(791KB)를 통째로 받다가,
+   같은 날 공식 다이나믹 서브셋 184조각으로 바꿨으나 페이지마다 17~24개를 받고 첫 화면 CSS가 27KB 늘어 이 방식으로 다시 바꿨다.
+   글자 모양 · 굵기 연결(400~500 Medium, 600~900 Bold)은 이전과 같다. 글꼴에 없는 글자(검색창에 입력한 드문 글자 등)는 아래 대체 글꼴로 보인다. */
 @font-face {
-  font-family: Pretendard;
-  src: url('~@public/fonts/Pretendard-Medium.woff2') format('woff2');
+  font-family: 'Portfolio Sans';
+  src: url('~@public/fonts/portfolio-sans-medium.woff2') format('woff2');
   font-weight: 400 500;
   font-display: swap;
 }
 @font-face {
-  font-family: Pretendard;
-  src: url('~@public/fonts/Pretendard-Bold.woff2') format('woff2');
+  font-family: 'Portfolio Sans';
+  src: url('~@public/fonts/portfolio-sans-bold.woff2') format('woff2');
   font-weight: 600 900;
   font-display: swap;
 }
+
+/* 2026-11-04: 본문 글꼴(Portfolio Sans = Pretendard 글자)이 도착하기 전 잠깐 보이는 대체 글꼴(Windows 맑은 고딕)의 글자 폭을 Pretendard에 맞춘다.
+   폭이 다르면 글꼴이 바뀌는 순간 줄 바꿈 · 자동 폭 칸(경력 탭 등)이 다시 계산돼 화면이 흔들린다(CLS).
+   size-adjust = 사이트 글(홈 · 글 2편)을 두 글꼴로 그려 잰 폭 비율. 한글은 86.43%, 그 외 글자는 굵기별로 103.78% · 100.24%,
+   공백은 맑은 고딕이 훨씬 넓어(0.352em, Pretendard 0.244em · 0.231em) 따로 69.44% · 65.56%.
+   ascent · descent는 Pretendard 값(1949 · 494 / 2048)을 size-adjust로 나눈 값. 맑은 고딕이 없는 기기(macOS · Android)는 이 묶음을 건너뛴다.
+   글자 범위가 겹치면 뒤에 선언한 규칙(한글 · 공백)이 먼저 적용된다. */
+@font-face { font-family: 'Portfolio Sans Fallback'; src: local('Malgun Gothic'), local('MalgunGothic'); font-weight: 400 500; size-adjust: 103.78%; ascent-override: 91.70%; descent-override: 23.24%; line-gap-override: 0%; }
+@font-face { font-family: 'Portfolio Sans Fallback'; src: local('Malgun Gothic Bold'), local('MalgunGothicBold'); font-weight: 600 900; size-adjust: 100.24%; ascent-override: 94.94%; descent-override: 24.06%; line-gap-override: 0%; }
+@font-face { font-family: 'Portfolio Sans Fallback'; src: local('Malgun Gothic'), local('MalgunGothic'); font-weight: 400 500; size-adjust: 86.43%; ascent-override: 110.11%; descent-override: 27.91%; line-gap-override: 0%; unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF; }
+@font-face { font-family: 'Portfolio Sans Fallback'; src: local('Malgun Gothic Bold'), local('MalgunGothicBold'); font-weight: 600 900; size-adjust: 86.43%; ascent-override: 110.11%; descent-override: 27.91%; line-gap-override: 0%; unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF; }
+@font-face { font-family: 'Portfolio Sans Fallback'; src: local('Malgun Gothic'), local('MalgunGothic'); font-weight: 400 500; size-adjust: 69.44%; ascent-override: 137.05%; descent-override: 34.74%; line-gap-override: 0%; unicode-range: U+0020, U+00A0; }
+@font-face { font-family: 'Portfolio Sans Fallback'; src: local('Malgun Gothic Bold'), local('MalgunGothicBold'); font-weight: 600 900; size-adjust: 65.56%; ascent-override: 145.16%; descent-override: 36.79%; line-gap-override: 0%; unicode-range: U+0020, U+00A0; }
 
 .skip-link{position:fixed;top:8px;left:8px;z-index:100;transform:translateY(-160%);padding:10px 16px;border-radius:6px;background:var(--accent);color:var(--on-accent)}
 .skip-link:focus{transform:translateY(0)}
@@ -23,7 +41,7 @@
 
 /* ───────────────────────── 폰트 (restyart 동일: 산세리프 Pretendard) ───────────────────────── */
 :root {
-  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  --font-sans: 'Portfolio Sans', 'Portfolio Sans Fallback', -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
 }
 
 /* ───────────────────────── 시맨틱 토큰 (라이트) ───────────────────────── */
@@ -34,7 +52,7 @@
   --surface-2: #f8f8f8;   /* editorGroupHeader.tabsBackground — 영역 머리 */
   --fg: #3b3b3b;          /* foreground — 본문 */
   --fg-strong: #1f1f1f;   /* 제목·강조 */
-  --muted: #6e7681;       /* editorLineNumber.foreground — 날짜·보조 */
+  --muted: #656c76;       /* 날짜·보조. 2026-11-04: editorLineNumber.foreground #6e7681은 페이지 바탕 대비 4.33:1이라 4.5:1 이상으로 조정 */
   --line: #e5e5e5;        /* panel.border */
   --accent: #0070c1;      /* 상수 이름 — 링크·마우스 올림 */
   --on-accent: #ffffff;
@@ -78,7 +96,7 @@
   --surface-2: #2d2d2d;
   --fg: #c5c5c5;
   --fg-strong: #e6e6e6;
-  --muted: #8b8b8b;
+  --muted: #959595;       /* 2026-11-04: #8b8b8b은 탭 줄(#2d2d2d) 대비 4.04:1이라 4.5:1 이상으로 조정 */
   --line: #3c3c3c;
   --accent: #4fc1ff;
   --on-accent: #1e1e1e;
@@ -113,6 +131,13 @@ html {
   /* 가짜 스크롤바 여백 없이 화면 전체에 배경을 그린다. */
   background: var(--bg);
 }
+/* 2026-11-05: 1024px 미만 홈은 영역 탭 줄(.mobile-section-nav, 높이 약 41px)이 화면 위에 붙는다.
+   Tab · Shift+Tab으로 옮긴 요소와 포커스 테두리가 그 뒤에 숨지 않도록 위쪽 스크롤 여백을 탭 줄 + 여유(3rem)로 둔다.
+   영역(Pane)의 위 여백(scroll-margin)은 모바일에서 0이라 영역으로 이동했을 때의 위치(화면 위 48px)는 이전과 같다.
+   블로그 · 이력서의 고정 머리 줄은 shared/ui/document-layout.module.css에서 같은 방식으로 처리한다. */
+@media (max-width: 1023.98px) {
+  html:has(.mobile-section-nav) { scroll-padding-top: 3rem; }
+}
 
 @media print {
   body { width: auto !important; }
@@ -127,8 +152,10 @@ html {
 }
 
 body {
-  /* 고정폭 글꼴 변수(next/font)가 body에 붙으므로 여기서 정의한다. */
-  --font-code: var(--font-jetbrains), var(--font-nanum-coding), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  /* 고정폭 글꼴 변수(next/font)가 body에 붙으므로 여기서 정의한다.
+     2026-11-05: 라벨 · 파일명 · 날짜의 영문 · 숫자는 JetBrains Mono, 그 안의 한글은 본문 글꼴(Portfolio Sans)로 그린다.
+     이전에는 한글을 나눔고딕코딩으로 그려 페이지마다 한글 조각 파일 4~8개(37~79KB)를 따로 받았다. 이제 추가 파일이 없다. */
+  --font-code: var(--font-jetbrains), 'Portfolio Sans', 'Portfolio Sans Fallback', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   /* 스크롤바가 생겨도 화면 전체 폭을 기준으로 문서를 중앙에 배치한다. */
   width: 100vw;
   background: transparent;
@@ -163,7 +190,9 @@ pre {
 .hljs-variable, .hljs-params { color: var(--sh-identifier); }
 .hljs-tag, .hljs-name, .hljs-meta { color: var(--sh-sign); }
 
-.prose :is(h1, h2, h3, h4, h5, h6) { scroll-margin-top: 80px; }
+/* 2026-11-05: 머리 줄 높이만큼의 위쪽 스크롤 여백(86px, document-layout.module.css)에 더해지므로 80px → 18px.
+   소제목 주소로 이동하면 데스크톱에서 이전과 같은 화면 위 104px에 온다. */
+.prose :is(h1, h2, h3, h4, h5, h6) { scroll-margin-top: 18px; }
 
 pre::-webkit-scrollbar { width: 7px; height: 7px; }
 pre::-webkit-scrollbar-thumb { background-color: #b1b1b1; border-radius: 4px; }
@@ -278,25 +307,38 @@ table {
 
 /* 낮은 데스크톱 화면에서도 소개·목차·연락 링크가 함께 보이도록 간격 조정 */
 @media (min-width: 1024px) and (max-height: 760px) {
-  header.portfolio-sidebar { padding-top: 2rem; padding-bottom: 2rem; }
+  header.portfolio-sidebar { padding-top: 2rem; }
   .portfolio-sidebar nav { margin-top: 1.75rem; }
   .portfolio-sidebar nav a { padding-top: 0.4rem; padding-bottom: 0.4rem; }
 }
 
-/* 홈 하단 가림 띠: 사이드바 아래 여백(83px) + 아이콘 칸 여백(약 13px) = 아이콘 아래 끝 높이.
-   낮은 화면에서는 위 규칙이 사이드바 아래 여백을 2rem으로 줄이므로 띠도 같이 낮춘다. */
-.portfolio-bottom-mask { height: 96px; }
-/* 위로 가기 · 테마 버튼도 가림 띠 위, 아이콘 아래 끝 높이에 맞춘다. 블로그도 같은 높이를 쓴다. */
-@media (min-width: 1024px) { .portfolio-floating, .document-floating { bottom: 96px; } }
-/* 떠 있는 버튼은 본문 영역 오른쪽 끝에서 48px 옆에 둔다(창이 좁으면 창 오른쪽 24px).
-   홈: 본문 틀 1152px 안쪽 여백 48px → 오른쪽 열 끝 = (100vw + 1152px) / 2 - 48px, 버튼 폭 44px
-   블로그: 문서 폭 794px → 문서 끝 = (100vw + 794px) / 2 */
-.portfolio-floating { right: max(1.5rem, calc((100vw - 1152px) / 2 + 48px - 48px - 44px)); }
-.document-floating { right: max(1.5rem, calc((100vw - 794px) / 2 - 48px - 44px)); }
-@media (min-width: 1024px) and (max-height: 760px) {
-  .portfolio-bottom-mask { height: 45px; }
-  .portfolio-floating, .document-floating { bottom: 45px; }
+/* 2026-11-04: 화면 아래 정렬 값을 변수로 묶는다. 하나만 바꿔도 가림 띠 · 떠 있는 버튼 · 사이드바 아이콘 ·
+   홈 하단 문구 · 블로그 목차 · 키보드 포커스 위치가 같이 따라간다.
+   --bottom-mask: 데스크톱(1024px 이상) 화면 아래 가림 띠 높이 = 사이드바 아이콘 아래 끝 높이. 낮은 화면(760px 이하)은 45px.
+   (이전 값: 가림 띠 · 버튼 96px/45px, 사이드바 아래 여백 83px/2rem, 버튼 위치 1152 · 48 · 794 · 44px를 각각 숫자로 적었다) */
+:root {
+  --bottom-mask: 0px;
+  --home-width: 1152px;      /* 홈 본문 틀 최대 폭 ((main)/layout.tsx) */
+  --home-gutter: 48px;       /* 홈 본문 틀 좌우 안쪽 여백(md 이상) */
+  --document-width: 794px;   /* 블로그 문서 폭 = 이력서 A4 폭 */
+  --floating-size: 44px;     /* 떠 있는 버튼 폭 */
+  --floating-gap: 48px;      /* 떠 있는 버튼과 본문 영역 사이 */
 }
+@media (min-width: 1024px) { :root { --bottom-mask: 96px; } }
+@media (min-width: 1024px) and (max-height: 760px) { :root { --bottom-mask: 45px; } }
+
+.portfolio-bottom-mask { height: var(--bottom-mask); }
+/* 사이드바 아래 여백 = 가림 높이 - 아이콘 칸 아래 여백(13px). 아이콘 아래 끝이 가림 띠 위 끝에 닿는다. */
+@media (min-width: 1024px) { header.portfolio-sidebar { padding-bottom: calc(var(--bottom-mask) - 13px); } }
+/* 2026-11-04: Tab으로 이동한 요소가 가림 띠 뒤에 숨지 않도록 가림 높이만큼 아래 스크롤 여백을 둔다(가림 띠가 있는 홈 · 블로그).
+   포커스 테두리(4px 띄움 + 2px 두께)까지 보이도록 8px를 더한다. */
+html:has(.portfolio-bottom-mask) { scroll-padding-bottom: calc(var(--bottom-mask) + 8px); }
+/* 위로 가기 · 테마 버튼도 가림 띠 위, 아이콘 아래 끝 높이에 맞춘다. 블로그도 같은 높이를 쓴다. */
+@media (min-width: 1024px) { .portfolio-floating, .document-floating { bottom: var(--bottom-mask); } }
+/* 떠 있는 버튼은 본문 영역 오른쪽 끝에서 --floating-gap 옆에 둔다(창이 좁으면 창 오른쪽 24px).
+   홈: 오른쪽 열 끝 = (100vw + 본문 틀 폭) / 2 - 안쪽 여백 / 블로그: 문서 끝 = (100vw + 문서 폭) / 2 */
+.portfolio-floating { right: max(1.5rem, calc((100vw - var(--home-width)) / 2 + var(--home-gutter) - var(--floating-gap) - var(--floating-size))); }
+.document-floating { right: max(1.5rem, calc((100vw - var(--document-width)) / 2 - var(--floating-gap) - var(--floating-size))); }
 @media print { .portfolio-bottom-mask { display: none; } }
 
 /* 이력서 인쇄 */
@@ -323,6 +365,13 @@ table {
     max-width: none !important;
     border: 0 !important;
     break-after: page;
+    /* 2026-11-04: 모바일 인쇄에서 1쪽 · 빈 쪽 · 2쪽 · 빈 쪽으로 나오던 문제.
+       기기가 위의 A4 · 여백 0 지정을 무시하고 더 작은 인쇄 영역(Letter, 기기 기본 여백 등)을 쓰면 297mm 쪽이 넘쳐 다음 장으로 흘렀다.
+       인쇄 영역(100vw × 100vh) 안에 들어가도록 쪽 전체를 같은 비율로 줄인다(tan(atan2(a, b)) = a / b).
+       Chrome은 인쇄 영역을 px 정수로 내려서(A4 높이 1122.52px → 1122px) A4가 지켜져도 비율이 0.9995쯤 나온다.
+       0.998 이상은 이 반올림 차이로 보고 1로 둔다(clamp 부분). 그래서 A4 · 여백 0이 지켜지면 이전과 같다. */
+    --print-fit: min(tan(atan2(100vw, 210mm)), tan(atan2(100vh, 297mm)));
+    zoom: min(1, max(var(--print-fit), clamp(0, (var(--print-fit) - 0.998) * 100000, 1)));
   }
   .resume-page:last-of-type {
     break-after: auto;

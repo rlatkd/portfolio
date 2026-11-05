@@ -44,9 +44,12 @@ await Promise.all(Array.from({ length: 4 }, async () => {
   for (;;) {
     const item = queue.shift(); if (!item) break;
     const [url, files] = item;
+    // 2026-11-04: 원문 주소가 깨져 대체 주소(replacement)로 그리는 이미지는 실제로 쓰는 대체 주소를 확인한다.
+    const replacement = metadata[url]?.replacement;
+    const target = replacement ?? url;
     try {
-      if (!url.startsWith('https://')) throw new Error('Expected HTTPS image');
-      const response = await fetch(url, { signal: AbortSignal.timeout(20000) });
+      if (!target.startsWith('https://')) throw new Error('Expected HTTPS image');
+      const response = await fetch(target, { signal: AbortSignal.timeout(20000) });
       if (!response.ok || !response.headers.get('content-type')?.startsWith('image/')) throw new Error(`HTTP ${response.status}: ${response.headers.get('content-type')}`);
       const reader = response.body.getReader(); const chunks = []; let size = 0;
       const limit = backup ? 10485760 : 262144;
@@ -58,8 +61,8 @@ await Promise.all(Array.from({ length: 4 }, async () => {
         await fs.writeFile(`test-results/image-backup/${filename}`, Buffer.concat(chunks));
         snapshots[url] = { file: filename, contentType: response.headers.get('content-type'), files };
       }
-      metadata[url] = { ...(metadata[url]?.alt ? { alt: metadata[url].alt, altReviewedAt: metadata[url].altReviewedAt } : {}), ...dimensions(Buffer.concat(chunks)), checkedAt: new Date().toISOString().slice(0,10) };
-    } catch (error) { failures.push({ url, files, error: error.message, expected: metadata[url]?.unavailable === true }); }
+      metadata[url] = { ...(replacement ? { replacement, reason: metadata[url].reason } : {}), ...(metadata[url]?.alt ? { alt: metadata[url].alt, altReviewedAt: metadata[url].altReviewedAt } : {}), ...dimensions(Buffer.concat(chunks)), checkedAt: new Date().toISOString().slice(0,10) };
+    } catch (error) { failures.push({ url, ...(replacement ? { replacement } : {}), files, error: error.message, expected: metadata[url]?.unavailable === true }); }
   }
 }));
 if (process.argv.includes('--write')) await fs.writeFile(metadataPath, JSON.stringify(metadata, null, 2) + '\n');

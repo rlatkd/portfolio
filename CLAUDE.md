@@ -178,3 +178,56 @@
 - 공유 카드 설명(og:description · twitter:description)을 다시 넣었다. 모든 링크 공통으로 사이드바 소개 문장 `데이터 정합성과 시스템 신뢰성을 먼저 두는 금융 도메인 소프트웨어 엔지니어입니다.`(profile.intro)를 쓴다. 위의 "공유 카드에는 설명을 넣지 않는다"는 과거 내용이다. 검색 결과용 페이지 설명은 지금처럼 `metadata.other.description`.
 - 홈 구조화 데이터는 `@graph`로 WebSite(`#website`, 이름 김상훈, 운영자 = 인물) · ProfilePage(`#profile`, 주인공 = 인물) · Person(`#person`)을 @id로 연결한다. 근무처 효성에프엠에스는 인물의 worksFor일 뿐 사이트 운영자로 쓰지 않는다(검사 도구가 제안한 publisher = Organization 코드는 쓰지 않는다).
 - `/llms.txt`(`src/app/llms.txt/route.ts`)는 사이트 데이터로 만든다: 소개, 주요 페이지(포트폴리오·블로그·RSS), 블로그 글 전체 목록, 연락처(이메일·GitHub·LinkedIn·Velog). 전화번호와 검색 노출을 막아 둔 이력서는 넣지 않는다.
+
+## 2026-11-04 갱신 (위 내용과 다르면 이 절을 우선한다)
+
+### 접근성 · 화면 아래 정렬
+- 하단 가림 띠가 Tab 포커스를 덮지 않도록 가림 띠가 있는 페이지(홈 · 블로그)는 `scroll-padding-bottom`을 가림 높이 + 8px로 둔다. 사이드바는 가림 띠보다 위층(`lg:z-[31]`)이다.
+- 홈 하단 개인정보 버튼 · 블로그 목차 링크 · 탭 · 탭 내용은 넘침이 잘리는 자리라 포커스 테두리를 안쪽(-2px)에 그린다.
+- 탭(`shared/ui/pane-tabs.tsx`)은 WAI-ARIA 탭 패턴이다. 선택된 탭만 Tab 정지점이고 ← → Home End로 옮기며, 탭 내용은 tabIndex 0이다.
+- 보조 글자 `--muted`는 라이트 `#656c76`, 다크 `#959595`다(모든 바탕 4.5:1 이상, `tests/design-tokens.test.ts`가 확인).
+- 화면 아래 정렬 값은 `styles/global.css`의 CSS 변수다: `--bottom-mask`(1024px 이상 96px, 높이 760px 이하 45px) · `--home-width` 1152px · `--home-gutter` 48px · `--document-width` 794px · `--floating-size` 44px · `--floating-gap` 48px. 가림 띠 · 떠 있는 버튼 · 사이드바 아래 여백(가림 높이 - 13px) · 홈 main 아래 여백(가림 높이 - 16px) · 블로그 목차 높이가 이 값을 쓴다. 그래서 낮은 화면에서도 홈 하단 문구 아래 끝이 사이드바 아이콘 아래 끝에 맞는다.
+
+### 글꼴
+- 본문 글꼴은 `Portfolio Sans`다. Pretendard 1.3.9에서 사이트에 쓰인 글자(약 860자)만 남긴 굵기별 woff2 한 파일(`public/fonts/portfolio-sans-medium.woff2` · `portfolio-sans-bold.woff2`, 각 약 69KB)이고 `pnpm fonts:build`(`scripts/build-fonts.mjs`)로 만든다. 글자 모양과 굵기 연결(400~500 Medium, 600~900 Bold)은 이전과 같다.
+- OFL FAQ 2.6 · 2.8: 글자를 덜어 낸 웹폰트는 수정 버전이라 예약 이름 `Pretendard`를 쓸 수 없다. 그래서 글꼴 안 이름 · CSS 이름 · 파일 이름을 `Portfolio Sans`로 바꿨다. 저작권 · 상표 · 제작자 · 라이선스 정보는 글꼴 안에 그대로 두고 라이선스 전문은 `public/fonts/OFL.txt`다. 줄인 글꼴을 다시 `Pretendard`라고 부르지 않는다.
+- 원본 `public/fonts/Pretendard-Medium.woff` · `Pretendard-Bold.woff`는 공유 카드 이미지(`/api/og`)와 글꼴 만들기 원본으로 남긴다.
+- 글이나 문구에 새 글자가 생기면 `tests/fonts.test.ts`가 실패한다. 그때 `pnpm fonts:build`를 실행한다(글자 목록 `scripts/fonts/portfolio-sans-characters.json`).
+- 같은 날 공식 다이나믹 서브셋 184조각을 잠시 썼다가 페이지마다 17~24개 파일을 받고 첫 화면 CSS가 27KB 늘어 지금 방식으로 바꿨다.
+- 대체 글꼴 `Portfolio Sans Fallback`은 Windows 맑은 고딕을 Pretendard 폭에 맞춘 묶음이다(한글 86.43%, 그 외 103.78% · 100.24%, 공백 69.44% · 65.56%). 글꼴이 바뀔 때 흔들림(CLS)을 줄인다.
+
+### 홈 · 블로그 · 이력서
+- 모바일 · 태블릿(1024px 미만) 홈은 about 위에 영역 탭 줄(`widgets/sidebar/mobile-section-nav.tsx`)이 있고 스크롤하면 화면 맨 위에 붙는다. 현재 위치 추적 · 이동은 사이드바와 같이 `widgets/sidebar/section-navigation.ts`를 쓴다.
+- 모바일 사이드 프로젝트 조작부(점 · 진행 바 · 쪽 번호 · 이동 버튼)는 오른쪽 정렬이다. 1024px 이상은 양 끝 배치 그대로다.
+- 사이드 프로젝트 캡처는 WebP다(`screen.webp` · `preview.webp`). UPquant · 간종양 CNN은 슬라이드 16:10 틀에 보이는 위쪽만 남겼다. 위의 `screen.png` · `preview.png` 설명은 과거 내용이다.
+- 블로그 글: 공유 카드 모습은 같고 종류만 `article`(발행일 · 수정일 포함)이다. 글 구조화 데이터 이미지는 글 자체 대표 이미지, 없으면 `/api/og`다. 제목 아래에 `Updated <수정일>`(velog 원문 수정일)을 보인다. Velog 원문 링크는 계속 두지 않는다.
+- 깨진 백준 그림(단지번호붙이기)은 `image-metadata.json`의 `replacement`(백준 이미지 저장소 주소)로 그린다. 본문 Markdown은 그대로다.
+- 이력서 인쇄: 기기가 A4 · 여백 0 지정을 무시하고 더 작은 인쇄 영역을 쓰면 쪽 전체를 그 영역에 맞춰 줄인다(`global.css`의 `zoom`). A4가 지켜지면 이전과 같다.
+- 네이버 앱 등 앱 안 브라우저는 `window.print()`가 동작하지 않는다. 인쇄가 시작되지 않으면 외부 브라우저로 여는 안내 창을 띄운다(`app/resume/print-button.tsx`).
+- 이력서 수상 · 교육 · 자격증은 `profile-data.ts`의 id를 `resume-data.ts`의 `factId`로 연결한다. Task 제목은 `resume-case-studies.ts`의 `title`, 쪽 제목 위치 보정은 각 쪽의 `data-title-offset`이다.
+
+### SEO · 분석 · 배포
+- GA는 `@next/third-parties` 없이 `shared/ui/production-analytics.tsx`에서 gtag를 직접 불러온다. GA로 나가는 측정 요청(`/g/collect`)에서 페이지 주소(dl) · 이전 주소(dr)의 `q` · `from`과 `ep.search_term`을 지운다. GA 속성의 자동 수집이 주소창 주소를 직접 읽어 코드의 page_location 지정이 통하지 않기 때문이다.
+- `vercel.json`으로 함수 지역을 서울(`icn1`)로 둔다.
+
+### 도구 · 검증
+- `pnpm dev:open`은 개발 서버가 준비되면 브라우저를 연다(`scripts/dev-open.mjs`, `opener.js`는 삭제). `check` 스크립트와 Playwright 테스트 서버는 pnpm으로 실행한다.
+- 단위 테스트: 이미지 허용 주소 · 색 대비 · 본문 글꼴 글자.
+- e2e 추가: 포커스와 가림 띠 · 탭 키보드 · 모바일 영역 탭 줄 · 인쇄 쪽 수 · 앱 안 인쇄 안내 · 글 article 정보 · 이력서 11쪽 화면 비교(`tests/browser/resume-visual.spec.ts`).
+- 이력서 화면 비교 기준 그림은 Windows용만 있어 다른 OS(CI의 Linux 등)에서는 건너뛴다. 이력서를 일부러 바꿨다면 `pnpm exec playwright test resume-visual --update-snapshots=all`로 다시 만든다.
+- 진행하지 않은 보류 항목: Node 버전 통일, CSP 정리, velog 동기화 안전장치, 모니터 범위 · 주기, 문서 정리(현재 기준 요약), 모바일 목차 "본문 바로 읽기", 모바일 떠 있는 버튼 겹침, 모바일 이력서 확대 안내, Search Console · GA · Vercel 직접 설정, 근거 링크, 기술 탭 범례, 글꼴 굵기 파일 추가.
+
+## 2026-11-05 갱신 (위 내용과 다르면 이 절을 우선한다)
+
+- 라벨 글꼴: 라벨 · 파일명 · 날짜의 영문 · 숫자는 JetBrains Mono, 그 안의 한글은 본문 글꼴(Portfolio Sans)이다(`--font-code`). 나눔고딕코딩은 뺐다(페이지마다 한글 조각 4~8개, 37~79KB를 받던 것). 위 11-01 디자인 절의 "JetBrains Mono · Nanum Gothic Coding"은 과거 내용이다. 이력서 종이는 원래 본문 글꼴만 써서 바뀌지 않았고, 이력서 화면 틀(위쪽 줄 · 인쇄 안내 창)의 한글만 바뀌었다.
+- 위쪽 고정 줄과 포커스: 1024px 미만 홈은 영역 탭 줄(`.mobile-section-nav`) 때문에 위쪽 스크롤 여백이 3rem이고, 영역(`Pane` · `PaneTabs`)의 scroll-margin은 1024px 이상에서만 24px이다(영역 이동 위치는 화면 위 48px 그대로). 블로그 · 이력서는 머리 줄 높이 + 8px(86px, 640px 미만 78px)을 위쪽 스크롤 여백으로 두고(`shared/ui/document-layout.module.css`), 블로그 소제목 scroll-margin은 80px → 18px(데스크톱 이동 위치 104px 그대로).
+- 모바일 영역 탭 줄은 위에도 경계선이 있다(라이트 테마에서 바탕이 페이지와 같아서).
+- GA 검색어 정리: 시작 스크립트와 정리 규칙은 `shared/lib/analytics-privacy.ts`(`gaInitScript` · `cleanAnalyticsHit`)에 있고 `tests/analytics-privacy.test.ts`가 스크립트를 실제로 실행해 확인한다. 이 사이트 주소(도메인 이름 비교, 포트 무시)의 `q` · `from`만 지우고 다른 사이트에서 온 이전 주소는 그대로 둔다. 인라인 스크립트 문자열 안에 역슬래시를 직접 쓰지 않는다(템플릿 문자열이 이스케이프를 먹어 GA가 멈춘 적이 있다).
+- 공유 카드 이미지(`/api/og`)는 한 가지뿐이다. 제목을 그린 모양은 지웠다(위 11-02 절의 "제목을 붙인 요청은 기존 모양"은 과거 내용).
+- 이력서 화면 비교 테스트(`resume-visual.spec.ts`)와 기준 그림은 지웠다(위 11-04 절의 관련 내용은 과거 내용).
+- 앱 안 인쇄 안내(Android)는 "Chrome으로 열기"와 "다른 브라우저로 열기"(기본 브라우저 · 선택 창 intent) 두 버튼이다. intent 대체 주소(S.browser_fallback_url)는 같은 페이지를 앱 안에서 다시 열 뿐이라 쓰지 않는다.
+- e2e 추가: 위로 이동한 포커스가 고정 줄(모바일 홈 탭 줄, 블로그 머리 줄)에 가려지지 않는지.
+- 홈 하단 ©는 글자 대신 lucide `Copyright` 아이콘(12px, 선 굵기 2.4)이다. 세로 위치는 `2026` 숫자 중심에 맞춘 `align-[-0.14em]`이고, 화면 낭독기에는 숨긴 `©` 글자를 읽힌다. 글꼴의 ©는 작고 흐려서 바꿨다.
+- 이력서 인쇄 버튼은 PDF 파일을 따로 만들지 않고 브라우저 인쇄(대상에서 PDF로 저장)를 그대로 쓴다. 문구는 640px 이상 `인쇄 | PDF 저장`(프린터 아이콘), 640px 미만 `PDF 저장`(파일 내려받기 아이콘)이다.
+- 개인정보 처리방침 모달 본문은 위아래 · 좌우 여백이 글자 기준으로 같다(데스크톱 40px, 640px 미만 24px). 첫 줄 위 · 마지막 줄 아래의 줄 간격(약 5px)만큼 위아래 안쪽 여백을 줄였다(`px-6 py-[19px] sm:px-10 sm:py-[35px]`). 이전은 좌우 40px · 위아래 56px.
+- 세션 인계 메모(11-04~05 작업 · 보류 항목 · about.md 문구 고민 · 다음 작업 논의 거리): `port/portfolio/20261105/세션인계_메모.md`(저장소에 올라가지 않음). 새 세션은 이 파일부터 읽는다.

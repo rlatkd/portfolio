@@ -17,6 +17,12 @@ export function shareCard(url: string) {
   };
 }
 
+// 2026-11-04: 블로그 글은 공유 카드 모습(제목 · 설명 · 이미지)은 그대로 두고, 종류만 article로 바꿔 발행일 · 수정일을 넣는다.
+export function articleShareCard(url: string, publishedTime: string, modifiedTime: string) {
+  const card = shareCard(url);
+  return { ...card, openGraph: { ...card.openGraph, type: 'article' as const, publishedTime, modifiedTime } };
+}
+
 // 2026-11-02: 탭 제목·검색 결과 제목도 글의 원래 제목(velog 제목)을 쓴다. 따로 두던 검색용 제목(seo-titles.json)은 없앴다.
 export function getPostTitle(post: PostPreview) {
   return post.metadata.title;
@@ -24,9 +30,9 @@ export function getPostTitle(post: PostPreview) {
 export function getPostDescription(post: PostPreview) {
   return post.metadata.summary;
 }
+// 2026-11-04: 글 구조화 데이터 이미지는 글 자체 대표 이미지가 있으면 그것, 없으면 지금 공유 카드 이미지(/api/og)를 쓴다(제목을 그린 옛 모양 대신).
 export function getPostImage(post: PostPreview) {
-  return post.metadata.image ? new URL(post.metadata.image, baseUrl).href
-    : `${baseUrl}/api/og?title=${encodeURIComponent(post.metadata.title)}`;
+  return post.metadata.image ? new URL(post.metadata.image, baseUrl).href : defaultOgImage;
 }
 export function serializeJsonLd(data: unknown) {
   return JSON.stringify(data).replace(/</g, '\\u003c');

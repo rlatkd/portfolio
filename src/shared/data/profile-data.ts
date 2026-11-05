@@ -1,13 +1,17 @@
 import type { Certification } from '@/shared/types/portfolio';
 
+// 2026-11-04: 교육·수상에도 id를 붙였다. 이력서(resume-data.ts)는 제목 문자열 대신 이 id로 기간·기관을 가져온다.
+
 export const training = [
   {
+    id: 'kosa-msa-fullstack',
     period: '2024.02.26 — 2024.08.09',
     title: 'MSA 기반 Full Stack 개발 전문가 양성 과정',
     org: '한국소프트웨어산업협회',
     hours: '960h',
   },
   {
+    id: 'ssg-cloud-engineer',
     period: '2023.08.07 — 2024.02.02',
     title: '클라우드 엔지니어 양성 과정',
     org: '신세계아이앤씨',
@@ -17,21 +21,25 @@ export const training = [
 
 export const awards = [
   {
+    id: 'iitp-conference-excellence',
     date: '2024.08',
     title: 'SW전문인재양성 우수성과 컨퍼런스 우수상',
     org: '정보통신기획평가원',
   },
   {
+    id: 'kosa-final-project',
     date: '2024.08',
     title: '파이널 프로젝트 최우수상',
     org: '한국소프트웨어산업협회',
   },
   {
+    id: 'kosa-top-graduate',
     date: '2024.08',
     title: '우수 수료생',
     org: '한국소프트웨어산업협회',
   },
   {
+    id: 'ssg-final-project',
     date: '2024.02',
     title: '파이널 프로젝트 최우수상',
     org: '신세계아이앤씨',

@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { FileText, Mail, Rss } from 'lucide-react';
 import { FiGithub, FiLinkedin } from 'react-icons/fi';
 import { profile, navItems } from '@/shared/data/site-data';
+import { useSectionNavigation } from './section-navigation';
 
 /** Velog 마크 — github/linkedin과 동일한 아웃라인(stroke) 스타일 */
 function VelogIcon({ size = 19 }: { size?: number }) {
@@ -25,114 +25,11 @@ function VelogIcon({ size = 19 }: { size?: number }) {
   );
 }
 
-function sectionScrollTop(section: HTMLElement) {
-  const margin = parseFloat(getComputedStyle(section).scrollMarginTop) || 0;
-  const padding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
-  const maximum = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-  return Math.min(maximum, Math.max(0, window.scrollY + section.getBoundingClientRect().top - margin - padding));
-}
+// 2026-11-04: 현재 위치 추적 · 목차 이동은 모바일 영역 탭 줄과 같이 쓰도록 section-navigation.ts로 옮겼다(동작은 같다).
+const sectionIds = navItems.map((n) => n.id);
 
 export default function Sidebar() {
-  const [active, setActive] = useState('about');
-  const navigationTarget = useRef<{ id: string; top: number; arrived: boolean } | null>(null);
-
-  const navigateToSection = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    const section = document.getElementById(id);
-    if (!section) return;
-
-    event.preventDefault();
-    const top = sectionScrollTop(section);
-    navigationTarget.current = { id, top, arrived: Math.abs(window.scrollY - top) <= 2 };
-    setActive(id);
-    if (window.location.hash !== `#${id}`) {
-      window.history.pushState(null, '', `#${id}`);
-    }
-    // Scroll the document explicitly, independently of the sticky sidebar's scroll container.
-    window.scrollTo({
-      top,
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
-    });
-  };
-
-  useEffect(() => {
-    const ids = navItems.map((n) => n.id);
-    if (ids.length === 0) return;
-
-    const updateActive = () => {
-      const target = navigationTarget.current;
-      if (target) {
-        const arrived = Math.abs(window.scrollY - target.top) <= 2;
-        if (!target.arrived || arrived) {
-          target.arrived = arrived;
-          setActive(target.id);
-          return;
-        }
-        navigationTarget.current = null;
-      }
-      // 페이지 최상단에서는 첫 섹션을 활성화 (화면이 높아 다음 섹션이 기준선 위에 있어도)
-      if (window.scrollY <= 2) {
-        setActive(ids[0]);
-        return;
-      }
-      // 페이지 최하단 도달 시 마지막 섹션을 강제로 활성화
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
-        setActive(ids[ids.length - 1]);
-        return;
-      }
-      // 뷰포트 35% 기준선을 지난 '마지막' 섹션을 활성화.
-      // 섹션 높이·경계와 무관하게 항상 정확히 하나만 선택되어 흔들리지 않는다.
-      const line = window.innerHeight * 0.35;
-      let current = ids[0];
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= line) current = id;
-      }
-      setActive(current);
-    };
-
-    // 스크롤은 rAF로 스로틀
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        updateActive();
-        ticking = false;
-      });
-    };
-
-    const releaseNavigation = () => {
-      navigationTarget.current = null;
-      updateActive();
-    };
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) releaseNavigation();
-    };
-    const onHashChange = () => {
-      const id = window.location.hash.slice(1);
-      const section = ids.includes(id) ? document.getElementById(id) : null;
-      navigationTarget.current = section ? { id, top: sectionScrollTop(section), arrived: false } : null;
-      updateActive();
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('wheel', releaseNavigation, { passive: true });
-    window.addEventListener('touchstart', releaseNavigation, { passive: true });
-    window.addEventListener('pointerdown', releaseNavigation, { passive: true });
-    window.addEventListener('keydown', onKeyDown);
-    window.addEventListener('hashchange', onHashChange);
-    onHashChange();
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('wheel', releaseNavigation);
-      window.removeEventListener('touchstart', releaseNavigation);
-      window.removeEventListener('pointerdown', releaseNavigation);
-      window.removeEventListener('keydown', onKeyDown);
-      window.removeEventListener('hashchange', onHashChange);
-    };
-  }, []);
+  const { active, navigate } = useSectionNavigation(sectionIds);
 
   // 2026-11-02: Velog를 다시 넣었다(블로그 글의 원래 출처, 구조화 데이터 sameAs와 맞춤).
   const socials = [
@@ -144,7 +41,8 @@ export default function Sidebar() {
   ];
 
   return (
-    <header className='portfolio-sidebar pt-14 lg:sticky lg:top-0 lg:flex lg:h-dvh lg:flex-col lg:justify-between lg:overflow-y-auto lg:pb-[83px] lg:pt-20'>
+    // 2026-11-04: 데스크톱 아래 여백은 global.css(가림 높이 - 13px). 가림 띠(z-30)보다 위층에 둬서 아이콘의 포커스 테두리가 잘리지 않게 한다.
+    <header className='portfolio-sidebar pt-14 lg:sticky lg:top-0 lg:z-[31] lg:flex lg:h-dvh lg:flex-col lg:justify-between lg:overflow-y-auto lg:pt-20'>
       <div>
         <p className='font-code text-[13px] text-accent'>◉ portfolio</p>
         <h1 className='mt-3 text-[40px] font-bold leading-tight tracking-tight text-fg-strong'>
@@ -172,7 +70,7 @@ export default function Sidebar() {
                 <li key={item.id}>
                   <a
                     href={`/#${item.id}`}
-                    onClick={event => navigateToSection(event, item.id)}
+                    onClick={event => navigate(event, item.id)}
                     aria-current={on ? 'location' : undefined}
                     className={`block rounded px-3 py-1.5 transition-colors ${on ? 'bg-nav-active text-fg-strong' : 'text-fg hover:text-accent'}`}
                   >
@@ -185,7 +83,7 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      {/* 하단: 링크. 아래 여백 83px + 아이콘 칸 여백 약 13px = 화면 아래 96px로, 맨 아래로 스크롤했을 때 본문 하단 문구 아래 끝과 맞는다.
+      {/* 하단: 링크. 아래 여백(가림 높이 - 13px) + 아이콘 칸 여백 약 13px = 가림 높이(보통 96px)로, 맨 아래로 스크롤했을 때 본문 하단 문구 아래 끝과 맞는다.
           (메인 page.tsx 하단 문구 여백과 짝. 화면이 높아도 어긋나지 않도록 사이드바 최대 높이 제한은 없앴다) */}
       <div className='mt-8 flex flex-wrap items-center gap-2 sm:gap-5 lg:mt-0'>
         {socials.map(({ Icon, href, label }) => (

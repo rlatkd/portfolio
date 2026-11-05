@@ -36,68 +36,65 @@ export const skills: { label: string; items: { name: string; work?: boolean }[] 
 ];
 
 // 교육·수상·자격증. 교육 줄은 과정의 파이널 프로젝트 저장소를 가리킨다.
+// 2026-11-04: 기간·기관은 여기 적지 않고 factId로 profile-data.ts에서 가져온다.
 const resumeOthers = [
   {
-    period: '2024.08',
     kind: '수상',
+    factId: 'iitp-conference-excellence',
     title: 'SW전문인재양성 우수성과 컨퍼런스 우수상',
-    org: '정보통신기획평가원',
     lines: [],
   },
   {
-    period: '2024.08',
     kind: '수상',
+    factId: 'kosa-final-project',
     title: '파이널 프로젝트 최우수상',
-    org: '한국소프트웨어산업협회',
     lines: [],
   },
   {
-    period: '2024.08',
     kind: '수상',
+    factId: 'kosa-top-graduate',
     title: '우수 수료생',
-    org: '한국소프트웨어산업협회',
     lines: [],
   },
   {
-    period: '2025.06',
     kind: '자격증',
+    factId: 'adsp',
     title: '데이터분석 준전문가(ADsP)',
     code: 'ADsP-045011461',
-    org: '한국데이터산업진흥원',
     lines: [],
   },
   {
-    period: '2024.06',
     kind: '자격증',
+    factId: 'sqld',
     title: 'SQL 개발자(SQLD)',
     code: 'SQLD-053001728',
-    org: '한국데이터산업진흥원',
     lines: [],
   },
   {
-    period: '2024.02.26 — 2024.08.09',
     kind: '교육',
+    factId: 'kosa-msa-fullstack',
     title: 'MSA 기반 Full Stack 개발 전문가 양성 과정 (960h)',
-    org: '한국소프트웨어산업협회',
     lines: [
       '파이널 프로젝트: github.com/rlatkd/cms-plus',
     ],
   },
   {
-    period: '2023.08.07 — 2024.02.02',
     kind: '교육',
+    factId: 'ssg-cloud-engineer',
     title: '클라우드 엔지니어 양성 과정 (920h)',
-    org: '신세계아이앤씨',
     lines: [
       '파이널 프로젝트: github.com/rlatkd/sale-sync',
     ],
   },
 ];
 
-const normalize = (value: string) => value.replace(/[\s()]/g, '');
-export const others = resumeOthers.map(item => {
-  const fact = [...awards, ...training, ...certifications.map(entry => ({ ...entry, title: entry.name }))].find(entry => normalize(item.title).startsWith(normalize(entry.title)));
-  return fact ? { ...item, period: 'date' in fact ? fact.date : fact.period, org: fact.org } : item;
+// 2026-11-04: 기간·기관은 profile-data.ts의 항목을 id(factId)로 찾아 쓴다. 제목 문구를 다듬어도 연결이 끊기지 않는다.
+// 없는 id를 적으면 빌드에서 바로 실패하게 해 엉뚱한 항목에 붙거나 조용히 빠지는 일을 막는다.
+const facts = [...awards, ...training, ...certifications];
+export const others = resumeOthers.map(({ factId, ...item }) => {
+  const fact = facts.find(entry => entry.id === factId);
+  if (!fact) throw new Error(`resume-data: profile-data에 없는 id입니다: ${factId}`);
+  return { ...item, period: 'date' in fact ? fact.date : fact.period, org: fact.org };
 });
 
 // AI 활용 경험: UPquant 저장소 README·CLAUDE.md 작업 이력 기준

@@ -16,8 +16,8 @@ import styles from './resume-viewer.module.css';
 type WorkEntry = (typeof work)[number];
 const runningTitle = 'RESUME';
 const byId = (id: string) => work.find(entry => entry.id === id)!;
-// 1쪽 목차 제목은 본문 Task 제목을 그대로 사용한다.
-const caseStudyTitles = resumeCaseStudies.map(content => content.match(/^# Task \d+\. (.+)$/m)?.[1] ?? '');
+// 1쪽 목차 제목은 본문 Task 제목을 그대로 사용한다(2026-11-04: 정규식 추출 대신 resume-case-studies.ts의 title).
+const caseStudyTitles = resumeCaseStudies.map(study => study.title);
 const taskMeta = ['billing-persistence', 'eai-integration'].map(byId);
 const projectWork = ['branch-manager', 'e-contract'].map(byId);
 // 주요 과제: 최신순, 쪽당 3개
@@ -29,8 +29,11 @@ const workPages = Array.from({ length: Math.ceil(mainWork.length / workPerPage) 
 const recoveryIndex = mainWork.findIndex(item => item.id === 'recovery');
 const recoveryPage = 1 + resumeCaseStudies.length * 2 + 1 + 1 + Math.floor(recoveryIndex / workPerPage);
 
-function Sheet({ title, children }: { title?: string; children: ReactNode }) {
-  return <div className={`${styles.caseStudy} ${styles.overview}`}>
+// 2026-11-04: 쪽 제목의 광학 정렬 보정값(resume-theme.module.css)을 쪽 순서(nth-child) 대신 각 쪽 내용에 붙인다.
+// 쪽 순서가 바뀌어도 보정이 그 쪽을 따라간다. 값이 없으면 보정하지 않는다(6쪽 프로젝트가 기준).
+type TitleOffset = '1' | '1.5';
+function Sheet({ title, titleOffset, children }: { title?: string; titleOffset?: TitleOffset; children: ReactNode }) {
+  return <div className={`${styles.caseStudy} ${styles.overview}`} data-title-offset={titleOffset}>
     <div className={styles.running} data-resume-running>{runningTitle} <span>SANGHUN KIM</span></div>
     {title && <h1>{title}</h1>}{children}
   </div>;
@@ -78,7 +81,7 @@ export default function ResumeDocument() {
   return <DocumentShell className='[word-break:keep-all]'>
     <DocumentHeader><PrintButton /></DocumentHeader>
     <main id='main-content'><ResumePager>
-      <Sheet>
+      <Sheet titleOffset='1'>
         <header className={styles.profileHeader}>
           <div>
             <h1>{profile.name}</h1><p>{profile.role}</p>
@@ -106,16 +109,16 @@ export default function ResumeDocument() {
           {caseStudyTitles.map((title, index) => <div key={title}><span>{`0${index + 1}`}</span><p><strong>{title}</strong></p></div>)}
         </section>
       </Sheet>
-      {resumeCaseStudies.flatMap((content, index) => [
-        <div key={`task-${index}`} className={`${styles.caseStudy} ${styles.overview}`} data-resume-task-detail>
+      {resumeCaseStudies.flatMap(({ body }, index) => [
+        <div key={`task-${index}`} className={`${styles.caseStudy} ${styles.overview}`} data-resume-task-detail data-title-offset='1.5'>
           <div className={styles.running} data-resume-running>{runningTitle} <span>SANGHUN KIM</span></div>
           <h1>{`Task 0${index + 1}. ${caseStudyTitles[index]}`}</h1>
           <div data-resume-task-meta><p className={styles.entryMeta}>효성에프엠에스<span className={styles.metaDivider} aria-hidden='true' />{taskMeta[index].platform}<span className={styles.metaDivider} aria-hidden='true' />{taskMeta[index].team}<span className={styles.metaDivider} aria-hidden='true' />{taskMeta[index].role}</p><span>{taskMeta[index].period}</span></div>
           <p className={styles.entryMeta}>{taskMeta[index].tech.replace(/,\s*/g, ' · ')}</p>
-          <ReactMarkdown>{index === 0 ? content.slice(content.indexOf('## Problem')).replace('계좌 결제 요청 배치는 ', '*계좌 결제 요청 배치는 ') : content.slice(content.indexOf('## Problem'))}</ReactMarkdown>
+          <ReactMarkdown>{index === 0 ? body.replace('계좌 결제 요청 배치는 ', '*계좌 결제 요청 배치는 ') : body}</ReactMarkdown>
           {index === 0 && <p data-resume-footnote><em>* {recoveryPage}p 주요 과제[{recoveryIndex + 1}] {mainWork[recoveryIndex].title}</em></p>}
         </div>,
-        <Sheet key={`architecture-${index}`} title={`Task 0${index + 1}. ${caseStudyTitles[index]}`}>
+        <Sheet key={`architecture-${index}`} title={`Task 0${index + 1}. ${caseStudyTitles[index]}`} titleOffset='1.5'>
           <TaskArchitecture task={index === 0 ? 1 : 2} />
         </Sheet>,
       ])}
@@ -125,7 +128,7 @@ export default function ResumeDocument() {
       {workPages.map((items, pageIndex) => <Sheet key={`work-${pageIndex}`} title='주요 과제'>
         <div className={styles.compact}>{items.map((item, index) => <WorkItem key={item.id} item={item} number={pageIndex * workPerPage + index + 1} />)}</div>
       </Sheet>)}
-      <Sheet title='그 외 과제'>
+      <Sheet title='그 외 과제' titleOffset='1'>
         <OtherTasks />
       </Sheet>
       <Sheet title='기타'>
@@ -142,7 +145,7 @@ export default function ResumeDocument() {
           </div>)}</div>
         </section>
       </Sheet>
-      <Sheet title='기타'>
+      <Sheet title='기타' titleOffset='1'>
         <section className={styles.infoSection} data-resume-info-section><h2>학력</h2>
           {education.map(item => <article key={item.title} className={styles.infoEntry} data-resume-info-entry>
             <Head title={item.title} period={item.period} /><p className={styles.subtle}>{item.sub}</p>

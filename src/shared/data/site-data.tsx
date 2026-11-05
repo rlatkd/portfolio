@@ -122,7 +122,7 @@ export const projects: Project[] = [
     ],
     tags: ['FastAPI', 'Python', 'React', 'TypeScript', 'WebSocket', 'AWS'],
     href: 'https://github.com/rlatkd/up-quant',
-    image: '/images/up-quant/preview.png',
+    image: '/images/up-quant/preview.webp',
   },
   {
     id: 'portfolio',
@@ -136,7 +136,7 @@ export const projects: Project[] = [
     ],
     tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Markdown', 'Playwright'],
     href: 'https://github.com/rlatkd/portfolio',
-    image: '/images/portfolio/preview.png',
+    image: '/images/portfolio/preview.webp',
   },
   {
     id: 'cms-plus',
@@ -151,7 +151,7 @@ export const projects: Project[] = [
     ],
     tags: ['React', 'Spring Boot', 'Spring Batch', 'Kafka', 'ECS Fargate', 'ELK'],
     href: 'https://github.com/rlatkd/cms-plus',
-    image: '/images/cms-plus/screen.png',
+    image: '/images/cms-plus/screen.webp',
   },
   {
     id: 'sale-sync',
@@ -165,7 +165,7 @@ export const projects: Project[] = [
     ],
     tags: ['React', 'MSA', 'EKS', 'Argo CD', 'Terraform', 'Kafka', 'AWS'],
     href: 'https://github.com/rlatkd/sale-sync',
-    image: '/images/sale-sync/screen.png',
+    image: '/images/sale-sync/screen.webp',
   },
   {
     id: 'liver-tumor-cnn',
@@ -178,7 +178,7 @@ export const projects: Project[] = [
       '종양 유무를 구분하는 이진 분류의 한계를 정리하고, 종양 종류를 구분하는 다중 클래스 분류를 후속 연구 과제로 제시했습니다.',
     ],
     tags: ['Python', 'Keras', 'CNN', 'VGG19', 'Medical Imaging'],
-    image: '/images/liver-tumor-cnn/preview.png',
+    image: '/images/liver-tumor-cnn/preview.webp',
   },
   {
     id: 'ct-image-reconstruction',
@@ -192,7 +192,7 @@ export const projects: Project[] = [
     ],
     tags: ['MATLAB', 'CT Reconstruction', 'Signal Processing'],
     href: 'https://github.com/rlatkd/ct-image-reconstruction',
-    image: '/images/ct-image-reconstruction/preview.png',
+    image: '/images/ct-image-reconstruction/preview.webp',
     imageFit: 'contain',
   },
 ];
