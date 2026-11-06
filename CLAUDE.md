@@ -47,7 +47,7 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 - `src/app`
   - `(main)` 홈 `/` · `(blog)/posts` 목록 · `(blog)/posts/[slug]` 상세 · `resume` · `api/og` · `rss` · `llms.txt` · `sitemap` · `robots`
   - 블로그 목록 · 상세 공용 레이아웃은 `(blog)/layout.tsx`
-- `src/widgets` — 홈 영역 8개: about, experience, tasks, projects, writing, contact, sidebar, footer. 모바일 영역 탭 줄은 `sidebar/mobile-section-nav.tsx`
+- `src/widgets` — 홈 영역 8개: about, experience, tasks, projects, writing, contact, sidebar, footer. 모바일 목차 버튼은 `sidebar/mobile-section-menu.tsx`
 - `src/features` — copy-email, post-recommend, privacy-notice, theme-toggle
 - `src/entities/post/ui` — 글 목록 · 카드 · 페이지 버튼 · 카테고리 · 목차 · 이전/다음 · 코드 복사
 - `src/shared` — config, content, data, lib, markdown, types, ui, utils
@@ -96,7 +96,7 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 - 하단 ©는 lucide `Copyright` 아이콘(12px, 선 굵기 2.4, `align-[-0.14em]`). 화면 낭독기는 숨긴 `©` 글자를 읽는다.
 - 개인정보 처리방침은 하단 링크로 여는 모달(`features/privacy-notice`)이다. 본문 여백은 데스크톱 40px, 640px 미만 24px로, 글자 기준 위아래와 좌우가 같다.
 - 데스크톱은 화면 아래 `--bottom-mask` 높이를 가림 띠(`.portfolio-bottom-mask`)로 가린다. 사이드바는 가림 띠보다 위층(`lg:z-[31]`)이다.
-- 1024px 미만은 about 위에 영역 탭 줄(`mobile-section-nav.tsx`)이 있고, 스크롤하면 화면 맨 위에 붙는다(위 경계선 있음). 현재 위치 추적은 사이드바와 같은 `section-navigation.ts`를 쓴다.
+- 1024px 미만은 화면 오른쪽 위에 목차 버튼(`mobile-section-menu.tsx`, 파일 목록 아이콘)이 있다. 오른쪽 끝 간격은 아래쪽 떠 있는 버튼과 같은 24px이다. 맨 위에서는 숨고 about 영역에 들어서면 나타난다. 누르면 버튼 아래에 사이드바와 같은 목차가 열리고(현재 영역 강조), 항목을 누르면 그 영역으로 이동한 뒤 닫힌다. 바깥을 누르거나 Esc로도 닫힌다. 현재 위치 추적 · 이동은 사이드바와 같은 `section-navigation.ts`를 쓴다.
 - 떠 있는 버튼(위로 가기 · 테마)은 본문 영역 오른쪽 끝에서 `--floating-gap` 옆에 둔다(창이 좁으면 창 오른쪽 24px). 아래 끝은 가림 띠 높이에 맞춘다. 클래스는 홈 `.portfolio-floating`, 블로그 `.document-floating`.
 - 낮은 데스크톱(1024×600)에서는 사이드바 아이콘이 잘린다(대응 여부 미정).
 
@@ -128,7 +128,7 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 
 ### 공통 포커스 · 스크롤
 - 가림 띠가 있는 페이지는 `scroll-padding-bottom`을 가림 높이 + 8px로 둔다.
-- 1024px 미만 홈은 위쪽 스크롤 여백 3rem이다. 영역 scroll-margin은 1024px 이상에서만 24px.
+- 1024px 미만 홈은 위쪽 스크롤 여백이 목차 버튼 아래 끝 + 8px(4.75rem = 76px)이다. 영역 scroll-margin은 1024px 이상에서만 24px.
 - 블로그 · 이력서는 위쪽 스크롤 여백이 머리 줄 높이 + 8px(86px, 640px 미만 78px)이다. 블로그 소제목 scroll-margin은 18px.
 - 넘침이 잘리는 자리(홈 하단 개인정보 버튼 · 블로그 목차 링크 · 탭 · 탭 내용)는 포커스 테두리를 안쪽(-2px)에 그린다.
 
@@ -201,7 +201,7 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 - `pnpm run check`: 타입 검사 · 단위 테스트 · 빌드.
 - `pnpm run test:e2e`: Playwright. 3100 포트에 운영 빌드를 띄우므로, 3100에 남은 `next start`가 있으면 먼저 끈다.
 - 단위 테스트: 콘텐츠 · 라우팅 · 이미지 허용 주소 · 색 대비 · 본문 글꼴 글자 · GA 정리 · 요약 · 모니터 · 동기화.
-- e2e: 홈 · 블로그 탐색 · 테마 · 검색 · 반응형 · 포커스와 가림 띠 · 고정 줄 · 탭 키보드 · 모바일 영역 탭 줄 · 이력서 이동 · 확대 · 인쇄 쪽 수 · 앱 안 인쇄 안내 · 글 article 정보 · 이동 스피너.
+- e2e: 홈 · 블로그 탐색 · 테마 · 검색 · 반응형 · 포커스와 가림 띠 · 고정 줄 · 탭 키보드 · 모바일 목차 버튼 · 이력서 이동 · 확대 · 인쇄 쪽 수 · 앱 안 인쇄 안내 · 글 article 정보 · 이동 스피너.
 - `pnpm dev:open`: 개발 서버가 준비되면 브라우저를 연다.
 - `pnpm fonts:build` · `pnpm content:check` / `content:sync` · `pnpm images:check` · `pnpm links:check` · `pnpm monitor` · `pnpm measure`.
 

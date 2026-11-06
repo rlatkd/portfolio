@@ -131,12 +131,11 @@ html {
   /* 가짜 스크롤바 여백 없이 화면 전체에 배경을 그린다. */
   background: var(--bg);
 }
-/* 2026-11-05: 1024px 미만 홈은 영역 탭 줄(.mobile-section-nav, 높이 약 41px)이 화면 위에 붙는다.
-   Tab · Shift+Tab으로 옮긴 요소와 포커스 테두리가 그 뒤에 숨지 않도록 위쪽 스크롤 여백을 탭 줄 + 여유(3rem)로 둔다.
-   영역(Pane)의 위 여백(scroll-margin)은 모바일에서 0이라 영역으로 이동했을 때의 위치(화면 위 48px)는 이전과 같다.
+/* 1024px 미만 홈은 오른쪽 위에 목차 버튼(.mobile-section-menu, 위 24px + 높이 44px)이 떠 있다.
+   목차로 이동한 영역의 머리와 Tab으로 옮긴 요소가 버튼 아래에서 시작하도록 위쪽 스크롤 여백을 버튼 아래 끝 + 8px(76px)로 둔다.
    블로그 · 이력서의 고정 머리 줄은 shared/ui/document-layout.module.css에서 같은 방식으로 처리한다. */
 @media (max-width: 1023.98px) {
-  html:has(.mobile-section-nav) { scroll-padding-top: 3rem; }
+  html:has(.mobile-section-menu) { scroll-padding-top: 4.75rem; }
 }
 
 @media print {

@@ -258,9 +258,9 @@ test('pane tabs move with arrow, Home and End keys', async ({ page }) => {
   await expect(page.getByRole('tabpanel', { name: '경력' })).toBeFocused();
 });
 
-// 2026-11-05: 위에 고정된 줄(모바일 홈 영역 탭 줄, 블로그 머리 줄)이 Shift+Tab으로 위로 옮긴 포커스를 가리지 않는다.
+// 위에 고정된 요소(모바일 홈 목차 버튼, 블로그 머리 줄)가 Shift+Tab으로 위로 옮긴 포커스를 가리지 않는다.
 test('focus moving upward stays below the sticky bars', async ({ page }) => {
-  for (const [path, width, height, bar] of [['/', 390, 844, '.mobile-section-nav'], ['/posts', 1440, 900, 'header'], ['/posts', 390, 844, 'header']] as const) {
+  for (const [path, width, height, bar] of [['/', 390, 844, '[data-section-menu-button]'], ['/posts', 1440, 900, 'header'], ['/posts', 390, 844, 'header']] as const) {
     await page.setViewportSize({ width, height });
     await page.goto(path);
     for (let index = 0; index < 100; index++) await page.keyboard.press('Tab');
@@ -274,7 +274,8 @@ test('focus moving upward stays below the sticky bars', async ({ page }) => {
         if (!element || element === document.body || !sticky || sticky.contains(element) || element.classList.contains('skip-link')) return null;
         const bar = sticky.getBoundingClientRect();
         const box = element.getBoundingClientRect();
-        if (!box.width || bar.top > 1) return null;
+        // 숨어 있거나(맨 위의 목차 버튼) 가로로 겹치지 않는 요소는 가려지지 않는다.
+        if (!box.width || bar.top > 30 || getComputedStyle(sticky).opacity === '0' || box.right < bar.left || box.left > bar.right) return null;
         const style = getComputedStyle(element);
         const ringTop = box.top - parseFloat(style.outlineOffset) - parseFloat(style.outlineWidth);
         return ringTop < bar.bottom - 1 ? `${(element.getAttribute('aria-label') || element.textContent || '').trim().slice(0, 20)} (테두리 위 ${ringTop.toFixed(1)} < 고정 줄 아래 ${bar.bottom.toFixed(1)})` : null;
