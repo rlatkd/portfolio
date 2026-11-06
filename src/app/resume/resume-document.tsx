@@ -16,7 +16,7 @@ import styles from './resume-viewer.module.css';
 type WorkEntry = (typeof work)[number];
 const runningTitle = 'RESUME';
 const byId = (id: string) => work.find(entry => entry.id === id)!;
-// 1쪽 목차 제목은 본문 Task 제목을 그대로 사용한다(2026-11-04: 정규식 추출 대신 resume-case-studies.ts의 title).
+// 1쪽 대표 과제 목록은 본문 대표 과제 제목을 그대로 사용한다(2026-11-04: 정규식 추출 대신 resume-case-studies.ts의 title).
 const caseStudyTitles = resumeCaseStudies.map(study => study.title);
 const taskMeta = ['billing-persistence', 'eai-integration'].map(byId);
 const projectWork = ['branch-manager', 'e-contract'].map(byId);
@@ -25,12 +25,15 @@ const datedPeriod = (item: WorkEntry) => item.period.match(/^\d{4}\.\d{2}/)?.[0]
 const mainWork = ['oz-report', 'export', 'settlement', 'recovery', 'integration', 'sparrow'].map(byId).sort((a, b) => datedPeriod(b).localeCompare(datedPeriod(a)));
 const workPerPage = 3;
 const workPages = Array.from({ length: Math.ceil(mainWork.length / workPerPage) }, (_, index) => mainWork.slice(index * workPerPage, (index + 1) * workPerPage));
-// Task 01 각주가 가리키는 기존 보정 자동화 과제의 위치 (1쪽 + Task 2쪽씩 + 프로젝트 1쪽 다음)
+// 대표 과제 아키텍처 그림 쪽 표시 여부. 지금은 숨긴다(그림 코드 task-architecture.tsx는 그대로 둔다). true로 바꾸면 대표 과제마다 그림 쪽이 다시 붙는다.
+const SHOW_TASK_ARCHITECTURE = false;
+const pagesPerTask = SHOW_TASK_ARCHITECTURE ? 2 : 1;
+// 대표 과제 01 각주가 가리키는 기존 보정 자동화 과제의 위치 (1쪽 + 대표 과제 쪽 + 프로젝트 1쪽 다음)
 const recoveryIndex = mainWork.findIndex(item => item.id === 'recovery');
-const recoveryPage = 1 + resumeCaseStudies.length * 2 + 1 + 1 + Math.floor(recoveryIndex / workPerPage);
+const recoveryPage = 1 + resumeCaseStudies.length * pagesPerTask + 1 + 1 + Math.floor(recoveryIndex / workPerPage);
 
 // 2026-11-04: 쪽 제목의 광학 정렬 보정값(resume-theme.module.css)을 쪽 순서(nth-child) 대신 각 쪽 내용에 붙인다.
-// 쪽 순서가 바뀌어도 보정이 그 쪽을 따라간다. 값이 없으면 보정하지 않는다(6쪽 프로젝트가 기준).
+// 쪽 순서가 바뀌어도 보정이 그 쪽을 따라간다. 값이 없으면 보정하지 않는다(프로젝트 쪽이 기준).
 type TitleOffset = '1' | '1.5';
 function Sheet({ title, titleOffset, children }: { title?: string; titleOffset?: TitleOffset; children: ReactNode }) {
   return <div className={`${styles.caseStudy} ${styles.overview}`} data-title-offset={titleOffset}>
@@ -105,22 +108,22 @@ export default function ResumeDocument() {
             <div data-resume-role><strong>{item.title}</strong><p>{item.text}</p></div>
           </div>)}</div>
         </section>
-        <section className={styles.documentGuide} data-resume-guide><h2>Task</h2>
+        <section className={styles.documentGuide} data-resume-guide><h2>대표 과제</h2>
           {caseStudyTitles.map((title, index) => <div key={title}><span>{`0${index + 1}`}</span><p><strong>{title}</strong></p></div>)}
         </section>
       </Sheet>
       {resumeCaseStudies.flatMap(({ body }, index) => [
         <div key={`task-${index}`} className={`${styles.caseStudy} ${styles.overview}`} data-resume-task-detail data-title-offset='1.5'>
           <div className={styles.running} data-resume-running>{runningTitle} <span>SANGHUN KIM</span></div>
-          <h1>{`Task 0${index + 1}. ${caseStudyTitles[index]}`}</h1>
+          <h1>{`대표 과제 0${index + 1}. ${caseStudyTitles[index]}`}</h1>
           <div data-resume-task-meta><p className={styles.entryMeta}>효성에프엠에스<span className={styles.metaDivider} aria-hidden='true' />{taskMeta[index].platform}<span className={styles.metaDivider} aria-hidden='true' />{taskMeta[index].team}<span className={styles.metaDivider} aria-hidden='true' />{taskMeta[index].role}</p><span>{taskMeta[index].period}</span></div>
           <p className={styles.entryMeta}>{taskMeta[index].tech.replace(/,\s*/g, ' · ')}</p>
           <ReactMarkdown>{index === 0 ? body.replace('계좌 결제 요청 배치는 ', '*계좌 결제 요청 배치는 ') : body}</ReactMarkdown>
           {index === 0 && <p data-resume-footnote><em>* {recoveryPage}p 주요 과제[{recoveryIndex + 1}] {mainWork[recoveryIndex].title}</em></p>}
         </div>,
-        <Sheet key={`architecture-${index}`} title={`Task 0${index + 1}. ${caseStudyTitles[index]}`} titleOffset='1.5'>
+        ...(SHOW_TASK_ARCHITECTURE ? [<Sheet key={`architecture-${index}`} title={`대표 과제 0${index + 1}. ${caseStudyTitles[index]}`} titleOffset='1.5'>
           <TaskArchitecture task={index === 0 ? 1 : 2} />
-        </Sheet>,
+        </Sheet>] : []),
       ])}
       <Sheet title='프로젝트'>
         {projectWork.map((item, index) => <WorkItem key={item.id} item={item} number={index + 1} />)}

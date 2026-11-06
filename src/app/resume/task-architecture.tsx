@@ -34,7 +34,7 @@ function PanelTitle({ y, children }: { y: number; children: ReactNode }) {
 function RecoveryArchitecture() {
   const marker = 'task01-architecture-arrow';
   return <svg className={styles.diagram} viewBox='0 0 640 784' role='img' aria-labelledby='task01-architecture-title task01-architecture-description'>
-    <title id='task01-architecture-title'>Task 01 청구 보정 배치의 변경 전후 구조</title>
+    <title id='task01-architecture-title'>대표 과제 01 청구 보정 배치의 변경 전후 구조</title>
     <desc id='task01-architecture-description'>변경 전에는 계좌 결제 요청 배치 안에서 예외 청구를 인메모리에 모아 보정 Step이 처리했습니다. 변경 후에는 예외 청구를 채널계 DB에 저장하고 별도 청구 보정 배치의 Tasklet이 읽어 청구 데이터를 보정합니다.</desc>
     <defs><marker id={marker} markerWidth={7} markerHeight={7} refX={6} refY={3.5} orient='auto'><path d='M0 0 L7 3.5 L0 7' fill='none' stroke='#555' /></marker></defs>
 
@@ -96,7 +96,7 @@ function RecoveryArchitecture() {
 function EaiArchitecture() {
   const marker = 'task02-architecture-arrow';
   return <svg className={styles.diagram} viewBox='0 0 640 720' role='img' aria-labelledby='task02-architecture-title task02-architecture-description'>
-    <title id='task02-architecture-title'>Task 02 계좌이동과 민원해지 연계의 변경 전후 구조</title>
+    <title id='task02-architecture-title'>대표 과제 02 계좌이동과 민원해지 연계의 변경 전후 구조</title>
     <desc id='task02-architecture-description'>외부 기관에서 발생한 계좌이동과 민원해지는 대외계를 거쳐 계정계에 반영됩니다. 변경 전에는 채널계 Batch가 수만 건의 고객을 API로 조회해 반영 대상을 확인했습니다. 변경 후에는 계정계가 반영 대상만 EAI로 보내고 채널계가 수신해 계좌이동 및 민원해지를 처리합니다.</desc>
     <defs><marker id={marker} markerWidth={7} markerHeight={7} refX={6} refY={3.5} orient='auto'><path d='M0 0 L7 3.5 L0 7' fill='none' stroke='#555' /></marker></defs>
 

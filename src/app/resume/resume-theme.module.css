@@ -33,9 +33,9 @@
   transform: translateY(var(--resume-title-ink-offset, 0px));
 }
 
-/* 6쪽을 기준으로 서로 다른 글자의 실제 잉크 상단을 광학 정렬한다.
+/* 프로젝트 쪽을 기준으로 서로 다른 글자의 실제 잉크 상단을 광학 정렬한다.
    2026-11-04: 쪽 순서(nth-child) 대신 각 쪽 내용에 붙인 data-title-offset 값을 쓴다(resume-document.tsx).
-   지금 배치는 1·9·11쪽 1px, 2~5쪽(Task) 1.5px로 이전과 같다. */
+   지금 배치는 1쪽 · 그 외 과제 · 기타 둘째 쪽 1px, 대표 과제 쪽 1.5px다(아키텍처 그림 쪽은 숨김). */
 .classic :global(.resume-page) [data-title-offset='1.5'] {
   --resume-title-ink-offset: 1.5px;
 }
@@ -224,7 +224,7 @@
   margin-top: 4mm;
 }
 
-/* 1쪽 Task 목록: 다른 구역과 같은 간격 */
+/* 1쪽 대표 과제 목록: 다른 구역과 같은 간격 */
 .classic :global(.resume-page) [data-resume-guide] {
   margin-top: 8mm;
   padding-top: 0;
@@ -251,7 +251,7 @@
   word-break: break-all;
 }
 
-/* Task 본문 각주: 쪽 하단에 고정 */
+/* 대표 과제 본문 각주: 쪽 하단에 고정 */
 .classic :global(.resume-page) [data-resume-task-meta]{display:flex;justify-content:space-between;align-items:baseline;gap:4mm;margin-top:calc(5mm - 1px)}
 .classic :global(.resume-page) [data-resume-task-meta]>p{margin:0;font-size:11px;color:#666}
 .classic :global(.resume-page) [data-resume-task-meta]>span{flex-shrink:0;font-size:11px;color:#666}

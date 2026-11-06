@@ -6,6 +6,7 @@ import { baseUrl, siteTitle, siteDescription } from '@/shared/config/site';
 import { shareCard } from '@/shared/lib/seo';
 import { ProductionAnalytics } from '@/shared/ui/production-analytics';
 import { FloatingControls } from '@/shared/ui/floating-controls';
+import { NavigationSpinner } from '@/shared/ui/navigation-spinner';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <div className='flex-auto min-w-0 flex flex-col'>
           {children}
           <FloatingControls />
+          <NavigationSpinner />
 
         </div>
         <ProductionAnalytics enabled={process.env.NODE_ENV === 'production' && process.env.VERCEL_ENV === 'production'} hostname={new URL(baseUrl).hostname} />

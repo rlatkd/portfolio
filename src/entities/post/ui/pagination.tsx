@@ -26,6 +26,7 @@ export default function Pagination({ currentPage, lastPage, category, search }: 
   const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
 
 
+  // 1쪽의 « ‹, 마지막 쪽의 › »는 자리만 남기고 보이지 않게 한다(invisible). 쪽 번호 위치가 쪽마다 밀리지 않고, 한 쪽뿐이면 1만 보인다.
   return (
     <div className='relative my-12 flex w-full min-w-0 items-center justify-center space-x-2' role='navigation' aria-label='글 목록 페이지'>
       <div className='flex shrink-0 items-center relative z-10'>
@@ -48,10 +49,10 @@ export default function Pagination({ currentPage, lastPage, category, search }: 
           </>
         ) : (
           <>
-            <span className='hidden h-10 w-10 items-center justify-center rounded-md p-2 text-muted/40 sm:flex'>
+            <span aria-hidden='true' className='invisible hidden h-10 w-10 items-center justify-center rounded-md p-2 sm:flex'>
               <ChevronsLeft className='w-5 h-5' />
             </span>
-            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-md text-muted/40'>
+            <span aria-hidden='true' className='invisible p-2 flex items-center justify-center w-10 h-10 rounded-md'>
               <ChevronLeft className='w-5 h-5' />
             </span>
           </>
@@ -94,10 +95,10 @@ export default function Pagination({ currentPage, lastPage, category, search }: 
           </>
         ) : (
           <>
-            <span className='p-2 flex items-center justify-center w-10 h-10 rounded-md text-muted/40'>
+            <span aria-hidden='true' className='invisible p-2 flex items-center justify-center w-10 h-10 rounded-md'>
               <ChevronRight className='w-5 h-5' />
             </span>
-            <span className='hidden h-10 w-10 items-center justify-center rounded-md p-2 text-muted/40 sm:flex'>
+            <span aria-hidden='true' className='invisible hidden h-10 w-10 items-center justify-center rounded-md p-2 sm:flex'>
               <ChevronsRight className='w-5 h-5' />
             </span>
           </>

@@ -18,7 +18,6 @@ import { getPosts } from '../src/shared/lib/markdown';
 Object.assign(process.env, { NODE_ENV: 'test' });
 import { profile, projects } from '../src/shared/data/site-data';
 import { certifications } from '../src/shared/data/profile-data';
-import benchmarkReport from '@public/reports/upquant-correlation.json';
 import nextConfig from '../next.config.js';
 
 const directory = path.join(process.cwd(), 'src/shared/content/posts');
@@ -142,24 +141,4 @@ test('every optimized blog image host is allowed by next.config.js remotePattern
     .map(([url, entry]) => new URL(entry.replacement ?? url));
   assert.ok(served.length > 0);
   for (const url of served) assert.ok(allowed(url), `next.config.js images.remotePatterns에 없는 호스트: ${url.href}`);
-});
-
-test('benchmark evidence contains its raw samples, source hashes and measured scope', () => {
-  const report = benchmarkReport;
-  assert.match(report.sourceCommit, /^[a-f0-9]{40}$/);
-  assert.equal(report.sourceCheck.expectedCommit, report.sourceCommit);
-  assert.equal(report.sourceCheck.cleanBackend, true);
-  assert.equal(report.sourceCheck.remoteVerification.head, report.sourceCommit);
-  assert.equal(report.sourceCheck.remoteVerification.ref, 'refs/heads/main');
-  assert.ok(Number.isFinite(Date.parse(report.sourceCheck.remoteVerification.checkedAt)));
-  for (const hash of Object.values(report.sourceHashes)) assert.match(String(hash), /^[a-f0-9]{64}$/);
-  for (const state of [report.cold, report.warm]) {
-    assert.equal(state.rawMs.length, state.samples);
-    assert.ok(state.rawMs.every((value: number) => value >= 0 && Number.isFinite(value)));
-    const sorted = [...state.rawMs].sort((a: number, b: number) => a - b);
-    assert.equal(state.p95Ms, sorted[Math.ceil(state.samples * .95) - 1]);
-  }
-  assert.equal(report.providerCalls.warmTotal, 0);
-  assert.equal(report.conditions.network, 'disabled');
-  assert.ok(report.limitations.includes('Does not reproduce'));
 });

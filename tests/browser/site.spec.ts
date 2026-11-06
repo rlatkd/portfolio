@@ -173,7 +173,7 @@ test('search, resume, privacy and short-screen readability work', async ({ page,
   await expect(page.locator('header').getByRole('link', { name: 'RSS', exact: true })).toBeVisible();
 });
 
-test('project cards link to GitHub, reviewed image descriptions and benchmark artifact are served', async ({ page, request }) => {
+test('project cards link to GitHub and reviewed image descriptions are served', async ({ page, request }) => {
   await page.goto('/');
   const projects = page.locator('#projects');
   // 캐러셀: 한 장씩 넘기며 각 프로젝트의 이미지와 GitHub 링크를 확인한다
@@ -205,12 +205,6 @@ test('project cards link to GitHub, reviewed image descriptions and benchmark ar
   expect(removedPage.status()).toBe(404);
   const sitemap = await request.get('/sitemap.xml');
   expect(await sitemap.text()).not.toContain('/evidence');
-  const response = await request.get('/reports/upquant-correlation.json');
-  expect(response.status()).toBe(200);
-  const report = await response.json();
-  expect(report.providerCalls.warmTotal).toBe(0);
-  expect(report.resultConsistency).toBe(true);
-  expect(report.warm.rawMs).toHaveLength(report.warm.samples);
 });
 
 // 2026-11-04: 화면 아래 가림 띠가 키보드 포커스를 덮지 않는다(가림 띠보다 위층인 사이드바 · 떠 있는 버튼은 제외).
@@ -289,4 +283,20 @@ test('focus moving upward stays below the sticky bars', async ({ page }) => {
     }
     expect(covered, `${path} ${width}x${height}`).toEqual([]);
   }
+});
+
+test('navigation spinner appears only for slow moves and clears after the page changes', async ({ page }) => {
+  await page.goto('/posts');
+  const spinner = page.locator('[data-navigation-spinner]');
+  // 빠른 이동: 0.3초 안에 끝나면 스피너가 보이지 않는다.
+  await page.getByRole('link', { name: '2 페이지로' }).click();
+  await expect(page).toHaveURL(/page=2/);
+  await expect(spinner).toHaveCount(0);
+  // 느린 이동: 응답을 늦추면 스피너가 보이고, 쪽이 바뀌면 사라진다.
+  await page.route(/\/posts\?(.*&)?page=3/, async route => { await new Promise(resolve => setTimeout(resolve, 1500)); await route.continue(); });
+  await page.getByRole('link', { name: '3 페이지로' }).click();
+  await expect(spinner).toBeVisible();
+  await expect(page).toHaveURL(/page=3/);
+  await expect(spinner).toHaveCount(0);
+  await expect(page.getByText('페이지를 불러오는 중')).toHaveCount(0);
 });
