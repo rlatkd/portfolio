@@ -25,13 +25,13 @@ function VelogIcon({ size = 19 }: { size?: number }) {
   );
 }
 
-// 2026-11-04: 현재 위치 추적 · 목차 이동은 모바일 영역 탭 줄과 같이 쓰도록 section-navigation.ts로 옮겼다(동작은 같다).
+// 현재 위치 추적 · 목차 이동은 모바일 목차 버튼과 함께 쓰는 section-navigation.ts에 있다.
 const sectionIds = navItems.map((n) => n.id);
 
 export default function Sidebar() {
   const { active, navigate } = useSectionNavigation(sectionIds);
 
-  // 2026-11-02: Velog를 다시 넣었다(블로그 글의 원래 출처, 구조화 데이터 sameAs와 맞춤).
+  // Velog는 블로그 글의 원래 출처다(구조화 데이터 sameAs와 맞춤).
   const socials = [
     { Icon: FiGithub, href: profile.github, label: 'GitHub' },
     { Icon: FiLinkedin, href: profile.linkedin, label: 'LinkedIn' },
@@ -41,8 +41,8 @@ export default function Sidebar() {
   ];
 
   return (
-    // 2026-11-04: 데스크톱 아래 여백은 global.css(가림 높이 - 13px). 가림 띠(z-30)보다 위층에 둬서 아이콘의 포커스 테두리가 잘리지 않게 한다.
-    <header className='portfolio-sidebar pt-14 lg:sticky lg:top-0 lg:z-[31] lg:flex lg:h-dvh lg:flex-col lg:justify-between lg:overflow-y-auto lg:pt-20'>
+    // 데스크톱 아래 여백은 global.css(가림 높이 - 13px). 가림 띠(z-30)보다 위층에 둬서 아이콘의 포커스 테두리가 잘리지 않게 한다.
+    <header className='portfolio-sidebar pt-14 lg:sticky lg:top-0 lg:z-[31] lg:flex lg:h-dvh lg:flex-col lg:justify-between lg:overflow-y-auto lg:pt-[var(--sidebar-top)]'>
       <div>
         <p className='font-code text-[13px] text-accent'>◉ portfolio</p>
         <h1 className='mt-3 text-[40px] font-bold leading-tight tracking-tight text-fg-strong'>
@@ -84,7 +84,7 @@ export default function Sidebar() {
       </div>
 
       {/* 하단: 링크. 아래 여백(가림 높이 - 13px) + 아이콘 칸 여백 약 13px = 가림 높이(보통 96px)로, 맨 아래로 스크롤했을 때 본문 하단 문구 아래 끝과 맞는다.
-          (메인 page.tsx 하단 문구 여백과 짝. 화면이 높아도 어긋나지 않도록 사이드바 최대 높이 제한은 없앴다) */}
+          (메인 page.tsx 하단 문구 여백과 짝. 화면이 높아도 어긋나지 않도록 사이드바 최대 높이는 제한하지 않는다) */}
       <div className='mt-8 flex flex-wrap items-center gap-2 sm:gap-5 lg:mt-0'>
         {socials.map(({ Icon, href, label }) => (
           <a

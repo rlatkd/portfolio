@@ -3,9 +3,9 @@ import { company, companyRoles } from '@/shared/data/career-data';
 import { education } from '@/shared/data/resume-data';
 import { majorSkills } from '@/shared/data/site-data';
 
-// 2026-11-01: 회사 정보는 이력서 1쪽 경력 칸과 같은 데이터·구성(회사·기간·직함·역할 3줄)으로 보여 준다.
-// 프로젝트와 주요 과제는 아래 tasks 영역(widgets/tasks)으로 옮겼다.
-// 2026-11-02: tasks처럼 머리를 `경력 / 학력` 탭으로 나눴다. 학력은 이력서와 같은 데이터(resume-data.ts education)를 쓴다.
+// 회사 정보는 이력서 1쪽 경력 칸과 같은 데이터·구성(회사·기간·직함·역할 3줄)으로 보여 준다.
+// 프로젝트와 주요 과제는 아래 tasks 영역(widgets/tasks)에 있다.
+// tasks처럼 머리를 `경력 / 학력 / 기술` 탭으로 나눈다. 학력은 이력서와 같은 데이터(resume-data.ts education)를 쓴다.
 const career = (
   <>
     <p className='flex flex-wrap items-baseline justify-between gap-x-3'>
@@ -38,7 +38,7 @@ const school = (
   </dl>
 );
 
-// 2026-11-02: 기술 탭은 분야 이름 + 칩(사이드 프로젝트 기술 칩과 같은 모양)
+// 기술 탭은 분야 이름 + 칩(사이드 프로젝트 기술 칩과 같은 모양)
 const tech = (
   <dl className='grid gap-y-3 sm:grid-cols-[auto_1fr] sm:gap-x-6'>
     {majorSkills.map((group) => (

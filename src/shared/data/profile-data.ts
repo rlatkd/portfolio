@@ -1,6 +1,6 @@
 import type { Certification } from '@/shared/types/portfolio';
 
-// 2026-11-04: 교육·수상에도 id를 붙였다. 이력서(resume-data.ts)는 제목 문자열 대신 이 id로 기간·기관을 가져온다.
+// 항목마다 id가 있다. 이력서(resume-data.ts)는 제목 문자열 대신 이 id(factId)로 기간·기관을 가져온다.
 
 export const training = [
   {

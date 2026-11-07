@@ -16,7 +16,7 @@ import styles from './resume-viewer.module.css';
 type WorkEntry = (typeof work)[number];
 const runningTitle = 'RESUME';
 const byId = (id: string) => work.find(entry => entry.id === id)!;
-// 1쪽 대표 과제 목록은 본문 대표 과제 제목을 그대로 사용한다(2026-11-04: 정규식 추출 대신 resume-case-studies.ts의 title).
+// 1쪽 대표 과제 목록은 본문 대표 과제 제목을 그대로 사용한다(resume-case-studies.ts의 title).
 const caseStudyTitles = resumeCaseStudies.map(study => study.title);
 const taskMeta = ['billing-persistence', 'eai-integration'].map(byId);
 const projectWork = ['branch-manager', 'e-contract'].map(byId);
@@ -32,7 +32,7 @@ const pagesPerTask = SHOW_TASK_ARCHITECTURE ? 2 : 1;
 const recoveryIndex = mainWork.findIndex(item => item.id === 'recovery');
 const recoveryPage = 1 + resumeCaseStudies.length * pagesPerTask + 1 + 1 + Math.floor(recoveryIndex / workPerPage);
 
-// 2026-11-04: 쪽 제목의 광학 정렬 보정값(resume-theme.module.css)을 쪽 순서(nth-child) 대신 각 쪽 내용에 붙인다.
+// 쪽 제목의 광학 정렬 보정값(resume-theme.module.css)을 쪽 순서(nth-child) 대신 각 쪽 내용에 붙인다.
 // 쪽 순서가 바뀌어도 보정이 그 쪽을 따라간다. 값이 없으면 보정하지 않는다(프로젝트 쪽이 기준).
 type TitleOffset = '1' | '1.5';
 function Sheet({ title, titleOffset, children }: { title?: string; titleOffset?: TitleOffset; children: ReactNode }) {

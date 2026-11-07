@@ -1,8 +1,8 @@
 import { PaneTabs } from '@/shared/ui/pane-tabs';
 import { company, work } from '@/shared/data/career-data';
 
-// 2026-11-01: 회사에서 한 일을 프로젝트(신규 구축) · 회사(주요 과제) 두 탭으로 나눠 설명까지 모두 보여 준다.
-// 2026-11-02: experience와 같은 PaneTabs를 쓴다. 선택하지 않은 탭의 과제도 HTML에 들어가 검색엔진이 읽는다.
+// 회사에서 한 일을 프로젝트(신규 구축) · 회사(주요 과제) 두 탭으로 나눠 설명까지 모두 보여 준다.
+// experience와 같은 PaneTabs를 쓴다. 선택하지 않은 탭의 과제도 HTML에 들어가 검색엔진이 읽는다.
 const projectIds = ['branch-manager', 'e-contract'];
 type Item = (typeof work)[number];
 

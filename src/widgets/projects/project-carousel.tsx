@@ -7,7 +7,7 @@ import type { Project } from '@/shared/types/portfolio';
 
 const INTERVAL = 3500;
 
-// 2026-11-01: 슬라이드를 이미지 대신 화면 구성 요소로 그린다. 왼쪽은 데이터의 부제·제목(사이트 토큰 색),
+// 슬라이드를 이미지 대신 화면 구성 요소로 그린다. 왼쪽은 데이터의 부제·제목(사이트 토큰 색),
 // 오른쪽은 CSS로 그린 기울어진 브라우저 틀 안에 원본 화면 캡처(project.image)를 넣는다.
 // 새 프로젝트는 캡처 한 장과 데이터만 추가하면 같은 모양으로 나온다.
 // 부제는 두 줄: 프로젝트 종류(인원 수 제외) / 기간. 예: '팀 프로젝트 4인 · 아키텍트 · 2024' → '팀 프로젝트' / '2024'
@@ -110,7 +110,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
         </ul>
       </div>
 
-      {/* 2026-11-04: 모바일(1024px 미만)은 점 · 진행 바 · 쪽 번호 · 이동 버튼을 모두 오른쪽에 모은다(줄이 바뀌어도 오른쪽 정렬). 데스크톱은 양 끝 배치 그대로. */}
+      {/* 모바일(1024px 미만)은 점 · 진행 바 · 쪽 번호 · 이동 버튼을 모두 오른쪽에 모은다(줄이 바뀌어도 오른쪽 정렬). 데스크톱은 양 끝 배치 그대로. */}
       <div className='mt-4 flex flex-wrap items-center justify-end gap-2 lg:justify-between'>
         <div className='flex'>
           {projects.map((item, i) => (

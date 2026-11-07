@@ -1,6 +1,6 @@
 .document {
   width: 100%;
-  max-width: var(--document-width); /* 2026-11-04: 794px, 떠 있는 버튼 위치 계산과 같은 변수(global.css) */
+  max-width: var(--document-width); /* 794px, 떠 있는 버튼 위치 계산과 같은 변수(global.css) */
   min-width: 0;
   margin: 0 auto;
   padding: 0 0 24px;

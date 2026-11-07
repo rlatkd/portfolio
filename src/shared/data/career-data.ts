@@ -1,5 +1,5 @@
 // Canonical career facts shared by the home page and resume.
-// 2026-11-01: 이력서(/resume)에서 확정한 제목·본문을 원본으로 삼는다. 화면별 용어 치환은 두지 않는다.
+// 이력서(/resume)에서 확정한 제목·본문을 원본으로 삼는다. 화면별 용어 치환은 두지 않는다.
 
 // 회사(효성에프엠에스) 정보와 역할 — 홈 Experience와 이력서 1쪽이 함께 쓴다 (최신순)
 export const company = { name: '효성에프엠에스', period: '2024.09', position: 'Full-stack Developer · Application Platform · 선임 · 정규직' };

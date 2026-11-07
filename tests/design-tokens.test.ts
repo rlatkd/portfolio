@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 
-// 2026-11-04: 색 토큰(styles/global.css)의 글자 대비를 WCAG 2.x 공식으로 계산해 4.5:1 이상인지 확인한다.
+// 색 토큰(styles/global.css)의 글자 대비를 WCAG 2.x 공식으로 계산해 4.5:1 이상인지 확인한다.
 // 보조 글자(--muted)가 탭 줄 · 페이지 바탕에서 4.5:1에 못 미쳤던 문제(다크 4.04:1, 라이트 4.33:1)가 다시 생기지 않게 한다.
 const css = fs.readFileSync(path.join(process.cwd(), 'styles/global.css'), 'utf8');
 

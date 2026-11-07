@@ -35,9 +35,9 @@ export const metadata: Metadata = {
   },
 };
 
-// 2026-11-01: VS Code 디자인의 라벨·파일명·날짜용 고정폭 글꼴. 빌드 때 받아 이 사이트 서버에서 제공한다.
+// VS Code 디자인의 라벨·파일명·날짜용 고정폭 글꼴. 빌드 때 받아 이 사이트 서버에서 제공한다.
 const jetbrains = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '500', '700'], variable: '--font-jetbrains', display: 'swap' });
-// 2026-11-05: 라벨 속 한글은 본문 글꼴(Portfolio Sans)로 그리므로 나눔고딕코딩은 더 받지 않는다(global.css --font-code).
+// 라벨 속 한글은 본문 글꼴(Portfolio Sans)로 그린다(global.css --font-code).
 
 type RootLayoutProps = {
   children: React.ReactNode;

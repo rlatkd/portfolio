@@ -2,7 +2,7 @@ import { baseUrl, siteDescription } from '@/shared/config/site';
 import { profile } from '@/shared/data/site-data';
 import { getPosts } from '@/shared/lib/markdown';
 
-// 2026-11-02: AI 서비스에 사이트를 요약해 알려 주는 llms.txt(https://llmstxt.org 제안 형식, 공식 표준은 아님).
+// AI 서비스에 사이트를 요약해 알려 주는 llms.txt(https://llmstxt.org 제안 형식, 공식 표준은 아님).
 // 사이트 데이터에서 만들므로 글이 늘어도 자동으로 반영된다. 전화번호 등 화면에 없는 개인 정보는 넣지 않는다.
 // 이력서(/resume)는 검색 노출을 막아 둔 페이지라 목록에 넣지 않는다.
 export const dynamic = 'force-static';

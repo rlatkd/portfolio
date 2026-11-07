@@ -17,7 +17,7 @@ export default async function Navigation({ currentPost }: NavigationProps) {
       <div className='flex justify-between w-full relative z-10'>
         {previousPost ? (
           <Link
-            href={`/posts/${previousPost.slug}`}
+            href={`/posts/${encodeURIComponent(previousPost.slug)}`}
             className='flex items-center w-[45%] max-w-[240px] px-5 py-4 border border-line bg-surface rounded-xl text-fg group hover:border-accent transition-colors'
           >
             <div className='w-10 h-10 flex items-center justify-center rounded-md bg-surface-2 transition-colors mr-4'>
@@ -33,7 +33,7 @@ export default async function Navigation({ currentPost }: NavigationProps) {
         )}
         {nextPost ? (
           <Link
-            href={`/posts/${nextPost.slug}`}
+            href={`/posts/${encodeURIComponent(nextPost.slug)}`}
             className='flex items-center w-[45%] max-w-[240px] px-5 py-4 border border-line bg-surface rounded-xl text-fg group hover:border-accent transition-colors'
           >
             <div className='flex flex-col items-end overflow-hidden flex-1'>

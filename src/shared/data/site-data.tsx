@@ -19,15 +19,15 @@ export const profile: PublicProfile = {
 };
 
 export const aboutIntro = [
-  // 2026-11-01: 사용자가 직접 쓴 개발자 소개. 이력서 문장과 달리 관점 위주로 쓴다.
+  // 사용자가 직접 쓴 개발자 소개. 이력서 문장과 달리 관점 위주로 쓴다.
   'Spring Boot와 Vue.js로 서비스를 개발하고 운영하면서 데이터 정합성과 시스템 안정성을 고민해 왔습니다.',
   '문제를 풀 때는 기존 구조와 제약을 먼저 이해하고 다른 시스템에 주는 영향을 줄이는 쪽을 택합니다.',
 ];
 
-// About 문단에서 진하게 표시할 문구 (2026-11-01: 현재 소개 문단 기준으로 갱신)
+// About 문단에서 진하게 표시할 문구. 본문과 글자가 정확히 같아야 굵게 표시된다.
 export const aboutKeyTerms = ['데이터 정합성과 시스템 안정성', '다른 시스템에 주는 영향을 줄이는 쪽'];
 
-// 2026-11-02: 홈 experience '기술' 탭. 이력서 기술 스택 중 큰 항목만 고른 것(실무가 아닌 것 포함).
+// 홈 experience '기술' 탭. 이력서 기술 스택 중 큰 항목만 고른 것(실무가 아닌 것 포함).
 // 검색엔진용 인물 정보의 knowsAbout도 이 목록을 그대로 쓴다(화면에 보이는 것만).
 export const majorSkills = [
   { label: 'AI', items: ['Claude Code', 'Codex', 'OpenCode'] },
@@ -197,7 +197,7 @@ export const projects: Project[] = [
   },
 ];
 
-// 2026-11-01: VS Code 디자인. 목차와 각 영역 머리에 파일 이름(file)으로 표시한다.
+// VS Code 디자인. 목차와 각 영역 머리에 파일 이름(file)으로 표시한다.
 export const navItems = [
   { id: 'about', label: 'About', file: 'about.md' },
   { id: 'experience', label: 'Experience', file: 'experience/' },

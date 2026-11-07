@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ArrowUp } from 'lucide-react';
+import { ChevronUp } from 'lucide-react';
+import { FLOATING_BUTTON } from './floating-button';
 
-export default function ScrollToTop({ embedded = false }: { embedded?: boolean }) {
+export default function ScrollToTop() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -15,15 +16,14 @@ export default function ScrollToTop({ embedded = false }: { embedded?: boolean }
 
   return (
     <button
+      type='button'
       aria-label='맨 위로'
       tabIndex={show ? 0 : -1}
       aria-hidden={!show}
       onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}
-      className={`${embedded ? '' : 'fixed bottom-6 right-6 z-40'} flex h-11 w-11 items-center justify-center rounded-md border border-line bg-surface text-muted shadow-lg transition-all hover:border-accent hover:text-accent ${
-        show ? 'translate-y-0 opacity-100' : 'pointer-events-none -translate-y-3 opacity-0'
-      }`}
+      className={`${FLOATING_BUTTON} ${show ? 'translate-y-0 opacity-100' : 'pointer-events-none -translate-y-3 opacity-0'}`}
     >
-      <ArrowUp size={18} />
+      <ChevronUp size={20} />
     </button>
   );
 }

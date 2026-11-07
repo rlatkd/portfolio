@@ -14,7 +14,7 @@ export default function PostRecommend({ posts }: { posts: PostPreview[] }) {
         </h2>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
           {posts.map(post => (
-            <Link key={post.slug} href={`/posts/${post.slug}`} className='border border-line bg-surface rounded-xl overflow-hidden hover:border-accent transition-colors group'>
+            <Link key={post.slug} href={`/posts/${encodeURIComponent(post.slug)}`} className='border border-line bg-surface rounded-xl overflow-hidden hover:border-accent transition-colors group'>
               <div className='p-5 flex flex-col gap-4 relative'>
                 <div className='relative'>
                   <h3 className='text-lg font-serif text-fg-strong mb-2 group-hover:text-accent transition-colors'>{post.metadata.title}</h3>

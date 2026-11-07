@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     authors: [{ name: '김상훈', url: baseUrl }],
     alternates: { canonical: `/posts/${encodeURIComponent(post.slug)}` },
     // 공유 카드는 모든 링크 공통(shareCard). 글 제목·요약은 탭 제목과 페이지 설명에만 쓴다.
-    // 2026-11-04: 글은 카드 모습은 같고 종류만 article(발행일 · 수정일 포함)이다.
+    // 글은 카드 모습은 같고 종류만 article(발행일 · 수정일 포함)이다.
     ...articleShareCard(`${baseUrl}/posts/${encodeURIComponent(post.slug)}`, post.metadata.publishedAt, post.metadata.updatedAt ?? post.metadata.publishedAt),
   };
 }
@@ -68,7 +68,7 @@ export default async function Page({ params }: Props) {
           <h1 className='title min-w-0 flex-1 basis-64 text-fg-strong'>{post.metadata.title}</h1>
         <p className={styles.pageSubtitle}>
           <time dateTime={post.metadata.publishedAt}>{dateFormatter(post.metadata.publishedAt)}</time>
-          {/* 2026-11-04: 원문(velog) 수정일이 작성일과 다르면 함께 보인다. 구조화 데이터 dateModified와 같은 값이다. */}
+          {/* 원문(velog) 수정일이 작성일과 다르면 함께 보인다. 구조화 데이터 dateModified와 같은 값이다. */}
           {post.metadata.updatedAt && dateFormatter(post.metadata.updatedAt) !== dateFormatter(post.metadata.publishedAt) && <>
             {' · '}Updated <time dateTime={post.metadata.updatedAt}>{dateFormatter(post.metadata.updatedAt)}</time>
           </>}

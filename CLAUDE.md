@@ -10,6 +10,7 @@
 - **절 순서는 고정한다.** `0 문서 작성 규칙 → 1 작업 원칙 → 2 기술 스택 → 3 구조 → 4 디자인 → 5 화면별 세부 → 6 콘텐츠 → 7 이력 서술 기준 → 8 SEO · 분석 · 배포 → 9 검증 · 도구 → 10 보류 항목`. 새 내용은 맞는 절에 넣고, 절을 새로 만들지 않는다.
 - **한 줄에 사실 하나.** 개조식, `~다` 체. 파일 · 경로 · 값 · 명령은 백틱. 이유는 필요할 때만 줄 끝 괄호로 짧게.
 - **날짜는 쓰지 않는다.** 예외는 경력 기간처럼 날짜 자체가 사실인 경우뿐이다.
+- **CLAUDE.md와 AGENTS.md는 함께 고친다.** 한쪽을 고치면 같은 작업에서 다른 쪽도 같은 방향으로 갱신한다(AGENTS.md는 요약이라 해당 요점이 있거나 새로 생기면 반영).
 - **대화를 옮겨 적지 않는다.** 사용자와 나눈 말을 그대로 인용하거나 "사용자가 ~라고 했다"를 근거로 남기지 않는다. 정해진 규칙과 사실만 중립적인 문장으로 쓴다.
 - **공개 저장소다.** 지원한 회사 이름, 고객사 등급, VoC 건수 같은 내부 수치, 개인 연락처는 쓰지 않는다.
 - **세 문서의 역할:** `CLAUDE.md` = 작업 기준의 원본. `AGENTS.md` = Codex 등 다른 에이전트용 요약, 세부는 `CLAUDE.md`를 가리킨다. `README.md` = 저장소 방문자용 소개 · 실행 방법, 작업 규칙과 변경 기록은 넣지 않는다.
@@ -19,6 +20,7 @@
 
 - 커밋 · 푸시는 사용자가 직접 한다. AI는 하지 않는다. 커밋 메시지는 항상 한 줄 `type: 설명`이다(type은 feat · fix · refactor · docs · test · chore 등, 본문 없음).
 - AI 답변이 끝나기 전에 사용자가 보낸 메시지는 그 이전 답변에 대한 응답이다. 최신 답변의 새 목록 · 제안을 승인한 것으로 보지 않는다. 애매하면 적용 전에 묻는다.
+- 기능 · 페이지 · 파일을 폐기할 때는 관련된 것을 모두 찾아 함께 폐기한다: 코드 · 설정(리다이렉트 등) · 테스트 · 정적 파일 · `CLAUDE.md` · `AGENTS.md` · `README.md`. 저장소 전체를 검색해 남은 언급이 없는지 확인한다(`port/` 원본 자료와 지난 인계 파일은 제외).
 - 수정 지시는 그 지시가 가리키는 범위에만 적용한다. 보고로 낸 목록은 따로 승인받기 전까지 손대지 않는다.
 - 사용자에게 진행 여부나 의사결정이 필요한 작업 목록을 낼 때는 항상 `1.` `2.` `3.` 오름차순 번호 목록으로 쓴다(체크박스 · 글머리표 · 표로 대신하지 않는다).
 - 방식을 제안하기 전에 이 사이트의 실제 데이터를 먼저 측정한다.
@@ -49,8 +51,10 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
   - 블로그 목록 · 상세 공용 레이아웃은 `(blog)/layout.tsx`
 - `src/widgets` — 홈 영역 8개: about, experience, tasks, projects, writing, contact, sidebar, footer. 모바일 목차 버튼은 `sidebar/mobile-section-menu.tsx`
 - `src/features` — copy-email, post-recommend, privacy-notice, theme-toggle
-- `src/entities/post/ui` — 글 목록 · 카드 · 페이지 버튼 · 카테고리 · 목차 · 이전/다음 · 코드 복사
+- `src/entities/post/ui` — 글 목록 · 카드 · 페이지 버튼 · 카테고리 · 목차 · 이전/다음
+- `src/shared/markdown` — 블로그 본문 렌더러 · 코드 강조 · 코드 복사 버튼(`code-copier.tsx`) · 이미지 메타데이터 · 목차 id
 - `src/shared` — config, content, data, lib, markdown, types, ui, utils
+- 코드 주석은 지금 코드가 왜 그런지만 적는다. 날짜, `~로 바꿨다` · `이전에는` 같은 변경 경위를 쓰지 않는다(변경 이력은 git). 코드만 봐도 분명하면 주석을 두지 않는다.
 - 이름 규칙: ts · tsx 파일과 폴더는 kebab-case. 코드 안에서 컴포넌트 · 타입은 PascalCase, 함수 · 변수 · 훅은 camelCase, 상수는 UPPER_SNAKE_CASE. 기본 import 이름은 export 이름과 같게.
 
 ## 4. 디자인
@@ -65,12 +69,12 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 - 글꼴
   - 본문: `Portfolio Sans` = Pretendard 1.3.9에서 사이트에 쓰인 글자만 남긴 woff2 두 파일(`public/fonts/portfolio-sans-medium.woff2` · `-bold.woff2`). 400~500은 Medium, 600~900은 Bold.
   - 줄인 글꼴은 OFL상 수정 버전이라 `Pretendard`라고 부르지 않는다. 저작권 · 라이선스 정보는 글꼴 안에 그대로 두고 전문은 `public/fonts/OFL.txt`.
-  - 원본 `public/fonts/Pretendard-Medium.woff` · `-Bold.woff`는 공유 카드 이미지와 글꼴 만들기 원본이라 남긴다.
+  - 원본 `assets/fonts/Pretendard-Medium.woff` · `-Bold.woff`는 공유 카드 이미지(`/api/og`가 파일로 읽음)와 글꼴 만들기 원본이다. 화면에서 받지 않으므로 `public/` 밖에 둔다.
   - 새 글자가 생기면 `tests/fonts.test.ts`가 실패한다. `pnpm fonts:build`(글자 목록 `scripts/fonts/portfolio-sans-characters.json`)를 실행한다.
   - 대체 글꼴 `Portfolio Sans Fallback`은 Windows 맑은 고딕을 Pretendard 폭에 맞춘 묶음이다(글꼴 교체 때 흔들림 감소).
   - 라벨 · 파일명 · 날짜(`font-code`): 영문 · 숫자는 JetBrains Mono(`next/font`), 그 안의 한글은 본문 글꼴.
 - 공통 영역: `@/shared/ui/pane`(파일 탭 머리, 오른쪽 `action` 자리), 탭으로 나뉜 영역은 `@/shared/ui/pane-tabs`.
-- 화면 아래 정렬 값은 `global.css` CSS 변수로만 바꾼다: `--bottom-mask`(1024px 이상 96px, 높이 760px 이하 45px) · `--home-width` 1152px · `--home-gutter` 48px · `--document-width` 794px · `--floating-size` 44px · `--floating-gap` 48px.
+- 화면 아래 정렬 값은 `global.css` CSS 변수로만 바꾼다: `--bottom-mask`(1024px 이상 96px, 높이 760px 이하 45px) · `--home-width` 1152px · `--home-gutter` 48px · `--document-width` 794px · `--floating-size` 44px · `--floating-gap` 48px · `--floating-edge`(1024px 미만 12px, 이상 24px) · `--sidebar-top`(38px, 높이 760px 이하 32px) · `--sidebar-name-offset` 42px.
 - 문구 부호: 긴 줄표(—) 금지. 기간은 `–`, 나열은 `·`, 제목 구분자는 `|`.
 - 모든 컴포넌트는 모바일 우선 반응형.
 - 파비콘(`src/app/icon.svg`)과 공유 카드 아이콘은 겹친 마름모, 색 `#4fc1ff` · 바탕 `#252526`.
@@ -95,9 +99,11 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 - 사이드바 하단 아이콘: GitHub · LinkedIn · Velog · 이메일 · RSS.
 - 하단 ©는 lucide `Copyright` 아이콘(12px, 선 굵기 2.4, `align-[-0.14em]`). 화면 낭독기는 숨긴 `©` 글자를 읽는다.
 - 개인정보 처리방침은 하단 링크로 여는 모달(`features/privacy-notice`)이다. 본문 여백은 데스크톱 40px, 640px 미만 24px로, 글자 기준 위아래와 좌우가 같다.
+- 데스크톱 홈은 사이드바 이름(김상훈) 글자 위 끝과 about.md 영역 위 끝을 맞춘다. 본문 위 여백 = `--sidebar-top` + `--sidebar-name-offset`(e2e가 1px 이내로 확인). 사이드바 위쪽 글자 크기 · 간격을 바꾸면 `--sidebar-name-offset`을 다시 잰다.
 - 데스크톱은 화면 아래 `--bottom-mask` 높이를 가림 띠(`.portfolio-bottom-mask`)로 가린다. 사이드바는 가림 띠보다 위층(`lg:z-[31]`)이다.
-- 1024px 미만은 화면 오른쪽 위에 목차 버튼(`mobile-section-menu.tsx`, 파일 목록 아이콘)이 있다. 오른쪽 끝 간격은 아래쪽 떠 있는 버튼과 같은 24px이다. 맨 위에서는 숨고 about 영역에 들어서면 나타난다. 누르면 버튼 아래에 사이드바와 같은 목차가 열리고(현재 영역 강조), 항목을 누르면 그 영역으로 이동한 뒤 닫힌다. 바깥을 누르거나 Esc로도 닫힌다. 현재 위치 추적 · 이동은 사이드바와 같은 `section-navigation.ts`를 쓴다.
-- 떠 있는 버튼(위로 가기 · 테마)은 본문 영역 오른쪽 끝에서 `--floating-gap` 옆에 둔다(창이 좁으면 창 오른쪽 24px). 아래 끝은 가림 띠 높이에 맞춘다. 클래스는 홈 `.portfolio-floating`, 블로그 `.document-floating`.
+- 1024px 미만은 화면 오른쪽 위에 목차 버튼(`mobile-section-menu.tsx`, 파일 목록 아이콘)이 있다. 오른쪽 끝 간격은 아래쪽 떠 있는 버튼과 같은 `--floating-edge`(12px)로, 본문 오른쪽 끝(24px)에 맞추지 않는다. 맨 위에서는 숨고 about 영역에 들어서면 나타난다. 누르면 버튼 아래에 사이드바와 같은 목차가 열리고(현재 영역 강조), 항목을 누르면 그 영역으로 이동한 뒤 닫힌다. 바깥을 누르거나 Esc로도 닫힌다. 현재 위치 추적 · 이동은 사이드바와 같은 `section-navigation.ts`를 쓴다.
+- 떠 있는 버튼(목차 · 위로 가기 · 테마)은 본문 카드와 구분되도록 글자색 `--fg-strong`으로 채운 동그란 버튼이다(`shared/ui/floating-button.ts`, 아이콘은 바탕색 `--bg`라 테마마다 반전, 위로 가기 아이콘은 꺾쇠 `^`). 위로 가기는 240px 넘게 내려가면 테마 버튼 위에 따로 나타난다. 목차 버튼은 열리면 바깥 고리를 그린다.
+- 떠 있는 버튼(위로 가기 · 테마)은 본문 영역 오른쪽 끝에서 `--floating-gap` 옆에 둔다(창이 좁으면 창 오른쪽 `--floating-edge`). 아래 끝은 가림 띠 높이에 맞춘다. 클래스는 홈 `.portfolio-floating`, 블로그 `.document-floating`.
 - 낮은 데스크톱(1024×600)에서는 사이드바 아이콘이 잘린다(대응 여부 미정).
 
 ### 블로그
@@ -191,7 +197,7 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 - robots: 전체 허용, `/api/`는 막고 `/api/og`만 허용.
 - RSS 이름 `김상훈 | Posts`.
 - `/llms.txt`는 사이트 데이터로 만든다: 소개 · 주요 페이지 · 글 목록 · 연락처. 전화번호와 이력서는 넣지 않는다.
-- 리다이렉트(308): `/resume2 → /resume`, `/privacy → /`.
+- 리다이렉트(308): `/privacy → /`.
 - GA는 `shared/ui/production-analytics.tsx`에서 gtag를 직접 불러온다(운영 환경에서만).
   - 측정 요청에서 이 사이트 주소의 `q` · `from`과 `ep.search_term`을 지운다(`shared/lib/analytics-privacy.ts`, `tests/analytics-privacy.test.ts`).
   - 인라인 스크립트 문자열 안에 역슬래시를 직접 쓰지 않는다(템플릿 문자열이 이스케이프를 먹어 GA가 멈춘다).

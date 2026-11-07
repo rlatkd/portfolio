@@ -1,4 +1,4 @@
-// 2026-11-05: GA 측정 요청(/g/collect)의 본문 · 주소 문자열에서 블로그 검색어를 지운다.
+// GA 측정 요청(/g/collect)의 본문 · 주소 문자열에서 블로그 검색어를 지운다.
 // - dl(페이지 주소) · dr(이전 페이지 주소)이 이 사이트(hostname, 포트는 보지 않는다)일 때만 q(검색어) · from(검색 목록 주소를 담은 값)을 뺀다.
 //   다른 사이트에서 들어온 이전 주소(예: 검색 포털)는 건드리지 않는다.
 // - ep.search_term(GA 자동 사이트 검색 이벤트의 검색어)은 지운다. 그 밖의 값은 글자 그대로 둔다.
@@ -23,7 +23,7 @@ export function cleanAnalyticsHit(text: string, hostname: string): string {
 export const GA_COLLECT = /google-analytics\.com\/g\/collect/;
 
 /**
- * 2026-11-05: GA를 시작하는 인라인 스크립트. 측정 요청(sendBeacon · fetch)을 보내기 직전에 cleanAnalyticsHit로 검색어를 지운다.
+ * GA를 시작하는 인라인 스크립트. 측정 요청(sendBeacon · fetch)을 보내기 직전에 cleanAnalyticsHit로 검색어를 지운다.
  * 이 문자열 안에는 역슬래시를 직접 쓰지 않는다(TS 템플릿 문자열이 이스케이프를 먹어 정규식이 깨진 적이 있다).
  * tests/analytics-privacy.test.ts가 이 스크립트를 실제로 실행해 문법 오류와 정리 결과를 확인한다.
  */

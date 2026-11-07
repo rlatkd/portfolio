@@ -13,14 +13,13 @@ const color = {
 
 // fs reads physical files; TypeScript import aliases do not resolve filesystem paths.
 const fonts = Promise.all(['Bold', 'Medium'].map(async weight => {
-  const buffer = await fs.readFile(path.join(process.cwd(), `public/fonts/Pretendard-${weight}.woff`));
+  const buffer = await fs.readFile(path.join(process.cwd(), `assets/fonts/Pretendard-${weight}.woff`));
   return { name: 'Pretendard', data: buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength) as ArrayBuffer, weight: (weight === 'Bold' ? 700 : 500) as 700 | 500, style: 'normal' as const };
 }));
 
-// 2026-11-05: 공유 카드 이미지는 모든 링크 공통 한 가지다. 예전의 제목을 그린 모양(블로그 글 구조화 데이터용)은
-// 11-04부터 쓰는 곳이 없어 지웠다. 주소에 title 등 다른 값을 붙여도 같은 그림이 나온다.
+// 공유 카드 이미지는 모든 링크 공통 한 가지다. 주소에 title 등 다른 값을 붙여도 같은 그림이 나온다.
 export async function GET() {
-  // 2026-11-02: 카드의 제목·주소와 겹치지 않도록 이름·직함·도메인을 빼고 아이콘 + portfolio 표시와 사이트의 파일 탭 모양만 그린다.
+  // 카드의 제목·주소와 겹치지 않도록 이름·직함·도메인을 빼고 아이콘 + portfolio 표시와 사이트의 파일 탭 모양만 그린다.
   const files = ['about.md', 'experience.md', 'tasks/', 'side-projects/', 'posts/'];
   const bars = ['82%', '64%', '90%', '56%'];
   return new ImageResponse(

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { cleanAnalyticsHit, gaInitScript } from '../src/shared/lib/analytics-privacy';
 
-// 2026-11-05: GA 측정 요청에서 블로그 검색어를 지우는 규칙(production-analytics.tsx가 인라인 스크립트로 쓴다).
+// GA 측정 요청에서 블로그 검색어를 지우는 규칙(production-analytics.tsx가 인라인 스크립트로 쓴다).
 const host = 'www.sanghunkim.com'; // 비교는 도메인 이름(hostname)으로 한다
 const encode = (value: string) => encodeURIComponent(value);
 

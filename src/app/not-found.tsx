@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-// 2026-11-01: VS Code 디자인. 편집기 영역 하나에 오류 내용을 보여 준다.
+// VS Code 디자인. 편집기 영역 하나에 오류 내용을 보여 준다.
 export default function NotFound() {
   return (
     <main id='main-content' className='flex min-h-screen w-full items-center justify-center bg-bg px-6 py-16'>

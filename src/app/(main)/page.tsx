@@ -46,7 +46,7 @@ export default async function Page() {
         type='application/ld+json'
         suppressHydrationWarning
         dangerouslySetInnerHTML={{
-          // 2026-11-02: 사이트(WebSite)·이 페이지(ProfilePage)·인물(Person)을 @id로 서로 연결한다.
+          // 사이트(WebSite)·이 페이지(ProfilePage)·인물(Person)을 @id로 서로 연결한다.
           // 사이트 운영자와 페이지 주인공은 인물(김상훈)이다. 근무처(효성에프엠에스)는 인물의 worksFor일 뿐이다.
           __html: serializeJsonLd({
             '@context': 'https://schema.org',
@@ -74,7 +74,7 @@ export default async function Page() {
                 '@id': authorId,
                 name: profile.name,
                 alternateName: profile.nameEn,
-                // 2026-11-02: 화면에 보이는 직함만 쓴다(사이드바 Software Engineer, Experience Full-stack Developer). 구글 구조화 데이터 지침.
+                // 화면에 보이는 직함만 쓴다(사이드바 Software Engineer, Experience Full-stack Developer). 구글 구조화 데이터 지침.
                 jobTitle: [profile.role, 'Full-stack Developer'],
                 url: baseUrl,
                 email: `mailto:${profile.email}`,
@@ -83,7 +83,7 @@ export default async function Page() {
                   { '@type': 'CollegeOrUniversity', name: '성균관대학교' },
                   { '@type': 'CollegeOrUniversity', name: '경희대학교' },
                 ],
-                // 2026-11-02: experience '기술' 탭에 보이는 항목과 같게 둔다.
+                // experience '기술' 탭에 보이는 항목과 같게 둔다.
                 knowsAbout: majorSkills.flatMap(group => group.items),
                 sameAs: [profile.github, profile.linkedin, profile.velog],
               },

@@ -12,6 +12,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 작업 기준의 원본은 `CLAUDE.md`다. 이 파일은 다른 에이전트(Codex 등)가 먼저 지킬 요점만 모은 요약이다. 둘이 다르면 `CLAUDE.md`를 따른다. 이 파일도 `CLAUDE.md` `0. 문서 작성 규칙`의 형식을 따른다(현재 상태만, 날짜 절 없음, 해당 줄을 직접 고침).
 
+- **두 문서는 함께 고친다.** 이 파일을 고치면 같은 작업에서 `CLAUDE.md`도 같은 방향으로 갱신하고, `CLAUDE.md`를 고치면 이 파일의 해당 요점도 갱신한다.
+
 ## 시작할 때
 
 - 로컬 작업을 시작할 때 `port/INDEX.md`가 있으면 먼저 읽고, 그 안의 안내에 따라 필요한 문서만 연다. `port/`의 내용은 공개 문서 · 코드 · 커밋 메시지에 옮기지 않는다.
@@ -21,6 +23,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## 작업 원칙
 
 - 커밋 · 푸시는 사용자가 직접 한다. 커밋 메시지는 항상 한 줄 `type: 설명`이다(본문 없음).
+- 기능 · 페이지 · 파일을 폐기할 때는 코드 · 설정 · 테스트 · 정적 파일 · 세 문서(`CLAUDE.md` · `AGENTS.md` · `README.md`)에서 관련된 것을 모두 찾아 함께 폐기하고, 저장소 전체 검색으로 남은 언급이 없는지 확인한다.
 - 수정 지시는 지시한 범위에만 적용한다. 보고한 목록은 따로 승인받기 전까지 손대지 않는다.
 - 사용자에게 진행 여부나 의사결정이 필요한 작업 목록을 낼 때는 항상 `1.` `2.` `3.` 오름차순 번호 목록으로 쓴다(체크박스 · 글머리표 · 표로 대신하지 않는다).
 - 공개 저장소다. 지원한 회사 이름이나 내부 수치를 문서와 코드에 쓰지 않는다.
@@ -29,10 +32,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## 코드 · 디자인
 
 - 화면은 VS Code 편집기 모양이고 기본 테마는 다크다. 색은 `styles/global.css`의 시맨틱 토큰만 쓴다.
-- 영역은 `src/shared/ui/pane.tsx`, 탭 영역은 `src/shared/ui/pane-tabs.tsx`를 쓴다.
-- 화면 아래 정렬 숫자는 `global.css`의 CSS 변수(`--bottom-mask` 등)로만 바꾼다.
+- 영역은 `src/shared/ui/pane.tsx`, 탭 영역은 `src/shared/ui/pane-tabs.tsx`를 쓴다. 떠 있는 버튼은 `src/shared/ui/floating-button.ts`의 동그란 반전 무채색 버튼(바탕 `--fg-strong`, 아이콘 `--bg`)을 쓴다.
+- 화면 정렬 숫자는 `global.css`의 CSS 변수로만 바꾼다: 아래 정렬 `--bottom-mask` 등, 떠 있는 버튼 창 끝 간격 `--floating-edge`, 홈 위쪽 정렬(사이드바 이름 글자 위 끝 = about.md 위 끝) `--sidebar-top` · `--sidebar-name-offset`.
 - 문구에 긴 줄표(—)를 쓰지 않는다. 기간 `–`, 나열 `·`, 제목 구분자 `|`.
 - 파일 · 폴더 이름은 kebab-case.
+- 코드 주석은 지금 코드가 왜 그런지만 적는다. 날짜와 변경 경위(`~로 바꿨다` · `이전에는`)는 쓰지 않는다.
 
 ## 콘텐츠
 
@@ -45,6 +49,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - 본문 글꼴은 Pretendard에서 사이트 글자만 남긴 `Portfolio Sans`다. OFL상 `Pretendard`라고 부르지 않는다.
 - `tests/fonts.test.ts`가 실패하면 `pnpm fonts:build`를 실행한다.
 - 라벨 한글은 본문 글꼴로 그린다.
+- 원본 `Pretendard-*.woff`는 `assets/fonts/`에 있다(공유 카드 이미지와 글꼴 만들기 원본, 공개 경로 밖).
 
 ## 분석
 

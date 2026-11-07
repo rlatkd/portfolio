@@ -3,9 +3,9 @@
 import { useRef, useState } from 'react';
 import { Check, Copy, ExternalLink, FileDown, Printer, X } from 'lucide-react';
 
-// 2026-11-04: 네이버 앱 · 카카오톡 같은 앱 안의 브라우저(Android WebView, iOS 앱 내장 브라우저)는 window.print()를 지원하지 않아
-// 인쇄 버튼을 눌러도 아무 일도 일어나지 않았다(Android 공식 문서: WebView 안의 JavaScript로는 인쇄를 시작할 수 없다).
-// 일반 브라우저는 이전처럼 바로 인쇄한다. 앱 안의 브라우저에서는 인쇄를 시도한 뒤 인쇄가 시작되지 않으면(beforeprint 없음)
+// 네이버 앱 · 카카오톡 같은 앱 안의 브라우저(Android WebView, iOS 앱 내장 브라우저)는 window.print()를 지원하지 않아
+// 인쇄 버튼을 눌러도 아무 일도 일어나지 않는다(Android 공식 문서: WebView 안의 JavaScript로는 인쇄를 시작할 수 없다).
+// 일반 브라우저는 바로 인쇄한다. 앱 안의 브라우저에서는 인쇄를 시도한 뒤 인쇄가 시작되지 않으면(beforeprint 없음)
 // 외부 브라우저로 여는 안내를 띄운다.
 type Browser = { android: boolean; kakao: boolean };
 
@@ -19,7 +19,7 @@ function inAppBrowser(userAgent: string): Browser | null {
 }
 
 // 외부 브라우저로 여는 주소. 카카오톡은 자체 주소, Android는 Chrome intent. iOS는 앱 밖으로 여는 공통 방법이 없어 안내만 한다.
-// 2026-11-05: Chrome이 없거나 꺼 둔 Android 기기를 위해 기본 브라우저(또는 브라우저 선택 창)로 여는 intent도 함께 둔다.
+// Chrome이 없거나 꺼 둔 Android 기기를 위해 기본 브라우저(또는 브라우저 선택 창)로 여는 intent도 함께 둔다.
 // (intent의 대체 주소 S.browser_fallback_url은 웹 주소만 받아 같은 페이지를 앱 안에서 다시 열 뿐이라 쓰지 않는다)
 function externalLinks(url: string, browser: Browser): { label: string; href: string }[] {
   if (browser.kakao) return [{ label: '외부 브라우저로 열기', href: `kakaotalk://web/openExternal?url=${encodeURIComponent(url)}` }];
@@ -85,7 +85,7 @@ export function PrintButton() {
         onClick={print}
         className='inline-flex items-center gap-2 rounded-md border border-line bg-surface px-3.5 py-2 font-code text-[13px] text-fg-strong transition-colors hover:border-accent hover:text-accent'
       >
-        {/* 2026-11-05: 휴대폰(640px 미만)에서는 인쇄보다 PDF 저장으로 쓰므로 'PDF 저장'으로 보인다. 동작은 같은 브라우저 인쇄(PDF로 저장)다. */}
+        {/* 휴대폰(640px 미만)에서는 인쇄보다 PDF 저장으로 쓰므로 'PDF 저장'으로 보인다. 동작은 같은 브라우저 인쇄(PDF로 저장)다. */}
         <Printer size={15} aria-hidden='true' className='hidden sm:block' />
         <FileDown size={15} aria-hidden='true' className='sm:hidden' />
         <span className='hidden sm:inline'>인쇄 | PDF 저장</span>

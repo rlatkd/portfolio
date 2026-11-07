@@ -59,7 +59,7 @@ test('all restored articles have valid DOM, metadata and no comments requests', 
     const ids = await page.locator('article [id]').evaluateAll(nodes => nodes.map(node => node.id));
     expect(new Set(ids).size, slug).toBe(ids.length);
     await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
-    // 2026-11-04: 글은 공유 카드 종류가 article이고 수정일은 원문(velog) 수정일이다.
+    // 글은 공유 카드 종류가 article이고 수정일은 원문(velog) 수정일이다.
     await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'article');
     await expect(page.locator('meta[property="article:modified_time"]')).toHaveAttribute('content', (sources as Record<string, { updatedAt: string }>)[slug].updatedAt);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${baseUrl}/posts/${encodeURIComponent(slug)}`);
@@ -99,11 +99,11 @@ test('invalid URLs and retired comment endpoints return 404', async ({ request }
 test('sitemap, RSS, OG and optimized images are served successfully', async ({ request }) => {
   const sitemap = await request.get('/sitemap.xml');
   expect(sitemap.status()).toBe(200);
-  expect((await sitemap.text()).match(/<loc>/g)).toHaveLength(Object.keys(sources).length + 2); // 홈 · 글 목록 (2026-11-01 /privacy는 모달로 바뀌어 제외)
+  expect((await sitemap.text()).match(/<loc>/g)).toHaveLength(Object.keys(sources).length + 2); // 홈 · 글 목록
   const rss = await request.get('/rss');
   expect(rss.status()).toBe(200);
   expect((await rss.text()).match(/<item>/g)).toHaveLength(Object.keys(sources).length);
-  // 2026-11-05: 공유 카드 이미지는 한 가지(제목 붙은 모양은 삭제)
+  // 공유 카드 이미지는 한 가지다
   const og = await request.get('/api/og');
   expect(og.status()).toBe(200);
   expect(og.headers()['content-type']).toContain('image/png');
@@ -153,10 +153,8 @@ test('search, resume, privacy and short-screen readability work', async ({ page,
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('김상훈');
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
   await expect(page).toHaveTitle('resume');
-  // 2026-11-01: /resume2를 /resume로 통합했다
-  expect((await request.get('/resume2', { maxRedirects: 0 })).status()).toBe(308);
   expect(await (await request.get('/sitemap.xml')).text()).not.toContain('/resume');
-  // 2026-11-01: 개인정보 안내는 하단 링크에서 여는 모달이다
+  // 개인정보 안내는 하단 링크에서 여는 모달이다
   await page.goto('/');
   await page.getByRole('button', { name: '개인정보 처리방침' }).click();
   await expect(page.getByRole('dialog')).toContainText('방문 분석');
@@ -198,7 +196,7 @@ test('project cards link to GitHub and reviewed image descriptions are served', 
   expect(await projects.locator('a a').count()).toBe(0);
   await page.goto('/posts/Deployment');
   await expect(page.getByRole('link', { name: 'Velog 원문 보기' })).toHaveCount(0);
-  // 2026-11-04: 수정일을 작성일 옆에 다시 보인다(값은 원문 velog 수정일). Velog 원문 링크는 계속 두지 않는다.
+  // 수정일을 작성일 옆에 보인다(값은 원문 velog 수정일). Velog 원문 링크는 두지 않는다.
   await expect(page.locator(`header time[datetime="${(sources as Record<string, { updatedAt: string }>).Deployment.updatedAt}"]`)).toBeVisible();
   await expect(page.locator('article img').first()).toHaveAttribute('alt', /In-place 배포 흐름/);
   const removedPage = await request.get('/evidence');
@@ -207,7 +205,7 @@ test('project cards link to GitHub and reviewed image descriptions are served', 
   expect(await sitemap.text()).not.toContain('/evidence');
 });
 
-// 2026-11-04: 화면 아래 가림 띠가 키보드 포커스를 덮지 않는다(가림 띠보다 위층인 사이드바 · 떠 있는 버튼은 제외).
+// 화면 아래 가림 띠가 키보드 포커스를 덮지 않는다(가림 띠보다 위층인 사이드바 · 떠 있는 버튼은 제외).
 test('keyboard focus and its focus ring stay above the bottom mask', async ({ page }) => {
   for (const [width, height] of [[1280, 720], [1440, 900]]) {
     await page.setViewportSize({ width, height });
@@ -234,7 +232,7 @@ test('keyboard focus and its focus ring stay above the bottom mask', async ({ pa
   }
 });
 
-// 2026-11-04: 탭(경력 · 학력 · 기술)은 WAI-ARIA 탭 패턴대로 선택된 탭만 Tab 정지점이고 방향키 · Home · End로 옮긴다.
+// 탭(경력 · 학력 · 기술)은 WAI-ARIA 탭 패턴대로 선택된 탭만 Tab 정지점이고 방향키 · Home · End로 옮긴다.
 test('pane tabs move with arrow, Home and End keys', async ({ page }) => {
   await page.goto('/');
   const tabs = page.getByRole('tablist', { name: '경력 · 학력 · 기술' }).getByRole('tab');

@@ -5,9 +5,9 @@ import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 type Tab = { key: string; label: string; count?: number; content: ReactNode };
 
 /**
- * 2026-11-02: 머리의 파일 탭 줄을 분류 탭으로 쓰는 영역(tasks와 같은 모양).
+ * 머리의 파일 탭 줄을 분류 탭으로 쓰는 영역(tasks와 같은 모양).
  * 모든 탭 내용을 HTML에 두고 선택하지 않은 탭은 숨긴다(검색엔진이 숨은 탭 내용도 읽는다).
- * 2026-11-04: WAI-ARIA 탭 패턴의 키보드 조작. 선택된 탭만 Tab 정지점이고, ← → 로 이전 · 다음 탭(끝에서 반대쪽으로),
+ * WAI-ARIA 탭 패턴의 키보드 조작. 선택된 탭만 Tab 정지점이고, ← → 로 이전 · 다음 탭(끝에서 반대쪽으로),
  * Home · End로 처음 · 마지막 탭을 바로 선택한다. 탭 내용(tabpanel)은 Tab으로 들어갈 수 있게 tabIndex 0.
  * 탭 줄과 영역이 넘침을 잘라 내므로 포커스 테두리는 안쪽(-2px)에 그린다.
  */

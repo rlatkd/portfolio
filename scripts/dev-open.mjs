@@ -1,6 +1,6 @@
-// 2026-11-04: 개발 서버를 켜고, Next.js가 준비됐다고(Ready) 알리면 그 주소를 기본 브라우저로 연다.
+// 개발 서버를 켜고, Next.js가 준비됐다고(Ready) 알리면 그 주소를 기본 브라우저로 연다.
 // pnpm dev:open · npm run dev:open 어디서 실행해도 같다. 뒤에 붙인 옵션은 next dev로 넘긴다(예: pnpm dev:open --port 4000).
-// 이전 opener.js는 서버가 뜨기 전에 3000번 주소를 열어 첫 화면이 접속 실패로 보이거나, 3000번이 이미 쓰이고 있으면 다른 서버를 열 수 있었다.
+// 서버가 준비되기 전에 열면 첫 화면이 접속 실패로 보이고, 고정 주소(3000번)를 열면 그 포트의 다른 서버가 열릴 수 있어 Ready 주소를 쓴다.
 import { exec, spawn } from 'node:child_process';
 import { createRequire } from 'node:module';
 

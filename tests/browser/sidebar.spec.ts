@@ -49,7 +49,8 @@ test('mobile section menu appears from about and jumps to sections', async ({ pa
   // 나타나는 움직임(위로 가기 버튼과 같은 translate)이 끝난 뒤 위치를 잰다.
   await expect.poll(async () => Math.round((await button.boundingBox())!.y)).toBe(24);
   const buttonBox = (await button.boundingBox())!;
-  expect(Math.round(390 - buttonBox.x - buttonBox.width)).toBe(24);
+  // 오른쪽 간격은 본문 오른쪽 끝(24px)보다 바깥인 12px(--floating-edge)이다.
+  expect(Math.round(390 - buttonBox.x - buttonBox.width)).toBe(12);
   await button.click();
   await expect(button).toHaveAttribute('aria-expanded', 'true');
   const menu = page.locator('#mobile-section-menu-list');
@@ -69,4 +70,26 @@ test('mobile section menu appears from about and jumps to sections', async ({ pa
   await expect(button).toBeHidden();
   await page.setViewportSize({ width: 1440, height: 900 });
   await expect(button).toBeHidden();
+});
+
+// 데스크톱 홈: 사이드바 이름(김상훈) 글자 위 끝과 오른쪽 첫 영역(about.md) 위 끝이 같은 높이다(global.css --sidebar-top · --sidebar-name-offset).
+test('sidebar name glyph top aligns with the about pane top', async ({ page }) => {
+  for (const [width, height] of [[1440, 900], [1280, 720], [1024, 768]] as const) {
+    await page.setViewportSize({ width, height });
+    await page.goto('/');
+    await page.evaluate(() => document.fonts.ready);
+    const { glyphTop, aboutTop } = await page.evaluate(() => {
+      const heading = document.querySelector('header.portfolio-sidebar h1')!;
+      const style = getComputedStyle(heading);
+      const context = document.createElement('canvas').getContext('2d')!;
+      context.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+      const metrics = context.measureText(heading.textContent || '');
+      const leading = (parseFloat(style.lineHeight) - metrics.fontBoundingBoxAscent - metrics.fontBoundingBoxDescent) / 2;
+      return {
+        glyphTop: heading.getBoundingClientRect().top + leading + metrics.fontBoundingBoxAscent - metrics.actualBoundingBoxAscent,
+        aboutTop: document.getElementById('about')!.getBoundingClientRect().top,
+      };
+    });
+    expect(Math.abs(glyphTop - aboutTop), `${width}x${height}`).toBeLessThanOrEqual(1);
+  }
 });

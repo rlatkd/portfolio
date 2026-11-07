@@ -1,4 +1,4 @@
-// 2026-11-04: TrueType 글꼴(sfnt)의 이름 표(name) 중 지정한 항목만 새 이름으로 바꾸고 나머지 표는 그대로 다시 묶는다.
+// TrueType 글꼴(sfnt)의 이름 표(name) 중 지정한 항목만 새 이름으로 바꾸고 나머지 표는 그대로 다시 묶는다.
 // 글자를 덜어 낸 글꼴은 OFL상 수정 버전이라 예약 이름을 쓸 수 없어서 쓴다(scripts/build-fonts.mjs).
 
 function checksum(data) {

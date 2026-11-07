@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import ts from 'typescript';
 
-// 2026-11-04: 화면에 나올 수 있는 글자를 모은다. 본문 글꼴(Portfolio Sans)을 만들 때(scripts/build-fonts.mjs)와
+// 화면에 나올 수 있는 글자를 모은다. 본문 글꼴(Portfolio Sans)을 만들 때(scripts/build-fonts.mjs)와
 // 빠진 글자가 없는지 검사할 때(tests/fonts.test.ts) 같은 기준을 쓴다.
 // - src의 ts · tsx: 문자열 · 템플릿 문자열 · JSX 글자만 모은다(주석은 화면에 나오지 않아 뺀다)
 // - 블로그 글 원문(mdx) 전체와 이미지 대체 문구(image-metadata.json의 alt)

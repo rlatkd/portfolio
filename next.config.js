@@ -2,7 +2,7 @@
 module.exports = {
   reactStrictMode: true,
   poweredByHeader: false,
-  // 2026-11-02: 블로그 본문의 외부 이미지를 Next.js 이미지 변환기로 WebP·화면 너비에 맞춰 보낸다(본문 마크다운과 원본 주소는 그대로).
+  // 블로그 본문의 외부 이미지를 Next.js 이미지 변환기로 WebP·화면 너비에 맞춰 보낸다(본문 마크다운과 원본 주소는 그대로).
   images: {
     formats: ['image/webp'],
     remotePatterns: [
@@ -11,15 +11,13 @@ module.exports = {
       { protocol: 'https', hostname: 'grepp-programmers.s3.ap-northeast-2.amazonaws.com' },
       { protocol: 'https', hostname: 'user-images.githubusercontent.com' },
       { protocol: 'https', hostname: 'u.acmicpc.net' },
-      // 2026-11-04: 원문 주소가 깨진 백준 문제 그림의 대체 주소(image-metadata.json replacement)
+      // 원문 주소가 깨진 백준 문제 그림의 대체 주소(image-metadata.json replacement)
       { protocol: 'https', hostname: 'onlinejudgeimages.s3-ap-northeast-1.amazonaws.com' },
     ],
   },
-  // 2026-11-01: 비교용 /resume2를 정식 /resume로 통합했다.
   async redirects() {
     return [
-      { source: '/resume2', destination: '/resume', permanent: true },
-      // 2026-11-01: 개인정보 처리방침은 별도 페이지 대신 하단 링크의 모달로 바꿨다.
+      // 개인정보 처리방침은 하단 링크에서 여는 모달이다. 옛 주소는 홈으로 보낸다.
       { source: '/privacy', destination: '/', permanent: true },
     ];
   },

@@ -44,7 +44,7 @@ await Promise.all(Array.from({ length: 4 }, async () => {
   for (;;) {
     const item = queue.shift(); if (!item) break;
     const [url, files] = item;
-    // 2026-11-04: 원문 주소가 깨져 대체 주소(replacement)로 그리는 이미지는 실제로 쓰는 대체 주소를 확인한다.
+    // 원문 주소가 깨져 대체 주소(replacement)로 그리는 이미지는 실제로 쓰는 대체 주소를 확인한다.
     const replacement = metadata[url]?.replacement;
     const target = replacement ?? url;
     try {

@@ -1,5 +1,5 @@
 export const themeEffect = () => {
-  // 2026-11-01: 다크가 기본 테마(VS Code Dark+). 사용자가 라이트를 선택해 저장한 경우에만 라이트로 표시
+  // 다크가 기본 테마(VS Code Dark+). 사용자가 라이트를 선택해 저장한 경우에만 라이트로 표시
   let dark = true;
   try {
     dark = localStorage.getItem('theme') !== 'light';

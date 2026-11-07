@@ -3,11 +3,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { Files } from 'lucide-react';
 import { navItems } from '@/shared/data/site-data';
+import { FLOATING_BUTTON } from '@/shared/ui/floating-button';
 import { useSectionNavigation } from './section-navigation';
 
 // 모바일 · 태블릿(1024px 미만) 홈의 목차. 데스크톱은 사이드바 목차를 쓴다.
 // 화면 오른쪽 위(아래쪽 위로 · 테마 버튼과 같은 세로줄)에 파일 목록 아이콘 버튼을 두고, about 영역에 들어서면 나타난다.
 // 누르면 사이드바와 같은 목차가 버튼 아래에 열리고, 항목을 누르면 그 영역으로 이동한 뒤 닫힌다.
+// 버튼은 아래쪽 떠 있는 버튼과 같은 모양이다. 열려 있으면 바깥 고리를 그린다.
 const sectionIds = navItems.map(item => item.id);
 
 export default function MobileSectionMenu() {
@@ -54,7 +56,7 @@ export default function MobileSectionMenu() {
   }, [open]);
 
   return (
-    <div ref={root} className='mobile-section-menu fixed right-6 top-6 z-40 print:hidden lg:hidden'>
+    <div ref={root} className='mobile-section-menu fixed right-[var(--floating-edge)] top-6 z-40 print:hidden lg:hidden'>
       <button
         ref={button}
         type='button'
@@ -65,9 +67,7 @@ export default function MobileSectionMenu() {
         tabIndex={show ? 0 : -1}
         onClick={() => setOpen(value => !value)}
         data-section-menu-button
-        className={`flex h-11 w-11 items-center justify-center rounded-md border bg-surface shadow-lg transition-all hover:border-accent hover:text-accent ${open ? 'border-accent text-accent' : 'border-line text-muted'} ${
-          show ? 'translate-y-0 opacity-100' : 'pointer-events-none -translate-y-3 opacity-0'
-        }`}
+        className={`${FLOATING_BUTTON} ${open ? 'ring-2 ring-fg-strong ring-offset-2 ring-offset-bg' : ''} ${show ? 'translate-y-0 opacity-100' : 'pointer-events-none -translate-y-3 opacity-0'}`}
       >
         <Files size={18} />
       </button>

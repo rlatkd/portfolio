@@ -1,6 +1,6 @@
 import { training, awards, certifications } from './profile-data';
 
-// 이력서(/resume) 콘텐츠. 2026-11-01 기존 비교용 이력서를 정리하고 현재 이력서 내용만 남겼다.
+// 이력서(/resume) 콘텐츠.
 
 // 1쪽 소개: 문단 단위로 이어지는 본문.
 export const introduction = [
@@ -36,7 +36,7 @@ export const skills: { label: string; items: { name: string; work?: boolean }[] 
 ];
 
 // 교육·수상·자격증. 교육 줄은 과정의 파이널 프로젝트 저장소를 가리킨다.
-// 2026-11-04: 기간·기관은 여기 적지 않고 factId로 profile-data.ts에서 가져온다.
+// 기간·기관은 여기 적지 않고 factId로 profile-data.ts에서 가져온다.
 const resumeOthers = [
   {
     kind: '수상',
@@ -88,7 +88,7 @@ const resumeOthers = [
   },
 ];
 
-// 2026-11-04: 기간·기관은 profile-data.ts의 항목을 id(factId)로 찾아 쓴다. 제목 문구를 다듬어도 연결이 끊기지 않는다.
+// 기간·기관은 profile-data.ts의 항목을 id(factId)로 찾아 쓴다. 제목 문구를 다듬어도 연결이 끊기지 않는다.
 // 없는 id를 적으면 빌드에서 바로 실패하게 해 엉뚱한 항목에 붙거나 조용히 빠지는 일을 막는다.
 const facts = [...awards, ...training, ...certifications];
 export const others = resumeOthers.map(({ factId, ...item }) => {

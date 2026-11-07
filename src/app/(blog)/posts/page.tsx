@@ -21,7 +21,7 @@ async function loadListing(searchParams: Props['searchParams']) {
 }
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const listing = await loadListing(searchParams);
-  // 2026-11-02: 화면 부제와 같은 문장에, 탭 제목(posts)에 없는 이름만 앞에 붙인다.
+  // 화면 부제와 같은 문장에, 탭 제목(posts)에 없는 이름만 앞에 붙인다.
   const description = '김상훈의 개발, 설계, 그리고 경험에 대한 기록입니다.';
   const canonical = listingUrl(listing.page, listing.category, listing.search);
   return {

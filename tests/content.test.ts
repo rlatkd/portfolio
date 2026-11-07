@@ -13,7 +13,7 @@ import { highlightCode } from '../src/shared/markdown/highlight-code';
 import sources from '../src/shared/content/velog-sources.json';
 import { getPosts } from '../src/shared/lib/markdown';
 
-// 2026-11-02: 블로그 이미지는 next/image 변환 주소로 그린다. next.config.js 밖(이 테스트)에서는 Next.js가 정한 테스트 환경 값으로
+// 블로그 이미지는 next/image 변환 주소로 그린다. next.config.js 밖(이 테스트)에서는 Next.js가 정한 테스트 환경 값으로
 // 개발용 외부 주소 검사를 건너뛴다(실제 허용 목록은 next.config.js images.remotePatterns와 e2e가 확인한다).
 Object.assign(process.env, { NODE_ENV: 'test' });
 import { profile, projects } from '../src/shared/data/site-data';
@@ -125,7 +125,7 @@ test('all source image URLs have reviewed descriptions outside the original body
   }
 });
 
-// 2026-11-04: 크기가 기록된 블로그 이미지는 Next.js 이미지 변환기를 거친다. 그 주소(대체 주소 포함)의 호스트가
+// 크기가 기록된 블로그 이미지는 Next.js 이미지 변환기를 거친다. 그 주소(대체 주소 포함)의 호스트가
 // next.config.js images.remotePatterns에 없으면 운영에서만 이미지가 깨진다(이 테스트 환경은 Next.js의 호스트 검사를 건너뛴다).
 test('every optimized blog image host is allowed by next.config.js remotePatterns', () => {
   const metadata = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/shared/content/image-metadata.json'), 'utf8')) as Record<string, { replacement?: string; width?: number; height?: number; unavailable?: boolean }>;

@@ -57,13 +57,13 @@ src/
 ├── app/                   페이지·레이아웃, RSS·OG 이미지·llms.txt
 ├── widgets/               소개·경력·과제·사이드 프로젝트 등 화면 영역
 ├── features/              테마·이메일 복사·개인정보 안내 등 기능
-├── entities/post/ui/      글 목록·페이지 이동·목차·코드 복사
+├── entities/post/ui/      글 목록·페이지 이동·목차
 └── shared/
     ├── config/            도메인·사이트 메타데이터
     ├── content/           블로그 원문·출처·이미지 메타데이터
     ├── data/              프로필·경력·프로젝트·이력서 데이터
     ├── lib/               콘텐츠 조회·검색·SEO 처리
-    ├── markdown/          원문 파싱·정제·렌더링
+    ├── markdown/          원문 파싱·정제·렌더링·코드 복사
     └── ui/                Pane·PaneTabs·공통 헤더·보기 도구
 styles/                    전역 스타일·테마 토큰
 public/                    화면 캡처·글꼴

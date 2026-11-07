@@ -4,12 +4,12 @@ import { useRef } from 'react';
 import { X } from 'lucide-react';
 import { profile } from '@/shared/data/site-data';
 
-// 2026-11-01: 별도 페이지(/privacy) 대신 하단 링크에서 여는 모달로 안내한다. 내용은 기존 페이지와 같다.
+// 개인정보 처리방침은 하단 링크에서 여는 모달로 안내한다.
 export function PrivacyNotice() {
   const dialog = useRef<HTMLDialogElement>(null);
   return (
     <>
-      {/* 2026-11-04: 맨 아래로 스크롤하면 이 줄 아래 끝이 가림 띠 위 끝과 맞아서, 포커스 테두리를 안쪽에 그린다(좌우 여백은 음수 여백으로 상쇄해 위치는 그대로). */}
+      {/* 맨 아래로 스크롤하면 이 줄 아래 끝이 가림 띠 위 끝과 맞아서, 포커스 테두리를 안쪽에 그린다(좌우 여백은 음수 여백으로 상쇄해 위치는 그대로). */}
       <button type='button' onClick={() => dialog.current?.showModal()} className='-mx-1 px-1 underline underline-offset-2 hover:text-accent focus-visible:-outline-offset-2'>
         개인정보 처리방침
       </button>
@@ -26,7 +26,7 @@ export function PrivacyNotice() {
           </button>
         </div>
         {/* 문단 사이는 좁게, 소제목 위는 넓게 두어 구역이 나뉘어 보이게 한다. */}
-        {/* 2026-11-05: 본문 위아래 여백을 좌우 여백과 같게 보이게 둔다(데스크톱 40px, 640px 미만 24px). 이전: 좌우 40px · 위아래 56px.
+        {/* 본문 위아래 여백을 좌우 여백과 같게 보이게 둔다(데스크톱 40px, 640px 미만 24px).
             첫 줄 위 · 마지막 줄 아래에는 줄 간격이 약 5px 더 붙어서, 위아래 안쪽 여백을 그만큼 줄여 글자까지의 거리가 좌우와 같아지게 한다. */}
         <div className='max-h-[70vh] overflow-y-auto px-6 py-[19px] font-sans sm:px-10 sm:py-[35px] text-[14px] leading-[1.75] [&>h3]:mb-1 [&>h3]:mt-6 [&>p+p]:mt-2 [&>ul]:mt-2 [&>ul]:space-y-0.5'>
           <h2 id='privacy-title' className='mb-3 text-xl font-bold text-fg-strong'>개인정보 처리방침</h2>

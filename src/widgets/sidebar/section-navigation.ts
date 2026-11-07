@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
 
-// 2026-11-04: 사이드바 목차(데스크톱)와 모바일 영역 탭 줄이 같이 쓰도록 sidebar.tsx의 현재 위치 추적 · 이동 코드를 그대로 옮겼다.
+// 사이드바 목차(데스크톱)와 모바일 목차 버튼(mobile-section-menu.tsx)이 함께 쓰는 현재 위치 추적 · 이동.
 
 function sectionScrollTop(section: HTMLElement) {
   const margin = parseFloat(getComputedStyle(section).scrollMarginTop) || 0;

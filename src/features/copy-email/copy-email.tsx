@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Check, Copy, X } from 'lucide-react';
 
-// 2026-11-02: 복사 결과는 화면에서 아이콘으로만 보여 준다(성공 ✓, 실패 ✕). 문구는 화면 낭독기에만 읽힌다.
+// 복사 결과는 화면에서 아이콘으로만 보여 준다(성공 ✓, 실패 ✕). 문구는 화면 낭독기에만 읽힌다.
 type Status = 'idle' | 'copied' | 'failed';
 const messages: Record<Status, string> = {
   idle: '',
