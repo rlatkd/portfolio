@@ -1,0 +1,21 @@
+name: Monitor
+# 운영 사이트 점검(scripts/monitor.mjs)을 매일 한국 시간 오전 9시에 실행한다. 실패하면 GitHub가 실패 알림을 보낸다.
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # 점검 스크립트는 Node 기본 기능만 써서 패키지 설치가 필요 없다.
+      - run: node scripts/monitor.mjs
+        env:
+          MONITOR_ATTEMPTS: '3'

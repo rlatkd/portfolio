@@ -48,7 +48,14 @@ test('resume restores location and no page content is clipped', async ({ page, b
 test('security headers are present and projects auto-advance with reading controls', async ({ page, request, browserName }) => {
   const response = await request.get('/');
   expect(response.headers()['x-content-type-options']).toBe('nosniff');
-  expect(response.headers()['content-security-policy-report-only']).toContain("object-src 'none'");
+  const csp = response.headers()['content-security-policy-report-only'];
+  expect(csp).toContain("object-src 'none'");
+  expect(csp).not.toContain('cdn.jsdelivr.net');
+  expect(csp).toContain('report-uri /api/csp-report; report-to csp');
+  expect(response.headers()['reporting-endpoints']).toBe('csp="/api/csp-report"');
+  // 위반 보고는 받아서 로그에만 남기고 내용 없이 204로 답한다.
+  expect((await request.post('/api/csp-report', { data: { 'csp-report': { 'violated-directive': 'img-src' } } })).status()).toBe(204);
+  expect((await request.post('/api/csp-report', { headers: { 'content-type': 'application/reports+json' }, data: JSON.stringify([{ type: 'csp-violation', body: { effectiveDirective: 'img-src' } }]) })).status()).toBe(204);
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
   const first = page.locator('#projects li[aria-hidden="false"] h3');

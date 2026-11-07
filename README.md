@@ -156,7 +156,7 @@ pnpm content:sync
 | 명령 | 용도 |
 | --- | --- |
 | `pnpm build` / `pnpm start` | 프로덕션 빌드 / 빌드 결과 실행 |
-| `pnpm monitor` | 운영 페이지의 응답·본문·canonical·RSS 등 점검 |
+| `pnpm monitor` | 운영 페이지의 응답·본문·canonical·RSS·llms.txt·공유 카드 이미지 점검(GitHub Actions가 매일 실행) |
 | `pnpm images:check` | 블로그 외부 이미지의 제공 상태와 크기 점검 |
 | `pnpm links:check` | 블로그 본문의 외부 링크 점검 |
 | `pnpm measure` | 로컬 페이지의 로딩 지표·가로 넘침 측정 및 캡처 |

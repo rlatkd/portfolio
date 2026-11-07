@@ -26,7 +26,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - 커밋 여부를 말하기 전에 `git status` · `git log`로 먼저 확인한다. 사용자는 알리지 않고 커밋하므로 미커밋이라고 가정하지 않는다.
 - 기능 · 페이지 · 파일을 폐기할 때는 코드 · 설정 · 테스트 · 정적 파일 · 세 문서(`CLAUDE.md` · `AGENTS.md` · `README.md`)에서 관련된 것을 모두 찾아 함께 폐기하고, 저장소 전체 검색으로 남은 언급이 없는지 확인한다.
 - 수정 지시는 지시한 범위에만 적용한다. 보고한 목록은 따로 승인받기 전까지 손대지 않는다.
-- 사용자에게 진행 여부나 의사결정이 필요한 작업 목록을 낼 때는 항상 `1.` `2.` `3.` 오름차순 번호 목록으로 쓴다(체크박스 · 글머리표 · 표로 대신하지 않는다). 한 묶음은 5개까지이고, 더 많으면 5개 단위 묶음으로 나눈다.
+- 사용자에게 진행 여부나 의사결정이 필요한 작업 목록을 낼 때는 항상 `1.` `2.` `3.` 오름차순 번호 목록으로 쓴다(체크박스 · 글머리표 · 표로 대신하지 않는다). 한 번의 답변에는 5개까지만 쓰고, 나머지는 남은 개수만 알린 뒤 요청받으면 다음 5개를 보고한다.
 - 공개 저장소다. 지원한 회사 이름이나 내부 수치를 문서와 코드에 쓰지 않는다.
 - 문서에 대화를 그대로 인용하거나 대화를 근거로 남기지 않는다. 규칙과 사실만 중립적인 문장으로 쓴다.
 
@@ -59,3 +59,4 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## 검증
 
 - `pnpm run check` → `pnpm run test:e2e`. e2e는 3100 포트를 쓴다.
+- 운영 점검은 `pnpm monitor`(GitHub Actions `Monitor`가 매일 실행). CSP는 보고 전용이고 위반은 `report-to` · `report-uri`로 `/api/csp-report`에 받는다(Chrome의 `report-to`는 HTTPS에서만 동작).

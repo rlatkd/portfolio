@@ -23,7 +23,7 @@
 - AI 답변이 끝나기 전에 사용자가 보낸 메시지는 그 이전 답변에 대한 응답이다. 최신 답변의 새 목록 · 제안을 승인한 것으로 보지 않는다. 애매하면 적용 전에 묻는다.
 - 기능 · 페이지 · 파일을 폐기할 때는 관련된 것을 모두 찾아 함께 폐기한다: 코드 · 설정(리다이렉트 등) · 테스트 · 정적 파일 · `CLAUDE.md` · `AGENTS.md` · `README.md`. 저장소 전체를 검색해 남은 언급이 없는지 확인한다(`port/` 원본 자료와 지난 인계 파일은 제외).
 - 수정 지시는 그 지시가 가리키는 범위에만 적용한다. 보고로 낸 목록은 따로 승인받기 전까지 손대지 않는다.
-- 사용자에게 진행 여부나 의사결정이 필요한 작업 목록을 낼 때는 항상 `1.` `2.` `3.` 오름차순 번호 목록으로 쓴다(체크박스 · 글머리표 · 표로 대신하지 않는다). 한 묶음은 5개까지이고, 더 많으면 소제목을 단 5개 단위 묶음으로 나눈다(번호는 이어서 매긴다).
+- 사용자에게 진행 여부나 의사결정이 필요한 작업 목록을 낼 때는 항상 `1.` `2.` `3.` 오름차순 번호 목록으로 쓴다(체크박스 · 글머리표 · 표로 대신하지 않는다). 한 번의 답변에는 5개까지만 쓴다. 더 있으면 우선순위가 높은 5개만 보고하고 남은 개수만 알린 뒤, 사용자가 요청하면 다음 5개를 보고한다(한 답변에 여러 묶음을 나열하지 않는다).
 - 방식을 제안하기 전에 이 사이트의 실제 데이터를 먼저 측정한다.
 - 로컬 개발 서버(`pnpm dev`, http://localhost:3000)는 켜 둔다. 재시작은 3000 포트 프로세스를 끄고 `.next/dev`를 지운 뒤 띄운다.
 - 로컬 작업을 시작할 때 `port/INDEX.md`가 있으면 먼저 읽고, 그 안의 안내에 따라 필요한 문서만 연다. `port/`의 내용은 공개 문서 · 코드 · 커밋 메시지에 옮기지 않는다.
@@ -196,6 +196,7 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
   - `knowsAbout`은 `majorSkills`와 같다. `sameAs`는 GitHub · LinkedIn · Velog.
 - 글 구조화 데이터 이미지는 글 대표 이미지, 없으면 `/api/og`.
 - robots: 전체 허용, `/api/`는 막고 `/api/og`만 허용.
+- CSP는 보고 전용(`Content-Security-Policy-Report-Only`, `next.config.js`)이다. 위반은 `report-to csp`(`Reporting-Endpoints`)와 `report-uri`(지원하지 않는 브라우저용)로 `/api/csp-report`에 받아 Vercel 함수 로그에 `csp-report`로 남는다. Chrome은 `Reporting-Endpoints`를 HTTPS에서만 받아들이므로 로컬 HTTP에서는 보고가 가지 않는다. 허용 목록을 바꾸면 GA를 켠 운영 빌드에서 `securitypolicyviolation`이 0건인지 확인한다.
 - RSS 이름 `김상훈 | Posts`.
 - `/llms.txt`는 사이트 데이터로 만든다: 소개 · 주요 페이지 · 글 목록 · 연락처. 전화번호와 이력서는 넣지 않는다.
 - 리다이렉트(308): `/privacy → /`.
@@ -211,6 +212,8 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 - e2e: 홈 · 블로그 탐색 · 테마 · 검색 · 반응형 · 포커스와 가림 띠 · 고정 줄 · 탭 키보드 · 모바일 목차 버튼 · 이력서 이동 · 확대 · 인쇄 쪽 수 · 앱 안 인쇄 안내 · 글 article 정보 · 이동 스피너.
 - `pnpm dev:open`: 개발 서버가 준비되면 브라우저를 연다.
 - `pnpm fonts:build` · `pnpm content:check` / `content:sync` · `pnpm images:check` · `pnpm links:check` · `pnpm monitor` · `pnpm measure`.
+- `pnpm monitor`는 운영 사이트의 `/` · `/posts` · `/sitemap.xml` · `/rss` · `/llms.txt` · `/api/og` · `/resume` · RSS 첫 글을 점검한다. GitHub Actions `Monitor`(`.github/workflows/monitor.yml`)가 매일 한국 시간 오전 9시에 실행한다.
+- `content:sync`는 바뀐 글과 지문 목록을 모두 임시 파일에 쓴 뒤 한꺼번에 교체하고, 지문 목록은 마지막에 교체한다(쓰기 실패 시 원본 유지).
 
 ## 10. 보류 항목
 

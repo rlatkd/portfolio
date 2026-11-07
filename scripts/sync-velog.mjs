@@ -64,7 +64,18 @@ for (const post of posts.sort((a, b) => Date.parse(a.released_at) - Date.parse(b
 const missing = Object.entries(manifest).filter(([, source]) => ![...remoteUrls].some(url => decodeURI(url) === decodeURI(source.url))).map(([slug]) => slug);
 console.log(JSON.stringify({ mode: apply ? 'apply' : 'check', remoteCount: posts.length, changes: changes.map(({ slug, previous, metadata }) => ({ slug, previous, next: metadata.bodySha256, updatedAt: metadata.updatedAt })), missing, note: 'Existing summaries/frontmatter are preserved; missing remote posts are never deleted.' }, null, 2));
 // Validate the entire response and local snapshots before any writes.
+// 쓰기는 두 단계다. 1) 바뀐 글과 지문 목록을 모두 임시 파일에 쓴다. 하나라도 실패하면 임시 파일을 지우고 원본은 그대로 둔다.
+// 2) 모두 쓰였으면 글을 이름 바꾸기(rename)로 교체하고, 지문 목록은 맨 마지막에 교체한다.
+// 그래서 중간에 멈춰도 지문 목록이 아직 반영되지 않은 글을 가리키는 일이 없고, 다시 실행하면 남은 글을 이어서 반영한다.
 if (apply) {
-  for (const change of changes) { await fs.writeFile(change.filename, change.content); manifest[change.slug] = change.metadata; }
-  await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
+  for (const change of changes) manifest[change.slug] = change.metadata;
+  const staged = [...changes.map(change => ({ target: change.filename, content: change.content })), { target: manifestPath, content: JSON.stringify(manifest, null, 2) + '\n' }]
+    .map(file => ({ ...file, temp: `${file.target}.sync-${process.pid}.tmp` }));
+  try {
+    for (const file of staged) await fs.writeFile(file.temp, file.content);
+  } catch (error) {
+    await Promise.all(staged.map(file => fs.rm(file.temp, { force: true })));
+    throw error;
+  }
+  for (const file of staged) await fs.rename(file.temp, file.target);
 } else if (changes.length || missing.length) process.exitCode = 1;
