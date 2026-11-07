@@ -23,9 +23,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## 작업 원칙
 
 - 커밋 · 푸시는 사용자가 직접 한다. 커밋 메시지는 항상 한 줄 `type: 설명`이다(본문 없음).
+- 커밋 여부를 말하기 전에 `git status` · `git log`로 먼저 확인한다. 사용자는 알리지 않고 커밋하므로 미커밋이라고 가정하지 않는다.
 - 기능 · 페이지 · 파일을 폐기할 때는 코드 · 설정 · 테스트 · 정적 파일 · 세 문서(`CLAUDE.md` · `AGENTS.md` · `README.md`)에서 관련된 것을 모두 찾아 함께 폐기하고, 저장소 전체 검색으로 남은 언급이 없는지 확인한다.
 - 수정 지시는 지시한 범위에만 적용한다. 보고한 목록은 따로 승인받기 전까지 손대지 않는다.
-- 사용자에게 진행 여부나 의사결정이 필요한 작업 목록을 낼 때는 항상 `1.` `2.` `3.` 오름차순 번호 목록으로 쓴다(체크박스 · 글머리표 · 표로 대신하지 않는다).
+- 사용자에게 진행 여부나 의사결정이 필요한 작업 목록을 낼 때는 항상 `1.` `2.` `3.` 오름차순 번호 목록으로 쓴다(체크박스 · 글머리표 · 표로 대신하지 않는다). 한 묶음은 5개까지이고, 더 많으면 5개 단위 묶음으로 나눈다.
 - 공개 저장소다. 지원한 회사 이름이나 내부 수치를 문서와 코드에 쓰지 않는다.
 - 문서에 대화를 그대로 인용하거나 대화를 근거로 남기지 않는다. 규칙과 사실만 중립적인 문장으로 쓴다.
 
@@ -42,7 +43,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - 경력 사실의 원본은 `src/shared/data/career-data.ts`의 `work`다. 이력 서술 금지 표현은 `CLAUDE.md` `7. 이력 서술 기준`을 따른다.
 - 블로그 Markdown 본문은 고치지 않는다(velog 동기화 해시). 표시 방식은 `src/shared/markdown` 렌더러에서 바꾼다.
-- 이력서는 `/resume` 하나이고 9쪽이다. 대표 과제 아키텍처 그림 쪽은 `SHOW_TASK_ARCHITECTURE`로 숨겨 두었다.
+- 이력서는 `/resume` 하나이고 9쪽이다. 인쇄 버튼 문구는 모든 화면에서 `인쇄 | PDF 저장`이다. iOS WebKit 인쇄는 쪽 높이를 내용 높이로 둔다(`global.css`). 대표 과제 아키텍처 그림 쪽은 `SHOW_TASK_ARCHITECTURE`로 숨겨 두었다.
 
 ## 글꼴
 
@@ -53,7 +54,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## 분석
 
-- GA 시작 스크립트는 `src/shared/lib/analytics-privacy.ts`에서 고치고 `tests/analytics-privacy.test.ts`로 확인한다. 스크립트 문자열 안에 역슬래시를 직접 쓰지 않는다.
+- GA 시작 스크립트는 `src/shared/lib/analytics-privacy.ts`에서 고치고 `tests/analytics-privacy.test.ts`로 확인한다. 스크립트 문자열 안에 역슬래시를 직접 쓰지 않는다. 검색어 정리 대상은 `google-analytics.com`만이 아니라 `www.google.com` 등 모든 Google `/g/collect` 요청이다.
 
 ## 검증
 

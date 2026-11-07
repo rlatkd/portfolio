@@ -20,7 +20,9 @@ export function cleanAnalyticsHit(text: string, hostname: string): string {
 }
 
 /** GA 측정 요청 주소를 알아보는 규칙. 인라인 스크립트에는 toString으로 넣어 역슬래시를 손으로 이스케이프하지 않는다. */
-export const GA_COLLECT = /google-analytics\.com\/g\/collect/;
+// GA는 같은 측정을 google-analytics.com(지역 하위 도메인 포함)뿐 아니라 Google 신호용 www.google.com 등에도 보내므로
+// 주소에 google · doubleclick이 들어간 모든 /g/collect를 잡는다.
+export const GA_COLLECT = /^https:\/\/[^/]*(google|doubleclick)[^/]*\/g\/collect/;
 
 /**
  * GA를 시작하는 인라인 스크립트. 측정 요청(sendBeacon · fetch)을 보내기 직전에 cleanAnalyticsHit로 검색어를 지운다.

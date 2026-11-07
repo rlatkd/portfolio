@@ -379,6 +379,18 @@ html:has(.portfolio-bottom-mask) { scroll-padding-bottom: calc(var(--bottom-mask
   .resume-page:last-of-type {
     break-after: auto;
   }
+  /* iOS(iPhone · iPad) WebKit은 @page의 A4 · 여백 0을 무시하고 머리글 · 바닥글 여백을 둔 인쇄 영역을 쓴다. 297mm로 고정한 쪽은
+     그 영역을 넘쳐 쪽마다 빈 쪽이 끼므로, 쪽 높이를 내용 높이(가장 긴 쪽 약 242mm)로 두고 줄이지 않는다.
+     -webkit-touch-callout은 iOS WebKit만 지원하는 속성이라 iOS만 고르는 조건으로 쓴다. */
+  @supports (-webkit-touch-callout: none) {
+    .resume-page {
+      height: auto !important;
+      zoom: 1;
+      page-break-after: always;
+      page-break-inside: avoid;
+    }
+    .resume-page:last-of-type { page-break-after: auto; }
+  }
   :root,
   .dark {
     --bg: #ffffff;

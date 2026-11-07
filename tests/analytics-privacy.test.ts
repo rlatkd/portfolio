@@ -49,6 +49,10 @@ test('the GA init script runs and cleans hits sent through sendBeacon and fetch'
   assert.equal(sent[1], 'en=view_search_results');
   assert.equal(new URL(sent[2]).searchParams.get('dl'), 'https://www.sanghunkim.com/posts');
   assert.equal(sent[4], 'https://www.sanghunkim.com/posts?q=비밀'); // GA가 아닌 요청은 그대로
+  // Google 신호용으로 www.google.com에 보내는 같은 측정 요청도 지운다.
+  await (window.fetch as (input: string) => Promise<Response>)(`https://www.google.com/g/collect?v=2&dl=${pageUrl}&ep.search_term=비밀`);
+  assert.equal(new URL(sent[6]).searchParams.get('dl'), 'https://www.sanghunkim.com/posts');
+  assert.equal(new URL(sent[6]).searchParams.get('ep.search_term'), null);
 });
 
 test('compares the site by hostname so a port in either URL does not skip cleaning', () => {

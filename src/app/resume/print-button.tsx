@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { Check, Copy, ExternalLink, FileDown, Printer, X } from 'lucide-react';
+import { Check, Copy, ExternalLink, Printer, X } from 'lucide-react';
 
 // 네이버 앱 · 카카오톡 같은 앱 안의 브라우저(Android WebView, iOS 앱 내장 브라우저)는 window.print()를 지원하지 않아
 // 인쇄 버튼을 눌러도 아무 일도 일어나지 않는다(Android 공식 문서: WebView 안의 JavaScript로는 인쇄를 시작할 수 없다).
@@ -85,11 +85,8 @@ export function PrintButton() {
         onClick={print}
         className='inline-flex items-center gap-2 rounded-md border border-line bg-surface px-3.5 py-2 font-code text-[13px] text-fg-strong transition-colors hover:border-accent hover:text-accent'
       >
-        {/* 휴대폰(640px 미만)에서는 인쇄보다 PDF 저장으로 쓰므로 'PDF 저장'으로 보인다. 동작은 같은 브라우저 인쇄(PDF로 저장)다. */}
-        <Printer size={15} aria-hidden='true' className='hidden sm:block' />
-        <FileDown size={15} aria-hidden='true' className='sm:hidden' />
-        <span className='hidden sm:inline'>인쇄 | PDF 저장</span>
-        <span className='sm:hidden'>PDF 저장</span>
+        <Printer size={15} aria-hidden='true' />
+        <span>인쇄 | PDF 저장</span>
       </button>
       <dialog
         ref={dialog}

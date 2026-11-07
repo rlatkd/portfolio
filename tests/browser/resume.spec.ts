@@ -59,8 +59,8 @@ test.describe('in-app browser printing', () => {
   test('shows how to open the resume in a regular browser', async ({ page }) => {
     await page.addInitScript(() => { window.print = () => {}; });
     await page.goto('/resume');
-    // 휴대폰 폭에서는 버튼 이름이 'PDF 저장'이다(동작은 같은 브라우저 인쇄)
-    await expect(page.getByRole('button', { name: 'PDF 저장', exact: true })).toBeVisible();
+    // 휴대폰 폭에서도 버튼 이름은 데스크톱과 같다
+    await expect(page.getByRole('button', { name: '인쇄 | PDF 저장', exact: true })).toBeVisible();
     await page.getByRole('button', { name: /PDF 저장$/ }).click();
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();

@@ -19,10 +19,11 @@
 ## 1. 작업 원칙
 
 - 커밋 · 푸시는 사용자가 직접 한다. AI는 하지 않는다. 커밋 메시지는 항상 한 줄 `type: 설명`이다(type은 feat · fix · refactor · docs · test · chore 등, 본문 없음).
+- 커밋 여부를 말하기 전에(남은 할 일 · 인계 파일 · 커밋 메시지 제안 포함) `git status` · `git log`로 먼저 확인한다. 사용자는 알리지 않고 커밋하므로, 이전 대화에서 미커밋이었다고 해서 지금도 미커밋이라고 가정하지 않는다.
 - AI 답변이 끝나기 전에 사용자가 보낸 메시지는 그 이전 답변에 대한 응답이다. 최신 답변의 새 목록 · 제안을 승인한 것으로 보지 않는다. 애매하면 적용 전에 묻는다.
 - 기능 · 페이지 · 파일을 폐기할 때는 관련된 것을 모두 찾아 함께 폐기한다: 코드 · 설정(리다이렉트 등) · 테스트 · 정적 파일 · `CLAUDE.md` · `AGENTS.md` · `README.md`. 저장소 전체를 검색해 남은 언급이 없는지 확인한다(`port/` 원본 자료와 지난 인계 파일은 제외).
 - 수정 지시는 그 지시가 가리키는 범위에만 적용한다. 보고로 낸 목록은 따로 승인받기 전까지 손대지 않는다.
-- 사용자에게 진행 여부나 의사결정이 필요한 작업 목록을 낼 때는 항상 `1.` `2.` `3.` 오름차순 번호 목록으로 쓴다(체크박스 · 글머리표 · 표로 대신하지 않는다).
+- 사용자에게 진행 여부나 의사결정이 필요한 작업 목록을 낼 때는 항상 `1.` `2.` `3.` 오름차순 번호 목록으로 쓴다(체크박스 · 글머리표 · 표로 대신하지 않는다). 한 묶음은 5개까지이고, 더 많으면 소제목을 단 5개 단위 묶음으로 나눈다(번호는 이어서 매긴다).
 - 방식을 제안하기 전에 이 사이트의 실제 데이터를 먼저 측정한다.
 - 로컬 개발 서버(`pnpm dev`, http://localhost:3000)는 켜 둔다. 재시작은 3000 포트 프로세스를 끄고 `.next/dev`를 지운 뒤 띄운다.
 - 로컬 작업을 시작할 때 `port/INDEX.md`가 있으면 먼저 읽고, 그 안의 안내에 따라 필요한 문서만 연다. `port/`의 내용은 공개 문서 · 코드 · 커밋 메시지에 옮기지 않는다.
@@ -127,8 +128,8 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 - 탭 제목 `resume`. 검색 노출은 noindex이고 사이트맵에서도 빠진다(노출 여부는 사용자 결정 보류).
 - 1쪽 대표 과제 목록과 대표 과제 쪽 제목은 `resume-case-studies.ts`의 `title`. 쪽 제목 위치 보정은 각 쪽의 `data-title-offset`.
 - 수상 · 교육 · 자격증은 `profile-data.ts`의 id를 `resume-data.ts`의 `factId`로 연결한다.
-- 인쇄 버튼은 브라우저 인쇄(PDF로 저장)를 그대로 쓴다. 문구는 640px 이상 `인쇄 | PDF 저장`(프린터 아이콘), 미만 `PDF 저장`(내려받기 아이콘).
-- A4 · 여백 0을 무시하는 기기에서는 쪽 전체를 인쇄 영역에 맞춰 줄인다(`global.css` `zoom`).
+- 인쇄 버튼은 브라우저 인쇄(PDF로 저장)를 그대로 쓴다. 문구는 모든 화면에서 `인쇄 | PDF 저장`(프린터 아이콘)이다.
+- A4 · 여백 0을 무시하는 기기에서는 쪽 전체를 인쇄 영역에 맞춰 줄인다(`global.css` `zoom`). iOS WebKit(`@supports (-webkit-touch-callout: none)`)은 쪽 높이를 내용 높이로 두어 빈 쪽이 끼지 않게 한다(가장 긴 쪽 약 242mm).
 - 앱 안 브라우저(네이버 앱 등)는 `window.print()`가 동작하지 않는다. 인쇄가 시작되지 않으면 외부 브라우저로 여는 안내 창을 띄운다(`print-button.tsx`). Android는 "Chrome으로 열기"와 "다른 브라우저로 열기" 두 버튼이다.
 - 이력서 종이 본문 디자인(흑백)은 사이트 테마와 따로 둔다.
 
@@ -199,7 +200,7 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 - `/llms.txt`는 사이트 데이터로 만든다: 소개 · 주요 페이지 · 글 목록 · 연락처. 전화번호와 이력서는 넣지 않는다.
 - 리다이렉트(308): `/privacy → /`.
 - GA는 `shared/ui/production-analytics.tsx`에서 gtag를 직접 불러온다(운영 환경에서만).
-  - 측정 요청에서 이 사이트 주소의 `q` · `from`과 `ep.search_term`을 지운다(`shared/lib/analytics-privacy.ts`, `tests/analytics-privacy.test.ts`).
+  - 측정 요청(`google-analytics.com`과 Google 신호용 `www.google.com` 등 주소에 google · doubleclick이 든 모든 `/g/collect`)에서 이 사이트 주소의 `q` · `from`과 `ep.search_term`을 지운다(`shared/lib/analytics-privacy.ts`, `tests/analytics-privacy.test.ts`).
   - 인라인 스크립트 문자열 안에 역슬래시를 직접 쓰지 않는다(템플릿 문자열이 이스케이프를 먹어 GA가 멈춘다).
 
 ## 9. 검증 · 도구
