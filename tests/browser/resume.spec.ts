@@ -33,23 +33,23 @@ test('resume printing restores all pages without screen zoom or controls', async
   await page.goto('/resume');
   await page.getByRole('button', { name: '확대', exact: true }).click();
   await page.emulateMedia({ media: 'print' });
-  await expect(page.locator('.resume-page:visible')).toHaveCount(9);
+  await expect(page.locator('.resume-page:visible')).toHaveCount(10);
   await expect(page.getByLabel('이력서 보기 도구')).toBeHidden();
   const transforms = await page.locator('.resume-page').evaluateAll(pages => pages.map(element => getComputedStyle(element.parentElement!).transform));
   expect(transforms.every(transform => transform === 'none')).toBe(true);
 });
 
 // 기기가 CSS 용지(A4 · 여백 0)를 무시하고 더 작은 용지 · 여백으로 인쇄해도 쪽마다 빈 쪽이 끼지 않아야 한다.
-// 뒤에 붙인 @page 규칙으로 그런 기기를 흉내 내도 9쪽 그대로 나와야 한다(PDF는 Chromium에서만 만들 수 있다).
+// 뒤에 붙인 @page 규칙으로 그런 기기를 흉내 내도 10쪽 그대로 나와야 한다(PDF는 Chromium에서만 만들 수 있다).
 test('printing on paper smaller than A4 keeps one resume page per sheet', async ({ page, browserName }) => {
   test.skip(browserName !== 'chromium', 'PDF 생성은 Chromium만 지원');
   const countPages = (pdf: Buffer) => (pdf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length;
   await page.goto('/resume');
-  expect(countPages(await page.pdf({ preferCSSPageSize: true, printBackground: true }))).toBe(9);
+  expect(countPages(await page.pdf({ preferCSSPageSize: true, printBackground: true }))).toBe(10);
   for (const paper of ['letter; margin: 0', 'letter; margin: 0.5in', 'A4; margin: 12mm']) {
     await page.goto('/resume');
     await page.addStyleTag({ content: `@page { size: ${paper}; }` });
-    expect(countPages(await page.pdf({ preferCSSPageSize: true, printBackground: true })), paper).toBe(9);
+    expect(countPages(await page.pdf({ preferCSSPageSize: true, printBackground: true })), paper).toBe(10);
   }
 });
 

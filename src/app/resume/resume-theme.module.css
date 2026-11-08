@@ -251,20 +251,11 @@
   word-break: break-all;
 }
 
-/* 대표 과제 본문 각주: 쪽 하단에 고정 */
+/* 대표 과제 쪽 메타 줄 */
 .classic :global(.resume-page) [data-resume-task-meta]{display:flex;justify-content:space-between;align-items:baseline;gap:4mm;margin-top:calc(5mm - 1px)}
 .classic :global(.resume-page) [data-resume-task-meta]>p{margin:0;font-size:11px;color:#666}
 .classic :global(.resume-page) [data-resume-task-meta]>span{flex-shrink:0;font-size:11px;color:#666}
 .classic :global(.resume-page) [data-resume-task-meta]+p{color:#666;font-size:11px}
-.classic :global(.resume-page) [data-resume-footnote] {
-  position: absolute;
-  left: 21mm;
-  right: 21mm;
-  bottom: 19mm;
-  margin: 0;
-  color: #666;
-  font-size: 11px;
-}
 
 /* 글자색은 #000(제목·강조) · #333(본문) · #666(보조) 세 가지로 통일한다. */
 .classic :global(.resume-page) div:has(> h3) + p {

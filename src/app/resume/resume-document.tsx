@@ -16,21 +16,18 @@ import styles from './resume-viewer.module.css';
 type WorkEntry = (typeof work)[number];
 const runningTitle = 'RESUME';
 const byId = (id: string) => work.find(entry => entry.id === id)!;
-// 1쪽 대표 과제 목록은 본문 대표 과제 제목을 그대로 사용한다(resume-case-studies.ts의 title).
-const caseStudyTitles = resumeCaseStudies.map(study => study.title);
-const taskMeta = ['billing-persistence', 'eai-integration'].map(byId);
+const datedPeriod = (item: WorkEntry) => item.period.match(/^\d{4}\.\d{2}/)?.[0] ?? '';
+// 대표 과제: 최신순. 1쪽 대표 과제 목록은 본문 대표 과제 제목을 그대로 사용한다(resume-case-studies.ts의 title).
+const caseStudies = [...resumeCaseStudies].sort((a, b) => datedPeriod(byId(b.workId)).localeCompare(datedPeriod(byId(a.workId))));
+const caseStudyTitles = caseStudies.map(study => study.title);
+const taskMeta = caseStudies.map(study => byId(study.workId));
 const projectWork = ['branch-manager', 'e-contract'].map(byId);
 // 주요 과제: 최신순, 쪽당 3개
-const datedPeriod = (item: WorkEntry) => item.period.match(/^\d{4}\.\d{2}/)?.[0] ?? '';
-const mainWork = ['oz-report', 'export', 'settlement', 'recovery', 'integration', 'sparrow'].map(byId).sort((a, b) => datedPeriod(b).localeCompare(datedPeriod(a)));
+const mainWork = ['billing-persistence', 'oz-report', 'sparrow', 'settlement', 'integration'].map(byId).sort((a, b) => datedPeriod(b).localeCompare(datedPeriod(a)));
 const workPerPage = 3;
 const workPages = Array.from({ length: Math.ceil(mainWork.length / workPerPage) }, (_, index) => mainWork.slice(index * workPerPage, (index + 1) * workPerPage));
-// 대표 과제 아키텍처 그림 쪽 표시 여부. 지금은 숨긴다(그림 코드 task-architecture.tsx는 그대로 둔다). true로 바꾸면 대표 과제마다 그림 쪽이 다시 붙는다.
+// 대표 과제 아키텍처 그림 쪽 표시 여부. 지금은 숨긴다(그림 코드 task-architecture.tsx는 그대로 둔다). true로 바꾸면 architecture가 있는 대표 과제 뒤에 그림 쪽이 붙는다.
 const SHOW_TASK_ARCHITECTURE = false;
-const pagesPerTask = SHOW_TASK_ARCHITECTURE ? 2 : 1;
-// 대표 과제 01 각주가 가리키는 기존 보정 자동화 과제의 위치 (1쪽 + 대표 과제 쪽 + 프로젝트 1쪽 다음)
-const recoveryIndex = mainWork.findIndex(item => item.id === 'recovery');
-const recoveryPage = 1 + resumeCaseStudies.length * pagesPerTask + 1 + 1 + Math.floor(recoveryIndex / workPerPage);
 
 // 쪽 제목의 광학 정렬 보정값(resume-theme.module.css)을 쪽 순서(nth-child) 대신 각 쪽 내용에 붙인다.
 // 쪽 순서가 바뀌어도 보정이 그 쪽을 따라간다. 값이 없으면 보정하지 않는다(프로젝트 쪽이 기준).
@@ -112,17 +109,16 @@ export default function ResumeDocument() {
           {caseStudyTitles.map((title, index) => <div key={title}><span>{`0${index + 1}`}</span><p><strong>{title}</strong></p></div>)}
         </section>
       </Sheet>
-      {resumeCaseStudies.flatMap(({ body }, index) => [
+      {caseStudies.flatMap(({ body, architecture }, index) => [
         <div key={`task-${index}`} className={`${styles.caseStudy} ${styles.overview}`} data-resume-task-detail data-title-offset='1.5'>
           <div className={styles.running} data-resume-running>{runningTitle} <span>SANGHUN KIM</span></div>
           <h1>{`대표 과제 0${index + 1}. ${caseStudyTitles[index]}`}</h1>
           <div data-resume-task-meta><p className={styles.entryMeta}>효성에프엠에스<span className={styles.metaDivider} aria-hidden='true' />{taskMeta[index].platform}<span className={styles.metaDivider} aria-hidden='true' />{taskMeta[index].team}<span className={styles.metaDivider} aria-hidden='true' />{taskMeta[index].role}</p><span>{taskMeta[index].period}</span></div>
           <p className={styles.entryMeta}>{taskMeta[index].tech.replace(/,\s*/g, ' · ')}</p>
-          <ReactMarkdown>{index === 0 ? body.replace('계좌 결제 요청 배치는 ', '*계좌 결제 요청 배치는 ') : body}</ReactMarkdown>
-          {index === 0 && <p data-resume-footnote><em>* {recoveryPage}p 주요 과제[{recoveryIndex + 1}] {mainWork[recoveryIndex].title}</em></p>}
+          <ReactMarkdown>{body}</ReactMarkdown>
         </div>,
-        ...(SHOW_TASK_ARCHITECTURE ? [<Sheet key={`architecture-${index}`} title={`대표 과제 0${index + 1}. ${caseStudyTitles[index]}`} titleOffset='1.5'>
-          <TaskArchitecture task={index === 0 ? 1 : 2} />
+        ...(SHOW_TASK_ARCHITECTURE && architecture ? [<Sheet key={`architecture-${index}`} title={`대표 과제 0${index + 1}. ${caseStudyTitles[index]}`} titleOffset='1.5'>
+          <TaskArchitecture task={architecture} />
         </Sheet>] : []),
       ])}
       <Sheet title='프로젝트'>

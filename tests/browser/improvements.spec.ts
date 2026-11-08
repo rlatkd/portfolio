@@ -25,7 +25,7 @@ test('resume restores location and no page content is clipped', async ({ page, b
   await expect(page.locator('.resume-page[data-active="true"]')).toHaveAttribute('aria-label', '2쪽');
   await page.getByRole('button', { name: '너비 맞춤', exact: true }).click();
   const pageCount = await page.locator('.resume-page').count();
-  expect(pageCount).toBe(9);
+  expect(pageCount).toBe(10);
   for (let index = 0; index < pageCount; index++) {
     await page.goto(`/resume#page=${index + 1}`);
     const paper = page.locator('.resume-page[data-active="true"]');

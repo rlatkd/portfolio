@@ -10,7 +10,7 @@ export const companyRoles = [
 ];
 
 // 최신순. platform·team은 이력서 메타 줄(효성에프엠에스 | 플랫폼 | 인원 | 역할)에 쓴다.
-// 2026.10 Task 01·02는 이력서에서 별도 쪽(resume-case-studies)으로 설명하고 여기서는 홈 목록용 요약만 둔다.
+// 대표 과제는 이력서에서 별도 쪽(resume-case-studies)으로 설명한다. points가 빈 항목은 홈 목록용 요약만 둔다.
 export const work = [
   {
     id: 'billing-persistence',
@@ -20,7 +20,12 @@ export const work = [
     period: '2026.10',
     title: '계좌 결제 요청 배치의 보정 대상 영속화 및 배치 분리',
     role: '백엔드·배치 개발',
-    points: [] as string[],
+    points: [
+      '전송 중 예외가 발생한 청구를 인메모리에 모아 같은 배치의 다음 Step에서 보정하던 구조라 서버가 중단되면 보정 대상이 사라지는 문제를 확인했습니다.',
+      '기존 전송 흐름과 보정 기준은 유지한 채 보정 대상을 DB에 저장하고 보정 Step을 별도 배치로 분리했습니다.',
+      '하루에 발생하는 보정 대상이 적어 전체를 하나의 트랜잭션으로 처리하고 실패 시 전체를 다시 수행하도록 Tasklet으로 구성했습니다.',
+      '거의 매일 수행하는 재보정을 결제 요청 배치 없이 독립 실행하고 서버 중단 후에도 대상을 조회할 수 있게 했습니다.',
+    ] as string[],
     tech: 'Spring Batch, Oracle',
   },
   {
