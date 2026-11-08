@@ -22,7 +22,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## 작업 원칙
 
-- 커밋 · 푸시는 사용자가 직접 한다. 커밋 메시지는 항상 한 줄 `type: 설명`이다(본문 없음).
+- 커밋 · 푸시는 사용자가 직접 한다. 커밋 메시지는 항상 한 줄 `type: 설명`이다(본문 없음). 제안할 때는 `git commit -m "type: 설명"` 명령어 전체를 준다.
 - 커밋 여부를 말하기 전에 `git status` · `git log`로 먼저 확인한다. 사용자는 알리지 않고 커밋하므로 미커밋이라고 가정하지 않는다.
 - 기능 · 페이지 · 파일을 폐기할 때는 코드 · 설정 · 테스트 · 정적 파일 · 세 문서(`CLAUDE.md` · `AGENTS.md` · `README.md`)에서 관련된 것을 모두 찾아 함께 폐기하고, 저장소 전체 검색으로 남은 언급이 없는지 확인한다.
 - 수정 지시는 지시한 범위에만 적용한다. 보고한 목록은 따로 승인받기 전까지 손대지 않는다.
@@ -34,6 +34,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - 화면은 VS Code 편집기 모양이고 기본 테마는 다크다. 색은 `styles/global.css`의 시맨틱 토큰만 쓴다.
 - 영역은 `src/shared/ui/pane.tsx`, 탭 영역은 `src/shared/ui/pane-tabs.tsx`를 쓴다. 떠 있는 버튼은 `src/shared/ui/floating-button.ts`의 동그란 반전 무채색 버튼(바탕 `--fg-strong`, 아이콘 `--bg`)을 쓴다. 버튼 구성은 `usePathname`으로 정하지 않고 레이아웃이 `FloatingControls`에 넘긴다.
+- 홈 · 글 상세는 배포 때 한 번 만드는 정적 페이지이고 `revalidate`를 쓰지 않는다.
 - 화면 정렬 숫자는 `global.css`의 CSS 변수로만 바꾼다: 아래 정렬 `--bottom-mask` 등, 떠 있는 버튼 창 끝 간격 `--floating-edge`, 홈 위쪽 정렬(사이드바 이름 글자 위 끝 = about.md 위 끝) `--sidebar-top` · `--sidebar-name-offset`.
 - 문구에 긴 줄표(—)를 쓰지 않는다. 기간 `–`, 나열 `·`, 제목 구분자 `|`.
 - 파일 · 폴더 이름은 kebab-case.

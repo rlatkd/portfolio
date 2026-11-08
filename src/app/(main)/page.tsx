@@ -10,8 +10,6 @@ import { serializeJsonLd } from '@/shared/lib/seo';
 import { profile, majorSkills } from '@/shared/data/site-data';
 import { baseUrl, authorId, siteTitle } from '@/shared/config/site';
 
-export const revalidate = 86400;
-
 export const metadata = {
   // sitemap과 같은 슬래시 없는 주소를 canonical로 쓴다.
   alternates: { canonical: baseUrl },

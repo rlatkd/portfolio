@@ -19,7 +19,6 @@ function resolveSlug(raw: string) {
 export async function generateStaticParams() {
   return (await getPosts()).map(post => ({ slug: post.slug }));
 }
-export const revalidate = 86400;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = resolveSlug((await params).slug);
