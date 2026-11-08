@@ -5,7 +5,6 @@ import { themeEffect } from '@/features/theme-toggle/lib/theme-effect';
 import { baseUrl, siteTitle, siteDescription } from '@/shared/config/site';
 import { shareCard } from '@/shared/lib/seo';
 import { ProductionAnalytics } from '@/shared/ui/production-analytics';
-import { FloatingControls } from '@/shared/ui/floating-controls';
 import { NavigationSpinner } from '@/shared/ui/navigation-spinner';
 
 export const metadata: Metadata = {
@@ -60,7 +59,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <a href='#main-content' className='skip-link'>본문 바로가기</a>
         <div className='flex-auto min-w-0 flex flex-col'>
           {children}
-          <FloatingControls />
           <NavigationSpinner />
 
         </div>

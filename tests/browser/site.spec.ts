@@ -31,6 +31,26 @@ test('home navigation, theme persistence and landmarks work without runtime erro
   expect(errors).toEqual([]);
 });
 
+test('every kind of 404 keeps the saved theme and shows only the theme button', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  for (const path of ['/no-such-page', '/posts/no-such-post', '/posts?page=99']) {
+    await page.evaluate(() => { try { localStorage.removeItem('theme'); } catch { /* about:blank has no storage */ } });
+    const response = await page.goto(path);
+    expect(response?.status(), path).toBe(404);
+    await expect(page.getByRole('heading', { name: '페이지를 찾을 수 없습니다.' }), path).toBeVisible();
+    await expect(page.locator('html'), path).toHaveClass(/dark/);
+    await expect(page.getByRole('button', { name: '테마 전환' }), path).toBeVisible();
+    await expect(page.getByRole('button', { name: '맨 위로', includeHidden: true }), path).toHaveCount(0);
+
+    await page.evaluate(() => localStorage.setItem('theme', 'light'));
+    await page.reload();
+    await expect(page.getByRole('heading', { name: '페이지를 찾을 수 없습니다.' }), path).toBeVisible();
+    await expect(page.locator('html'), path).not.toHaveClass(/dark/);
+  }
+  expect(errors).toEqual([]);
+});
+
 test('mobile archive stays within viewport and pagination/category links work', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/posts');

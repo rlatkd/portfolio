@@ -105,6 +105,8 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 - 1024px 미만은 화면 오른쪽 위에 목차 버튼(`mobile-section-menu.tsx`, 파일 목록 아이콘)이 있다. 오른쪽 끝 간격은 아래쪽 떠 있는 버튼과 같은 `--floating-edge`(12px)로, 본문 오른쪽 끝(24px)에 맞추지 않는다. 맨 위에서는 숨고 about 영역에 들어서면 나타난다. 누르면 버튼 아래에 사이드바와 같은 목차가 열리고(현재 영역 강조), 항목을 누르면 그 영역으로 이동한 뒤 닫힌다. 바깥을 누르거나 Esc로도 닫힌다. 현재 위치 추적 · 이동은 사이드바와 같은 `section-navigation.ts`를 쓴다.
 - 떠 있는 버튼(목차 · 위로 가기 · 테마)은 본문 카드와 구분되도록 글자색 `--fg-strong`으로 채운 동그란 버튼이다(`shared/ui/floating-button.ts`, 아이콘은 바탕색 `--bg`라 테마마다 반전, 위로 가기 아이콘은 꺾쇠 `^`). 위로 가기는 240px 넘게 내려가면 테마 버튼 위에 따로 나타난다. 목차 버튼은 열리면 바깥 고리를 그린다.
 - 떠 있는 버튼(위로 가기 · 테마)은 본문 영역 오른쪽 끝에서 `--floating-gap` 옆에 둔다(창이 좁으면 창 오른쪽 `--floating-edge`). 아래 끝은 가림 띠 높이에 맞춘다. 클래스는 홈 `.portfolio-floating`, 블로그 `.document-floating`.
+- 떠 있는 버튼 구성은 `usePathname`으로 정하지 않고 홈 · 블로그 레이아웃과 `not-found.tsx`가 `FloatingControls`에 넘긴다(Vercel이 재생성한 홈 HTML은 서버가 읽는 주소가 브라우저와 달라 하이드레이션이 실패한다). `/resume`에는 넣지 않는다.
+- `notFound()` 응답은 테마 스크립트 없는 빈 HTML(`__next_error__`)이라 `not-found.tsx`가 `useLayoutEffect`로 테마를 적용한다.
 - 낮은 데스크톱(1024×600)에서는 사이드바 아이콘이 잘린다(대응 여부 미정).
 
 ### 블로그

@@ -1,10 +1,17 @@
 'use client';
 
+import { useLayoutEffect } from 'react';
 import Link from 'next/link';
+import { themeEffect } from '@/features/theme-toggle/lib/theme-effect';
+import { FloatingControls } from '@/shared/ui/floating-controls';
 
 // VS Code 디자인. 편집기 영역 하나에 오류 내용을 보여 준다.
 export default function NotFound() {
+  // notFound() 응답은 테마 스크립트 없는 빈 HTML이고, React가 나중에 넣는 스크립트는 실행되지 않아 여기서 테마를 적용한다.
+  useLayoutEffect(themeEffect, []);
+
   return (
+    <>
     <main id='main-content' className='flex min-h-screen w-full items-center justify-center bg-bg px-6 py-16'>
       <section className='w-full max-w-xl overflow-hidden rounded-lg border border-line bg-surface'>
         <div className='flex border-b border-line bg-surface-2 font-code text-[12px]'>
@@ -29,5 +36,7 @@ export default function NotFound() {
         </div>
       </section>
     </main>
+    <FloatingControls />
+    </>
   );
 }

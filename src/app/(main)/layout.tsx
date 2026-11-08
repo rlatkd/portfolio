@@ -1,5 +1,6 @@
 import Sidebar from '@/widgets/sidebar/sidebar';
 import MobileSectionMenu from '@/widgets/sidebar/mobile-section-menu';
+import { FloatingControls } from '@/shared/ui/floating-controls';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -19,6 +20,7 @@ export default function Layout({ children }: LayoutProps) {
       {/* 모바일 · 태블릿 목차: 오른쪽 위 파일 목록 버튼(about 영역부터 보임). 데스크톱에서는 숨긴다. */}
       <MobileSectionMenu />
       <div aria-hidden='true' className='portfolio-bottom-mask fixed inset-x-0 bottom-0 z-30 hidden bg-bg lg:block' />
+      <FloatingControls showScroll place='portfolio-floating' />
     </>
   );
 }

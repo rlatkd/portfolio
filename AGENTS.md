@@ -33,7 +33,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## 코드 · 디자인
 
 - 화면은 VS Code 편집기 모양이고 기본 테마는 다크다. 색은 `styles/global.css`의 시맨틱 토큰만 쓴다.
-- 영역은 `src/shared/ui/pane.tsx`, 탭 영역은 `src/shared/ui/pane-tabs.tsx`를 쓴다. 떠 있는 버튼은 `src/shared/ui/floating-button.ts`의 동그란 반전 무채색 버튼(바탕 `--fg-strong`, 아이콘 `--bg`)을 쓴다.
+- 영역은 `src/shared/ui/pane.tsx`, 탭 영역은 `src/shared/ui/pane-tabs.tsx`를 쓴다. 떠 있는 버튼은 `src/shared/ui/floating-button.ts`의 동그란 반전 무채색 버튼(바탕 `--fg-strong`, 아이콘 `--bg`)을 쓴다. 버튼 구성은 `usePathname`으로 정하지 않고 레이아웃이 `FloatingControls`에 넘긴다.
 - 화면 정렬 숫자는 `global.css`의 CSS 변수로만 바꾼다: 아래 정렬 `--bottom-mask` 등, 떠 있는 버튼 창 끝 간격 `--floating-edge`, 홈 위쪽 정렬(사이드바 이름 글자 위 끝 = about.md 위 끝) `--sidebar-top` · `--sidebar-name-offset`.
 - 문구에 긴 줄표(—)를 쓰지 않는다. 기간 `–`, 나열 `·`, 제목 구분자 `|`.
 - 파일 · 폴더 이름은 kebab-case.
