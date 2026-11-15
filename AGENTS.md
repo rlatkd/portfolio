@@ -16,6 +16,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## 시작할 때
 
+- 작업을 시작하면 가장 먼저 비공개 문서 `port/작업기준_비공개.md`를 읽는다(이력 서술 기준 · 제출용 이력서 규칙). `CLAUDE.md`는 이 파일을 자동으로 가져오지만 이 파일은 가져오기 기능이 없어 직접 연다.
 - 로컬 작업을 시작할 때 `port/INDEX.md`가 있으면 먼저 읽고, 그 안의 안내에 따라 필요한 문서만 연다. `port/`의 내용은 공개 문서 · 코드 · 커밋 메시지에 옮기지 않는다.
 - 사용자가 정정한 사실과 이미 답한 질문을 다시 묻지 않고, 사용자의 최신 지시를 우선한다.
 - 작업 인계는 `port/handoff/YYYY-MM-DD.md`로 한다. 시작할 때 가장 최근 파일을 읽고, 파일을 바꾸는 작업을 마치면 다음 세션에서 모르면 실수하거나 같은 일을 다시 하게 되는 내용만 오늘 날짜 파일에 적는다. 형식과 보류 넘기기 규칙은 `CLAUDE.md` `1. 작업 원칙` · `10. 보류 항목`을 따른다.
@@ -43,10 +44,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## 콘텐츠
 
-- 경력 사실의 원본은 `src/shared/data/career-data.ts`의 `work`다. 이력 서술 금지 표현은 `CLAUDE.md` `7. 이력 서술 기준`을 따른다.
+- 경력 사실의 원본은 `src/shared/data/career-data.ts`의 `work`다. 이력 서술 기준과 제출용 이력서 규칙은 비공개 문서 `port/작업기준_비공개.md`를 따른다.
 - 블로그 Markdown 본문은 고치지 않는다(velog 동기화 해시). 표시 방식은 `src/shared/markdown` 렌더러에서 바꾼다.
 - `/resume`은 누구나 볼 수 있는 공개 이력서이고 10쪽이다(대표 과제 3개, 민감 정보 없음). 본문의 `break-all`은 줄 끝을 맞추려는 의도된 설정이다. AI 활용 경험은 AI 활용 능력을 기준으로 쓴다.
-- `port/main/resume_main.html`은 원래 과제를 모두 대표 과제로 둔 제출용 기준본이다. `port/main/resume_custom_<번호>_<회사명영어>.html`은 공고(`port/` 아래 날짜 이름 폴더)의 JD에 맞춰 대표 과제를 3개 정도로 추리고 나머지를 주요 과제 등으로 옮긴 제출본이다. 공고마다 번호를 올려 새 파일로 만들고 기존 파일을 덮어쓰지 않는다. 인쇄 버튼 문구는 모든 화면에서 `인쇄 | PDF 저장`이다. iOS WebKit 인쇄는 쪽 높이를 내용 높이로 둔다(`global.css`). 대표 과제 아키텍처 그림 쪽은 `SHOW_TASK_ARCHITECTURE`로 숨겨 두었다.
+- 인쇄 버튼 문구는 모든 화면에서 `인쇄 | PDF 저장`이다. iOS WebKit 인쇄는 쪽 높이를 내용 높이로 둔다(`global.css`). 대표 과제 아키텍처 그림 쪽은 `SHOW_TASK_ARCHITECTURE`로 숨겨 두었다.
 
 ## 글꼴
 
