@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Check, Copy, X } from 'lucide-react';
 
 // 복사 결과는 화면에서 아이콘으로만 보여 준다(성공 ✓, 실패 ✕). 문구는 화면 낭독기에만 읽힌다.
@@ -10,9 +10,18 @@ const messages: Record<Status, string> = {
   copied: '이메일을 복사했습니다.',
   failed: '복사할 수 없습니다. 이메일 주소를 직접 복사해 주세요.',
 };
+// 결과 아이콘을 보여 준 뒤 복사 아이콘으로 돌아가는 시간. 실패는 직접 복사하라는 안내(title)를 읽을 수 있게 더 길게 둔다.
+const RESET_AFTER_MS: Record<Exclude<Status, 'idle'>, number> = { copied: 2000, failed: 6000 };
 
 export function CopyEmail({ email }: { email: string }) {
   const [status, setStatus] = useState<Status>('idle');
+  const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  useEffect(() => () => clearTimeout(timer.current), []);
+  const show = (next: Exclude<Status, 'idle'>) => {
+    clearTimeout(timer.current);
+    setStatus(next);
+    timer.current = setTimeout(() => setStatus('idle'), RESET_AFTER_MS[next]);
+  };
   return (
     <div className='flex items-center'>
       <button
@@ -23,9 +32,9 @@ export function CopyEmail({ email }: { email: string }) {
         onClick={async () => {
           try {
             await navigator.clipboard.writeText(email);
-            setStatus('copied');
+            show('copied');
           } catch {
-            setStatus('failed');
+            show('failed');
           }
         }}
       >

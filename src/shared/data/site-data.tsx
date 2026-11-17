@@ -14,8 +14,6 @@ export const profile: PublicProfile = {
   githubLabel: 'github.com/rlatkd',
   linkedin: 'https://linkedin.com/in/sanghunkim96',
   linkedinLabel: 'linkedin.com/in/sanghunkim96',
-  velog: 'https://velog.io/@kata',
-  velogLabel: 'velog.io/@kata',
 };
 
 export const aboutIntro = [

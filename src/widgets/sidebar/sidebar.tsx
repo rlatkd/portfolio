@@ -5,37 +5,15 @@ import { FiGithub, FiLinkedin } from 'react-icons/fi';
 import { profile, navItems } from '@/shared/data/site-data';
 import { useSectionNavigation } from './section-navigation';
 
-/** Velog 마크 — github/linkedin과 동일한 아웃라인(stroke) 스타일 */
-function VelogIcon({ size = 19 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox='0 0 24 24'
-      fill='none'
-      stroke='currentColor'
-      strokeWidth={2}
-      strokeLinecap='round'
-      strokeLinejoin='round'
-      aria-hidden='true'
-    >
-      <rect x='3' y='3' width='18' height='18' rx='5' />
-      <path d='M8 8.5l3 7 3-7' />
-    </svg>
-  );
-}
-
 // 현재 위치 추적 · 목차 이동은 모바일 목차 버튼과 함께 쓰는 section-navigation.ts에 있다.
 const sectionIds = navItems.map((n) => n.id);
 
 export default function Sidebar() {
   const { active, navigate } = useSectionNavigation(sectionIds);
 
-  // Velog는 블로그 글의 원래 출처다(구조화 데이터 sameAs와 맞춤).
   const socials = [
     { Icon: FiGithub, href: profile.github, label: 'GitHub' },
     { Icon: FiLinkedin, href: profile.linkedin, label: 'LinkedIn' },
-    { Icon: VelogIcon, href: profile.velog, label: 'Velog' },
     { Icon: Mail, href: `mailto:${profile.email}`, label: '이메일' },
     { Icon: Rss, href: '/rss', label: 'RSS' },
   ];

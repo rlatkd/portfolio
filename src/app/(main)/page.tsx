@@ -83,7 +83,7 @@ export default async function Page() {
                 ],
                 // experience '기술' 탭에 보이는 항목과 같게 둔다.
                 knowsAbout: majorSkills.flatMap(group => group.items),
-                sameAs: [profile.github, profile.linkedin, profile.velog],
+                sameAs: [profile.github, profile.linkedin],
               },
             ],
           }),

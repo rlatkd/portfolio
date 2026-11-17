@@ -100,8 +100,8 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
   - 부제는 두 줄(종류, 인원 수 제외 / 기간)이다. 슬라이드 아래 설명란에는 부제를 다시 쓰지 않는다.
   - 모바일 조작부는 오른쪽 정렬, 1024px 이상은 양 끝 배치.
 - posts 영역: id · 주소 `/#posts`. `더보기 ›`는 탭 줄 오른쪽 끝(`Pane`의 `action`).
-- contact: 이메일 복사 결과는 아이콘으로만 보인다(성공 ✓ `--accent`, 실패 ✕ `--error`). 상태 문구는 화면 낭독기에만 읽힌다.
-- 사이드바 하단 아이콘: GitHub · LinkedIn · Velog · 이메일 · RSS.
+- contact: 이메일 복사 결과는 아이콘으로만 보인다(성공 ✓ `--accent`, 실패 ✕ `--error`). 성공은 2초, 실패는 6초 뒤 복사 아이콘으로 돌아간다(실패 안내 `title`을 읽을 시간). 상태 문구는 화면 낭독기에만 읽힌다.
+- 사이드바 하단 아이콘: GitHub · LinkedIn · 이메일 · RSS. Velog 프로필 링크는 두지 않는다(블로그 글 동기화 출처로만 쓴다).
 - 하단 ©는 lucide `Copyright` 아이콘(12px, 선 굵기 2.4, `align-[-0.14em]`). 화면 낭독기는 숨긴 `©` 글자를 읽는다.
 - 개인정보 처리방침은 하단 링크로 여는 모달(`features/privacy-notice`)이다. 본문 여백은 데스크톱 40px, 640px 미만 24px로, 글자 기준 위아래와 좌우가 같다.
 - 데스크톱 홈은 사이드바 이름(김상훈) 글자 위 끝과 about.md 영역 위 끝을 맞춘다. 본문 위 여백 = `--sidebar-top` + `--sidebar-name-offset`(e2e가 1px 이내로 확인). 사이드바 위쪽 글자 크기 · 간격을 바꾸면 `--sidebar-name-offset`을 다시 잰다.
@@ -190,7 +190,7 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 - 홈 구조화 데이터는 `@graph`로 WebSite(`#website`) · ProfilePage(`#profile`) · Person(`#person`)을 @id로 연결한다.
   - 사이트 운영자와 페이지 주인공은 인물이다. 근무처는 인물의 `worksFor`일 뿐 publisher로 쓰지 않는다.
   - `jobTitle`은 화면에 보이는 직함만: `['Software Engineer', 'Full-stack Developer']`.
-  - `knowsAbout`은 `majorSkills`와 같다. `sameAs`는 GitHub · LinkedIn · Velog.
+  - `knowsAbout`은 `majorSkills`와 같다. `sameAs`는 GitHub · LinkedIn.
 - 글 구조화 데이터 이미지는 글 대표 이미지, 없으면 `/api/og`.
 - robots: 전체 허용, `/api/`는 막고 `/api/og`만 허용.
 - CSP는 보고 전용(`Content-Security-Policy-Report-Only`, `next.config.js`)이다. 위반은 `report-to csp`(`Reporting-Endpoints`)와 `report-uri`(지원하지 않는 브라우저용)로 `/api/csp-report`에 받아 Vercel 함수 로그에 `csp-report`로 남는다. Chrome은 `Reporting-Endpoints`를 HTTPS에서만 받아들이므로 로컬 HTTP에서는 보고가 가지 않는다. 허용 목록을 바꾸면 GA를 켠 운영 빌드에서 `securitypolicyviolation`이 0건인지 확인한다.

@@ -9,8 +9,6 @@ export type PublicProfile = {
   githubLabel: string;
   linkedin: string;
   linkedinLabel: string;
-  velog: string;
-  velogLabel: string;
 };
 
 export type Project = {
