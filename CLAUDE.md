@@ -79,7 +79,7 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
   - 라벨 · 파일명 · 날짜(`font-code`): 영문 · 숫자는 JetBrains Mono(`next/font`), 그 안의 한글은 본문 글꼴.
 - 공통 영역: `@/shared/ui/pane`(파일 탭 머리, 오른쪽 `action` 자리), 탭으로 나뉜 영역은 `@/shared/ui/pane-tabs`.
 - 화면 아래 정렬 값은 `global.css` CSS 변수로만 바꾼다: `--bottom-mask`(1024px 이상 96px, 높이 760px 이하 45px) · `--home-width` 1152px · `--home-gutter` 48px · `--document-width` 794px · `--floating-size` 44px · `--floating-gap` 48px · `--floating-edge`(1024px 미만 12px, 이상 24px) · `--sidebar-top`(38px, 높이 760px 이하 32px) · `--sidebar-name-offset` 42px.
-- 문구 부호: 긴 줄표(—) 금지. 기간은 `–`, 나열은 `·`, 제목 구분자는 `|`.
+- 문구 부호: 긴 줄표(—) 금지. 기간은 일반 하이픈 `-`, 나열은 `·`, 제목 구분자는 `|`.
 - 모든 컴포넌트는 모바일 우선 반응형.
 - 파비콘(`src/app/icon.svg`)과 공유 카드 아이콘은 겹친 마름모, 색 `#4fc1ff` · 바탕 `#252526`.
 

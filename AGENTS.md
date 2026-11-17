@@ -38,7 +38,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - 영역은 `src/shared/ui/pane.tsx`, 탭 영역은 `src/shared/ui/pane-tabs.tsx`를 쓴다. 떠 있는 버튼은 `src/shared/ui/floating-button.ts`의 동그란 반전 무채색 버튼(바탕 `--fg-strong`, 아이콘 `--bg`)을 쓴다. 버튼 구성은 `usePathname`으로 정하지 않고 레이아웃이 `FloatingControls`에 넘긴다.
 - 홈 · 글 상세는 배포 때 한 번 만드는 정적 페이지이고 `revalidate`를 쓰지 않는다.
 - 화면 정렬 숫자는 `global.css`의 CSS 변수로만 바꾼다: 아래 정렬 `--bottom-mask` 등, 떠 있는 버튼 창 끝 간격 `--floating-edge`, 홈 위쪽 정렬(사이드바 이름 글자 위 끝 = about.md 위 끝) `--sidebar-top` · `--sidebar-name-offset`.
-- 문구에 긴 줄표(—)를 쓰지 않는다. 기간 `–`, 나열 `·`, 제목 구분자 `|`.
+- 문구에 긴 줄표(—)를 쓰지 않는다. 기간은 일반 하이픈 `-`, 나열 `·`, 제목 구분자 `|`.
 - 파일 · 폴더 이름은 kebab-case.
 - 코드 주석은 지금 코드가 왜 그런지만 적는다. 날짜와 변경 경위(`~로 바꿨다` · `이전에는`)는 쓰지 않는다.
 
