@@ -35,14 +35,8 @@ export const awards = [
   {
     id: 'kosa-top-graduate',
     date: '2024.08',
-    title: '우수 수료생',
+    title: '우수인재상',
     org: '한국소프트웨어산업협회',
-  },
-  {
-    id: 'ssg-final-project',
-    date: '2024.02',
-    title: '파이널 프로젝트 최우수상',
-    org: '신세계아이앤씨',
   },
 ];
 

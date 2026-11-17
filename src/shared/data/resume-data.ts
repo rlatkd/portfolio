@@ -53,7 +53,7 @@ const resumeOthers = [
   {
     kind: '수상',
     factId: 'kosa-top-graduate',
-    title: '우수 수료생',
+    title: '우수인재상',
     lines: [],
   },
   {
