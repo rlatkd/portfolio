@@ -2,36 +2,27 @@ import { Fragment, type ReactNode } from 'react';
 import Image from 'next/image';
 import profilePhoto from '@public/images/resume/kim-sanghun-profile.webp';
 import { DocumentShell, DocumentHeader } from '@/shared/ui/document-layout';
-import ReactMarkdown from 'react-markdown';
 import { profile, trackRecord } from '@/shared/data/site-data';
 import { work, company, companyRoles } from '@/shared/data/career-data';
 import { introduction, education, skills, others, aiExperience } from '@/shared/data/resume-data';
-import { resumeCaseStudies } from '@/shared/data/resume-case-studies';
 import { PrintButton } from './print-button';
 import { PhoneLink } from './phone-link';
 import { ResumePager } from './resume-pager';
-import { TaskArchitecture } from './task-architecture';
 import styles from './resume-viewer.module.css';
 
 type WorkEntry = (typeof work)[number];
 const runningTitle = 'RESUME';
 const byId = (id: string) => work.find(entry => entry.id === id)!;
 const datedPeriod = (item: WorkEntry) => item.period.match(/^\d{4}\.\d{2}/)?.[0] ?? '';
-// 대표 과제: 최신순. 1쪽 대표 과제 목록은 본문 대표 과제 제목을 그대로 사용한다(resume-case-studies.ts의 title).
-const caseStudies = [...resumeCaseStudies].sort((a, b) => datedPeriod(byId(b.workId)).localeCompare(datedPeriod(byId(a.workId))));
-const caseStudyTitles = caseStudies.map(study => study.title);
-const taskMeta = caseStudies.map(study => byId(study.workId));
 const projectWork = ['branch-manager', 'e-contract'].map(byId);
-// 주요 과제: 최신순, 쪽당 3개
-const mainWork = ['billing-persistence', 'oz-report', 'sparrow', 'settlement', 'integration'].map(byId).sort((a, b) => datedPeriod(b).localeCompare(datedPeriod(a)));
-const workPerPage = 3;
+// 주요 과제: 최신순, 쪽당 4개
+const mainWork = ['billing-persistence', 'eai-integration', 'oz-report', 'sparrow', 'export', 'settlement', 'recovery', 'integration'].map(byId).sort((a, b) => datedPeriod(b).localeCompare(datedPeriod(a)));
+const workPerPage = 4;
 const workPages = Array.from({ length: Math.ceil(mainWork.length / workPerPage) }, (_, index) => mainWork.slice(index * workPerPage, (index + 1) * workPerPage));
-// 대표 과제 아키텍처 그림 쪽 표시 여부. 지금은 숨긴다(그림 코드 task-architecture.tsx는 그대로 둔다). true로 바꾸면 architecture가 있는 대표 과제 뒤에 그림 쪽이 붙는다.
-const SHOW_TASK_ARCHITECTURE = false;
 
 // 쪽 제목의 광학 정렬 보정값(resume-theme.module.css)을 쪽 순서(nth-child) 대신 각 쪽 내용에 붙인다.
 // 쪽 순서가 바뀌어도 보정이 그 쪽을 따라간다. 값이 없으면 보정하지 않는다(프로젝트 쪽이 기준).
-type TitleOffset = '1' | '1.5';
+type TitleOffset = '1';
 function Sheet({ title, titleOffset, children }: { title?: string; titleOffset?: TitleOffset; children: ReactNode }) {
   return <div className={`${styles.caseStudy} ${styles.overview}`} data-title-offset={titleOffset}>
     <div className={styles.running} data-resume-running>{runningTitle} <span>SANGHUN KIM</span></div>
@@ -105,22 +96,7 @@ export default function ResumeDocument() {
             <div data-resume-role><strong>{item.title}</strong><p>{item.text}</p></div>
           </div>)}</div>
         </section>
-        <section className={styles.documentGuide} data-resume-guide><h2>대표 과제</h2>
-          {caseStudyTitles.map((title, index) => <div key={title}><span>{`0${index + 1}`}</span><p><strong>{title}</strong></p></div>)}
-        </section>
       </Sheet>
-      {caseStudies.flatMap(({ body, architecture }, index) => [
-        <div key={`task-${index}`} className={`${styles.caseStudy} ${styles.overview}`} data-resume-task-detail data-title-offset='1.5'>
-          <div className={styles.running} data-resume-running>{runningTitle} <span>SANGHUN KIM</span></div>
-          <h1>{`대표 과제 0${index + 1}. ${caseStudyTitles[index]}`}</h1>
-          <div data-resume-task-meta><p className={styles.entryMeta}>효성에프엠에스<span className={styles.metaDivider} aria-hidden='true' />{taskMeta[index].platform}<span className={styles.metaDivider} aria-hidden='true' />{taskMeta[index].team}<span className={styles.metaDivider} aria-hidden='true' />{taskMeta[index].role}</p><span>{taskMeta[index].period}</span></div>
-          <p className={styles.entryMeta}>{taskMeta[index].tech.replace(/,\s*/g, ' · ')}</p>
-          <ReactMarkdown>{body}</ReactMarkdown>
-        </div>,
-        ...(SHOW_TASK_ARCHITECTURE && architecture ? [<Sheet key={`architecture-${index}`} title={`대표 과제 0${index + 1}. ${caseStudyTitles[index]}`} titleOffset='1.5'>
-          <TaskArchitecture task={architecture} />
-        </Sheet>] : []),
-      ])}
       <Sheet title='프로젝트'>
         {projectWork.map((item, index) => <WorkItem key={item.id} item={item} number={index + 1} />)}
       </Sheet>

@@ -125,16 +125,16 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 
 ### 이력서 (`/resume`)
 - `/resume`은 누구나 볼 수 있는 공개 웹사이트 이력서다. 수치 등 민감 정보를 넣지 않는다.
-- 쪽 구성: 1쪽 소개 · 대표 과제 3개 · 프로젝트 · 주요 과제 2쪽 · 그 외 과제 · 기타 2쪽, 모두 10쪽.
-- 대표 과제는 EAI 전환 · 대량 엑셀 추출 · 실패 청구 자동 보정이다. 대표 과제와 주요 과제 모두 최신순이다(`resume-document.tsx`가 `career-data.ts`의 기간으로 정렬).
-- 대표 과제 아키텍처 그림 쪽(`task-architecture.tsx`)은 숨겨 두었다. `resume-document.tsx`의 `SHOW_TASK_ARCHITECTURE`를 `true`로 바꾸면 `architecture`가 있는 대표 과제(EAI 전환) 뒤에 그림 쪽이 붙어 11쪽이 된다. 이때 e2e 쪽 수 기대값도 같이 바꾼다.
+- 쪽 구성: 1쪽 소개 · 프로젝트 · 주요 과제 2쪽 · 그 외 과제 · 기타 2쪽, 모두 7쪽.
+- 주요 과제는 8개로, `resume-document.tsx`가 `career-data.ts`의 기간으로 최신순 정렬해 쪽당 4개씩 싣는다. 이력서에는 별도 상세 설명 쪽이 없다.
+- 화면 기본 배율은 폭 맞춤(최대 100%)이다. 낮은 데스크톱(`(min-width: 1024px) and (max-height: 760px)`, `global.css`와 같은 구간)에서는 확대 · 축소 한 단계(25%)만큼 작게 시작한다(`resume-pager.tsx`). `너비 맞춤` 버튼은 이 기본 배율로 되돌린다.
 - 이력서 본문의 `break-all`(`resume-theme.module.css`)은 줄 끝 위치를 맞추려는 의도된 설정이다. 단어가 나뉘어도 고치지 않는다.
 - 파일
   - 화면: `src/app/resume/resume-document.tsx`
   - 공용 배치: `resume-viewer.module.css`
   - 흑백 종이 테마: `resume-theme.module.css`
 - 탭 제목 `resume`. 검색 노출은 noindex이고 사이트맵에서도 빠진다(노출 여부는 사용자 결정 보류).
-- 1쪽 대표 과제 목록과 대표 과제 쪽 제목은 `resume-case-studies.ts`의 `title`. 쪽 제목 위치 보정은 각 쪽의 `data-title-offset`.
+- 쪽 제목 위치 보정은 각 쪽의 `data-title-offset`.
 - 수상 · 교육 · 자격증은 `profile-data.ts`의 id를 `resume-data.ts`의 `factId`로 연결한다.
 - 인쇄 버튼은 브라우저 인쇄(PDF로 저장)를 그대로 쓴다. 문구는 모든 화면에서 `인쇄 | PDF 저장`(프린터 아이콘)이다.
 - A4 · 여백 0을 무시하는 기기에서는 쪽 전체를 인쇄 영역에 맞춰 줄인다(`global.css` `zoom`). iOS WebKit(`@supports (-webkit-touch-callout: none)`)은 쪽 높이를 내용 높이로 두어 빈 쪽이 끼지 않게 한다(가장 긴 쪽 약 242mm).
@@ -154,7 +154,6 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
   - `aboutKeyTerms`는 본문과 글자가 정확히 같아야 굵게 표시된다(다르면 오류 없이 굵게만 사라진다).
 - `resume-data.ts`: 이력서 소개 · 학력(단일 원본) · 기술 스택 · 교육 · 수상 · 자격증 · AI 활용 경험.
 - AI 활용 경험은 AI 활용 능력을 기준으로 쓴다. AI로 문제를 푼 방식과 AI의 오류를 바로잡은 방식을 적고 도메인 설명은 넣지 않는다.
-- `resume-case-studies.ts`: 대표 과제 본문. 메타 정보는 `workId`로 `career-data.ts`의 `work`에서 가져온다. 이력서에서 `Task` 대신 `대표 과제`라는 용어를 쓴다(인사 담당자도 읽는 문서라 한국어 명사로 통일).
 - `profile-data.ts`: 교육 · 수상 · 자격증 원본(`factId`로 연결).
 - 고객 / 고객사는 통일하지 않는다. 고객사 = 사업 · 도메인 용어, 고객 = 데이터 · 시스템 맥락.
 - 블로그 원문은 `https://velog.io/@kata/posts`다.

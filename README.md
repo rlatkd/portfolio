@@ -124,7 +124,6 @@ GitHub Actions의 [`Validate`](.github/workflows/check.yml)는 push·PR에서 �
 | 회사·역할·프로젝트·주요 과제 | [`career-data.ts`](src/shared/data/career-data.ts) |
 | 이력서 소개·학력·기술·교육·수상·자격·AI 활용 경험 | [`resume-data.ts`](src/shared/data/resume-data.ts) |
 | 교육·수상·자격증의 프로필 데이터 | [`profile-data.ts`](src/shared/data/profile-data.ts) |
-| 이력서 Task 상세 본문 | [`resume-case-studies.ts`](src/shared/data/resume-case-studies.ts) |
 | 블로그 원문과 기본 메타데이터 | [`src/shared/content/posts`](src/shared/content/posts) |
 | 블로그 출처·수정일·본문 해시 | [`velog-sources.json`](src/shared/content/velog-sources.json) |
 | 이미지 크기·대체 설명·제공 상태 | [`image-metadata.json`](src/shared/content/image-metadata.json) |

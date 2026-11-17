@@ -10,7 +10,6 @@ export const companyRoles = [
 ];
 
 // 최신순. platform·team은 이력서 메타 줄(효성에프엠에스 | 플랫폼 | 인원 | 역할)에 쓴다.
-// 대표 과제는 이력서에서 별도 쪽(resume-case-studies)으로 설명한다. points가 빈 항목은 홈 목록용 요약만 둔다.
 export const work = [
   {
     id: 'billing-persistence',

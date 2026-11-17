@@ -6,6 +6,9 @@ import styles from './resume-viewer.module.css';
 
 const WIDTH = 794;
 const HEIGHT = 1123;
+const ZOOM_STEP = .25;
+// global.css의 낮은 데스크톱 구간과 같다. 이 구간에서는 기본 배율을 확대·축소 한 단계만큼 줄인다.
+const SHORT_DESKTOP = '(min-width: 1024px) and (max-height: 760px)';
 
 export function ResumePager({ children }: { children: ReactNode }) {
   const pages = Children.toArray(children);
@@ -44,9 +47,12 @@ export function ResumePager({ children }: { children: ReactNode }) {
   useEffect(() => {
     const element = viewport.current;
     if (!element) return;
-    const observer = new ResizeObserver(() => setFit(Math.min(1, element.clientWidth / WIDTH)));
+    const short = window.matchMedia(SHORT_DESKTOP);
+    const update = () => setFit(Math.min(1 - (short.matches ? ZOOM_STEP : 0), element.clientWidth / WIDTH));
+    const observer = new ResizeObserver(update);
     observer.observe(element);
-    return () => observer.disconnect();
+    short.addEventListener('change', update);
+    return () => { observer.disconnect(); short.removeEventListener('change', update); };
   }, []);
 
   useEffect(() => {
@@ -110,9 +116,9 @@ export function ResumePager({ children }: { children: ReactNode }) {
           <button type='button' aria-label='다음 쪽' disabled={page === last} onClick={() => changePage(page + 1)}><ChevronRight size={18} /></button>
         </div>
         <div className={styles.controlGroup}>
-          <button type='button' aria-label='축소' disabled={scale <= fit + .005} onClick={() => changeZoom(scale - .25)}><ZoomOut size={17} /></button>
+          <button type='button' aria-label='축소' disabled={scale <= fit + .005} onClick={() => changeZoom(scale - ZOOM_STEP)}><ZoomOut size={17} /></button>
           <span className={styles.zoomStatus} aria-label='현재 배율'>{Math.round(scale * 100)}%</span>
-          <button type='button' aria-label='확대' disabled={scale >= 2} onClick={() => changeZoom(scale + .25)}><ZoomIn size={17} /></button>
+          <button type='button' aria-label='확대' disabled={scale >= 2} onClick={() => changeZoom(scale + ZOOM_STEP)}><ZoomIn size={17} /></button>
           <button type='button' className={styles.fitButton} aria-label='너비 맞춤' onClick={() => { anchor.current = null; setZoom(null); remember(page, null); viewport.current?.scrollTo({ left: 0, top: 0, behavior: 'instant' }); }}><ScanLine size={16} /><span>너비 맞춤</span></button>
         </div>
       </div>

@@ -46,8 +46,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - 경력 사실의 원본은 `src/shared/data/career-data.ts`의 `work`다. 이력 서술 기준과 제출용 이력서 규칙은 비공개 문서 `port/작업기준_비공개.md`를 따른다.
 - 블로그 Markdown 본문은 고치지 않는다(velog 동기화 해시). 표시 방식은 `src/shared/markdown` 렌더러에서 바꾼다.
-- `/resume`은 누구나 볼 수 있는 공개 이력서이고 10쪽이다(대표 과제 3개, 민감 정보 없음). 본문의 `break-all`은 줄 끝을 맞추려는 의도된 설정이다. AI 활용 경험은 AI 활용 능력을 기준으로 쓴다.
-- 인쇄 버튼 문구는 모든 화면에서 `인쇄 | PDF 저장`이다. iOS WebKit 인쇄는 쪽 높이를 내용 높이로 둔다(`global.css`). 대표 과제 아키텍처 그림 쪽은 `SHOW_TASK_ARCHITECTURE`로 숨겨 두었다.
+- `/resume`은 누구나 볼 수 있는 공개 이력서이고 7쪽이다(주요 과제 8개 최신순 · 쪽당 4개, 민감 정보 없음). 화면 기본 배율은 폭 맞춤이고, 낮은 데스크톱 구간(`global.css`와 같음)에서는 한 단계(25%) 작게 시작한다(`resume-pager.tsx`). 본문의 `break-all`은 줄 끝을 맞추려는 의도된 설정이다. AI 활용 경험은 AI 활용 능력을 기준으로 쓴다.
+- 인쇄 버튼 문구는 모든 화면에서 `인쇄 | PDF 저장`이다. iOS WebKit 인쇄는 쪽 높이를 내용 높이로 둔다(`global.css`).
 
 ## 글꼴
 

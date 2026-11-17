@@ -44,9 +44,6 @@
 .roleHistory>div{display:grid;grid-template-columns:17mm 1fr;gap:3mm;margin-bottom:3mm}
 .roleHistory span{font-size:8pt;color:#977333;font-variant-numeric:tabular-nums;padding-top:.5mm}
 .roleHistory p{margin:0}
-.overview .documentGuide{margin-top:9mm;border-top:1px solid #dedbd4;padding-top:3mm}
-.documentGuide>div{display:grid;grid-template-columns:10mm 1fr;gap:3mm;margin-top:4mm}
-.documentGuide>div>span{color:#977333;font-size:13pt}
 .overview .compact{font-size:8.6pt;line-height:1.6}
 .overview .compact .experience{margin-top:4mm}
 .overview .compact .entryHeading h3{font-size:9.5pt}
