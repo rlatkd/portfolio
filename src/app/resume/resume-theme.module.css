@@ -252,7 +252,7 @@
   display: grid;
   grid-template-columns: 38mm 1fr;
   gap: 3mm;
-  padding: 1.6mm 0;
+  padding: 1.3mm 0;
   border-bottom: 1px solid #eeece7;
 }
 
