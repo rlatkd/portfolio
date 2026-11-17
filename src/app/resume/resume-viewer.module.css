@@ -1,8 +1,8 @@
 .viewer{max-width:794px;margin:0 auto;min-width:0}
 .viewport{width:100%;overflow:auto;overscroll-behavior:contain;touch-action:pan-x pan-y pinch-zoom;scrollbar-width:thin;scrollbar-color:var(--muted) transparent}
 .viewport:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.canvas{position:relative;margin:0 auto}
-.scaled{position:absolute;top:0;left:0;width:794px;transform-origin:top left}
+.canvas{position:relative;margin:0 auto;width:calc(794px * var(--resume-scale,1));height:calc(1123px * var(--resume-scale,1))}
+.scaled{position:absolute;top:0;left:0;width:794px;transform-origin:top left;transform:scale(var(--resume-scale,1))}
 .paper{display:none;flex-direction:column;box-sizing:border-box;width:794px;height:1123px;overflow:hidden;border:1px solid var(--line);padding:56px 56px 32px;font-size:12px;line-height:1.75}
 .paper[data-active='true']{display:flex}
 .pageContent{flex:1;min-height:0}
@@ -44,11 +44,6 @@
 .roleHistory>div{display:grid;grid-template-columns:17mm 1fr;gap:3mm;margin-bottom:3mm}
 .roleHistory span{font-size:8pt;color:#977333;font-variant-numeric:tabular-nums;padding-top:.5mm}
 .roleHistory p{margin:0}
-.overview .compact{font-size:8.6pt;line-height:1.6}
-.overview .compact .experience{margin-top:4mm}
-.overview .compact .entryHeading h3{font-size:9.5pt}
-.overview .compact .entryMeta{margin:1mm 0 2mm}
-.overview .compact li{margin-bottom:1mm}
 .trackRecord>div{display:grid;grid-template-columns:17mm 1fr 30mm;gap:2mm;padding:1.5mm 0;border-bottom:1px solid #eeece7;font-size:8pt}
 .trackRecord p{margin:0}
 .trackRecord span{color:#667085}

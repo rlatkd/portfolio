@@ -47,17 +47,17 @@ export const trackRecord = [
   {
     period: '2026.08',
     title: '자동재결제 배치 실행 중 결제수단 변경 시 결제수단 동기화 처리',
-    service: 'CMS+',
+    service: '효성CMS+',
   },
   {
     period: '2026.07',
     title: '가상계좌 결제 결과반영 배치 수행 시 당일 입금취소 분기 신설',
-    service: 'CMS+',
+    service: '효성CMS+',
   },
   {
     period: '2026.04',
     title: 'SMS 발송 및 원생 신규 등록 시 불필요한 예약어 검증 제거',
-    service: 'iBill',
+    service: '아이빌',
   },
   {
     period: '2026.02',
@@ -67,27 +67,27 @@ export const trackRecord = [
   {
     period: '2026.01',
     title: '비회원 결제 정보 표기 방식 개선 및 API 스펙 통일',
-    service: 'CMS+',
+    service: '효성CMS+',
   },
   {
     period: '2025.12',
     title: '청구 내역 조회 시 Offset에서 Cursor 방식으로 전환',
-    service: 'CMS+',
+    service: '효성CMS+',
   },
   {
     period: '2025.11',
     title: '신규 결제상태 환불 추가 및 관련 결제 로직 전반 수정',
-    service: 'CMS+',
+    service: '효성CMS+',
   },
   {
     period: '2025.11',
     title: '대량 인쇄 페이지 캐싱 적용을 통한 렌더링 개선',
-    service: 'Connect',
+    service: '효성CMS+ 커넥트',
   },
   {
     period: '2025.10',
     title: '사용자 이벤트 중복 방지를 위한 공용 컴포넌트 생성',
-    service: 'CMS+',
+    service: '효성CMS+',
   },
   {
     period: '2025.10',
@@ -97,12 +97,12 @@ export const trackRecord = [
   {
     period: '2025.09',
     title: '통계 서비스 구축 및 수납률 리포트 신설',
-    service: 'CMS+',
+    service: '효성CMS+',
   },
   {
     period: '2025.08',
     title: '청구/결제 분기별 가상계좌 예금주명 불일치 개선',
-    service: 'CMS+',
+    service: '효성CMS+',
   }
 ];
 

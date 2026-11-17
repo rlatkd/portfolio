@@ -4,9 +4,9 @@ import { training, awards, certifications } from './profile-data';
 
 // 1쪽 소개: 문단 단위로 이어지는 본문.
 export const introduction = [
-  '계약·결제·정산이 고객에 닿는 채널 계층을 담당하며 4개 플랫폼을 Spring Boot와 Vue.js로 개발하고 운영하고 있습니다. 화면부터 API와 배치까지 담당 범위를 넓혀 계정계 등 여러 시스템 사이의 데이터 처리 흐름을 개선합니다.',
+  '결제·정산이 고객에게 닿는 채널계에서 4개 플랫폼을 Spring Boot와 Vue.js로 개발하고 운영하고 있습니다. 화면부터 API와 배치까지 담당 범위를 넓혀 계정계 등 여러 시스템 사이의 데이터 처리 흐름을 개선합니다.',
   'VoC를 분석할 때는 화면에 드러난 현상보다 데이터가 만들어지는 기준과 시스템 사이의 전달 과정부터 살펴봅니다. 결제와 정산의 작은 불일치도 고객 업무에 직접 영향을 주기 때문에 기존 처리 흐름과 연동 시스템에 미칠 영향까지 검토한 뒤 수정 방향을 정합니다.',
-  '2026년 8월부터는 교육비 수납 플랫폼 iBill의 오너를 맡고 있습니다. 고객 요청을 검토해 진행할 과제를 선정하고 운영 이슈의 원인 분석부터 배포까지 책임집니다.',
+  '2026년 8월부터는 교육비 전용 수납 플랫폼 아이빌의 오너를 맡고 있습니다. 고객 요청을 검토해 진행할 과제를 선정하고 운영 이슈의 원인 분석부터 배포까지 책임집니다.',
 ];
 
 // 학력: 기간에 상태를 붙이고 학사 논문만 남긴다.
@@ -26,13 +26,14 @@ export const skills: { label: string; items: { name: string; work?: boolean }[] 
   { label: 'Messaging', items: [{ name: 'EAI', work: true }, { name: 'Apache Kafka' }] },
   { label: 'Test', items: [{ name: 'Mockito', work: true }, { name: 'Playwright' }, { name: 'Storybook' }, { name: 'Vitest' }] },
   { label: 'Infra', items: [{ name: 'Linux', work: true }, { name: 'Nginx', work: true }, { name: 'AWS' }, { name: 'Docker' }, { name: 'Kubernetes' }, { name: 'Terraform' }] },
-  { label: 'CI/CD', items: [{ name: 'Bamboo', work: true }, { name: 'Bitbucket', work: true }, { name: 'GitHub Actions' }, { name: 'Argo CD' }] },
+  { label: 'CI/CD', items: [{ name: 'Bamboo', work: true }, { name: 'Bitbucket', work: true }, { name: 'Nexus', work: true }, { name: 'GitHub Actions' }, { name: 'Argo CD' }] },
   { label: 'Monitoring', items: [{ name: 'InterMax', work: true }, { name: 'Scouter', work: true }, { name: 'Prometheus' }, { name: 'Grafana' }, { name: 'Kibana' }, { name: 'Fluentd' }] },
   { label: 'Template', items: [{ name: 'JSP', work: true }, { name: 'Thymeleaf', work: true }] },
   { label: 'Frontend', items: [{ name: 'jQuery', work: true }, { name: 'Recoil' }, { name: 'Redux' }, { name: 'TanStack Query' }, { name: 'Vuex' }, { name: 'Zustand' }] },
   { label: 'UI', items: [{ name: 'Kendo UI', work: true }, { name: 'Tailwind CSS', work: true }, { name: 'Bootstrap' }, { name: 'Chart.js' }, { name: 'ECharts' }, { name: 'MUI' }, { name: 'styled-components' }] },
-  { label: 'Build', items: [{ name: 'Webpack', work: true }, { name: 'Babel' }, { name: 'Vite' }] },
-  { label: 'Lint', items: [{ name: 'ESLint' }, { name: 'Prettier' }] },
+  { label: 'Build', items: [{ name: 'Maven', work: true }, { name: 'Webpack', work: true }, { name: 'Babel' }, { name: 'Vite' }] },
+  { label: 'Lint', items: [{ name: 'Sparrow SAST', work: true }, { name: 'ESLint' }, { name: 'Prettier' }] },
+  { label: 'IDE', items: [{ name: 'Eclipse', work: true }, { name: 'IntelliJ', work: true }] },
 ];
 
 // 교육·수상·자격증. 교육 줄은 과정의 파이널 프로젝트 저장소를 가리킨다.

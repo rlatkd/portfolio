@@ -3,7 +3,7 @@ import Image from 'next/image';
 import profilePhoto from '@public/images/resume/kim-sanghun-profile.webp';
 import { DocumentShell, DocumentHeader } from '@/shared/ui/document-layout';
 import { profile, trackRecord } from '@/shared/data/site-data';
-import { work, company, companyRoles } from '@/shared/data/career-data';
+import { work, company, companyRoles, platforms } from '@/shared/data/career-data';
 import { introduction, education, skills, others, aiExperience } from '@/shared/data/resume-data';
 import { PrintButton } from './print-button';
 import { PhoneLink } from './phone-link';
@@ -96,12 +96,15 @@ export default function ResumeDocument() {
             <div data-resume-role><strong>{item.title}</strong><p>{item.text}</p></div>
           </div>)}</div>
         </section>
+        <section className={styles.infoSection} data-resume-info-section><h2>담당 플랫폼</h2>
+          <div data-resume-platforms>{platforms.map(item => <div key={item.name}><span>{item.name}</span><p>{item.text}</p></div>)}</div>
+        </section>
       </Sheet>
       <Sheet title='프로젝트'>
         {projectWork.map((item, index) => <WorkItem key={item.id} item={item} number={index + 1} />)}
       </Sheet>
       {workPages.map((items, pageIndex) => <Sheet key={`work-${pageIndex}`} title='주요 과제'>
-        <div className={styles.compact}>{items.map((item, index) => <WorkItem key={item.id} item={item} number={pageIndex * workPerPage + index + 1} />)}</div>
+        {items.map((item, index) => <WorkItem key={item.id} item={item} number={pageIndex * workPerPage + index + 1} />)}
       </Sheet>)}
       <Sheet title='그 외 과제' titleOffset='1'>
         <OtherTasks />

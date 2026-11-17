@@ -42,6 +42,20 @@ test('resume starts one zoom step smaller on short desktop screens', async ({ pa
   await expect(zoom).toHaveText('100%');
 });
 
+// 하이드레이션 전(서버 HTML과 인라인 스크립트만 실행된 상태)에도 첫 배율이 화면에 맞아야 한다.
+// 100%로 그렸다가 줄어드는 깜빡임을 막는 resume-scale.ts 스크립트를 지킨다. JS 번들을 막아 하이드레이션을 멈춘다.
+test('resume paints the fitted zoom before hydration', async ({ page }) => {
+  await page.route(/\/_next\/static\/chunks\//, route => route.abort());
+  for (const [width, height, expected] of [[1440, 700, .75], [1920, 1080, 1]] as const) {
+    await page.setViewportSize({ width, height });
+    await page.goto('/resume');
+    // 배율 글자는 하이드레이션 뒤에만 채워지므로, 비어 있으면 아직 하이드레이션 전이다.
+    await expect(page.getByLabel('현재 배율')).toHaveText('');
+    const scale = await page.locator('.resume-page').first().evaluate(element => new DOMMatrix(getComputedStyle(element.parentElement!).transform).a);
+    expect(scale).toBeCloseTo(expected, 3);
+  }
+});
+
 test('resume printing restores all pages without screen zoom or controls', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/resume');

@@ -104,8 +104,7 @@
   margin-top: 12mm;
 }
 
-.classic :global(.resume-page) h1 + [data-resume-experience],
-.classic :global(.resume-page) h1 + div > [data-resume-experience]:first-child {
+.classic :global(.resume-page) h1 + [data-resume-experience] {
   margin-top: 5mm;
 }
 
@@ -247,8 +246,9 @@
   bottom: 12mm;
 }
 
-/* 기술: 분류 | 항목 2열 표. 실무 사용 기술은 굵게 표시한다. */
-.classic :global(.resume-page) [data-resume-skills] > div {
+/* 기술 · 담당 플랫폼: 분류 | 항목 2열 표. 실무 사용 기술은 굵게 표시한다. */
+.classic :global(.resume-page) [data-resume-skills] > div,
+.classic :global(.resume-page) [data-resume-platforms] > div {
   display: grid;
   grid-template-columns: 38mm 1fr;
   gap: 3mm;
@@ -256,13 +256,15 @@
   border-bottom: 1px solid #eeece7;
 }
 
-.classic :global(.resume-page) [data-resume-skills] > div > span {
+.classic :global(.resume-page) [data-resume-skills] > div > span,
+.classic :global(.resume-page) [data-resume-platforms] > div > span {
   color: #000;
   font-size: 11px;
   font-weight: 700;
 }
 
-.classic :global(.resume-page) [data-resume-skills] p {
+.classic :global(.resume-page) [data-resume-skills] p,
+.classic :global(.resume-page) [data-resume-platforms] p {
   margin: 0;
   color: #666;
   word-break: keep-all;

@@ -127,7 +127,9 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 - `/resume`은 누구나 볼 수 있는 공개 웹사이트 이력서다. 수치 등 민감 정보를 넣지 않는다.
 - 쪽 구성: 1쪽 소개 · 프로젝트 · 주요 과제 2쪽 · 그 외 과제 · 기타 2쪽, 모두 7쪽.
 - 주요 과제는 8개로, `resume-document.tsx`가 `career-data.ts`의 기간으로 최신순 정렬해 쪽당 4개씩 싣는다. 이력서에는 별도 상세 설명 쪽이 없다.
+- 1쪽 경력 아래에 `담당 플랫폼` 표(공식 이름 | 설명, `career-data.ts` `platforms`)가 있다. 기술 스택 표와 같은 CSS 규칙을 쓴다.
 - 화면 기본 배율은 폭 맞춤(최대 100%)이다. 낮은 데스크톱(`(min-width: 1024px) and (max-height: 760px)`, `global.css`와 같은 구간)에서는 확대 · 축소 한 단계(25%)만큼 작게 시작한다(`resume-pager.tsx`). `너비 맞춤` 버튼은 이 기본 배율로 되돌린다.
+- 첫 배율은 문서 영역 바로 뒤 인라인 스크립트가 실제 너비를 재 `--resume-scale`(CSS 변수)로 넣는다(하이드레이션 전에 100%로 그렸다 줄어드는 것 방지). 공식은 `resume-scale.ts` 한 곳이고 스크립트에는 `toString()`으로 들어가므로 그 함수들은 바깥 값을 참조하지 않는다.
 - 이력서 본문의 `break-all`(`resume-theme.module.css`)은 줄 끝 위치를 맞추려는 의도된 설정이다. 단어가 나뉘어도 고치지 않는다.
 - 파일
   - 화면: `src/app/resume/resume-document.tsx`
@@ -150,6 +152,8 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 ## 6. 콘텐츠
 
 - 경력 사실의 단일 원본은 `src/shared/data/career-data.ts`의 `work`다. 홈 tasks와 이력서 본문(`title` · `points` · `platform` · `team` · `role` · `tech`)이 같은 항목을 쓴다. 화면별 용어 치환은 두지 않고, 원본 문구 자체를 확정 표현으로 관리한다.
+  - 홈 tasks는 `points`가 아니라 요약 `main.how`(과제마다 두 줄) · `main.kpi`를 쓴다.
+  - 플랫폼은 공식 이름 `효성CMS+` · `효성CMS+ 커넥트` · `효성CMS+ 스퀘어` · `아이빌`로 쓴다.
 - `site-data.tsx`: `profile` · `aboutIntro` · `aboutKeyTerms` · `majorSkills` · `trackRecord` · `projects` · `navItems`.
   - `aboutKeyTerms`는 본문과 글자가 정확히 같아야 굵게 표시된다(다르면 오류 없이 굵게만 사라진다).
 - `resume-data.ts`: 이력서 소개 · 학력(단일 원본) · 기술 스택 · 교육 · 수상 · 자격증 · AI 활용 경험.
@@ -176,7 +180,7 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 - 탭 제목 형식은 `%s | 김상훈`.
 - 홈 검색 설명(`siteDescription`): `데이터 정합성과 시스템 신뢰성을 먼저 두는 금융 도메인 소프트웨어 엔지니어 김상훈입니다. Spring Boot와 Vue.js로 서비스를 개발하고 운영합니다.`
 - 블로그 목록 검색 설명: `김상훈의 개발, 설계, 그리고 경험에 대한 기록입니다.`
-- 이력서 검색 설명: `김상훈 이력서 - 계약·결제·정산이 고객에 닿는 채널 계층을 담당하는 …`(메타 문구에 긴 줄표 금지).
+- 이력서 검색 설명: `김상훈 이력서 - 결제·정산이 고객에게 닿는 채널계를 담당하는 …`(메타 문구에 긴 줄표 금지).
 - 검색 결과용 설명은 각 페이지에서 `metadata.other.description`으로 넣는다. `metadata.description`을 쓰면 Next.js가 공유 카드 설명으로 복사한다.
 - 공유 카드(OG · X)는 모든 링크가 같다(`shared/lib/seo.ts` `shareCard(url)`).
   - 제목 `김상훈 | 개발자 포트폴리오`, 설명 `profile.intro`, 이미지 `/api/og`.
@@ -201,7 +205,7 @@ Feature-Sliced Design. 의존 방향은 `app → widgets → features · entitie
 - `pnpm run check`: 타입 검사 · 단위 테스트 · 빌드.
 - `pnpm run test:e2e`: Playwright. 3100 포트에 운영 빌드를 띄우므로, 3100에 남은 `next start`가 있으면 먼저 끈다.
 - 단위 테스트: 콘텐츠 · 라우팅 · 이미지 허용 주소 · 색 대비 · 본문 글꼴 글자 · GA 정리 · 요약 · 모니터 · 동기화.
-- e2e: 홈 · 블로그 탐색 · 테마 · 검색 · 반응형 · 포커스와 가림 띠 · 고정 줄 · 탭 키보드 · 모바일 목차 버튼 · 이력서 이동 · 확대 · 인쇄 쪽 수 · 앱 안 인쇄 안내 · 글 article 정보 · 이동 스피너.
+- e2e: 홈 · 블로그 탐색 · 테마 · 검색 · 반응형 · 포커스와 가림 띠 · 고정 줄 · 탭 키보드 · 모바일 목차 버튼 · 이력서 이동 · 확대 · 하이드레이션 전 첫 배율 · 인쇄 쪽 수 · 앱 안 인쇄 안내 · 글 article 정보 · 이동 스피너.
 - `pnpm dev:open`: 개발 서버가 준비되면 브라우저를 연다.
 - `pnpm fonts:build` · `pnpm content:check` / `content:sync` · `pnpm images:check` · `pnpm links:check` · `pnpm monitor` · `pnpm measure`.
 - `pnpm monitor`는 운영 사이트의 `/` · `/posts` · `/sitemap.xml` · `/rss` · `/llms.txt` · `/api/og` · `/resume` · RSS 첫 글을 점검한다. GitHub Actions `Monitor`(`.github/workflows/monitor.yml`)가 매일 한국 시간 오전 9시에 실행한다.

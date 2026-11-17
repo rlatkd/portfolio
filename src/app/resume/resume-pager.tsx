@@ -1,7 +1,8 @@
 'use client';
 
-import { Children, useEffect, useRef, useState, type ReactNode } from 'react';
+import { Children, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut, ScanLine } from 'lucide-react';
+import { readResumeZoom, resumeFit, resumeScaleEffect } from './resume-scale';
 import styles from './resume-viewer.module.css';
 
 const WIDTH = 794;
@@ -9,27 +10,30 @@ const HEIGHT = 1123;
 const ZOOM_STEP = .25;
 // global.css의 낮은 데스크톱 구간과 같다. 이 구간에서는 기본 배율을 확대·축소 한 단계만큼 줄인다.
 const SHORT_DESKTOP = '(min-width: 1024px) and (max-height: 760px)';
+const SCALE_SCRIPT = `(${resumeScaleEffect.toString()})(${resumeFit.toString()}, ${readResumeZoom.toString()}, ${JSON.stringify(SHORT_DESKTOP)})`;
 
 export function ResumePager({ children }: { children: ReactNode }) {
   const pages = Children.toArray(children);
   const [page, setPage] = useState(0);
-  const [fit, setFit] = useState(1);
+  // 하이드레이션 전에는 null이고, 그동안 배율은 인라인 스크립트가 넣은 CSS 변수를 따른다.
+  const [measuredFit, setFit] = useState<number | null>(null);
   const [zoom, setZoom] = useState<number | null>(null);
   const viewport = useRef<HTMLDivElement>(null);
   const anchor = useRef<{ x: number; y: number } | null>(null);
+  const fit = measuredFit ?? 1;
   const scale = zoom === null ? fit : Math.max(fit, zoom);
   const last = pages.length - 1;
 
-  useEffect(() => {
+  // 화면을 그리기 전에 쪽 · 배율을 정해야 첫 화면이 바뀌지 않는다.
+  useLayoutEffect(() => {
     const restore = (event?: HashChangeEvent) => {
       // A router history update can run before this queued hashchange handler.
       // Use the navigation's destination, then keep the router URL in sync too.
       const url = new URL(event?.newURL || location.href);
       const hash = new URLSearchParams(url.hash.slice(1));
       const requested = Number(hash.get('page') || 1);
-      const requestedZoom = Number(hash.get('zoom'));
       setPage(Number.isInteger(requested) ? Math.max(0, Math.min(last, requested - 1)) : 0);
-      setZoom(requestedZoom > 0 && requestedZoom <= 2 ? requestedZoom : null);
+      setZoom(readResumeZoom(url.hash));
       if (event) history.replaceState(null, '', url.href);
       viewport.current?.scrollTo({ left: 0, top: 0, behavior: 'instant' });
     };
@@ -44,11 +48,12 @@ export function ResumePager({ children }: { children: ReactNode }) {
     history.replaceState(null, '', `#${hash}`);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const element = viewport.current;
     if (!element) return;
     const short = window.matchMedia(SHORT_DESKTOP);
-    const update = () => setFit(Math.min(1 - (short.matches ? ZOOM_STEP : 0), element.clientWidth / WIDTH));
+    const update = () => setFit(resumeFit(element.clientWidth, short.matches));
+    update();
     const observer = new ResizeObserver(update);
     observer.observe(element);
     short.addEventListener('change', update);
@@ -96,10 +101,10 @@ export function ResumePager({ children }: { children: ReactNode }) {
   }, [last, page, zoom, fit]);
 
   return (
-    <div className={styles.viewer}>
+    <div className={styles.viewer} style={measuredFit === null ? undefined : { '--resume-scale': scale } as CSSProperties}>
       <div ref={viewport} className={styles.viewport} role='region' aria-label='이력서 문서' tabIndex={0}>
-        <div className={styles.canvas} style={{ width: WIDTH * scale, height: HEIGHT * scale }}>
-          <div className={styles.scaled} style={{ transform: `scale(${scale})` }}>
+        <div className={styles.canvas}>
+          <div className={styles.scaled}>
             {pages.map((content, index) => (
               <section key={index} aria-label={`${index + 1}쪽`} aria-hidden={index !== page} data-active={index === page} className={`resume-paper resume-page ${styles.paper} ${styles.casePaper}`}>
                 <div className={styles.pageContent}>{content}</div>
@@ -109,6 +114,7 @@ export function ResumePager({ children }: { children: ReactNode }) {
           </div>
         </div>
       </div>
+      <script dangerouslySetInnerHTML={{ __html: SCALE_SCRIPT }} />
       <div className={styles.controls} aria-label='이력서 보기 도구'>
         <div className={styles.controlGroup}>
           <button type='button' aria-label='이전 쪽' disabled={page === 0} onClick={() => changePage(page - 1)}><ChevronLeft size={18} /></button>
@@ -117,7 +123,7 @@ export function ResumePager({ children }: { children: ReactNode }) {
         </div>
         <div className={styles.controlGroup}>
           <button type='button' aria-label='축소' disabled={scale <= fit + .005} onClick={() => changeZoom(scale - ZOOM_STEP)}><ZoomOut size={17} /></button>
-          <span className={styles.zoomStatus} aria-label='현재 배율'>{Math.round(scale * 100)}%</span>
+          <span className={styles.zoomStatus} aria-label='현재 배율'>{measuredFit === null ? '' : `${Math.round(scale * 100)}%`}</span>
           <button type='button' aria-label='확대' disabled={scale >= 2} onClick={() => changeZoom(scale + ZOOM_STEP)}><ZoomIn size={17} /></button>
           <button type='button' className={styles.fitButton} aria-label='너비 맞춤' onClick={() => { anchor.current = null; setZoom(null); remember(page, null); viewport.current?.scrollTo({ left: 0, top: 0, behavior: 'instant' }); }}><ScanLine size={16} /><span>너비 맞춤</span></button>
         </div>
